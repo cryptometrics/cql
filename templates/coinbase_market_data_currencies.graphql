@@ -1,0 +1,15 @@
+query {
+  coinbaseMarketDataCurrencies {
+    name
+    id
+    minSize
+    status
+    message
+    maxPrecision
+    convertibleTo
+    displayName
+    processingTimeSeconds
+    minWithdrawalAmount
+    maxWithdrawalAmount
+  }
+}

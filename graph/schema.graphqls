@@ -14,8 +14,22 @@ type User {
   name: String!
 }
 
+type CoinbaseMarketDataCurrency {
+  id: String!
+  name: String!
+  minSize: String!
+  status: String!
+  message: String
+  maxPrecision: String
+  convertibleTo: [String]
+  displayName: String
+  processingTimeSeconds: Int!
+  minWithdrawalAmount: Int!
+  maxWithdrawalAmount: Int!
+}
+
 type Query {
-  todos: [Todo!]!
+  coinbaseMarketDataCurrencies(test: String): [CoinbaseMarketDataCurrency]
 }
 
 input NewTodo {

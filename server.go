@@ -1,19 +1,30 @@
 package main
 
 import (
-	"cbql/graph"
-	"cbql/graph/generated"
+	"cql/graph"
+	"cql/graph/generated"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
+	"github.com/joho/godotenv"
 )
 
 const defaultPort = "8080"
 
+func loadEnv() (e error) {
+	if err := godotenv.Load(); err != nil {
+		e = fmt.Errorf("Error loading .env file: %v", err)
+	}
+	return
+}
+
 func main() {
+	loadEnv()
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort
