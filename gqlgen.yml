@@ -56,3 +56,7 @@ models:
       - github.com/99designs/gqlgen/graphql.Int32
   CoinbaseMarketDataCurrency:
     model: cql/model.CoinbaseMarketDataCurrency
+  CoinbaseMarketDataCurrencyDetails:
+    model: cql/model.CoinbaseMarketDataCurrencyDetails
+  CoinbaseBuyPrice:
+    model: cql/model.CoinbaseBuyPrice
