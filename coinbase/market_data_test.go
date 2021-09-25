@@ -72,6 +72,12 @@ func TestMarketDataCurrencies(t *testing.T) {
 			{Details: model.CoinbaseMarketDataCurrencyDetails{Type: "crypto"}},
 		}
 		test("details should parse correctly", g, clientCtrl, buf, expected)
+
+		buf = []byte(`[{"min_size":"0.01"}]`)
+		expected = []*model.CoinbaseMarketDataCurrency{
+			{MinSize: 0.01},
+		}
+		test("strings-floats should convert to floats", g, clientCtrl, buf, expected)
 	})
 }
 

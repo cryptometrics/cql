@@ -53,14 +53,12 @@ func (md *MarketData) currency(gen client.Generator, id string) (m *model.Coinba
 	return
 }
 
-// Currencies returns a list of known currencies on coinbase and decodes them
-// into a slice of model.CoinbaseMarketDataCurrency and, if it exists, returns
-// an error.
+// Currencies returns a list of all known currencies on coinbase
 func (md *MarketData) Currencies() ([]*model.CoinbaseMarketDataCurrency, error) {
 	return md.currencies(client.New)
 }
 
-// Currencies returns a single MD currency object for a specified id.
+// Currencies returns a single MD currency object for a specified id
 func (md *MarketData) Currency(id string) (*model.CoinbaseMarketDataCurrency, error) {
 	return md.currency(client.New, id)
 }

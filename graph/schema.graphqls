@@ -28,10 +28,10 @@ type CoinbaseMarketDataCurrencyDetails {
 type CoinbaseMarketDataCurrency {
   id: String!
   name: String!
-  minSize: String
+  minSize: Float
   status: String
   message: String
-  maxPrecision: String
+  maxPrecision: Float
   convertibleTo: [String]
   details: CoinbaseMarketDataCurrencyDetails
   displayName: String

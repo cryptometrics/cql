@@ -459,10 +459,10 @@ type CoinbaseMarketDataCurrencyDetails {
 type CoinbaseMarketDataCurrency {
   id: String!
   name: String!
-  minSize: String
+  minSize: Float
   status: String
   message: String
-  maxPrecision: String
+  maxPrecision: Float
   convertibleTo: [String]
   details: CoinbaseMarketDataCurrencyDetails
   displayName: String
@@ -778,9 +778,9 @@ func (ec *executionContext) _CoinbaseMarketDataCurrency_minSize(ctx context.Cont
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(float64)
 	fc.Result = res
-	return ec.marshalOString2string(ctx, field.Selections, res)
+	return ec.marshalOFloat2float64(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbaseMarketDataCurrency_status(ctx context.Context, field graphql.CollectedField, obj *model1.CoinbaseMarketDataCurrency) (ret graphql.Marshaler) {
@@ -874,9 +874,9 @@ func (ec *executionContext) _CoinbaseMarketDataCurrency_maxPrecision(ctx context
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(float64)
 	fc.Result = res
-	return ec.marshalOString2string(ctx, field.Selections, res)
+	return ec.marshalOFloat2float64(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbaseMarketDataCurrency_convertibleTo(ctx context.Context, field graphql.CollectedField, obj *model1.CoinbaseMarketDataCurrency) (ret graphql.Marshaler) {
@@ -3823,6 +3823,15 @@ func (ec *executionContext) marshalOCoinbaseMarketDataCurrency2ᚖcqlᚋmodelᚐ
 
 func (ec *executionContext) marshalOCoinbaseMarketDataCurrencyDetails2cqlᚋmodelᚐCoinbaseMarketDataCurrencyDetails(ctx context.Context, sel ast.SelectionSet, v model1.CoinbaseMarketDataCurrencyDetails) graphql.Marshaler {
 	return ec._CoinbaseMarketDataCurrencyDetails(ctx, sel, &v)
+}
+
+func (ec *executionContext) unmarshalOFloat2float64(ctx context.Context, v interface{}) (float64, error) {
+	res, err := graphql.UnmarshalFloat(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOFloat2float64(ctx context.Context, sel ast.SelectionSet, v float64) graphql.Marshaler {
+	return graphql.MarshalFloat(v)
 }
 
 func (ec *executionContext) unmarshalOInt2int(ctx context.Context, v interface{}) (int, error) {
