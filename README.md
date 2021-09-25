@@ -1,10 +1,18 @@
 # cql
 
+## Installation 
+
+To start the server run 
+
+```sh
+$ go run server.go
+```
+
 ## Usage
 
 To re-generate a change to the schema:
 
-```
+```sh
 $ go run github.com/99designs/gqlgen generate
 ```
 
