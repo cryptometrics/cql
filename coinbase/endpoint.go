@@ -11,6 +11,7 @@ const (
 	ProductsEP
 	ProductEP
 	ProductOrderBookEP
+	ProductTickerEP
 )
 
 func (endpoint Endpoint) Get(args ...string) string {
@@ -26,7 +27,7 @@ func (endpoint Endpoint) Get(args ...string) string {
 		// list the available currency pairs for trading
 		ProductsEP: func(_ ...string) string { return "/products" },
 
-		//  market data for a specific currency pair
+		// market data for a specific currency pair
 		ProductEP: func(args ...string) string {
 			return fmt.Sprintf("%s/%s", ProductsEP.Get(), args[0])
 		},
@@ -34,6 +35,12 @@ func (endpoint Endpoint) Get(args ...string) string {
 		// List of open orders for a product
 		ProductOrderBookEP: func(args ...string) string {
 			return fmt.Sprintf("%s/book?level=%s", ProductEP.Get(args[0]), args[1])
+		},
+
+		// Snapshot information about the last trade (tick), best bid/ask and 24h
+		// volume
+		ProductTickerEP: func(args ...string) string {
+			return fmt.Sprintf("%s/ticker", ProductEP.Get(args[0]))
 		},
 	}[endpoint](args...)
 }

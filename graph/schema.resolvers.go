@@ -47,6 +47,11 @@ func (r *queryResolver) CoinbaseProductOrderBook(ctx context.Context, id string,
 	return md.ProductOrderBook(id, level)
 }
 
+func (r *queryResolver) CoinbaseProductTicker(ctx context.Context, id string) (*model1.CoinbaseProductTicker, error) {
+	md := coinbase.NewMarketData()
+	return md.ProductTicker(id)
+}
+
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 

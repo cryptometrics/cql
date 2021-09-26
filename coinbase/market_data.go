@@ -38,6 +38,11 @@ func (md *MarketData) productOrderBook(gen client.Generator, id, level string) (
 	return
 }
 
+func (md *MarketData) productTicker(gen client.Generator, id string) (m *model.CoinbaseProductTicker, err error) {
+	err = decode(gen, &m, ProductTickerEP, id)
+	return
+}
+
 // Currencies returns a list of all known currencies on coinbase
 func (md *MarketData) Currencies() ([]*model.CoinbaseCurrency, error) {
 	return md.currencies(client.New)
@@ -63,4 +68,10 @@ func (md *MarketData) Product(id string) (*model.CoinbaseProduct, error) {
 // detail shown can be customized with the level parameter
 func (md *MarketData) ProductOrderBook(id, level string) (*model.CoinbaseProductOrderBook, error) {
 	return md.productOrderBook(client.New, id, level)
+}
+
+// ProductTicker returns a Snapshot information about the last trade (tick),
+// best bid/ask and 24h volume
+func (md *MarketData) ProductTicker(id string) (*model.CoinbaseProductTicker, error) {
+	return md.productTicker(client.New, id)
 }

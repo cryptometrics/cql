@@ -2,6 +2,8 @@
 #
 # https://gqlgen.com/getting-started/
 
+scalar Time
+
 type Todo {
   id: ID!
   text: String!
@@ -25,9 +27,22 @@ type CoinbaseCurrencyDetails {
   groupTypes: [String]
 }
 
+"""
+CoinbaseCurrency holds currency data from the coinbase API. Currency codes will
+conform to the ISO 4217 standard where possible. Currencies which have or had no
+representation in ISO 4217 may use a custom code.
+"""
 type CoinbaseCurrency {
+  """
+  id is the code coinbase uses to recognize an asset, e.g. BTC, ETH, etc
+  """
   id: String!
+
+  """
+  name is the full name associated with the id/code
+  """
   name: String!
+
   minSize: Float
   status: String
   message: String
@@ -45,23 +60,105 @@ type CoinbaseBuyPrice {
   currency: String!
 }
 
+"""
+CoinbaseProduct returns the market data for a specific currency pair. Only a
+maximum of one of trading_disabled, cancel_only, post_only, limit_only can be
+true at once. If none are true, the product is trading normally.
+"""
 type CoinbaseProduct {
+  """
+  id specifies the product as a pair on the coinbase app in the form
+  {baseCurrency}-{quoteCurrency}, e.g. BTC-USD, ETH-BTC, etc
+  """
   id: String
+
+  """
+  displayName is a human-readable format of id i.e. {baseCurrency} per
+  {quoteCurrency}
+  """
   displayName: String
+
+  """
+  baseCurrency is the currency we are measuring in terms of the quote currency
+  """
   baseCurrency: String
+
+  """
+  quoteCurrency is the currency we are using to compare with the baseCurrency
+  """
   quoteCurrency: String
+
+  """
+  baseIncrement specifies the minimum increment for the base_currency
+  """
   baseIncrement: Float
+
+  """
+  quoteIncrement field specifies the min order price as well as the price
+  increment.  The order price must be a multiple of this increment (i.e. if the
+  increment is 0.01, order prices of 0.001 or 0.021 would be rejected
+  """
   quoteIncrement: Float
+
+  """
+  baseMinSize defines the min order size
+  """
   baseMinSize: Float
+
+  """
+  baseMaxSize defines the max order siz
+  """
   baseMaxSize: Float
+
+  """
+  minMarketFunds defines the min funds allowed in a market order
+  """
   minMarketFunds: Float
+
+  """
+  maxMarketFunds defines the max funds allowed in a market orde
+  """
   maxMarketFunds: Float
+
+  """
+  status reflects the condition of the product on coinbase, whether it's online,
+  etc
+  """
   status: String
+
+  """
+  statusMessage provides any extra information regarding the status if
+  available
+  """
   statusMessage: String
+
+  """
+  cancelOnly indicates whether this product only accepts cancel requests for
+  orders
+  """
   cancelOnly: Boolean
+
+  """
+  limitOnly indicates whether this product only accepts limit orders
+  """
   limitOnly: Boolean
+
+  """
+  postOnly indicates whether only maker orders can be placed. No orders will be
+  matched when post_only mode is active
+  """
   postOnly: Boolean
+
+  """
+  tradingDisabled indicates whether trading is currently restricted on this
+  product, this includes whether both new orders and order cancelations are
+  restricted.
+  """
   tradingDisabled: Boolean
+
+  """
+  fxStablecoin indicates whether the currency pair is a Stable Pair
+  """
   fxStablecoin: Boolean
 }
 
@@ -90,6 +187,7 @@ type CoinbaseProductOrderBookBidAsk {
   """
   orderID: String
 }
+
 """
 CoinbaseProductOrderBook holds bid/ask data as a list of open orders for a
 product. The amount of detail shown can be customized with the level
@@ -116,6 +214,21 @@ type CoinbaseProductOrderBook {
   asks: [CoinbaseProductOrderBookBidAsk]
 }
 
+"""
+CoinbaseProductTicket encapsulates snapshot information about the last trade
+(tick), best bid/ask and 24h volume.  Polling is discouraged in favor of
+connecting via the websocket stream and listening for match messages
+"""
+type CoinbaseProductTicker {
+  tradeID: Int
+  price: Float
+  size: Float
+  bid: Float
+  ask: Float
+  volume: Float
+  time: Time
+}
+
 type Query {
   coinbaseCurrencies(test: String): [CoinbaseCurrency]
   coinbaseCurrency(id: String!): CoinbaseCurrency
@@ -126,6 +239,7 @@ type Query {
     id: String!
     level: String!
   ): CoinbaseProductOrderBook
+  coinbaseProductTicker(id: String!): CoinbaseProductTicker
 }
 
 input NewTodo {

@@ -66,3 +66,5 @@ models:
     model: cql/model.CoinbaseProductOrderBook
   CoinbaseProductOrderBookBidAsk:
     model: cql/model.CoinbaseProductOrderBookBidAsk
+  CoinbaseProductTicker:
+    model: cql/model.CoinbaseProductTicker

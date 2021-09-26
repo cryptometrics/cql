@@ -3,6 +3,7 @@ package model
 import (
 	"encoding/json"
 	"testing"
+	"time"
 
 	. "github.com/franela/goblin"
 )
@@ -154,6 +155,48 @@ func TestCoinbaseProductOrderBookUnmarshalJSON(t *testing.T) {
 			},
 		}
 		test("level 2, multiple", buf, expected)
+	})
+}
+
+func TestCoinbaseProductTickerUnmarshalJSON(t *testing.T) {
+	g := Goblin(t)
+	g.Describe("CoinbaseProductTicker#UnmarshalJSON", func() {
+		test := func(desc string, buf []byte, expected CoinbaseProductTicker) {
+			g.It(desc, func() {
+				v := CoinbaseProductTicker{}
+				if err := json.Unmarshal(buf, &v); err != nil {
+					panic(err)
+				}
+				g.Assert(v).Equal(expected)
+			})
+		}
+		var buf []byte
+		var expected CoinbaseProductTicker
+
+		buf = []byte(`{
+	 		"trade_id": 4729088,
+	 		"price": "333.99",
+	 		"size": "0.193",
+	 		"bid": "333.98",
+	 		"ask": "333.99",
+	 		"volume": "5957.11914015",
+	 		"time": "2015-11-14T20:46:03.511254Z"
+	 	}`)
+		expected = CoinbaseProductTicker{
+			TradeID: 4729088,
+			Price:   333.99,
+			Size:    0.193,
+			Bid:     333.98,
+			Ask:     333.99,
+			Volume:  5957.11914015,
+		}
+
+		var err error
+		expected.Time, err = time.Parse("2006-01-02T15:04:05.000000Z", "2015-11-14T20:46:03.511254Z")
+		if err != nil {
+			panic(err)
+		}
+		test("all fields", buf, expected)
 	})
 }
 
