@@ -14,7 +14,7 @@ type User {
   name: String!
 }
 
-type CoinbaseMarketDataCurrencyDetails {
+type CoinbaseCurrencyDetails {
   type: String
   symbol: String
   networkConfirmations: Int
@@ -25,7 +25,7 @@ type CoinbaseMarketDataCurrencyDetails {
   groupTypes: [String]
 }
 
-type CoinbaseMarketDataCurrency {
+type CoinbaseCurrency {
   id: String!
   name: String!
   minSize: Float
@@ -33,7 +33,7 @@ type CoinbaseMarketDataCurrency {
   message: String
   maxPrecision: Float
   convertibleTo: [String]
-  details: CoinbaseMarketDataCurrencyDetails
+  details: CoinbaseCurrencyDetails
   displayName: String
   processingTimeSeconds: Int
   minWithdrawalAmount: Int
@@ -45,10 +45,49 @@ type CoinbaseBuyPrice {
   currency: String!
 }
 
+type CoinbaseProduct {
+  id: String
+  displayName: String
+  baseCurrency: String
+  quoteCurrency: String
+  baseIncrement: Float
+  quoteIncrement: Float
+  baseMinSize: Float
+  baseMaxSize: Float
+  minMarketFunds: Float
+  maxMarketFunds: Float
+  status: String
+  statusMessage: String
+  cancelOnly: Boolean
+  limitOnly: Boolean
+  postOnly: Boolean
+  tradingDisabled: Boolean
+  fxStablecoin: Boolean
+}
+
+type CoinbaseProductOrderBookBidAsk {
+  price: Float
+  size: Float
+  numOrders: Int
+  orderID: String
+}
+
+type CoinbaseProductOrderBook {
+  sequence: Int
+  bids: [CoinbaseProductOrderBookBidAsk]
+  asks: [CoinbaseProductOrderBookBidAsk]
+}
+
 type Query {
-  coinbaseMarketDataCurrencies(test: String): [CoinbaseMarketDataCurrency]
-  coinbaseMarketDataCurrency(id: String!): CoinbaseMarketDataCurrency
+  coinbaseCurrencies(test: String): [CoinbaseCurrency]
+  coinbaseCurrency(id: String!): CoinbaseCurrency
   coinbaseBuyPrice(currencyPair: String!): CoinbaseBuyPrice
+  coinbaseProducts(test: String): [CoinbaseProduct]
+  coinbaseProduct(id: String!): CoinbaseProduct
+  coinbaseProductOrderBook(
+    id: String!
+    level: String!
+  ): CoinbaseProductOrderBook
 }
 
 input NewTodo {

@@ -3,8 +3,6 @@ package coinbase
 import (
 	"cql/client"
 	"cql/model"
-	"encoding/json"
-	"net/http"
 )
 
 type MarketData struct{}
@@ -15,50 +13,54 @@ func NewMarketData() *MarketData {
 	return &MarketData{}
 }
 
-func (md *MarketData) currencies(gen client.Generator) (m []*model.CoinbaseMarketDataCurrency, e error) {
-	var cb client.C
-	cb, e = gen(client.CoinbasePro)
-	if e != nil {
-		return
-	}
-	cb.Connect()
-
-	var res *http.Response
-	res, e = cb.Get(CurrenciesEP.Get())
-	if e != nil {
-		return
-	}
-
-	decoder := json.NewDecoder(res.Body)
-	e = decoder.Decode(&m)
+func (md *MarketData) currencies(gen client.Generator) (m []*model.CoinbaseCurrency, err error) {
+	err = decode(gen, &m, CurrenciesEP)
 	return
 }
 
-func (md *MarketData) currency(gen client.Generator, id string) (m *model.CoinbaseMarketDataCurrency, e error) {
-	var cb client.C
-	cb, e = gen(client.CoinbasePro)
-	if e != nil {
-		return
-	}
-	cb.Connect()
+func (md *MarketData) currency(gen client.Generator, id string) (m *model.CoinbaseCurrency, err error) {
+	err = decode(gen, &m, CurrencyEP, id)
+	return
+}
 
-	var res *http.Response
-	res, e = cb.Get(CurrencyEP.Get(id))
-	if e != nil {
-		return
-	}
+func (md *MarketData) products(gen client.Generator) (m []*model.CoinbaseProduct, err error) {
+	err = decode(gen, &m, ProductsEP)
+	return
+}
 
-	decoder := json.NewDecoder(res.Body)
-	e = decoder.Decode(&m)
+func (md *MarketData) product(gen client.Generator, id string) (m *model.CoinbaseProduct, err error) {
+	err = decode(gen, &m, ProductEP, id)
+	return
+}
+
+func (md *MarketData) productOrderBook(gen client.Generator, id, level string) (m *model.CoinbaseProductOrderBook, err error) {
+	err = decode(gen, &m, ProductOrderBookEP, id, level)
 	return
 }
 
 // Currencies returns a list of all known currencies on coinbase
-func (md *MarketData) Currencies() ([]*model.CoinbaseMarketDataCurrency, error) {
+func (md *MarketData) Currencies() ([]*model.CoinbaseCurrency, error) {
 	return md.currencies(client.New)
 }
 
-// Currencies returns a single MD currency object for a specified id
-func (md *MarketData) Currency(id string) (*model.CoinbaseMarketDataCurrency, error) {
+// Currency returns a single MD currency object for a specified id (e.g. BTC)
+func (md *MarketData) Currency(id string) (*model.CoinbaseCurrency, error) {
 	return md.currency(client.New, id)
+}
+
+// Products returns a list of available currency pairs for trading
+func (md *MarketData) Products() ([]*model.CoinbaseProduct, error) {
+	return md.products(client.New)
+}
+
+// Product returns a single MD product to get market data for a specific
+// currency pair (e.g. BTC-USD)
+func (md *MarketData) Product(id string) (*model.CoinbaseProduct, error) {
+	return md.product(client.New, id)
+}
+
+// ProductOrderBook returns a list of open orders for a product. The amount of
+// detail shown can be customized with the level parameter
+func (md *MarketData) ProductOrderBook(id, level string) (*model.CoinbaseProductOrderBook, error) {
+	return md.productOrderBook(client.New, id, level)
 }
