@@ -22,28 +22,19 @@ type CoinbaseProductOrderBook struct {
 // UnmarshalJSON is an override required to parst strings from coinbases api
 // into floats, specifically min_size and max_precision
 func (book *CoinbaseProductOrderBook) UnmarshalJSON(d []byte) error {
-	m := map[string]interface{}{}
-	if err := json.Unmarshal(d, &m); err != nil {
+	data := make(umap)
+	if err := json.Unmarshal(d, &data); err != nil {
 		return err
-	}
-
-	setter := func(name string, fn func(interface{}) error) error {
-		if v := m[name]; v != nil {
-			if err := fn(v); err != nil {
-				return err
-			}
-		}
-		return nil
 	}
 
 	var err error
 
-	err = setter("sequence", func(v interface{}) error {
+	err = data.unmarshal("sequence", func(v interface{}) error {
 		book.Sequence = int(v.(float64))
 		return nil
 	})
 
-	err = setter("bids", func(v interface{}) error {
+	err = data.unmarshal("bids", func(v interface{}) error {
 		for _, ibid := range v.([]interface{}) {
 			jsonString, _ := json.Marshal(ibid)
 			bid := CoinbaseProductOrderBookBidAsk{}
@@ -58,7 +49,7 @@ func (book *CoinbaseProductOrderBook) UnmarshalJSON(d []byte) error {
 		return err
 	}
 
-	err = setter("asks", func(v interface{}) error {
+	err = data.unmarshal("asks", func(v interface{}) error {
 		for _, iask := range v.([]interface{}) {
 			jsonString, _ := json.Marshal(iask)
 			ask := CoinbaseProductOrderBookBidAsk{}

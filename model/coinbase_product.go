@@ -66,43 +66,34 @@ type CoinbaseProduct struct {
 // UnmarshalJSON is an override required to parst strings from coinbases api
 // into floats
 func (product *CoinbaseProduct) UnmarshalJSON(d []byte) error {
-	m := make(map[string]interface{})
-	if err := json.Unmarshal(d, &m); err != nil {
+	data := make(umap)
+	if err := json.Unmarshal(d, &data); err != nil {
 		return err
-	}
-
-	setter := func(name string, fn func(interface{}) error) error {
-		if v := m[name]; v != nil {
-			if err := fn(v); err != nil {
-				return err
-			}
-		}
-		return nil
 	}
 
 	var err error
 
-	setter("id", func(v interface{}) error {
+	data.unmarshal("id", func(v interface{}) error {
 		product.ID = v.(string)
 		return nil
 	})
 
-	setter("display_name", func(v interface{}) error {
+	data.unmarshal("display_name", func(v interface{}) error {
 		product.DisplayName = v.(string)
 		return nil
 	})
 
-	setter("base_currency", func(v interface{}) error {
+	data.unmarshal("base_currency", func(v interface{}) error {
 		product.BaseCurrency = v.(string)
 		return nil
 	})
 
-	setter("quote_currency", func(v interface{}) error {
+	data.unmarshal("quote_currency", func(v interface{}) error {
 		product.QuoteCurrency = v.(string)
 		return nil
 	})
 
-	err = setter("base_increment", func(v interface{}) error {
+	err = data.unmarshal("base_increment", func(v interface{}) error {
 		strFloat := v.(string)
 		product.BaseIncrement, err = strconv.ParseFloat(strFloat, 64)
 		return err
@@ -111,7 +102,7 @@ func (product *CoinbaseProduct) UnmarshalJSON(d []byte) error {
 		return err
 	}
 
-	err = setter("quote_increment", func(v interface{}) error {
+	err = data.unmarshal("quote_increment", func(v interface{}) error {
 		strFloat := v.(string)
 		product.QuoteIncrement, err = strconv.ParseFloat(strFloat, 64)
 		return err
@@ -120,7 +111,7 @@ func (product *CoinbaseProduct) UnmarshalJSON(d []byte) error {
 		return err
 	}
 
-	err = setter("base_min_size", func(v interface{}) error {
+	err = data.unmarshal("base_min_size", func(v interface{}) error {
 		strFloat := v.(string)
 		product.BaseMinSize, err = strconv.ParseFloat(strFloat, 64)
 		return err
@@ -129,7 +120,7 @@ func (product *CoinbaseProduct) UnmarshalJSON(d []byte) error {
 		return err
 	}
 
-	err = setter("base_max_size", func(v interface{}) error {
+	err = data.unmarshal("base_max_size", func(v interface{}) error {
 		product.BaseMaxSize, err = strconv.ParseFloat(v.(string), 64)
 		return err
 	})
@@ -137,7 +128,7 @@ func (product *CoinbaseProduct) UnmarshalJSON(d []byte) error {
 		return err
 	}
 
-	setter("min_market_funds", func(v interface{}) error {
+	err = data.unmarshal("min_market_funds", func(v interface{}) error {
 		product.MinMarketFunds, err = strconv.ParseFloat(v.(string), 64)
 		return nil
 	})
@@ -145,7 +136,7 @@ func (product *CoinbaseProduct) UnmarshalJSON(d []byte) error {
 		return err
 	}
 
-	err = setter("max_market_funds", func(v interface{}) error {
+	err = data.unmarshal("max_market_funds", func(v interface{}) error {
 		product.MaxMarketFunds, err = strconv.ParseFloat(v.(string), 64)
 		return nil
 	})
@@ -153,37 +144,37 @@ func (product *CoinbaseProduct) UnmarshalJSON(d []byte) error {
 		return err
 	}
 
-	setter("status", func(v interface{}) error {
+	data.unmarshal("status", func(v interface{}) error {
 		product.Status = v.(string)
 		return nil
 	})
 
-	setter("status_message", func(v interface{}) error {
+	data.unmarshal("status_message", func(v interface{}) error {
 		product.StatusMessage = v.(string)
 		return nil
 	})
 
-	setter("cancel_only", func(v interface{}) error {
+	data.unmarshal("cancel_only", func(v interface{}) error {
 		product.CancelOnly = v.(bool)
 		return nil
 	})
 
-	setter("limit_only", func(v interface{}) error {
+	data.unmarshal("limit_only", func(v interface{}) error {
 		product.LimitOnly = v.(bool)
 		return nil
 	})
 
-	setter("post_only", func(v interface{}) error {
+	data.unmarshal("post_only", func(v interface{}) error {
 		product.PostOnly = v.(bool)
 		return nil
 	})
 
-	setter("trading_disabled", func(v interface{}) error {
+	data.unmarshal("trading_disabled", func(v interface{}) error {
 		product.TradingDisabled = v.(bool)
 		return nil
 	})
 
-	setter("fx_stablecoin", func(v interface{}) error {
+	data.unmarshal("fx_stablecoin", func(v interface{}) error {
 		product.FXStablecoin = v.(bool)
 		return nil
 	})

@@ -25,28 +25,19 @@ type CoinbaseProductTicker struct {
 // UnmarshalJSON is an override required to parst strings from coinbases api
 // into floats, specifically min_size and max_precision
 func (ticker *CoinbaseProductTicker) UnmarshalJSON(d []byte) error {
-	m := map[string]interface{}{}
-	if err := json.Unmarshal(d, &m); err != nil {
+	data := make(umap)
+	if err := json.Unmarshal(d, &data); err != nil {
 		return err
-	}
-
-	setter := func(name string, fn func(interface{}) error) error {
-		if v := m[name]; v != nil {
-			if err := fn(v); err != nil {
-				return err
-			}
-		}
-		return nil
 	}
 
 	var err error
 
-	setter("trade_id", func(v interface{}) error {
+	data.unmarshal("trade_id", func(v interface{}) error {
 		ticker.TradeID = int(v.(float64))
 		return nil
 	})
 
-	err = setter("price", func(v interface{}) error {
+	err = data.unmarshal("price", func(v interface{}) error {
 		ticker.Price, err = strconv.ParseFloat(v.(string), 64)
 		return err
 	})
@@ -54,7 +45,7 @@ func (ticker *CoinbaseProductTicker) UnmarshalJSON(d []byte) error {
 		return err
 	}
 
-	err = setter("size", func(v interface{}) error {
+	err = data.unmarshal("size", func(v interface{}) error {
 		ticker.Size, err = strconv.ParseFloat(v.(string), 64)
 		return err
 	})
@@ -62,7 +53,7 @@ func (ticker *CoinbaseProductTicker) UnmarshalJSON(d []byte) error {
 		return err
 	}
 
-	err = setter("bid", func(v interface{}) error {
+	err = data.unmarshal("bid", func(v interface{}) error {
 		ticker.Bid, err = strconv.ParseFloat(v.(string), 64)
 		return err
 	})
@@ -70,7 +61,7 @@ func (ticker *CoinbaseProductTicker) UnmarshalJSON(d []byte) error {
 		return err
 	}
 
-	err = setter("ask", func(v interface{}) error {
+	err = data.unmarshal("ask", func(v interface{}) error {
 		ticker.Ask, err = strconv.ParseFloat(v.(string), 64)
 		return err
 	})
@@ -78,7 +69,7 @@ func (ticker *CoinbaseProductTicker) UnmarshalJSON(d []byte) error {
 		return err
 	}
 
-	err = setter("volume", func(v interface{}) error {
+	err = data.unmarshal("volume", func(v interface{}) error {
 		ticker.Volume, err = strconv.ParseFloat(v.(string), 64)
 		return err
 	})
@@ -86,8 +77,8 @@ func (ticker *CoinbaseProductTicker) UnmarshalJSON(d []byte) error {
 		return err
 	}
 
-	err = setter("time", func(v interface{}) error {
-		layOut := "2006-01-02T15:04:05.000000Z"
+	err = data.unmarshal("time", func(v interface{}) error {
+		layOut := "2006-01-02T15:04:05.999999999Z07:00"
 		ticker.Time, err = time.Parse(layOut, v.(string))
 		return err
 	})

@@ -26,72 +26,63 @@ type CoinbaseCurrency struct {
 // UnmarshalJSON is an override required to parst strings from coinbases api
 // into floats, specifically min_size and max_precision
 func (currency *CoinbaseCurrency) UnmarshalJSON(d []byte) error {
-	m := make(map[string]interface{})
-	if err := json.Unmarshal(d, &m); err != nil {
+	data := make(umap)
+	if err := json.Unmarshal(d, &data); err != nil {
 		return err
-	}
-
-	setter := func(name string, fn func(interface{}) error) error {
-		if v := m[name]; v != nil {
-			if err := fn(v); err != nil {
-				return err
-			}
-		}
-		return nil
 	}
 
 	var err error
 
-	setter("id", func(v interface{}) error {
+	data.unmarshal("id", func(v interface{}) error {
 		currency.ID = v.(string)
 		return nil
 	})
 
-	setter("name", func(v interface{}) error {
+	data.unmarshal("name", func(v interface{}) error {
 		currency.Name = v.(string)
 		return nil
 	})
 
-	setter("status", func(v interface{}) error {
+	data.unmarshal("status", func(v interface{}) error {
 		currency.Status = v.(string)
 		return nil
 	})
 
-	setter("message", func(v interface{}) error {
+	data.unmarshal("message", func(v interface{}) error {
 		currency.Message = v.(string)
 		return nil
 	})
 
-	setter("convertible_to", func(v interface{}) error {
+	data.unmarshal("convertible_to", func(v interface{}) error {
 		for _, ct := range v.([]interface{}) {
 			currency.ConvertibleTo = append(currency.ConvertibleTo, ct.(string))
 		}
 		return nil
 	})
 
-	setter("display_name", func(v interface{}) error {
+	data.unmarshal("display_name", func(v interface{}) error {
 		currency.DisplayName = v.(string)
 		return nil
 	})
 
-	setter("processing_time_seconds", func(v interface{}) error {
+	data.unmarshal("processing_time_seconds", func(v interface{}) error {
 		currency.ProcessingTimeSeconds = int(v.(float64))
 		return nil
 	})
 
-	setter("min_withdrawal_amount", func(v interface{}) error {
+	data.unmarshal("min_withdrawal_amount", func(v interface{}) error {
 		currency.MinWithdrawalAmount = int(v.(float64))
 		return nil
 	})
 
-	setter("max_withdrawal_amount", func(v interface{}) error {
+	data.unmarshal("max_withdrawal_amount", func(v interface{}) error {
 		currency.MaxWithdrawalAmount = int(v.(float64))
 		return nil
 	})
 
-	err = setter("details", func(v interface{}) error {
+	err = data.unmarshal("details", func(v interface{}) error {
 		currency.Details = CoinbaseCurrencyDetails{}
-		jsonString, _ := json.Marshal(m["details"])
+		jsonString, _ := json.Marshal(data["details"])
 		if err := json.Unmarshal(jsonString, &currency.Details); err != nil {
 			return err
 		}
@@ -101,7 +92,7 @@ func (currency *CoinbaseCurrency) UnmarshalJSON(d []byte) error {
 		return err
 	}
 
-	setter("min_size", func(v interface{}) error {
+	data.unmarshal("min_size", func(v interface{}) error {
 		strFloat := v.(string)
 		currency.MinSize, err = strconv.ParseFloat(strFloat, 64)
 		return err
@@ -110,7 +101,7 @@ func (currency *CoinbaseCurrency) UnmarshalJSON(d []byte) error {
 		return err
 	}
 
-	setter("max_precision", func(v interface{}) error {
+	data.unmarshal("max_precision", func(v interface{}) error {
 		strFloat := v.(string)
 		currency.MaxPrecision, err = strconv.ParseFloat(strFloat, 64)
 		return err
