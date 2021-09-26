@@ -95,8 +95,9 @@ type ComplexityRoot struct {
 	}
 
 	CoinbaseProductOrderBook struct {
-		Asks func(childComplexity int) int
-		Bids func(childComplexity int) int
+		Asks     func(childComplexity int) int
+		Bids     func(childComplexity int) int
+		Sequence func(childComplexity int) int
 	}
 
 	CoinbaseProductOrderBookBidAsk struct {
@@ -446,6 +447,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.CoinbaseProductOrderBook.Bids(childComplexity), true
 
+	case "CoinbaseProductOrderBook.sequence":
+		if e.complexity.CoinbaseProductOrderBook.Sequence == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseProductOrderBook.Sequence(childComplexity), true
+
 	case "CoinbaseProductOrderBookBidAsk.numOrders":
 		if e.complexity.CoinbaseProductOrderBookBidAsk.NumOrders == nil {
 			break
@@ -731,15 +739,51 @@ type CoinbaseProduct {
   fxStablecoin: Boolean
 }
 
+"""
+CoinbaseProductOrderBookBidAsk is the object encapsulation of the a list of
+values defined by the level passed to the client
+"""
 type CoinbaseProductOrderBookBidAsk {
+  """
+  price is either bid/ask price
+  """
   price: Float
+
+  """
+  size is the amount of the asset that was purchased at the price
+  """
   size: Float
+
+  """
+  numOrders orders executed at the price, specific to level 2
+  """
   numOrders: Int
+
+  """
+  orderID is the uuid associated with the order, specific to level 3
+  """
   orderID: String
 }
-
+"""
+CoinbaseProductOrderBook holds bid/ask data as a list of open orders for a
+product. The amount of detail shown can be customized with the level
+parameter
+"""
 type CoinbaseProductOrderBook {
+  sequence: Int
+
+  """
+  bids are the object encapsulations of the list of data returned by coinbase.
+  More specifically, a bid price refer to the highest price that traders are
+  willing to pay for a product
+  """
   bids: [CoinbaseProductOrderBookBidAsk]
+
+  """
+  asks are the object encapsulations of the list of data returned by coinbase.
+  More specifically, ab ask price refers to the lowest price that the owners of
+  that product are willing to sell it for
+  """
   asks: [CoinbaseProductOrderBookBidAsk]
 }
 
@@ -2196,6 +2240,38 @@ func (ec *executionContext) _CoinbaseProduct_fxStablecoin(ctx context.Context, f
 	res := resTmp.(bool)
 	fc.Result = res
 	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseProductOrderBook_sequence(ctx context.Context, field graphql.CollectedField, obj *model1.CoinbaseProductOrderBook) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseProductOrderBook",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Sequence, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalOInt2int(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbaseProductOrderBook_bids(ctx context.Context, field graphql.CollectedField, obj *model1.CoinbaseProductOrderBook) (ret graphql.Marshaler) {
@@ -4259,6 +4335,8 @@ func (ec *executionContext) _CoinbaseProductOrderBook(ctx context.Context, sel a
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("CoinbaseProductOrderBook")
+		case "sequence":
+			out.Values[i] = ec._CoinbaseProductOrderBook_sequence(ctx, field, obj)
 		case "bids":
 			out.Values[i] = ec._CoinbaseProductOrderBook_bids(ctx, field, obj)
 		case "asks":

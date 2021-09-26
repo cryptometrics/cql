@@ -12,6 +12,10 @@ import (
 	"github.com/golang/mock/gomock"
 )
 
+// TODO -- get rid of these tests, just need to test decode.  How they actually
+// TODO -- get decoded is in the model by unmarshal methods.
+// ! Think this through though!
+
 func TestMarketDataCurrencies(t *testing.T) {
 	g := Goblin(t)
 	g.Describe("Test MarketData#Currencies", func() {

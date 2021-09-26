@@ -6,8 +6,8 @@ import (
 	"strconv"
 )
 
-// CoinbaseProductOrderBookBidAsk is a slice of values defined by the level passed
-// to the client
+// CoinbaseProductOrderBookBidAsk is the object encapsulation of the a list of
+// values defined by the level passed to the client
 type CoinbaseProductOrderBookBidAsk struct {
 	Price     float64 `json:"price"`
 	Size      float64 `json:"size"`
