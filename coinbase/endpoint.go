@@ -12,6 +12,7 @@ const (
 	ProductEP
 	ProductOrderBookEP
 	ProductTickerEP
+	ProductTradesEP
 )
 
 func (endpoint Endpoint) Get(args ...string) string {
@@ -41,6 +42,11 @@ func (endpoint Endpoint) Get(args ...string) string {
 		// volume
 		ProductTickerEP: func(args ...string) string {
 			return fmt.Sprintf("%s/ticker", ProductEP.Get(args[0]))
+		},
+
+		// List the latest trades for a product
+		ProductTradesEP: func(args ...string) string {
+			return fmt.Sprintf("%s/trades", ProductEP.Get(args[0]))
 		},
 	}[endpoint](args...)
 }

@@ -200,6 +200,45 @@ func TestCoinbaseProductTickerUnmarshalJSON(t *testing.T) {
 	})
 }
 
+func TestCoinbaseProductTradeUnmarshalJSON(t *testing.T) {
+	g := Goblin(t)
+	g.Describe("CoinbaseProductTrade#UnmarshalJSON", func() {
+		test := func(desc string, buf []byte, expected CoinbaseProductTrade) {
+			g.It(desc, func() {
+				v := CoinbaseProductTrade{}
+				if err := json.Unmarshal(buf, &v); err != nil {
+					panic(err)
+				}
+				g.Assert(v).Equal(expected)
+			})
+		}
+		var buf []byte
+		var expected CoinbaseProductTrade
+
+		buf = []byte(`		{
+	    "time": "2014-11-07T22:19:28.578544Z",
+	    "trade_id": 74,
+	    "price": "10.00000000",
+	    "size": "0.01000000",
+	    "side": "buy"
+		}`)
+
+		expected = CoinbaseProductTrade{
+			TradeID: 74,
+			Price:   10.00000000,
+			Size:    0.01000000,
+			Side:    "buy",
+		}
+
+		var err error
+		expected.Time, err = time.Parse("2006-01-02T15:04:05.000000Z", "2014-11-07T22:19:28.578544Z")
+		if err != nil {
+			panic(err)
+		}
+		test("all fields", buf, expected)
+	})
+}
+
 func TestCoinbaseProductUnmarshalJSON(t *testing.T) {
 	g := Goblin(t)
 	g.Describe("CoinbaseProduct#UnmarshalJSON", func() {

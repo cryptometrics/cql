@@ -118,6 +118,14 @@ type ComplexityRoot struct {
 		Volume  func(childComplexity int) int
 	}
 
+	CoinbaseProductTrade struct {
+		Price   func(childComplexity int) int
+		Side    func(childComplexity int) int
+		Size    func(childComplexity int) int
+		Time    func(childComplexity int) int
+		TradeID func(childComplexity int) int
+	}
+
 	Mutation struct {
 		CreateTodo func(childComplexity int, input model.NewTodo) int
 	}
@@ -129,6 +137,7 @@ type ComplexityRoot struct {
 		CoinbaseProduct          func(childComplexity int, id string) int
 		CoinbaseProductOrderBook func(childComplexity int, id string, level string) int
 		CoinbaseProductTicker    func(childComplexity int, id string) int
+		CoinbaseProductTrade     func(childComplexity int, id string) int
 		CoinbaseProducts         func(childComplexity int, test *string) int
 	}
 
@@ -156,6 +165,7 @@ type QueryResolver interface {
 	CoinbaseProduct(ctx context.Context, id string) (*model1.CoinbaseProduct, error)
 	CoinbaseProductOrderBook(ctx context.Context, id string, level string) (*model1.CoinbaseProductOrderBook, error)
 	CoinbaseProductTicker(ctx context.Context, id string) (*model1.CoinbaseProductTicker, error)
+	CoinbaseProductTrade(ctx context.Context, id string) ([]*model1.CoinbaseProductTrade, error)
 }
 
 type executableSchema struct {
@@ -544,6 +554,41 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.CoinbaseProductTicker.Volume(childComplexity), true
 
+	case "CoinbaseProductTrade.price":
+		if e.complexity.CoinbaseProductTrade.Price == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseProductTrade.Price(childComplexity), true
+
+	case "CoinbaseProductTrade.side":
+		if e.complexity.CoinbaseProductTrade.Side == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseProductTrade.Side(childComplexity), true
+
+	case "CoinbaseProductTrade.size":
+		if e.complexity.CoinbaseProductTrade.Size == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseProductTrade.Size(childComplexity), true
+
+	case "CoinbaseProductTrade.time":
+		if e.complexity.CoinbaseProductTrade.Time == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseProductTrade.Time(childComplexity), true
+
+	case "CoinbaseProductTrade.tradeID":
+		if e.complexity.CoinbaseProductTrade.TradeID == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseProductTrade.TradeID(childComplexity), true
+
 	case "Mutation.createTodo":
 		if e.complexity.Mutation.CreateTodo == nil {
 			break
@@ -627,6 +672,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.CoinbaseProductTicker(childComplexity, args["id"].(string)), true
+
+	case "Query.coinbaseProductTrade":
+		if e.complexity.Query.CoinbaseProductTrade == nil {
+			break
+		}
+
+		args, err := ec.field_Query_coinbaseProductTrade_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.CoinbaseProductTrade(childComplexity, args["id"].(string)), true
 
 	case "Query.coinbaseProducts":
 		if e.complexity.Query.CoinbaseProducts == nil {
@@ -977,6 +1034,24 @@ type CoinbaseProductTicker {
   time: Time
 }
 
+"""
+CoinbaseProductTrade lists the latest trades for a product
+"""
+type CoinbaseProductTrade {
+  time: Time
+  tradeID: Int
+  price: Float
+  size: Float
+
+  """
+  side indicates the maker order side. The maker order is the order that was
+  open on the order book. buy side indicates a down-tick because the maker was a
+  buy order and their order was removed. Conversely, sell side indicates an
+  up-tick.
+  """
+  side: String
+}
+
 type Query {
   coinbaseCurrencies(test: String): [CoinbaseCurrency]
   coinbaseCurrency(id: String!): CoinbaseCurrency
@@ -988,6 +1063,7 @@ type Query {
     level: String!
   ): CoinbaseProductOrderBook
   coinbaseProductTicker(id: String!): CoinbaseProductTicker
+  coinbaseProductTrade(id: String!): [CoinbaseProductTrade]
 }
 
 input NewTodo {
@@ -1106,6 +1182,21 @@ func (ec *executionContext) field_Query_coinbaseProductOrderBook_args(ctx contex
 }
 
 func (ec *executionContext) field_Query_coinbaseProductTicker_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_coinbaseProductTrade_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 string
@@ -2896,6 +2987,166 @@ func (ec *executionContext) _CoinbaseProductTicker_time(ctx context.Context, fie
 	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _CoinbaseProductTrade_time(ctx context.Context, field graphql.CollectedField, obj *model1.CoinbaseProductTrade) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseProductTrade",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Time, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseProductTrade_tradeID(ctx context.Context, field graphql.CollectedField, obj *model1.CoinbaseProductTrade) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseProductTrade",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TradeID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalOInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseProductTrade_price(ctx context.Context, field graphql.CollectedField, obj *model1.CoinbaseProductTrade) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseProductTrade",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Price, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(float64)
+	fc.Result = res
+	return ec.marshalOFloat2float64(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseProductTrade_size(ctx context.Context, field graphql.CollectedField, obj *model1.CoinbaseProductTrade) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseProductTrade",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Size, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(float64)
+	fc.Result = res
+	return ec.marshalOFloat2float64(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseProductTrade_side(ctx context.Context, field graphql.CollectedField, obj *model1.CoinbaseProductTrade) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseProductTrade",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Side, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Mutation_createTodo(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -3209,6 +3460,45 @@ func (ec *executionContext) _Query_coinbaseProductTicker(ctx context.Context, fi
 	res := resTmp.(*model1.CoinbaseProductTicker)
 	fc.Result = res
 	return ec.marshalOCoinbaseProductTicker2ᚖcqlᚋmodelᚐCoinbaseProductTicker(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Query_coinbaseProductTrade(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Query_coinbaseProductTrade_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().CoinbaseProductTrade(rctx, args["id"].(string))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model1.CoinbaseProductTrade)
+	fc.Result = res
+	return ec.marshalOCoinbaseProductTrade2ᚕᚖcqlᚋmodelᚐCoinbaseProductTrade(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -4887,6 +5177,38 @@ func (ec *executionContext) _CoinbaseProductTicker(ctx context.Context, sel ast.
 	return out
 }
 
+var coinbaseProductTradeImplementors = []string{"CoinbaseProductTrade"}
+
+func (ec *executionContext) _CoinbaseProductTrade(ctx context.Context, sel ast.SelectionSet, obj *model1.CoinbaseProductTrade) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, coinbaseProductTradeImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("CoinbaseProductTrade")
+		case "time":
+			out.Values[i] = ec._CoinbaseProductTrade_time(ctx, field, obj)
+		case "tradeID":
+			out.Values[i] = ec._CoinbaseProductTrade_tradeID(ctx, field, obj)
+		case "price":
+			out.Values[i] = ec._CoinbaseProductTrade_price(ctx, field, obj)
+		case "size":
+			out.Values[i] = ec._CoinbaseProductTrade_size(ctx, field, obj)
+		case "side":
+			out.Values[i] = ec._CoinbaseProductTrade_side(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
 var mutationImplementors = []string{"Mutation"}
 
 func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet) graphql.Marshaler {
@@ -5008,6 +5330,17 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_coinbaseProductTicker(ctx, field)
+				return res
+			})
+		case "coinbaseProductTrade":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_coinbaseProductTrade(ctx, field)
 				return res
 			})
 		case "__type":
@@ -5847,6 +6180,53 @@ func (ec *executionContext) marshalOCoinbaseProductTicker2ᚖcqlᚋmodelᚐCoinb
 		return graphql.Null
 	}
 	return ec._CoinbaseProductTicker(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOCoinbaseProductTrade2ᚕᚖcqlᚋmodelᚐCoinbaseProductTrade(ctx context.Context, sel ast.SelectionSet, v []*model1.CoinbaseProductTrade) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalOCoinbaseProductTrade2ᚖcqlᚋmodelᚐCoinbaseProductTrade(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+	return ret
+}
+
+func (ec *executionContext) marshalOCoinbaseProductTrade2ᚖcqlᚋmodelᚐCoinbaseProductTrade(ctx context.Context, sel ast.SelectionSet, v *model1.CoinbaseProductTrade) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._CoinbaseProductTrade(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOFloat2float64(ctx context.Context, v interface{}) (float64, error) {
