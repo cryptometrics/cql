@@ -16,6 +16,43 @@ type User {
   name: String!
 }
 
+"""
+CoinbaseAccountHistoryDetails are the details for account history
+"""
+type CoinbaseAccountHistoryDetails {
+  orderID: String
+  tradeID: String
+  productID: String
+}
+
+"""
+CoinbaseAccountHistory encapsulates data for account activity of the API
+key's profile. Account activity either increases or decreases your account
+balance. Items are paginated and sorted latest first. See the Pagination
+section for retrieving additional entries after the first page.
+"""
+type CoinbaseAccountHistory {
+  id: String
+  createdAt: Time
+  amount: Float
+  balance: Float
+  type: String
+  details: CoinbaseAccountHistoryDetails
+}
+
+"""
+CoinbaseAccount encapsulates information for a coinbase account
+"""
+type CoinbaseAccount {
+  id: String
+  currency: String
+  balance: Float
+  available: Float
+  hold: Float
+  profileID: String
+  tradingEnabled: Boolean
+}
+
 type CoinbaseCurrencyDetails {
   type: String
   symbol: String
@@ -325,6 +362,45 @@ type CoinbaseTime {
 }
 
 type Query {
+  coinbaseAccountHistory(
+    """
+    Returns list of ledger entries from this account id.
+    """
+    id: String!
+
+    """
+    Parameter requires a positive integer. If set, returns ledger entries before
+    the specified integer.
+    """
+    before: Int
+
+    """
+    Parameter requires a positive integer. If set, returns ledger entries after
+    the specified integer.
+    """
+    after: Int
+
+    """
+    If set, returns ledger entries created after the start_date timestamp,
+    sorted by newest creation date. When combined with end_date, returns ledger
+    entries in the specified time range.
+    """
+    startDate: String
+
+    """
+    If set, returns ledger entries created before the end_date timestamp, sorted
+    by newest creation date.
+    """
+    endDate: String
+
+    """
+    Number of results per request. Maximum 1000. (default 1000)
+    """
+    limit: Int
+  ): [CoinbaseAccountHistory]
+
+  coinbaseAccount(id: String!): CoinbaseAccount
+  coinbaseAccounts(test: String): [CoinbaseAccount]
   coinbaseCurrencies(test: String): [CoinbaseCurrency]
   coinbaseCurrency(id: String!): CoinbaseCurrency
   coinbaseProducts(test: String): [CoinbaseProduct]

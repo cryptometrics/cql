@@ -7,6 +7,8 @@ import (
 	"io"
 	"log"
 	"net/http"
+
+	"github.com/sirupsen/logrus"
 )
 
 // connector is a client connector, such as the New function.  It's broken into
@@ -38,12 +40,14 @@ func validateResponse(res *http.Response) (err error) {
 }
 
 // fetch uses a client connector and an endpiont to fetch data from the client
-func (conn Connector) fetch(endpoint Endpoint, endpointArgs ...string) (*http.Response, error) {
+func (conn Connector) fetch(endpoint Endpoint, endpointArgs ...*string) (*http.Response, error) {
 	c, err := conn()
 	if err != nil {
 		return nil, err
 	}
 	c.Connect()
+	parsedEndpoint := endpoint.Get(endpointArgs...)
+	logrus.Info("/GET ", parsedEndpoint)
 	res, err := c.Get(endpoint.Get(endpointArgs...))
 	if err != nil {
 		return nil, err
@@ -61,7 +65,7 @@ func printBody(res *http.Response) {
 
 // decode will fetch the data and then try to decode it into v, which should be
 // the pointer to a struct
-func (conn Connector) Decode(v interface{}, endpoint Endpoint, endpointArgs ...string) error {
+func (conn Connector) Decode(v interface{}, endpoint Endpoint, endpointArgs ...*string) error {
 	res, err := conn.fetch(endpoint, endpointArgs...)
 	if err != nil {
 		return err

@@ -8,6 +8,96 @@ import (
 	. "github.com/franela/goblin"
 )
 
+func TestCoinbaseAccountHistoryJSON(t *testing.T) {
+	g := Goblin(t)
+	g.Describe("CoinbaseAccountHistory#UnmarshalJSON", func() {
+		test := func(desc string, buf []byte, expected CoinbaseAccountHistory) {
+			g.It(desc, func() {
+				v := CoinbaseAccountHistory{}
+				if err := json.Unmarshal(buf, &v); err != nil {
+					panic(err)
+				}
+				g.Assert(v).Equal(expected)
+			})
+		}
+		var buf []byte
+		var expected CoinbaseAccountHistory
+
+		buf = []byte(`{
+			"id": "100",
+			"created_at": "2014-11-07T08:19:27.028459Z",
+			"amount": "0.001",
+			"balance": "239.669",
+			"type": "fee",
+			"details": {
+					"order_id": "d50ec984-77a8-460a-b958-66f114b0de9b",
+					"trade_id": "74",
+					"product_id": "BTC-USD"
+			}
+		}`)
+
+		details := CoinbaseAccountHistoryDetails{
+			OrderID:   "d50ec984-77a8-460a-b958-66f114b0de9b",
+			TradeID:   "74",
+			ProductID: "BTC-USD",
+		}
+
+		expected = CoinbaseAccountHistory{
+			ID:      "100",
+			Amount:  0.001,
+			Balance: 239.669,
+			Type:    "fee",
+			Details: details,
+		}
+
+		var err error
+		expected.CreatedAt, err = time.Parse("2006-01-02T15:04:05.000000Z", "2014-11-07T08:19:27.028459Z")
+		if err != nil {
+			panic(err)
+		}
+		test("all fields", buf, expected)
+	})
+}
+
+func TestCoinbaseAccountJSON(t *testing.T) {
+	g := Goblin(t)
+	g.Describe("CoinbaseAccount#UnmarshalJSON", func() {
+		test := func(desc string, buf []byte, expected CoinbaseAccount) {
+			g.It(desc, func() {
+				v := CoinbaseAccount{}
+				if err := json.Unmarshal(buf, &v); err != nil {
+					panic(err)
+				}
+				g.Assert(v).Equal(expected)
+			})
+		}
+		var buf []byte
+		var expected CoinbaseAccount
+
+		buf = []byte(`{
+			"id": "71452118-efc7-4cc4-8780-a5e22d4baa53",
+			"currency": "BTC",
+			"balance": "19.123",
+			"available": "912.31",
+			"hold": "0.0000000000000001",
+			"profile_id": "75da88c5-05bf-4f54-bc85-5c775bd68254",
+			"trading_enabled": true
+		 }`)
+
+		expected = CoinbaseAccount{
+			ID:             "71452118-efc7-4cc4-8780-a5e22d4baa53",
+			Currency:       "BTC",
+			Balance:        19.123,
+			Available:      912.31,
+			Hold:           0.0000000000000001,
+			ProfileID:      "75da88c5-05bf-4f54-bc85-5c775bd68254",
+			TradingEnabled: true,
+		}
+
+		test("all fields", buf, expected)
+	})
+}
+
 func TestCoinbaseCurrencyUnmarshalJSON(t *testing.T) {
 	g := Goblin(t)
 	g.Describe("CoinbaseCurrency#UnmarshalJSON", func() {

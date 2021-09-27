@@ -3,7 +3,6 @@ package coinbase
 import (
 	"cql/client"
 	"cql/model"
-	"strconv"
 )
 
 type MarketData struct{}
@@ -20,7 +19,7 @@ func (md *MarketData) currencies(gen client.Connector) (m []*model.CoinbaseCurre
 }
 
 func (md *MarketData) currency(gen client.Connector, id string) (m *model.CoinbaseCurrency, err error) {
-	err = gen.Decode(&m, CurrencyEP, id)
+	err = gen.Decode(&m, CurrencyEP, &id)
 	return
 }
 
@@ -30,32 +29,32 @@ func (md *MarketData) products(gen client.Connector) (m []*model.CoinbaseProduct
 }
 
 func (md *MarketData) product(gen client.Connector, id string) (m *model.CoinbaseProduct, err error) {
-	err = gen.Decode(&m, ProductEP, id)
+	err = gen.Decode(&m, ProductEP, &id)
 	return
 }
 
 func (md *MarketData) productDailyStats(gen client.Connector, id string) (m *model.CoinbaseProductDailyStats, err error) {
-	err = gen.Decode(&m, ProductDailyStatsEP, id)
+	err = gen.Decode(&m, ProductDailyStatsEP, &id)
 	return
 }
 
 func (md *MarketData) productHistoricalRates(gen client.Connector, id, start, end string, granularity int) (m []*model.CoinbaseProductHistoricalRate, err error) {
-	err = gen.Decode(&m, ProductHistoricalRatesEP, id, start, end, strconv.Itoa(granularity))
+	err = gen.Decode(&m, ProductHistoricalRatesEP, &id, &start, &end, IntString(&granularity))
 	return
 }
 
 func (md *MarketData) productOrderBook(gen client.Connector, id, level string) (m *model.CoinbaseProductOrderBook, err error) {
-	err = gen.Decode(&m, ProductOrderBookEP, id, level)
+	err = gen.Decode(&m, ProductOrderBookEP, &id, &level)
 	return
 }
 
 func (md *MarketData) productTicker(gen client.Connector, id string) (m *model.CoinbaseProductTicker, err error) {
-	err = gen.Decode(&m, ProductTickerEP, id)
+	err = gen.Decode(&m, ProductTickerEP, &id)
 	return
 }
 
 func (md *MarketData) productTrades(gen client.Connector, id string) (m []*model.CoinbaseProductTrade, err error) {
-	err = gen.Decode(&m, ProductTradesEP, id)
+	err = gen.Decode(&m, ProductTradesEP, &id)
 	return
 }
 

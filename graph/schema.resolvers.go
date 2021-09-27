@@ -16,6 +16,21 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) 
 	panic(fmt.Errorf("not implemented"))
 }
 
+func (r *queryResolver) CoinbaseAccountHistory(ctx context.Context, id string, before *int, after *int, startDate *string, endDate *string, limit *int) ([]*model1.CoinbaseAccountHistory, error) {
+	private := coinbase.NewPrivate()
+	return private.AccountHistory(id, before, after, startDate, endDate, limit)
+}
+
+func (r *queryResolver) CoinbaseAccount(ctx context.Context, id string) (*model1.CoinbaseAccount, error) {
+	private := coinbase.NewPrivate()
+	return private.Account(id)
+}
+
+func (r *queryResolver) CoinbaseAccounts(ctx context.Context, test *string) ([]*model1.CoinbaseAccount, error) {
+	private := coinbase.NewPrivate()
+	return private.Accounts()
+}
+
 func (r *queryResolver) CoinbaseCurrencies(ctx context.Context, test *string) ([]*model1.CoinbaseCurrency, error) {
 	md := coinbase.NewMarketData()
 	return md.Currencies()

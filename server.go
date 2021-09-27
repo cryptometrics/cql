@@ -11,6 +11,7 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/joho/godotenv"
+	"github.com/sirupsen/logrus"
 )
 
 const defaultPort = "8080"
@@ -20,6 +21,10 @@ func loadEnv() (e error) {
 		e = fmt.Errorf("Error loading .env file: %v", err)
 	}
 	return
+}
+
+func init() {
+	logrus.SetLevel(logrus.DebugLevel)
 }
 
 func main() {

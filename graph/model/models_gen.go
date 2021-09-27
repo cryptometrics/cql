@@ -2,6 +2,11 @@
 
 package model
 
+type CoinbaseBuyPrice struct {
+	Amount   float64 `json:"amount"`
+	Currency string  `json:"currency"`
+}
+
 type NewTodo struct {
 	Text   string `json:"text"`
 	UserID string `json:"userId"`

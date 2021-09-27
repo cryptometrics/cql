@@ -54,8 +54,12 @@ models:
       - github.com/99designs/gqlgen/graphql.Int
       - github.com/99designs/gqlgen/graphql.Int64
       - github.com/99designs/gqlgen/graphql.Int32
-  CoinbaseBuyPrice:
-    model: cql/model.CoinbaseBuyPrice
+  CoinbaseAccountHistoryDetails:
+    model: cql/model.CoinbaseAccountHistoryDetails
+  CoinbaseAccountHistory:
+    model: cql/model.CoinbaseAccountHistory
+  CoinbaseAccount:
+    model: cql/model.CoinbaseAccount
   CoinbaseCurrency:
     model: cql/model.CoinbaseCurrency
   CoinbaseCurrencyDetails:
