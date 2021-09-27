@@ -92,6 +92,11 @@ func (cb *proC) Connect() error {
 	return nil
 }
 
+// Identifier identifies requests
+func (cb *proC) Identifier() string {
+	return "Coinbase Pro"
+}
+
 // Get makes and http GET request, given a an endpoint
 func (cb *proC) Get(endpoint string) (*http.Response, error) {
 	return cb.request(client.GET, endpoint)

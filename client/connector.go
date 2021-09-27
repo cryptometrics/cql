@@ -7,8 +7,6 @@ import (
 	"io"
 	"log"
 	"net/http"
-
-	"github.com/sirupsen/logrus"
 )
 
 // connector is a client connector, such as the New function.  It's broken into
@@ -46,8 +44,7 @@ func (conn Connector) fetch(endpoint Endpoint, endpointArgs ...*string) (*http.R
 		return nil, err
 	}
 	c.Connect()
-	parsedEndpoint := endpoint.Get(endpointArgs...)
-	logrus.Info("/GET ", parsedEndpoint)
+	GET.LogInfo(c, endpoint, endpointArgs...)
 	res, err := c.Get(endpoint.Get(endpointArgs...))
 	if err != nil {
 		return nil, err

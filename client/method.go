@@ -1,5 +1,11 @@
 package client
 
+import (
+	"fmt"
+
+	"github.com/sirupsen/logrus"
+)
+
 // Common HTTP methods.
 //
 // Unless otherwise noted, these are defined in RFC 7231 section 4.3.
@@ -14,4 +20,10 @@ func (m Method) String() string {
 	return map[Method]string{
 		GET: "GET",
 	}[m]
+}
+
+// LogInfo will long that a request was made for a method
+func (m Method) LogInfo(c C, endpoint Endpoint, args ...*string) {
+	logrus.Info(fmt.Sprintf("/%s (%s) %s", m.String(), c.Identifier(),
+		endpoint.Get(args...)))
 }
