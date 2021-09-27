@@ -292,7 +292,6 @@ type CoinbaseProductTrade {
 type Query {
   coinbaseCurrencies(test: String): [CoinbaseCurrency]
   coinbaseCurrency(id: String!): CoinbaseCurrency
-  coinbaseBuyPrice(currencyPair: String!): CoinbaseBuyPrice
   coinbaseProducts(test: String): [CoinbaseProduct]
   coinbaseProduct(id: String!): CoinbaseProduct
   coinbaseProductHistoricalRate(

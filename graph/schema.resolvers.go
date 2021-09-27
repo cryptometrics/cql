@@ -9,7 +9,6 @@ import (
 	"cql/graph/generated"
 	"cql/graph/model"
 	model1 "cql/model"
-	"cql/svc"
 	"fmt"
 )
 
@@ -25,11 +24,6 @@ func (r *queryResolver) CoinbaseCurrencies(ctx context.Context, test *string) ([
 func (r *queryResolver) CoinbaseCurrency(ctx context.Context, id string) (*model1.CoinbaseCurrency, error) {
 	md := coinbase.NewMarketData()
 	return md.Currency(id)
-}
-
-func (r *queryResolver) CoinbaseBuyPrice(ctx context.Context, currencyPair string) (*model1.CoinbaseBuyPrice, error) {
-	p := svc.CoinbaseBuyPrice{}
-	return p.Price(currencyPair)
 }
 
 func (r *queryResolver) CoinbaseProducts(ctx context.Context, test *string) ([]*model1.CoinbaseProduct, error) {

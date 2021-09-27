@@ -9,9 +9,9 @@ import (
 	"net/http"
 )
 
-// Generator is a client generator, such as the New function.  It's broken into
+// connector is a client connector, such as the New function.  It's broken into
 // it's own type for decoding purposes.
-type Generator func(Kind) (C, error)
+type Connector func() (C, error)
 
 // parseErrorMessage takes a response and a status and builder an error message
 // to send to the server
@@ -37,9 +37,9 @@ func validateResponse(res *http.Response) (err error) {
 	return nil
 }
 
-// fetch uses a client generator and an endpiont to fetch data from the client
-func (gen Generator) fetch(kind Kind, endpoint Endpoint, endpointArgs ...string) (*http.Response, error) {
-	c, err := gen(kind)
+// fetch uses a client connector and an endpiont to fetch data from the client
+func (conn Connector) fetch(endpoint Endpoint, endpointArgs ...string) (*http.Response, error) {
+	c, err := conn()
 	if err != nil {
 		return nil, err
 	}
@@ -61,8 +61,8 @@ func printBody(res *http.Response) {
 
 // decode will fetch the data and then try to decode it into v, which should be
 // the pointer to a struct
-func (gen Generator) Decode(kind Kind, v interface{}, endpoint Endpoint, endpointArgs ...string) error {
-	res, err := gen.fetch(kind, endpoint, endpointArgs...)
+func (conn Connector) Decode(v interface{}, endpoint Endpoint, endpointArgs ...string) error {
+	res, err := conn.fetch(endpoint, endpointArgs...)
 	if err != nil {
 		return err
 	}
