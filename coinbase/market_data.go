@@ -34,6 +34,11 @@ func (md *MarketData) product(gen client.Connector, id string) (m *model.Coinbas
 	return
 }
 
+func (md *MarketData) productDailyStats(gen client.Connector, id string) (m *model.CoinbaseProductDailyStats, err error) {
+	err = gen.Decode(&m, ProductDailyStatsEP, id)
+	return
+}
+
 func (md *MarketData) productHistoricalRates(gen client.Connector, id, start, end string, granularity int) (m []*model.CoinbaseProductHistoricalRate, err error) {
 	err = gen.Decode(&m, ProductHistoricalRatesEP, id, start, end, strconv.Itoa(granularity))
 	return
@@ -51,6 +56,11 @@ func (md *MarketData) productTicker(gen client.Connector, id string) (m *model.C
 
 func (md *MarketData) productTrades(gen client.Connector, id string) (m []*model.CoinbaseProductTrade, err error) {
 	err = gen.Decode(&m, ProductTradesEP, id)
+	return
+}
+
+func (md *MarketData) time(gen client.Connector) (m *model.CoinbaseTime, err error) {
+	err = gen.Decode(&m, TimeEP)
 	return
 }
 
@@ -75,6 +85,12 @@ func (md *MarketData) Product(id string) (*model.CoinbaseProduct, error) {
 	return md.product(newClient, id)
 }
 
+// ProductDailyStatus returns 24 hr stats for the product. volume is in base c
+// currency units. open, high, low are in quote currency units.
+func (md *MarketData) ProductDailyStats(id string) (*model.CoinbaseProductDailyStats, error) {
+	return md.productDailyStats(newClient, id)
+}
+
 // ProductHistoricalRates list of historic rates for a product. Rates are
 // returned in grouped buckets based on requested granularity
 func (md *MarketData) ProductHistoricalRates(id, start, end string, granularity int) ([]*model.CoinbaseProductHistoricalRate, error) {
@@ -96,4 +112,9 @@ func (md *MarketData) ProductTicker(id string) (*model.CoinbaseProductTicker, er
 // ProductTrade returns a list the latest trades for a product
 func (md *MarketData) ProductTrades(id string) ([]*model.CoinbaseProductTrade, error) {
 	return md.productTrades(newClient, id)
+}
+
+// Time returns the coinbase API server time
+func (md *MarketData) Time() (*model.CoinbaseTime, error) {
+	return md.time(newClient)
 }

@@ -62,6 +62,8 @@ models:
     model: cql/model.CoinbaseCurrencyDetails
   CoinbaseProduct:
     model: cql/model.CoinbaseProduct
+  CoinbaseProductDailyStats:
+    model: cql/model.CoinbaseProductDailyStats
   CoinbaseProductHistoricalRate:
     model: cql/model.CoinbaseProductHistoricalRate
   CoinbaseProductOrderBook:
@@ -72,3 +74,5 @@ models:
     model: cql/model.CoinbaseProductTicker
   CoinbaseProductTrade:
     model: cql/model.CoinbaseProductTrade
+  CoinbaseTime:
+    model: cql/model.CoinbaseTime

@@ -79,6 +79,42 @@ func TestCoinbaseCurrencyUnmarshalJSON(t *testing.T) {
 	})
 }
 
+func TestCoinbaseProductDailyStatsUnmarshalJSON(t *testing.T) {
+	g := Goblin(t)
+	g.Describe("CoinbaseProductDailyStats#UnmarshalJSON", func() {
+		test := func(desc string, buf []byte, exp CoinbaseProductDailyStats) {
+			g.It(desc, func() {
+				v := CoinbaseProductDailyStats{}
+				if err := json.Unmarshal(buf, &v); err != nil {
+					panic(err)
+				}
+				g.Assert(v).Equal(exp)
+			})
+		}
+		var buf []byte
+		var expected CoinbaseProductDailyStats
+
+		buf = []byte(`{
+			"open": "6745.61000000",
+			"high": "7292.11000000",
+			"low": "6650.00000000",
+			"volume": "26185.51325269",
+			"last": "6813.19000000",
+			"volume_30day": "1019451.11188405"
+		}`)
+
+		expected = CoinbaseProductDailyStats{
+			Open:        6745.61000000,
+			High:        7292.11000000,
+			Low:         6650.00000000,
+			Volume:      26185.51325269,
+			Last:        6813.19000000,
+			Volume30Day: 1019451.11188405,
+		}
+		test("all fields", buf, expected)
+	})
+}
+
 func TestCoinbaseProductHistoricalRateUnmarshalJSON(t *testing.T) {
 	g := Goblin(t)
 	g.Describe("CoinbaseProductHistoricalRate#UnmarshalJSON", func() {
@@ -104,7 +140,7 @@ func TestCoinbaseProductHistoricalRateUnmarshalJSON(t *testing.T) {
 			Close:  4.2,
 			Volume: 12.3,
 		}
-		test("level 2, single", buf, expected)
+		test("all fields", buf, expected)
 	})
 }
 
@@ -321,6 +357,35 @@ func TestCoinbaseProductUnmarshalJSON(t *testing.T) {
 			TradingDisabled: false,
 			FXStablecoin:    false,
 		}
+		test("all fields", buf, expected)
+	})
+}
+
+func TestCoinbaseTimeJSON(t *testing.T) {
+	g := Goblin(t)
+	g.Describe("CoinbaseTime#UnmarshalJSON", func() {
+		test := func(desc string, buf []byte, expected CoinbaseTime) {
+			g.It(desc, func() {
+				v := CoinbaseTime{}
+				if err := json.Unmarshal(buf, &v); err != nil {
+					panic(err)
+				}
+				g.Assert(v).Equal(expected)
+			})
+		}
+		var buf []byte
+		var expected CoinbaseTime
+
+		buf = []byte(`{
+			"iso": "2015-01-07T23:47:25.201Z",
+			"epoch": 1420674445.201
+		}`)
+
+		expected = CoinbaseTime{
+			ISO:   "2015-01-07T23:47:25.201Z",
+			Epoch: 1420674445.201,
+		}
+
 		test("all fields", buf, expected)
 	})
 }

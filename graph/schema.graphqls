@@ -163,6 +163,29 @@ type CoinbaseProduct {
 }
 
 """
+CoinbaseProductDailyStats encapsulates 24 hr stats for the product
+"""
+type CoinbaseProductDailyStats {
+  """
+  open is in quote currency units; product={base}-{quote}
+  """
+  open: Float
+
+  """
+  high is in quote currency units; product={base}-{quote}
+  """
+  high: Float
+  low: Float
+
+  """
+  Volume is in base currency units; product={base}-{quote}
+  """
+  volume: Float
+  last: Float
+  volume30Day: Float
+}
+
+"""
 CoinbaseProductHistoricalRate are historic rates for a product. Rates are
 returned in grouped buckets based on requested granularity.
 
@@ -289,11 +312,37 @@ type CoinbaseProductTrade {
   side: String
 }
 
+"""
+CoinbaseTime encapsulates the coinbase API server time
+"""
+type CoinbaseTime {
+  iso: String
+
+  """
+  epoch represents decimal seconds since Unix Epoch
+  """
+  epoch: Float
+}
+
 type Query {
   coinbaseCurrencies(test: String): [CoinbaseCurrency]
   coinbaseCurrency(id: String!): CoinbaseCurrency
   coinbaseProducts(test: String): [CoinbaseProduct]
-  coinbaseProduct(id: String!): CoinbaseProduct
+
+  coinbaseProduct(
+    """
+    id is the product of the form {baseCurrency}-{quoteCurrency}
+    """
+    id: String!
+  ): CoinbaseProduct
+
+  coinbaseProductDailyStats(
+    """
+    id is the product of the form {baseCurrency}-{quoteCurrency}
+    """
+    id: String!
+  ): CoinbaseProductDailyStats
+
   coinbaseProductHistoricalRate(
     """
     id is the product of the form {baseCurrency}-{quoteCurrency}
@@ -321,12 +370,30 @@ type Query {
     """
     granularity: Int!
   ): [CoinbaseProductHistoricalRate]
+
   coinbaseProductOrderBook(
+    """
+    id is the product of the form {baseCurrency}-{quoteCurrency}
+    """
     id: String!
     level: String!
   ): CoinbaseProductOrderBook
-  coinbaseProductTicker(id: String!): CoinbaseProductTicker
-  coinbaseProductTrade(id: String!): [CoinbaseProductTrade]
+
+  coinbaseProductTicker(
+    """
+    id is the product of the form {baseCurrency}-{quoteCurrency}
+    """
+    id: String!
+  ): CoinbaseProductTicker
+
+  coinbaseProductTrade(
+    """
+    id is the product of the form {baseCurrency}-{quoteCurrency}
+    """
+    id: String!
+  ): [CoinbaseProductTrade]
+
+  coinbaseTime(test: String): CoinbaseTime
 }
 
 input NewTodo {

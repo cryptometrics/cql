@@ -36,6 +36,11 @@ func (r *queryResolver) CoinbaseProduct(ctx context.Context, id string) (*model1
 	return md.Product(id)
 }
 
+func (r *queryResolver) CoinbaseProductDailyStats(ctx context.Context, id string) (*model1.CoinbaseProductDailyStats, error) {
+	md := coinbase.NewMarketData()
+	return md.ProductDailyStats(id)
+}
+
 func (r *queryResolver) CoinbaseProductHistoricalRate(ctx context.Context, id string, start string, end string, granularity int) ([]*model1.CoinbaseProductHistoricalRate, error) {
 	md := coinbase.NewMarketData()
 	return md.ProductHistoricalRates(id, start, end, granularity)
@@ -54,6 +59,11 @@ func (r *queryResolver) CoinbaseProductTicker(ctx context.Context, id string) (*
 func (r *queryResolver) CoinbaseProductTrade(ctx context.Context, id string) ([]*model1.CoinbaseProductTrade, error) {
 	md := coinbase.NewMarketData()
 	return md.ProductTrades(id)
+}
+
+func (r *queryResolver) CoinbaseTime(ctx context.Context, test *string) (*model1.CoinbaseTime, error) {
+	md := coinbase.NewMarketData()
+	return md.Time()
 }
 
 // Mutation returns generated.MutationResolver implementation.
