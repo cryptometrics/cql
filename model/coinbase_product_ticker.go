@@ -80,6 +80,7 @@ func (ticker *CoinbaseProductTicker) UnmarshalJSON(d []byte) error {
 	err = data.unmarshal("time", func(v interface{}) error {
 		layOut := "2006-01-02T15:04:05.999999999Z07:00"
 		ticker.Time, err = time.Parse(layOut, v.(string))
+		ticker.Time = ticker.Time.UTC()
 		return err
 	})
 	if err != nil {

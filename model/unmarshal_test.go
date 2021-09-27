@@ -79,6 +79,35 @@ func TestCoinbaseCurrencyUnmarshalJSON(t *testing.T) {
 	})
 }
 
+func TestCoinbaseProductHistoricalRateUnmarshalJSON(t *testing.T) {
+	g := Goblin(t)
+	g.Describe("CoinbaseProductHistoricalRate#UnmarshalJSON", func() {
+		test := func(desc string, buf []byte, exp CoinbaseProductHistoricalRate) {
+			g.It(desc, func() {
+				v := CoinbaseProductHistoricalRate{}
+				if err := json.Unmarshal(buf, &v); err != nil {
+					panic(err)
+				}
+				g.Assert(v).Equal(exp)
+			})
+		}
+		var buf []byte
+		var expected CoinbaseProductHistoricalRate
+
+		buf = []byte(`[ 1415398768, 0.32, 4.2, 0.35, 4.2, 12.3 ]`)
+
+		expected = CoinbaseProductHistoricalRate{
+			Time:   time.Date(2014, 11, 07, 22, 19, 28, 0, time.UTC),
+			Low:    0.32,
+			High:   4.2,
+			Open:   0.35,
+			Close:  4.2,
+			Volume: 12.3,
+		}
+		test("level 2, single", buf, expected)
+	})
+}
+
 func TestCoinbaseProductOrderBookUnmarshalJSON(t *testing.T) {
 	g := Goblin(t)
 	g.Describe("CoinbaseProductOrderBook#UnmarshalJSON", func() {

@@ -9,8 +9,6 @@ type C interface {
 	Get(endpoint string) (*http.Response, error)
 }
 
-type Generator func(Kind) (C, error)
-
 // New returns a new client interface, given a type
 func New(t Kind) (C, error) {
 	c := map[Kind]C{

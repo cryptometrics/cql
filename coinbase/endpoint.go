@@ -10,6 +10,7 @@ const (
 	CurrencyEP
 	ProductsEP
 	ProductEP
+	ProductHistoricalRatesEP
 	ProductOrderBookEP
 	ProductTickerEP
 	ProductTradesEP
@@ -31,6 +32,13 @@ func (endpoint Endpoint) Get(args ...string) string {
 		// market data for a specific currency pair
 		ProductEP: func(args ...string) string {
 			return fmt.Sprintf("%s/%s", ProductsEP.Get(), args[0])
+		},
+
+		// List of historic rates for a product. Rates are returned in grouped
+		// buckets based on requested granularity.
+		ProductHistoricalRatesEP: func(args ...string) string {
+			return fmt.Sprintf("%s/candles?start=%s&end=%s&granularity=%s",
+				ProductEP.Get(args[0]), args[1], args[2], args[3])
 		},
 
 		// List of open orders for a product

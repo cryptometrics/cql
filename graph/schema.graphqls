@@ -163,6 +163,48 @@ type CoinbaseProduct {
 }
 
 """
+CoinbaseProductHistoricalRate are historic rates for a product. Rates are
+returned in grouped buckets based on requested granularity.
+
+Historical rate data may be incomplete. No data is published for intervals
+where there are no ticks.
+
+Historical rates should not be polled frequently. If you need real-time
+information, use the trade and book endpoints along with the websocket feed.
+"""
+type CoinbaseProductHistoricalRate {
+  """
+  Time is the bucket start time
+  """
+  time: Time
+
+  """
+  Low is the lowest price during the bucket interval
+  """
+  low: Float
+
+  """
+  High is the highest price during the bucket interval
+  """
+  high: Float
+
+  """
+  Open is the opening price (first trade) in the bucket interval
+  """
+  open: Float
+
+  """
+  Close is the closing price (last trade) in the bucket interval
+  """
+  close: Float
+
+  """
+  Volume is the volume of trading activity during the bucket interval
+  """
+  volume: Float
+}
+
+"""
 CoinbaseProductOrderBookBidAsk is the object encapsulation of the a list of
 values defined by the level passed to the client
 """
@@ -253,6 +295,33 @@ type Query {
   coinbaseBuyPrice(currencyPair: String!): CoinbaseBuyPrice
   coinbaseProducts(test: String): [CoinbaseProduct]
   coinbaseProduct(id: String!): CoinbaseProduct
+  coinbaseProductHistoricalRate(
+    """
+    id is the product of the form {baseCurrency}-{quoteCurrency}
+    """
+    id: String!
+
+    """
+    start time in ISO 8601
+    """
+    start: String!
+
+    """
+    end time in ISO 8601
+    """
+    end: String!
+
+    """
+    granularity must be one of the following values:
+
+    	{60, 300, 900, 3600, 21600, 86400}
+
+    Otherwise, your request will be rejected. These values correspond to
+    timeslices representing one minute, five minutes, fifteen minutes, one hour,
+    six hours, and one day, respectively.
+    """
+    granularity: Int!
+  ): [CoinbaseProductHistoricalRate]
   coinbaseProductOrderBook(
     id: String!
     level: String!

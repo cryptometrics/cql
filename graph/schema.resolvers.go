@@ -42,6 +42,11 @@ func (r *queryResolver) CoinbaseProduct(ctx context.Context, id string) (*model1
 	return md.Product(id)
 }
 
+func (r *queryResolver) CoinbaseProductHistoricalRate(ctx context.Context, id string, start string, end string, granularity int) ([]*model1.CoinbaseProductHistoricalRate, error) {
+	md := coinbase.NewMarketData()
+	return md.ProductHistoricalRates(id, start, end, granularity)
+}
+
 func (r *queryResolver) CoinbaseProductOrderBook(ctx context.Context, id string, level string) (*model1.CoinbaseProductOrderBook, error) {
 	md := coinbase.NewMarketData()
 	return md.ProductOrderBook(id, level)
