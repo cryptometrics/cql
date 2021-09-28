@@ -9,6 +9,7 @@ type Endpoint int
 
 const (
 	_ Endpoint = iota
+	AccountHoldsEP
 	AccountEP
 	AccountsEP
 	AccountHistoryEP
@@ -56,6 +57,12 @@ func (endpoint Endpoint) Get(args ...*string) string {
 		AccountHistoryEP: func(args ...*string) string {
 			params := []string{"before", "after", "start_date", "end_date", "limit"}
 			return fmt.Sprintf("%s/ledger%s", AccountEP.Get(args[0]),
+				queryParams(params, args[1:]).String())
+		},
+
+		AccountHoldsEP: func(args ...*string) string {
+			params := []string{"before", "after", "limit"}
+			return fmt.Sprintf("%s/holds%s", AccountEP.Get(args[0]),
 				queryParams(params, args[1:]).String())
 		},
 

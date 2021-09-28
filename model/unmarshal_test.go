@@ -59,6 +59,52 @@ func TestCoinbaseAccountHistoryJSON(t *testing.T) {
 	})
 }
 
+func TestCoinbaseAccountHoldJSON(t *testing.T) {
+	g := Goblin(t)
+	g.Describe("CoinbaseAccountHold#UnmarshalJSON", func() {
+		test := func(desc string, buf []byte, expected CoinbaseAccountHold) {
+			g.It(desc, func() {
+				v := CoinbaseAccountHold{}
+				if err := json.Unmarshal(buf, &v); err != nil {
+					panic(err)
+				}
+				g.Assert(v).Equal(expected)
+			})
+		}
+		var buf []byte
+		var expected CoinbaseAccountHold
+
+		buf = []byte(`{
+			"id": "82dcd140-c3c7-4507-8de4-2c529cd1a28f",
+			"account_id": "e0b3f39a-183d-453e-b754-0c13e5bab0b3",
+			"created_at": "2014-11-06T10:34:47.123456Z",
+			"updated_at": "2014-11-06T10:40:47.123456Z",
+			"amount": "4.23",
+			"type": "order",
+			"ref": "0a205de4-dd35-4370-a285-fe8fc375a273"
+		}`)
+
+		expected = CoinbaseAccountHold{
+			ID:        "82dcd140-c3c7-4507-8de4-2c529cd1a28f",
+			AccountID: "e0b3f39a-183d-453e-b754-0c13e5bab0b3",
+			Amount:    4.23,
+			Type:      "order",
+			Ref:       "0a205de4-dd35-4370-a285-fe8fc375a273",
+		}
+
+		var err error
+		expected.CreatedAt, err = time.Parse(timeLayout, "2014-11-06T10:34:47.123456Z")
+		if err != nil {
+			panic(err)
+		}
+		expected.UpdatedAt, err = time.Parse(timeLayout, "2014-11-06T10:40:47.123456Z")
+		if err != nil {
+			panic(err)
+		}
+		test("all fields", buf, expected)
+	})
+}
+
 func TestCoinbaseAccountJSON(t *testing.T) {
 	g := Goblin(t)
 	g.Describe("CoinbaseAccount#UnmarshalJSON", func() {

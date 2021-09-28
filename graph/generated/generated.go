@@ -36,6 +36,7 @@ type Config struct {
 }
 
 type ResolverRoot interface {
+	CoinbaseProductOrderBook() CoinbaseProductOrderBookResolver
 	Mutation() MutationResolver
 	Query() QueryResolver
 }
@@ -67,6 +68,16 @@ type ComplexityRoot struct {
 		OrderID   func(childComplexity int) int
 		ProductID func(childComplexity int) int
 		TradeID   func(childComplexity int) int
+	}
+
+	CoinbaseAccountHold struct {
+		AccountID func(childComplexity int) int
+		Amount    func(childComplexity int) int
+		CreatedAt func(childComplexity int) int
+		ID        func(childComplexity int) int
+		Ref       func(childComplexity int) int
+		Type      func(childComplexity int) int
+		UpdatedAt func(childComplexity int) int
 	}
 
 	CoinbaseBuyPrice struct {
@@ -181,6 +192,7 @@ type ComplexityRoot struct {
 	Query struct {
 		CoinbaseAccount               func(childComplexity int, id string) int
 		CoinbaseAccountHistory        func(childComplexity int, id string, before *int, after *int, startDate *string, endDate *string, limit *int) int
+		CoinbaseAccountHold           func(childComplexity int, id string, before *int, after *int, limit *int) int
 		CoinbaseAccounts              func(childComplexity int, test *string) int
 		CoinbaseCurrencies            func(childComplexity int, test *string) int
 		CoinbaseCurrency              func(childComplexity int, id string) int
@@ -207,11 +219,16 @@ type ComplexityRoot struct {
 	}
 }
 
+type CoinbaseProductOrderBookResolver interface {
+	Bids(ctx context.Context, obj *model1.CoinbaseProductOrderBook) ([]*model1.CoinbaseProductOrderBookBidAsk, error)
+	Asks(ctx context.Context, obj *model1.CoinbaseProductOrderBook) ([]*model1.CoinbaseProductOrderBookBidAsk, error)
+}
 type MutationResolver interface {
 	CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error)
 }
 type QueryResolver interface {
 	CoinbaseAccountHistory(ctx context.Context, id string, before *int, after *int, startDate *string, endDate *string, limit *int) ([]*model1.CoinbaseAccountHistory, error)
+	CoinbaseAccountHold(ctx context.Context, id string, before *int, after *int, limit *int) ([]*model1.CoinbaseAccountHold, error)
 	CoinbaseAccount(ctx context.Context, id string) (*model1.CoinbaseAccount, error)
 	CoinbaseAccounts(ctx context.Context, test *string) ([]*model1.CoinbaseAccount, error)
 	CoinbaseCurrencies(ctx context.Context, test *string) ([]*model1.CoinbaseCurrency, error)
@@ -352,6 +369,55 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.CoinbaseAccountHistoryDetails.TradeID(childComplexity), true
+
+	case "CoinbaseAccountHold.accountID":
+		if e.complexity.CoinbaseAccountHold.AccountID == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseAccountHold.AccountID(childComplexity), true
+
+	case "CoinbaseAccountHold.amount":
+		if e.complexity.CoinbaseAccountHold.Amount == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseAccountHold.Amount(childComplexity), true
+
+	case "CoinbaseAccountHold.createdAt":
+		if e.complexity.CoinbaseAccountHold.CreatedAt == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseAccountHold.CreatedAt(childComplexity), true
+
+	case "CoinbaseAccountHold.id":
+		if e.complexity.CoinbaseAccountHold.ID == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseAccountHold.ID(childComplexity), true
+
+	case "CoinbaseAccountHold.ref":
+		if e.complexity.CoinbaseAccountHold.Ref == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseAccountHold.Ref(childComplexity), true
+
+	case "CoinbaseAccountHold.type":
+		if e.complexity.CoinbaseAccountHold.Type == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseAccountHold.Type(childComplexity), true
+
+	case "CoinbaseAccountHold.updatedAt":
+		if e.complexity.CoinbaseAccountHold.UpdatedAt == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseAccountHold.UpdatedAt(childComplexity), true
 
 	case "CoinbaseBuyPrice.amount":
 		if e.complexity.CoinbaseBuyPrice.Amount == nil {
@@ -893,6 +959,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.CoinbaseAccountHistory(childComplexity, args["id"].(string), args["before"].(*int), args["after"].(*int), args["startDate"].(*string), args["endDate"].(*string), args["limit"].(*int)), true
 
+	case "Query.coinbaseAccountHold":
+		if e.complexity.Query.CoinbaseAccountHold == nil {
+			break
+		}
+
+		args, err := ec.field_Query_coinbaseAccountHold_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.CoinbaseAccountHold(childComplexity, args["id"].(string), args["before"].(*int), args["after"].(*int), args["limit"].(*int)), true
+
 	case "Query.coinbaseAccounts":
 		if e.complexity.Query.CoinbaseAccounts == nil {
 			break
@@ -1171,6 +1249,23 @@ type CoinbaseAccountHistory {
   balance: Float
   type: String
   details: CoinbaseAccountHistoryDetails
+}
+
+"""
+CoinbaseAccountHold represents a hold of an account that belong to the same
+profile as the API key. Holds are placed on an account for any active orders
+or pending withdraw requests. As an order is filled, the hold amount is
+updated. If an order is canceled, any remaining hold is removed. For a
+withdraw, once it is completed, the hold is removed
+"""
+type CoinbaseAccountHold {
+  id: String
+  accountID: String
+  createdAt: Time
+  updatedAt: Time
+  amount: Float
+  type: String
+  ref: String
 }
 
 """
@@ -1532,6 +1627,34 @@ type Query {
     limit: Int
   ): [CoinbaseAccountHistory]
 
+  """
+  List holds of an account that belong to the same profile as the API key. Holds
+  are placed on an account for any active orders or pending withdraw requests.
+  As an order is filled, the hold amount is updated. If an order is canceled,
+  any remaining hold is removed. For a withdraw, once it is completed, the hold
+  is removed
+  """
+  coinbaseAccountHold(
+    id: String!
+
+    """
+    Pagination parameter that requires a positive integer. If set, returns a
+    list of holds before the specified integer.
+    """
+    before: Int
+
+    """
+    Pagination parameter that requires a positive integer. If set, returns a
+    list of holds after the specified integer.
+    """
+    after: Int
+
+    """
+    Number of results per request. Maximum 1000. (default 1000)
+    """
+    limit: Int
+  ): [CoinbaseAccountHold]
+
   coinbaseAccount(id: String!): CoinbaseAccount
   coinbaseAccounts(test: String): [CoinbaseAccount]
   coinbaseCurrencies(test: String): [CoinbaseCurrency]
@@ -1708,6 +1831,48 @@ func (ec *executionContext) field_Query_coinbaseAccountHistory_args(ctx context.
 		}
 	}
 	args["limit"] = arg5
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_coinbaseAccountHold_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	var arg1 *int
+	if tmp, ok := rawArgs["before"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("before"))
+		arg1, err = ec.unmarshalOInt2ᚖint(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["before"] = arg1
+	var arg2 *int
+	if tmp, ok := rawArgs["after"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("after"))
+		arg2, err = ec.unmarshalOInt2ᚖint(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["after"] = arg2
+	var arg3 *int
+	if tmp, ok := rawArgs["limit"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("limit"))
+		arg3, err = ec.unmarshalOInt2ᚖint(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["limit"] = arg3
 	return args, nil
 }
 
@@ -2464,6 +2629,230 @@ func (ec *executionContext) _CoinbaseAccountHistoryDetails_productID(ctx context
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
 		return obj.ProductID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseAccountHold_id(ctx context.Context, field graphql.CollectedField, obj *model1.CoinbaseAccountHold) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseAccountHold",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseAccountHold_accountID(ctx context.Context, field graphql.CollectedField, obj *model1.CoinbaseAccountHold) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseAccountHold",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AccountID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseAccountHold_createdAt(ctx context.Context, field graphql.CollectedField, obj *model1.CoinbaseAccountHold) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseAccountHold",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedAt, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseAccountHold_updatedAt(ctx context.Context, field graphql.CollectedField, obj *model1.CoinbaseAccountHold) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseAccountHold",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UpdatedAt, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseAccountHold_amount(ctx context.Context, field graphql.CollectedField, obj *model1.CoinbaseAccountHold) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseAccountHold",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Amount, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(float64)
+	fc.Result = res
+	return ec.marshalOFloat2float64(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseAccountHold_type(ctx context.Context, field graphql.CollectedField, obj *model1.CoinbaseAccountHold) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseAccountHold",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Type, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseAccountHold_ref(ctx context.Context, field graphql.CollectedField, obj *model1.CoinbaseAccountHold) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseAccountHold",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Ref, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -4164,14 +4553,14 @@ func (ec *executionContext) _CoinbaseProductOrderBook_bids(ctx context.Context, 
 		Object:     "CoinbaseProductOrderBook",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Bids, nil
+		return ec.resolvers.CoinbaseProductOrderBook().Bids(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -4180,9 +4569,9 @@ func (ec *executionContext) _CoinbaseProductOrderBook_bids(ctx context.Context, 
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.([]model1.CoinbaseProductOrderBookBidAsk)
+	res := resTmp.([]*model1.CoinbaseProductOrderBookBidAsk)
 	fc.Result = res
-	return ec.marshalOCoinbaseProductOrderBookBidAsk2ᚕcqlᚋmodelᚐCoinbaseProductOrderBookBidAsk(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseProductOrderBookBidAsk2ᚕᚖcqlᚋmodelᚐCoinbaseProductOrderBookBidAsk(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbaseProductOrderBook_asks(ctx context.Context, field graphql.CollectedField, obj *model1.CoinbaseProductOrderBook) (ret graphql.Marshaler) {
@@ -4196,14 +4585,14 @@ func (ec *executionContext) _CoinbaseProductOrderBook_asks(ctx context.Context, 
 		Object:     "CoinbaseProductOrderBook",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Asks, nil
+		return ec.resolvers.CoinbaseProductOrderBook().Asks(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -4212,9 +4601,9 @@ func (ec *executionContext) _CoinbaseProductOrderBook_asks(ctx context.Context, 
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.([]model1.CoinbaseProductOrderBookBidAsk)
+	res := resTmp.([]*model1.CoinbaseProductOrderBookBidAsk)
 	fc.Result = res
-	return ec.marshalOCoinbaseProductOrderBookBidAsk2ᚕcqlᚋmodelᚐCoinbaseProductOrderBookBidAsk(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseProductOrderBookBidAsk2ᚕᚖcqlᚋmodelᚐCoinbaseProductOrderBookBidAsk(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbaseProductOrderBookBidAsk_price(ctx context.Context, field graphql.CollectedField, obj *model1.CoinbaseProductOrderBookBidAsk) (ret graphql.Marshaler) {
@@ -4872,6 +5261,45 @@ func (ec *executionContext) _Query_coinbaseAccountHistory(ctx context.Context, f
 	res := resTmp.([]*model1.CoinbaseAccountHistory)
 	fc.Result = res
 	return ec.marshalOCoinbaseAccountHistory2ᚕᚖcqlᚋmodelᚐCoinbaseAccountHistory(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Query_coinbaseAccountHold(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Query_coinbaseAccountHold_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().CoinbaseAccountHold(rctx, args["id"].(string), args["before"].(*int), args["after"].(*int), args["limit"].(*int))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model1.CoinbaseAccountHold)
+	fc.Result = res
+	return ec.marshalOCoinbaseAccountHold2ᚕᚖcqlᚋmodelᚐCoinbaseAccountHold(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_coinbaseAccount(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -6844,6 +7272,42 @@ func (ec *executionContext) _CoinbaseAccountHistoryDetails(ctx context.Context, 
 	return out
 }
 
+var coinbaseAccountHoldImplementors = []string{"CoinbaseAccountHold"}
+
+func (ec *executionContext) _CoinbaseAccountHold(ctx context.Context, sel ast.SelectionSet, obj *model1.CoinbaseAccountHold) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, coinbaseAccountHoldImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("CoinbaseAccountHold")
+		case "id":
+			out.Values[i] = ec._CoinbaseAccountHold_id(ctx, field, obj)
+		case "accountID":
+			out.Values[i] = ec._CoinbaseAccountHold_accountID(ctx, field, obj)
+		case "createdAt":
+			out.Values[i] = ec._CoinbaseAccountHold_createdAt(ctx, field, obj)
+		case "updatedAt":
+			out.Values[i] = ec._CoinbaseAccountHold_updatedAt(ctx, field, obj)
+		case "amount":
+			out.Values[i] = ec._CoinbaseAccountHold_amount(ctx, field, obj)
+		case "type":
+			out.Values[i] = ec._CoinbaseAccountHold_type(ctx, field, obj)
+		case "ref":
+			out.Values[i] = ec._CoinbaseAccountHold_ref(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
 var coinbaseBuyPriceImplementors = []string{"CoinbaseBuyPrice"}
 
 func (ec *executionContext) _CoinbaseBuyPrice(ctx context.Context, sel ast.SelectionSet, obj *model.CoinbaseBuyPrice) graphql.Marshaler {
@@ -7104,9 +7568,27 @@ func (ec *executionContext) _CoinbaseProductOrderBook(ctx context.Context, sel a
 		case "sequence":
 			out.Values[i] = ec._CoinbaseProductOrderBook_sequence(ctx, field, obj)
 		case "bids":
-			out.Values[i] = ec._CoinbaseProductOrderBook_bids(ctx, field, obj)
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._CoinbaseProductOrderBook_bids(ctx, field, obj)
+				return res
+			})
 		case "asks":
-			out.Values[i] = ec._CoinbaseProductOrderBook_asks(ctx, field, obj)
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._CoinbaseProductOrderBook_asks(ctx, field, obj)
+				return res
+			})
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -7297,6 +7779,17 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_coinbaseAccountHistory(ctx, field)
+				return res
+			})
+		case "coinbaseAccountHold":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_coinbaseAccountHold(ctx, field)
 				return res
 			})
 		case "coinbaseAccount":
@@ -8220,6 +8713,53 @@ func (ec *executionContext) marshalOCoinbaseAccountHistoryDetails2cqlᚋmodelᚐ
 	return ec._CoinbaseAccountHistoryDetails(ctx, sel, &v)
 }
 
+func (ec *executionContext) marshalOCoinbaseAccountHold2ᚕᚖcqlᚋmodelᚐCoinbaseAccountHold(ctx context.Context, sel ast.SelectionSet, v []*model1.CoinbaseAccountHold) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalOCoinbaseAccountHold2ᚖcqlᚋmodelᚐCoinbaseAccountHold(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+	return ret
+}
+
+func (ec *executionContext) marshalOCoinbaseAccountHold2ᚖcqlᚋmodelᚐCoinbaseAccountHold(ctx context.Context, sel ast.SelectionSet, v *model1.CoinbaseAccountHold) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._CoinbaseAccountHold(ctx, sel, v)
+}
+
 func (ec *executionContext) marshalOCoinbaseCurrency2ᚕᚖcqlᚋmodelᚐCoinbaseCurrency(ctx context.Context, sel ast.SelectionSet, v []*model1.CoinbaseCurrency) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
@@ -8379,11 +8919,7 @@ func (ec *executionContext) marshalOCoinbaseProductOrderBook2ᚖcqlᚋmodelᚐCo
 	return ec._CoinbaseProductOrderBook(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCoinbaseProductOrderBookBidAsk2cqlᚋmodelᚐCoinbaseProductOrderBookBidAsk(ctx context.Context, sel ast.SelectionSet, v model1.CoinbaseProductOrderBookBidAsk) graphql.Marshaler {
-	return ec._CoinbaseProductOrderBookBidAsk(ctx, sel, &v)
-}
-
-func (ec *executionContext) marshalOCoinbaseProductOrderBookBidAsk2ᚕcqlᚋmodelᚐCoinbaseProductOrderBookBidAsk(ctx context.Context, sel ast.SelectionSet, v []model1.CoinbaseProductOrderBookBidAsk) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseProductOrderBookBidAsk2ᚕᚖcqlᚋmodelᚐCoinbaseProductOrderBookBidAsk(ctx context.Context, sel ast.SelectionSet, v []*model1.CoinbaseProductOrderBookBidAsk) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -8410,7 +8946,7 @@ func (ec *executionContext) marshalOCoinbaseProductOrderBookBidAsk2ᚕcqlᚋmode
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOCoinbaseProductOrderBookBidAsk2cqlᚋmodelᚐCoinbaseProductOrderBookBidAsk(ctx, sel, v[i])
+			ret[i] = ec.marshalOCoinbaseProductOrderBookBidAsk2ᚖcqlᚋmodelᚐCoinbaseProductOrderBookBidAsk(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -8421,6 +8957,13 @@ func (ec *executionContext) marshalOCoinbaseProductOrderBookBidAsk2ᚕcqlᚋmode
 	}
 	wg.Wait()
 	return ret
+}
+
+func (ec *executionContext) marshalOCoinbaseProductOrderBookBidAsk2ᚖcqlᚋmodelᚐCoinbaseProductOrderBookBidAsk(ctx context.Context, sel ast.SelectionSet, v *model1.CoinbaseProductOrderBookBidAsk) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._CoinbaseProductOrderBookBidAsk(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalOCoinbaseProductTicker2ᚖcqlᚋmodelᚐCoinbaseProductTicker(ctx context.Context, sel ast.SelectionSet, v *model1.CoinbaseProductTicker) graphql.Marshaler {

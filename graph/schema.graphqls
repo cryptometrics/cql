@@ -41,6 +41,23 @@ type CoinbaseAccountHistory {
 }
 
 """
+CoinbaseAccountHold represents a hold of an account that belong to the same
+profile as the API key. Holds are placed on an account for any active orders
+or pending withdraw requests. As an order is filled, the hold amount is
+updated. If an order is canceled, any remaining hold is removed. For a
+withdraw, once it is completed, the hold is removed
+"""
+type CoinbaseAccountHold {
+  id: String
+  accountID: String
+  createdAt: Time
+  updatedAt: Time
+  amount: Float
+  type: String
+  ref: String
+}
+
+"""
 CoinbaseAccount encapsulates information for a coinbase account
 """
 type CoinbaseAccount {
@@ -398,6 +415,34 @@ type Query {
     """
     limit: Int
   ): [CoinbaseAccountHistory]
+
+  """
+  List holds of an account that belong to the same profile as the API key. Holds
+  are placed on an account for any active orders or pending withdraw requests.
+  As an order is filled, the hold amount is updated. If an order is canceled,
+  any remaining hold is removed. For a withdraw, once it is completed, the hold
+  is removed
+  """
+  coinbaseAccountHold(
+    id: String!
+
+    """
+    Pagination parameter that requires a positive integer. If set, returns a
+    list of holds before the specified integer.
+    """
+    before: Int
+
+    """
+    Pagination parameter that requires a positive integer. If set, returns a
+    list of holds after the specified integer.
+    """
+    after: Int
+
+    """
+    Number of results per request. Maximum 1000. (default 1000)
+    """
+    limit: Int
+  ): [CoinbaseAccountHold]
 
   coinbaseAccount(id: String!): CoinbaseAccount
   coinbaseAccounts(test: String): [CoinbaseAccount]

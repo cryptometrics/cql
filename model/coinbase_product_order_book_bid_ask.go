@@ -19,6 +19,13 @@ func (quotes *CoinbaseProductOrderBookBidAsks) append(v interface{}) {
 	*quotes = append(*quotes, *v.(*CoinbaseProductOrderBookBidAsk))
 }
 
+func (quotes *CoinbaseProductOrderBookBidAsks) Slice() (s []*CoinbaseProductOrderBookBidAsk) {
+	for _, quote := range *quotes {
+		s = append(s, &quote)
+	}
+	return
+}
+
 // UnmarshalJSON is an override required to parst strings from coinbases api
 // into floats, specifically min_size and max_precision
 func (quote *CoinbaseProductOrderBookBidAsk) UnmarshalJSON(d []byte) error {

@@ -12,6 +12,14 @@ import (
 	"fmt"
 )
 
+func (r *coinbaseProductOrderBookResolver) Bids(ctx context.Context, obj *model1.CoinbaseProductOrderBook) ([]*model1.CoinbaseProductOrderBookBidAsk, error) {
+	return obj.Bids.Slice(), nil
+}
+
+func (r *coinbaseProductOrderBookResolver) Asks(ctx context.Context, obj *model1.CoinbaseProductOrderBook) ([]*model1.CoinbaseProductOrderBookBidAsk, error) {
+	return obj.Asks.Slice(), nil
+}
+
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
 	panic(fmt.Errorf("not implemented"))
 }
@@ -19,6 +27,11 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) 
 func (r *queryResolver) CoinbaseAccountHistory(ctx context.Context, id string, before *int, after *int, startDate *string, endDate *string, limit *int) ([]*model1.CoinbaseAccountHistory, error) {
 	private := coinbase.NewPrivate()
 	return private.AccountHistory(id, before, after, startDate, endDate, limit)
+}
+
+func (r *queryResolver) CoinbaseAccountHold(ctx context.Context, id string, before *int, after *int, limit *int) ([]*model1.CoinbaseAccountHold, error) {
+	private := coinbase.NewPrivate()
+	return private.AccountHolds(id, before, after, limit)
 }
 
 func (r *queryResolver) CoinbaseAccount(ctx context.Context, id string) (*model1.CoinbaseAccount, error) {
@@ -81,11 +94,17 @@ func (r *queryResolver) CoinbaseTime(ctx context.Context, test *string) (*model1
 	return md.Time()
 }
 
+// CoinbaseProductOrderBook returns generated.CoinbaseProductOrderBookResolver implementation.
+func (r *Resolver) CoinbaseProductOrderBook() generated.CoinbaseProductOrderBookResolver {
+	return &coinbaseProductOrderBookResolver{r}
+}
+
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
+type coinbaseProductOrderBookResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }

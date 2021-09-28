@@ -58,6 +58,8 @@ models:
     model: cql/model.CoinbaseAccountHistoryDetails
   CoinbaseAccountHistory:
     model: cql/model.CoinbaseAccountHistory
+  CoinbaseAccountHold:
+    model: cql/model.CoinbaseAccountHold
   CoinbaseAccount:
     model: cql/model.CoinbaseAccount
   CoinbaseCurrency:
