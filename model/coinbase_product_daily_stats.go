@@ -1,10 +1,5 @@
 package model
 
-import (
-	"encoding/json"
-	"strconv"
-)
-
 // CoinbaseProductDailyStats encapsulates 24 hr stats for the product
 type CoinbaseProductDailyStats struct {
 	// Open is in quote currency units; product={base}-{quote}
@@ -23,57 +18,32 @@ type CoinbaseProductDailyStats struct {
 // UnmarshalJSON is an override required to parst strings from coinbases api
 // into floats, specifically min_size and max_precision
 func (stats *CoinbaseProductDailyStats) UnmarshalJSON(d []byte) error {
-	data := make(umap)
-	if err := json.Unmarshal(d, &data); err != nil {
-		return err
-	}
-
-	var err error
-
-	err = data.unmarshal("open", func(v interface{}) error {
-		stats.Open, err = strconv.ParseFloat(v.(string), 64)
-		return err
-	})
+	data, err := newUmap(d)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshal("high", func(v interface{}) error {
-		stats.High, err = strconv.ParseFloat(v.(string), 64)
-		return err
-	})
-	if err != nil {
+	if err := data.unmarshalFloatFromString("open", &stats.Open); err != nil {
 		return err
 	}
 
-	err = data.unmarshal("low", func(v interface{}) error {
-		stats.Low, err = strconv.ParseFloat(v.(string), 64)
-		return err
-	})
-	if err != nil {
+	if err := data.unmarshalFloatFromString("high", &stats.High); err != nil {
 		return err
 	}
 
-	err = data.unmarshal("volume", func(v interface{}) error {
-		stats.Volume, err = strconv.ParseFloat(v.(string), 64)
-		return err
-	})
-	if err != nil {
+	if err := data.unmarshalFloatFromString("low", &stats.Low); err != nil {
 		return err
 	}
 
-	err = data.unmarshal("last", func(v interface{}) error {
-		stats.Last, err = strconv.ParseFloat(v.(string), 64)
-		return err
-	})
-	if err != nil {
+	if err := data.unmarshalFloatFromString("volume", &stats.Volume); err != nil {
 		return err
 	}
 
-	err = data.unmarshal("volume_30day", func(v interface{}) error {
-		stats.Volume30Day, err = strconv.ParseFloat(v.(string), 64)
+	if err := data.unmarshalFloatFromString("last", &stats.Last); err != nil {
 		return err
-	})
+	}
+
+	err = data.unmarshalFloatFromString("volume_30day", &stats.Volume30Day)
 	if err != nil {
 		return err
 	}

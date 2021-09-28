@@ -1,10 +1,5 @@
 package model
 
-import (
-	"encoding/json"
-	"strconv"
-)
-
 // CoinbaseAccount encapsulates information for a coinbase account
 type CoinbaseAccount struct {
 	ID             string  `json:"id"`
@@ -19,56 +14,29 @@ type CoinbaseAccount struct {
 // UnmarshalJSON is an override required to parst strings from coinbases api
 // into floats, specifically min_size and max_precision
 func (account *CoinbaseAccount) UnmarshalJSON(d []byte) error {
-	data := make(umap)
-	if err := json.Unmarshal(d, &data); err != nil {
-		return err
-	}
-
-	var err error
-
-	err = data.unmarshal("id", func(v interface{}) error {
-		account.ID = v.(string)
-		return nil
-	})
-
-	err = data.unmarshal("currency", func(v interface{}) error {
-		account.Currency = v.(string)
-		return nil
-	})
-
-	err = data.unmarshal("balance", func(v interface{}) error {
-		account.Balance, err = strconv.ParseFloat(v.(string), 64)
-		return err
-	})
+	data, err := newUmap(d)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshal("available", func(v interface{}) error {
-		account.Available, err = strconv.ParseFloat(v.(string), 64)
-		return err
-	})
+	data.unmarshalString("id", &account.ID)
+	data.unmarshalString("currency", &account.Currency)
+	data.unmarshalString("profile_id", &account.ProfileID)
+	data.unmarshalBool("trading_enabled", &account.TradingEnabled)
+
+	err = data.unmarshalFloatFromString("balance", &account.Balance)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshal("hold", func(v interface{}) error {
-		account.Hold, err = strconv.ParseFloat(v.(string), 64)
-		return err
-	})
+	err = data.unmarshalFloatFromString("available", &account.Available)
 	if err != nil {
 		return err
 	}
-
-	err = data.unmarshal("profile_id", func(v interface{}) error {
-		account.ProfileID = v.(string)
-		return nil
-	})
-
-	err = data.unmarshal("trading_enabled", func(v interface{}) error {
-		account.TradingEnabled = v.(bool)
-		return nil
-	})
+	err = data.unmarshalFloatFromString("hold", &account.Hold)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

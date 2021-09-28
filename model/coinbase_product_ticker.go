@@ -1,8 +1,6 @@
 package model
 
 import (
-	"encoding/json"
-	"strconv"
 	"time"
 )
 
@@ -25,65 +23,37 @@ type CoinbaseProductTicker struct {
 // UnmarshalJSON is an override required to parst strings from coinbases api
 // into floats, specifically min_size and max_precision
 func (ticker *CoinbaseProductTicker) UnmarshalJSON(d []byte) error {
-	data := make(umap)
-	if err := json.Unmarshal(d, &data); err != nil {
-		return err
-	}
-
-	var err error
-
-	data.unmarshal("trade_id", func(v interface{}) error {
-		ticker.TradeID = int(v.(float64))
-		return nil
-	})
-
-	err = data.unmarshal("price", func(v interface{}) error {
-		ticker.Price, err = strconv.ParseFloat(v.(string), 64)
-		return err
-	})
+	data, err := newUmap(d)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshal("size", func(v interface{}) error {
-		ticker.Size, err = strconv.ParseFloat(v.(string), 64)
+	if err := data.unmarshalInt("trade_id", &ticker.TradeID); err != nil {
 		return err
-	})
+	}
+
+	if err := data.unmarshalFloatFromString("price", &ticker.Price); err != nil {
+		return err
+	}
+
+	if err := data.unmarshalFloatFromString("size", &ticker.Size); err != nil {
+		return err
+	}
+
+	if err := data.unmarshalFloatFromString("bid", &ticker.Bid); err != nil {
+		return err
+	}
+
+	if err := data.unmarshalFloatFromString("ask", &ticker.Ask); err != nil {
+		return err
+	}
+
+	err = data.unmarshalFloatFromString("volume", &ticker.Volume)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshal("bid", func(v interface{}) error {
-		ticker.Bid, err = strconv.ParseFloat(v.(string), 64)
-		return err
-	})
-	if err != nil {
-		return err
-	}
-
-	err = data.unmarshal("ask", func(v interface{}) error {
-		ticker.Ask, err = strconv.ParseFloat(v.(string), 64)
-		return err
-	})
-	if err != nil {
-		return err
-	}
-
-	err = data.unmarshal("volume", func(v interface{}) error {
-		ticker.Volume, err = strconv.ParseFloat(v.(string), 64)
-		return err
-	})
-	if err != nil {
-		return err
-	}
-
-	err = data.unmarshal("time", func(v interface{}) error {
-		layOut := "2006-01-02T15:04:05.999999999Z07:00"
-		ticker.Time, err = time.Parse(layOut, v.(string))
-		ticker.Time = ticker.Time.UTC()
-		return err
-	})
-	if err != nil {
+	if err := data.unmarshalTime("time", &ticker.Time); err != nil {
 		return err
 	}
 

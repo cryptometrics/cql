@@ -1,8 +1,6 @@
 package model
 
 import (
-	"encoding/json"
-	"strconv"
 	"time"
 )
 
@@ -22,49 +20,30 @@ type CoinbaseAccountHistory struct {
 // UnmarshalJSON is an override required to parst strings from coinbases api
 // into floats, specifically min_size and max_precision
 func (history *CoinbaseAccountHistory) UnmarshalJSON(d []byte) error {
-	data := make(umap)
-	if err := json.Unmarshal(d, &data); err != nil {
+	data, err := newUmap(d)
+	if err != nil {
 		return err
 	}
 
-	var err error
+	data.unmarshalString("id", &history.ID)
+	data.unmarshalString("type", &history.Type)
 
-	data.unmarshal("id", func(v interface{}) error {
-		history.ID = v.(string)
-		return nil
-	})
+	if err := data.unmarshalTime("created_at", &history.CreatedAt); err != nil {
+		return err
+	}
 
-	data.unmarshal("created_at", func(v interface{}) error {
-		layOut := "2006-01-02T15:04:05.999999999Z07:00"
-		history.CreatedAt, err = time.Parse(layOut, v.(string))
-		history.CreatedAt = history.CreatedAt.UTC()
-		return nil
-	})
-
-	data.unmarshal("amount", func(v interface{}) error {
-		history.Amount, err = strconv.ParseFloat(v.(string), 64)
-		return nil
-	})
-
-	data.unmarshal("balance", func(v interface{}) error {
-		history.Balance, err = strconv.ParseFloat(v.(string), 64)
-		return nil
-	})
-
-	data.unmarshal("type", func(v interface{}) error {
-		history.Type = v.(string)
-		return nil
-	})
-
-	err = data.unmarshal("details", func(v interface{}) error {
-		history.Details = CoinbaseAccountHistoryDetails{}
-		jsonString, _ := json.Marshal(data["details"])
-		if err := json.Unmarshal(jsonString, &history.Details); err != nil {
-			return err
-		}
-		return nil
-	})
+	err = data.unmarshalFloatFromString("amount", &history.Amount)
 	if err != nil {
+		return err
+	}
+
+	err = data.unmarshalFloatFromString("balance", &history.Balance)
+	if err != nil {
+		return err
+	}
+
+	history.Details = CoinbaseAccountHistoryDetails{}
+	if err := data.unmarshalStruct("details", &history.Details); err != nil {
 		return err
 	}
 

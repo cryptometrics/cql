@@ -1,10 +1,5 @@
 package model
 
-import (
-	"encoding/json"
-	"strconv"
-)
-
 // CoinbaseProduct returns the market data for a specific currency pair
 //
 // Only a maximum of one of trading_disabled, cancel_only, post_only,
@@ -66,118 +61,53 @@ type CoinbaseProduct struct {
 // UnmarshalJSON is an override required to parst strings from coinbases api
 // into floats
 func (product *CoinbaseProduct) UnmarshalJSON(d []byte) error {
-	data := make(umap)
-	if err := json.Unmarshal(d, &data); err != nil {
-		return err
-	}
-
-	var err error
-
-	data.unmarshal("id", func(v interface{}) error {
-		product.ID = v.(string)
-		return nil
-	})
-
-	data.unmarshal("display_name", func(v interface{}) error {
-		product.DisplayName = v.(string)
-		return nil
-	})
-
-	data.unmarshal("base_currency", func(v interface{}) error {
-		product.BaseCurrency = v.(string)
-		return nil
-	})
-
-	data.unmarshal("quote_currency", func(v interface{}) error {
-		product.QuoteCurrency = v.(string)
-		return nil
-	})
-
-	err = data.unmarshal("base_increment", func(v interface{}) error {
-		strFloat := v.(string)
-		product.BaseIncrement, err = strconv.ParseFloat(strFloat, 64)
-		return err
-	})
+	data, err := newUmap(d)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshal("quote_increment", func(v interface{}) error {
-		strFloat := v.(string)
-		product.QuoteIncrement, err = strconv.ParseFloat(strFloat, 64)
-		return err
-	})
+	data.unmarshalString("id", &product.ID)
+	data.unmarshalString("display_name", &product.DisplayName)
+	data.unmarshalString("base_currency", &product.BaseCurrency)
+	data.unmarshalString("quote_currency", &product.QuoteCurrency)
+	data.unmarshalString("status", &product.Status)
+	data.unmarshalString("status_message", &product.StatusMessage)
+	data.unmarshalBool("cancel_only", &product.CancelOnly)
+	data.unmarshalBool("limit_only", &product.LimitOnly)
+	data.unmarshalBool("post_only", &product.PostOnly)
+	data.unmarshalBool("trading_disabled", &product.TradingDisabled)
+	data.unmarshalBool("fx_stablecoin", &product.FXStablecoin)
+
+	err = data.unmarshalFloatFromString("base_increment", &product.BaseIncrement)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshal("base_min_size", func(v interface{}) error {
-		strFloat := v.(string)
-		product.BaseMinSize, err = strconv.ParseFloat(strFloat, 64)
-		return err
-	})
+	err = data.unmarshalFloatFromString("quote_increment", &product.QuoteIncrement)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshal("base_max_size", func(v interface{}) error {
-		product.BaseMaxSize, err = strconv.ParseFloat(v.(string), 64)
-		return err
-	})
+	err = data.unmarshalFloatFromString("base_min_size", &product.BaseMinSize)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshal("min_market_funds", func(v interface{}) error {
-		product.MinMarketFunds, err = strconv.ParseFloat(v.(string), 64)
-		return nil
-	})
+	err = data.unmarshalFloatFromString("base_max_size", &product.BaseMaxSize)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshal("max_market_funds", func(v interface{}) error {
-		product.MaxMarketFunds, err = strconv.ParseFloat(v.(string), 64)
-		return nil
-	})
+	err = data.unmarshalFloatFromString("min_market_funds",
+		&product.MinMarketFunds)
 	if err != nil {
 		return err
 	}
 
-	data.unmarshal("status", func(v interface{}) error {
-		product.Status = v.(string)
-		return nil
-	})
-
-	data.unmarshal("status_message", func(v interface{}) error {
-		product.StatusMessage = v.(string)
-		return nil
-	})
-
-	data.unmarshal("cancel_only", func(v interface{}) error {
-		product.CancelOnly = v.(bool)
-		return nil
-	})
-
-	data.unmarshal("limit_only", func(v interface{}) error {
-		product.LimitOnly = v.(bool)
-		return nil
-	})
-
-	data.unmarshal("post_only", func(v interface{}) error {
-		product.PostOnly = v.(bool)
-		return nil
-	})
-
-	data.unmarshal("trading_disabled", func(v interface{}) error {
-		product.TradingDisabled = v.(bool)
-		return nil
-	})
-
-	data.unmarshal("fx_stablecoin", func(v interface{}) error {
-		product.FXStablecoin = v.(bool)
-		return nil
-	})
-
+	err = data.unmarshalFloatFromString("max_market_funds",
+		&product.MaxMarketFunds)
+	if err != nil {
+		return err
+	}
 	return nil
 }

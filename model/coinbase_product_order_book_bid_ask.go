@@ -1,9 +1,7 @@
 package model
 
 import (
-	"encoding/json"
 	"fmt"
-	"strconv"
 )
 
 // CoinbaseProductOrderBookBidAsk is the object encapsulation of the a list of
@@ -15,34 +13,37 @@ type CoinbaseProductOrderBookBidAsk struct {
 	OrderID   *string `json:"order_id"`
 }
 
+type CoinbaseProductOrderBookBidAsks []CoinbaseProductOrderBookBidAsk
+
+func (quotes *CoinbaseProductOrderBookBidAsks) append(v interface{}) {
+	*quotes = append(*quotes, *v.(*CoinbaseProductOrderBookBidAsk))
+}
+
 // UnmarshalJSON is an override required to parst strings from coinbases api
 // into floats, specifically min_size and max_precision
 func (quote *CoinbaseProductOrderBookBidAsk) UnmarshalJSON(d []byte) error {
-	m := []interface{}{}
-	if err := json.Unmarshal(d, &m); err != nil {
-		return err
-	}
-
-	var err error
-
-	quote.Price, err = strconv.ParseFloat(m[0].(string), 64)
+	data, err := newUslice(d)
 	if err != nil {
 		return err
 	}
 
-	quote.Size, err = strconv.ParseFloat(m[1].(string), 64)
-	if err != nil {
+	if err := data.unmarshalFloatFromString(0, &quote.Price); err != nil {
 		return err
 	}
 
-	switch m[2].(type) {
+	if err := data.unmarshalFloatFromString(1, &quote.Size); err != nil {
+		return err
+	}
+
+	switch data[2].(type) {
 	case string:
-		quote.OrderID = String(m[2].(string))
+		quote.OrderID = String(data[2].(string))
 	case float64:
-		quote.NumOrders = Int(int(m[2].(float64)))
+		quote.NumOrders = Int(int(data[2].(float64)))
 	default:
 		msg := "unknown type unmarshalling CoinbaseProductOrderBookBidAsk"
 		return fmt.Errorf(msg)
 	}
+
 	return nil
 }

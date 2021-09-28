@@ -1,8 +1,6 @@
 package model
 
 import (
-	"encoding/json"
-	"strconv"
 	"time"
 )
 
@@ -23,49 +21,23 @@ type CoinbaseProductTrade struct {
 // UnmarshalJSON is an override required to parst strings from coinbases api
 // into floats, specifically min_size and max_precision
 func (trade *CoinbaseProductTrade) UnmarshalJSON(d []byte) error {
-	data := make(umap)
-	if err := json.Unmarshal(d, &data); err != nil {
-		return err
-	}
-
-	var err error
-
-	data.unmarshal("trade_id", func(v interface{}) error {
-		trade.TradeID = int(v.(float64))
-		return nil
-	})
-
-	err = data.unmarshal("price", func(v interface{}) error {
-		trade.Price, err = strconv.ParseFloat(v.(string), 64)
-		return err
-	})
+	data, err := newUmap(d)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshal("size", func(v interface{}) error {
-		trade.Size, err = strconv.ParseFloat(v.(string), 64)
-		return err
-	})
-	if err != nil {
+	data.unmarshalInt("trade_id", &trade.TradeID)
+	data.unmarshalString("side", &trade.Side)
+
+	if err := data.unmarshalFloatFromString("price", &trade.Price); err != nil {
 		return err
 	}
 
-	err = data.unmarshal("side", func(v interface{}) error {
-		trade.Side = v.(string)
-		return nil
-	})
-	if err != nil {
+	if err := data.unmarshalFloatFromString("size", &trade.Size); err != nil {
 		return err
 	}
 
-	err = data.unmarshal("time", func(v interface{}) error {
-		layOut := "2006-01-02T15:04:05.999999999Z07:00"
-		trade.Time, err = time.Parse(layOut, v.(string))
-		trade.Time = trade.Time.UTC()
-		return err
-	})
-	if err != nil {
+	if err := data.unmarshalTime("time", &trade.Time); err != nil {
 		return err
 	}
 
