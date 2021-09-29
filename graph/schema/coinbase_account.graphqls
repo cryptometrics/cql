@@ -1,0 +1,12 @@
+"""
+CoinbaseAccount encapsulates information for a coinbase account
+"""
+type CoinbaseAccount {
+  id: String
+  currency: String
+  balance: Float
+  available: Float
+  hold: Float
+  profileID: String
+  tradingEnabled: Boolean
+}

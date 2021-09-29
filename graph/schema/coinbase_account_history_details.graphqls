@@ -1,0 +1,8 @@
+"""
+CoinbaseAccountHistoryDetails are the details for account history
+"""
+type CoinbaseAccountHistoryDetails {
+  orderID: String
+  tradeID: String
+  productID: String
+}

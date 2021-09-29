@@ -1,0 +1,11 @@
+"""
+CoinbaseTime encapsulates the coinbase API server time
+"""
+type CoinbaseTime {
+  iso: String
+
+  """
+  epoch represents decimal seconds since Unix Epoch
+  """
+  epoch: Float
+}

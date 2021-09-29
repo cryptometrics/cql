@@ -1,8 +1,8 @@
 # cql
 
-## Installation 
+## Installation
 
-To start the server run 
+To start the server run
 
 ```sh
 $ go run server.go
@@ -24,3 +24,8 @@ There may be cases where the json being returned by a service is in snake case, 
   <gql schema name>:
     model: cql/model.<go struct name>
 ```
+
+## Docs
+
+- [Coinbase Pro Asyncronous Websocket Client Documentation](https://readthedocs.org/projects/copra/downloads/pdf/latest/)
+- [Coinbase Pro API Referenc](https://docs.pro.coinbase.com/)

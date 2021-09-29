@@ -36,6 +36,26 @@ func (m umap) unmarshalBool(name string, v *bool) error {
 	return nil
 }
 
+func (m umap) unmarshalOrderSide(name string, v *OrderSide) error {
+	*v = GetOrderSide(m[name].(string))
+	return nil
+}
+
+func (m umap) unmarshalOrderSTP(name string, v *OrderSTP) error {
+	*v = GetOrderSTP(m[name].(string))
+	return nil
+}
+
+func (m umap) unmarshalOrderTimeInForce(name string, v *OrderTimeInForce) error {
+	*v = GetOrderTimeInForce(m[name].(string))
+	return nil
+}
+
+func (m umap) unmarshalOrderType(name string, v *OrderType) error {
+	*v = GetOrderType(m[name].(string))
+	return nil
+}
+
 func (m umap) unmarshalFloatFromString(name string, v *float64) (err error) {
 	*v, err = strconv.ParseFloat(m[name].(string), 64)
 	return err
@@ -43,6 +63,11 @@ func (m umap) unmarshalFloatFromString(name string, v *float64) (err error) {
 
 func (m umap) unmarshalInt(name string, v *int) error {
 	*v = int(m[name].(float64))
+	return nil
+}
+
+func (m umap) unmarshalLocation(name string, v *time.Location) error {
+	*v = *time.FixedZone(m[name].(string), 0)
 	return nil
 }
 

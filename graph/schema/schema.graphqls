@@ -1,0 +1,146 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+type Query {
+  coinbaseAccountHistory(
+    """
+    Returns list of ledger entries from this account id.
+    """
+    id: String!
+
+    """
+    Parameter requires a positive integer. If set, returns ledger entries before
+    the specified integer.
+    """
+    before: Int
+
+    """
+    Parameter requires a positive integer. If set, returns ledger entries after
+    the specified integer.
+    """
+    after: Int
+
+    """
+    If set, returns ledger entries created after the start_date timestamp,
+    sorted by newest creation date. When combined with end_date, returns ledger
+    entries in the specified time range.
+    """
+    startDate: String
+
+    """
+    If set, returns ledger entries created before the end_date timestamp, sorted
+    by newest creation date.
+    """
+    endDate: String
+
+    """
+    Number of results per request. Maximum 1000. (default 1000)
+    """
+    limit: Int
+  ): [CoinbaseAccountHistory]
+
+  """
+  List holds of an account that belong to the same profile as the API key. Holds
+  are placed on an account for any active orders or pending withdraw requests.
+  As an order is filled, the hold amount is updated. If an order is canceled,
+  any remaining hold is removed. For a withdraw, once it is completed, the hold
+  is removed
+  """
+  coinbaseAccountHold(
+    id: String!
+
+    """
+    Pagination parameter that requires a positive integer. If set, returns a
+    list of holds before the specified integer.
+    """
+    before: Int
+
+    """
+    Pagination parameter that requires a positive integer. If set, returns a
+    list of holds after the specified integer.
+    """
+    after: Int
+
+    """
+    Number of results per request. Maximum 1000. (default 1000)
+    """
+    limit: Int
+  ): [CoinbaseAccountHold]
+
+  coinbaseAccount(id: String!): CoinbaseAccount
+  coinbaseAccounts(test: String): [CoinbaseAccount]
+  coinbaseCurrencies(test: String): [CoinbaseCurrency]
+  coinbaseCurrency(id: String!): CoinbaseCurrency
+  coinbaseProducts(test: String): [CoinbaseProduct]
+
+  coinbaseProduct(
+    """
+    id is the product of the form {baseCurrency}-{quoteCurrency}
+    """
+    id: String!
+  ): CoinbaseProduct
+
+  coinbaseProductDailyStats(
+    """
+    id is the product of the form {baseCurrency}-{quoteCurrency}
+    """
+    id: String!
+  ): CoinbaseProductDailyStats
+
+  coinbaseProductHistoricalRate(
+    """
+    id is the product of the form {baseCurrency}-{quoteCurrency}
+    """
+    id: String!
+
+    """
+    start time in ISO 8601
+    """
+    start: String!
+
+    """
+    end time in ISO 8601
+    """
+    end: String!
+
+    """
+    granularity must be one of the following values:
+
+    	{60, 300, 900, 3600, 21600, 86400}
+
+    Otherwise, your request will be rejected. These values correspond to
+    timeslices representing one minute, five minutes, fifteen minutes, one hour,
+    six hours, and one day, respectively.
+    """
+    granularity: Int!
+  ): [CoinbaseProductHistoricalRate]
+
+  coinbaseProductOrderBook(
+    """
+    id is the product of the form {baseCurrency}-{quoteCurrency}
+    """
+    id: String!
+    level: String!
+  ): CoinbaseProductOrderBook
+
+  coinbaseProductTicker(
+    """
+    id is the product of the form {baseCurrency}-{quoteCurrency}
+    """
+    id: String!
+  ): CoinbaseProductTicker
+
+  coinbaseProductTrade(
+    """
+    id is the product of the form {baseCurrency}-{quoteCurrency}
+    """
+    id: String!
+  ): [CoinbaseProductTrade]
+
+  coinbaseTime(test: String): CoinbaseTime
+}
+
+type Mutations {
+  test(t: String): [CoinbaseTime]
+}

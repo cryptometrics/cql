@@ -1,0 +1,22 @@
+"""
+CoinbaseProductDailyStats encapsulates 24 hr stats for the product
+"""
+type CoinbaseProductDailyStats {
+  """
+  open is in quote currency units; product={base}-{quote}
+  """
+  open: Float
+
+  """
+  high is in quote currency units; product={base}-{quote}
+  """
+  high: Float
+  low: Float
+
+  """
+  Volume is in base currency units; product={base}-{quote}
+  """
+  volume: Float
+  last: Float
+  volume30Day: Float
+}

@@ -215,6 +215,64 @@ func TestCoinbaseCurrencyUnmarshalJSON(t *testing.T) {
 	})
 }
 
+func TestCoinbaseOrderJSON(t *testing.T) {
+	g := Goblin(t)
+	g.Describe("CoinbaseOrder#UnmarshalJSON", func() {
+		test := func(desc string, buf []byte, expected CoinbaseOrder) {
+			g.It(desc, func() {
+				v := CoinbaseOrder{}
+				if err := json.Unmarshal(buf, &v); err != nil {
+					panic(err)
+				}
+				g.Assert(v).Equal(expected)
+			})
+		}
+		var buf []byte
+		var expected CoinbaseOrder
+
+		buf = []byte(`{
+			"id": "d0c5340b-6d6c-49d9-b567-48c4bfca13d2",
+			"price": "0.10000000",
+			"size": "0.01000000",
+			"product_id": "BTC-USD",
+			"side": "buy",
+			"stp": "dc",
+			"type": "limit",
+			"time_in_force": "GTC",
+			"post_only": false,
+			"created_at": "2016-12-08T20:02:28.53864Z",
+			"fill_fees": "0.0000000000000000",
+			"filled_size": "0.00000000",
+			"executed_value": "0.0000000000000000",
+			"status": "pending",
+			"settled": false
+		}`)
+
+		expected = CoinbaseOrder{
+			ID:            "d0c5340b-6d6c-49d9-b567-48c4bfca13d2",
+			Price:         0.10000000,
+			Size:          0.01000000,
+			ProductID:     "BTC-USD",
+			Side:          OrderSideBuy,
+			STP:           OrderSTP_DC,
+			Type:          OrderTypeLimit,
+			TimeInForce:   OrderTimeInForceGTC,
+			PostOnly:      false,
+			FillFees:      0.0000000000000000,
+			FilledSize:    0.00000000,
+			ExecutedValue: 0.0000000000000000,
+			Status:        "pending",
+			Settled:       false,
+		}
+		var err error
+		expected.CreatedAt, err = time.Parse(timeLayout, "2016-12-08T20:02:28.53864Z")
+		if err != nil {
+			panic(err)
+		}
+		test("all fields", buf, expected)
+	})
+}
+
 func TestCoinbaseProductDailyStatsUnmarshalJSON(t *testing.T) {
 	g := Goblin(t)
 	g.Describe("CoinbaseProductDailyStats#UnmarshalJSON", func() {

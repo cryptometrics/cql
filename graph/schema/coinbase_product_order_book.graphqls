@@ -1,0 +1,25 @@
+"""
+CoinbaseProductOrderBook holds bid/ask data as a list of open orders for a
+product. The amount of detail shown can be customized with the level
+parameter
+"""
+type CoinbaseProductOrderBook {
+  """
+  sequence represents the nth iterration of the order book update
+  """
+  sequence: Int
+
+  """
+  bids are the object encapsulations of the list of data returned by coinbase.
+  More specifically, a bid price refer to the highest price that traders are
+  willing to pay for a product
+  """
+  bids: [CoinbaseProductOrderBookBidAsk]
+
+  """
+  asks are the object encapsulations of the list of data returned by coinbase.
+  More specifically, ab ask price refers to the lowest price that the owners of
+  that product are willing to sell it for
+  """
+  asks: [CoinbaseProductOrderBookBidAsk]
+}
