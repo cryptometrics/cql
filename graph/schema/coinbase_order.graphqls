@@ -1,0 +1,87 @@
+"""
+CoinbaseOrder is the response to an order request in the coinbase API
+"""
+type CoinbaseOrder {
+  id: String
+  price: Float
+  size: Float
+  productID: String
+  side: OrderSide
+  stp: OrderSTP
+  type: OrderType
+  timeInForce: TimeInForce
+  postOnly: Boolean
+  createdAt: Time
+  fillFees: Float
+  filledSize: Float
+  executedValue: Float
+  status: String
+  settled: Boolean
+}
+
+input CoinbaseOrderInputBase {
+  """
+  buy or sell
+  """
+  side: OrderSide!
+
+  """
+  A valid product id, these are of the form {baseCurrency}-{quoteCurrency}, e.g
+  BTC-USD
+  """
+  productID: String!
+
+  """
+  [optional] Order ID selected by you to identify your order
+  """
+  clientOID: String
+
+  """
+  [optional] limit or market (default is limit)
+  """
+  type: OrderType
+
+  """
+  [optional] Self-trade prevention flag
+  """
+  stp: OrderSTP
+
+  """
+  Either loss or entry. Requires stop_price to be defined.
+  """
+  stop: OrderStop
+
+  """
+  [optional] Only if stop is defined. Sets trigger price for stop order.
+  """
+  stopPrice: String
+}
+
+input CoinbaseLimitOrderInput {
+  base: CoinbaseOrderInputBase
+
+  """
+  price / asset
+  """
+  price: Float!
+
+  """
+  Amount of base currency to buy or sell
+  """
+  size: Float!
+
+  """
+  [optional] GTC, GTT, IOC, or FOK (default is GTC)
+  """
+  timeInForce: TimeInForce
+
+  """
+  [optional]* min, hour, day
+  """
+  cancelAfter: OrderCancelTime
+
+  """
+  [optional]** Post only flag
+  """
+  postOnly: Boolean
+}

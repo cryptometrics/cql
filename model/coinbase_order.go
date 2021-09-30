@@ -1,30 +1,27 @@
 package model
 
-import "time"
+import (
+	"cql/scalar"
+	"time"
+)
 
-// CoinbaseOrder is how you request an order.  You can place two types of orders:
-// limit and market. Orders can only be placed if your account has sufficient
-// funds. Each profile can have a maximum of 500 open orders on a product. Once
-// reached, the profile will not be able to place any new orders until the total
-// number of open orders is below 500. Once an order is placed, your account
-// funds will be put on hold for the duration of the order. How much and which
-// funds are put on hold depends on the order type and parameters specified
+// CoinbaseOrder is the response to an order request through the cb api.
 type CoinbaseOrder struct {
-	ID            string           `json:"id"`
-	Price         float64          `json:"price"`
-	Size          float64          `json:"size"`
-	ProductID     string           `json:"product_id"`
-	Side          OrderSide        `json:"side"`
-	STP           OrderSTP         `json:"stp"`
-	Type          OrderType        `json:"type"`
-	TimeInForce   OrderTimeInForce `json:"time_in_force"`
-	PostOnly      bool             `json:"post_only"`
-	CreatedAt     time.Time        `json:"created_at"`
-	FillFees      float64          `json:"fill_fees"`
-	FilledSize    float64          `json:"filled_size"`
-	ExecutedValue float64          `json:"executed_value"`
-	Status        string           `json:"status"`
-	Settled       bool             `json:"settled"`
+	ID            string             `json:"id"`
+	Price         float64            `json:"price"`
+	Size          float64            `json:"size"`
+	ProductID     string             `json:"product_id"`
+	Side          scalar.OrderSide   `json:"side"`
+	STP           scalar.OrderSTP    `json:"stp"`
+	Type          scalar.OrderType   `json:"type"`
+	TimeInForce   scalar.TimeInForce `json:"time_in_force"`
+	PostOnly      bool               `json:"post_only"`
+	CreatedAt     time.Time          `json:"created_at"`
+	FillFees      float64            `json:"fill_fees"`
+	FilledSize    float64            `json:"filled_size"`
+	ExecutedValue float64            `json:"executed_value"`
+	Status        string             `json:"status"`
+	Settled       bool               `json:"settled"`
 }
 
 // UnmarshalJSON is an override required to parst strings from coinbases api

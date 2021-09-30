@@ -1,6 +1,7 @@
 package model
 
 import (
+	"cql/scalar"
 	"encoding/json"
 	"strconv"
 	"time"
@@ -36,23 +37,23 @@ func (m umap) unmarshalBool(name string, v *bool) error {
 	return nil
 }
 
-func (m umap) unmarshalOrderSide(name string, v *OrderSide) error {
-	*v = GetOrderSide(m[name].(string))
+func (m umap) unmarshalOrderSide(name string, v *scalar.OrderSide) error {
+	*v = scalar.OrderSide(m[name].(string))
 	return nil
 }
 
-func (m umap) unmarshalOrderSTP(name string, v *OrderSTP) error {
-	*v = GetOrderSTP(m[name].(string))
+func (m umap) unmarshalOrderSTP(name string, v *scalar.OrderSTP) error {
+	*v = scalar.OrderSTP((m[name].(string)))
 	return nil
 }
 
-func (m umap) unmarshalOrderTimeInForce(name string, v *OrderTimeInForce) error {
-	*v = GetOrderTimeInForce(m[name].(string))
+func (m umap) unmarshalOrderTimeInForce(name string, v *scalar.TimeInForce) error {
+	*v = scalar.TimeInForce(m[name].(string))
 	return nil
 }
 
-func (m umap) unmarshalOrderType(name string, v *OrderType) error {
-	*v = GetOrderType(m[name].(string))
+func (m umap) unmarshalOrderType(name string, v *scalar.OrderType) error {
+	*v = scalar.OrderType(m[name].(string))
 	return nil
 }
 

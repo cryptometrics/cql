@@ -38,14 +38,14 @@ func validateResponse(res *http.Response) (err error) {
 }
 
 // fetch uses a client connector and an endpiont to fetch data from the client
-func (conn Connector) fetch(endpoint Endpoint, endpointArgs ...*string) (*http.Response, error) {
+func (conn Connector) fetch(endpoint Endpoint, args EndpointArgs) (*http.Response, error) {
 	c, err := conn()
 	if err != nil {
 		return nil, err
 	}
 	c.Connect()
-	GET.LogInfo(c, endpoint, endpointArgs...)
-	res, err := c.Get(endpoint.Get(endpointArgs...))
+	GET.LogInfo(c, endpoint, args)
+	res, err := c.Get(endpoint.Get(args))
 	if err != nil {
 		return nil, err
 	}
@@ -62,8 +62,8 @@ func printBody(res *http.Response) {
 
 // decode will fetch the data and then try to decode it into v, which should be
 // the pointer to a struct
-func (conn Connector) Decode(v interface{}, endpoint Endpoint, endpointArgs ...*string) error {
-	res, err := conn.fetch(endpoint, endpointArgs...)
+func (conn Connector) Decode(v interface{}, endpoint Endpoint, args EndpointArgs) error {
+	res, err := conn.fetch(endpoint, args)
 	if err != nil {
 		return err
 	}

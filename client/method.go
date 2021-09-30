@@ -23,7 +23,7 @@ func (m Method) String() string {
 }
 
 // LogInfo will long that a request was made for a method
-func (m Method) LogInfo(c C, endpoint Endpoint, args ...*string) {
+func (m Method) LogInfo(c C, endpoint Endpoint, args EndpointArgs) {
 	logrus.Info(fmt.Sprintf("/%s (%s) %s", m.String(), c.Identifier(),
-		endpoint.Get(args...)))
+		endpoint.Get(args)))
 }

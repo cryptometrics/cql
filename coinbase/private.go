@@ -14,24 +14,38 @@ func NewPrivate() *Private {
 }
 
 func (p *Private) accountHistory(gen client.Connector, id string, before, after *int, startDate, endDate *string, limit *int) (m []*model.CoinbaseAccountHistory, err error) {
-	err = gen.Decode(&m, AccountHistoryEP, &id, IntString(before),
-		IntString(after), startDate, endDate, IntString(limit))
+	err = gen.Decode(&m, AccountHistoryEP, client.EndpointArgs{
+		"id":         &client.EndpointArg{PathParam: &id},
+		"before":     &client.EndpointArg{QueryParam: IntString(before)},
+		"after":      &client.EndpointArg{QueryParam: IntString(after)},
+		"start_date": &client.EndpointArg{QueryParam: startDate},
+		"end_date":   &client.EndpointArg{QueryParam: endDate},
+		"limit":      &client.EndpointArg{QueryParam: IntString(limit)}})
 	return
 }
 
 func (p *Private) accountHolds(gen client.Connector, id string, before, after, limit *int) (m []*model.CoinbaseAccountHold, err error) {
-	err = gen.Decode(&m, AccountHoldsEP, &id, IntString(before), IntString(after),
-		IntString(limit))
+	err = gen.Decode(&m, AccountHoldsEP, client.EndpointArgs{
+		"id":     &client.EndpointArg{PathParam: &id},
+		"before": &client.EndpointArg{QueryParam: IntString(before)},
+		"after":  &client.EndpointArg{QueryParam: IntString(after)},
+		"limit":  &client.EndpointArg{QueryParam: IntString(limit)}})
 	return
 }
 
 func (p *Private) account(gen client.Connector, id string) (m *model.CoinbaseAccount, err error) {
-	err = gen.Decode(&m, AccountEP, &id)
+	err = gen.Decode(&m, AccountEP, client.EndpointArgs{
+		"id": &client.EndpointArg{PathParam: &id}})
 	return
 }
 
 func (p *Private) accounts(gen client.Connector) (m []*model.CoinbaseAccount, err error) {
-	err = gen.Decode(&m, AccountsEP)
+	err = gen.Decode(&m, AccountsEP, nil)
+	return
+}
+
+func (p *Private) createLimitOrder(gen client.Connector, input *model.CoinbaseLimitOrderInput) (m *model.CoinbaseOrder, err error) {
+	// err = gen.Decode(&m, CreateOrderEP, input.Base.ClientOid, input.)
 	return
 }
 
@@ -68,4 +82,8 @@ func (p *Private) Account(id string) (*model.CoinbaseAccount, error) {
 // Accounts returns a list of trading accounts from the profile of the API key
 func (p *Private) Accounts() ([]*model.CoinbaseAccount, error) {
 	return p.accounts(newClient)
+}
+
+func (p *Private) CreateLimitOrder(input *model.CoinbaseLimitOrderInput) (*model.CoinbaseOrder, error) {
+	return p.createLimitOrder(newClient, input)
 }

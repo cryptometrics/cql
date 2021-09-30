@@ -1,6 +1,7 @@
 package model
 
 import (
+	"cql/scalar"
 	"encoding/json"
 	"testing"
 	"time"
@@ -236,7 +237,7 @@ func TestCoinbaseOrderJSON(t *testing.T) {
 			"size": "0.01000000",
 			"product_id": "BTC-USD",
 			"side": "buy",
-			"stp": "dc",
+			"stp": "cb",
 			"type": "limit",
 			"time_in_force": "GTC",
 			"post_only": false,
@@ -253,10 +254,10 @@ func TestCoinbaseOrderJSON(t *testing.T) {
 			Price:         0.10000000,
 			Size:          0.01000000,
 			ProductID:     "BTC-USD",
-			Side:          OrderSideBuy,
-			STP:           OrderSTP_DC,
-			Type:          OrderTypeLimit,
-			TimeInForce:   OrderTimeInForceGTC,
+			Side:          scalar.OrderSideBuy,
+			STP:           scalar.OrderSTP_CB,
+			Type:          scalar.OrderTypeLimit,
+			TimeInForce:   scalar.TimeInForceGTC,
 			PostOnly:      false,
 			FillFees:      0.0000000000000000,
 			FilledSize:    0.00000000,

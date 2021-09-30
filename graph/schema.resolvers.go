@@ -8,7 +8,12 @@ import (
 	"cql/coinbase"
 	"cql/graph/generated"
 	model1 "cql/model"
+	"fmt"
 )
+
+func (r *mutationResolver) CreateCoinbaseLimitOrder(ctx context.Context, input *model1.CoinbaseLimitOrderInput) (*model1.CoinbaseOrder, error) {
+	panic(fmt.Errorf("not implemented"))
+}
 
 func (r *queryResolver) CoinbaseAccountHistory(ctx context.Context, id string, before *int, after *int, startDate *string, endDate *string, limit *int) ([]*model1.CoinbaseAccountHistory, error) {
 	private := coinbase.NewPrivate()
@@ -80,7 +85,11 @@ func (r *queryResolver) CoinbaseTime(ctx context.Context, test *string) (*model1
 	return md.Time()
 }
 
+// Mutation returns generated.MutationResolver implementation.
+func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
+
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
+type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }

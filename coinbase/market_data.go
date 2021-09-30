@@ -14,52 +14,65 @@ func NewMarketData() *MarketData {
 }
 
 func (md *MarketData) currencies(gen client.Connector) (m []*model.CoinbaseCurrency, err error) {
-	err = gen.Decode(&m, CurrenciesEP)
+	err = gen.Decode(&m, CurrenciesEP, nil)
 	return
 }
 
 func (md *MarketData) currency(gen client.Connector, id string) (m *model.CoinbaseCurrency, err error) {
-	err = gen.Decode(&m, CurrencyEP, &id)
+	err = gen.Decode(&m, CurrencyEP, client.EndpointArgs{
+		"id": &client.EndpointArg{PathParam: &id}})
 	return
 }
 
 func (md *MarketData) products(gen client.Connector) (m []*model.CoinbaseProduct, err error) {
-	err = gen.Decode(&m, ProductsEP)
+	err = gen.Decode(&m, ProductsEP, nil)
 	return
 }
 
 func (md *MarketData) product(gen client.Connector, id string) (m *model.CoinbaseProduct, err error) {
-	err = gen.Decode(&m, ProductEP, &id)
+	err = gen.Decode(&m, ProductEP, client.EndpointArgs{
+		"id": &client.EndpointArg{PathParam: &id}})
 	return
 }
 
 func (md *MarketData) productDailyStats(gen client.Connector, id string) (m *model.CoinbaseProductDailyStats, err error) {
-	err = gen.Decode(&m, ProductDailyStatsEP, &id)
+	err = gen.Decode(&m, ProductDailyStatsEP, client.EndpointArgs{
+		"id": &client.EndpointArg{PathParam: &id}})
 	return
 }
 
 func (md *MarketData) productHistoricalRates(gen client.Connector, id, start, end string, granularity int) (m []*model.CoinbaseProductHistoricalRate, err error) {
-	err = gen.Decode(&m, ProductHistoricalRatesEP, &id, &start, &end, IntString(&granularity))
+	err = gen.Decode(&m, ProductHistoricalRatesEP, client.EndpointArgs{
+		"id":          &client.EndpointArg{PathParam: &id},
+		"start":       &client.EndpointArg{QueryParam: &start},
+		"end":         &client.EndpointArg{QueryParam: &end},
+		"granularity": &client.EndpointArg{QueryParam: IntString(&granularity)}})
 	return
 }
 
+// args["start"], args["end"], args["granularity"]
+
 func (md *MarketData) productOrderBook(gen client.Connector, id, level string) (m *model.CoinbaseProductOrderBook, err error) {
-	err = gen.Decode(&m, ProductOrderBookEP, &id, &level)
+	err = gen.Decode(&m, ProductOrderBookEP, client.EndpointArgs{
+		"id":    &client.EndpointArg{PathParam: &id},
+		"level": &client.EndpointArg{QueryParam: &level}})
 	return
 }
 
 func (md *MarketData) productTicker(gen client.Connector, id string) (m *model.CoinbaseProductTicker, err error) {
-	err = gen.Decode(&m, ProductTickerEP, &id)
+	err = gen.Decode(&m, ProductTickerEP, client.EndpointArgs{
+		"id": &client.EndpointArg{PathParam: &id}})
 	return
 }
 
 func (md *MarketData) productTrades(gen client.Connector, id string) (m []*model.CoinbaseProductTrade, err error) {
-	err = gen.Decode(&m, ProductTradesEP, &id)
+	err = gen.Decode(&m, ProductTradesEP, client.EndpointArgs{
+		"id": &client.EndpointArg{PathParam: &id}})
 	return
 }
 
 func (md *MarketData) time(gen client.Connector) (m *model.CoinbaseTime, err error) {
-	err = gen.Decode(&m, TimeEP)
+	err = gen.Decode(&m, TimeEP, nil)
 	return
 }
 

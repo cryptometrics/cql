@@ -1,1 +1,7 @@
+scalar OrderCancelTime
+scalar OrderSide
+scalar OrderStop
+scalar OrderSTP
+scalar OrderType
+scalar TimeInForce
 scalar Time
