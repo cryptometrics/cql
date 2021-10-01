@@ -63,9 +63,10 @@ func (endpoint Endpoint) Get(args client.EndpointArgs) string {
 			return fmt.Sprintf("%s/holds%s", AccountEP.Get(args), args.QueryPath())
 		},
 
-		// CreateOrderEP: func(args ...*string) string {
+		CreateOrderEP: func(args client.EndpointArgs) string {
+			return fmt.Sprintf("/orders%s", args.QueryPath())
 
-		// },
+		},
 
 		// List known currencies.
 		CurrenciesEP: func(_ client.EndpointArgs) string { return "/currencies" },

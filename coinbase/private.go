@@ -3,6 +3,8 @@ package coinbase
 import (
 	"cql/client"
 	"cql/model"
+	"cql/null"
+	"io"
 )
 
 type Private struct{}
@@ -14,38 +16,69 @@ func NewPrivate() *Private {
 }
 
 func (p *Private) accountHistory(gen client.Connector, id string, before, after *int, startDate, endDate *string, limit *int) (m []*model.CoinbaseAccountHistory, err error) {
-	err = gen.Decode(&m, AccountHistoryEP, client.EndpointArgs{
-		"id":         &client.EndpointArg{PathParam: &id},
-		"before":     &client.EndpointArg{QueryParam: IntString(before)},
-		"after":      &client.EndpointArg{QueryParam: IntString(after)},
-		"start_date": &client.EndpointArg{QueryParam: startDate},
-		"end_date":   &client.EndpointArg{QueryParam: endDate},
-		"limit":      &client.EndpointArg{QueryParam: IntString(limit)}})
+	err = gen.Decode(client.DecodeInput{
+		Method:   client.GET,
+		Endpoint: AccountHistoryEP,
+		EndpointArgs: client.EndpointArgs{
+			"id":         &client.EndpointArg{PathParam: &id},
+			"before":     &client.EndpointArg{QueryParam: IntPtrStringPtr(before)},
+			"after":      &client.EndpointArg{QueryParam: IntPtrStringPtr(after)},
+			"start_date": &client.EndpointArg{QueryParam: startDate},
+			"end_date":   &client.EndpointArg{QueryParam: endDate},
+			"limit":      &client.EndpointArg{QueryParam: IntPtrStringPtr(limit)}},
+	}, &m)
 	return
 }
 
 func (p *Private) accountHolds(gen client.Connector, id string, before, after, limit *int) (m []*model.CoinbaseAccountHold, err error) {
-	err = gen.Decode(&m, AccountHoldsEP, client.EndpointArgs{
-		"id":     &client.EndpointArg{PathParam: &id},
-		"before": &client.EndpointArg{QueryParam: IntString(before)},
-		"after":  &client.EndpointArg{QueryParam: IntString(after)},
-		"limit":  &client.EndpointArg{QueryParam: IntString(limit)}})
+	err = gen.Decode(client.DecodeInput{
+		Method:   client.GET,
+		Endpoint: AccountHoldsEP,
+		EndpointArgs: client.EndpointArgs{
+			"id":     &client.EndpointArg{PathParam: &id},
+			"before": &client.EndpointArg{QueryParam: IntPtrStringPtr(before)},
+			"after":  &client.EndpointArg{QueryParam: IntPtrStringPtr(after)},
+			"limit":  &client.EndpointArg{QueryParam: IntPtrStringPtr(limit)}},
+	}, &m)
 	return
 }
 
 func (p *Private) account(gen client.Connector, id string) (m *model.CoinbaseAccount, err error) {
-	err = gen.Decode(&m, AccountEP, client.EndpointArgs{
-		"id": &client.EndpointArg{PathParam: &id}})
+	err = gen.Decode(client.DecodeInput{
+		Method:   client.GET,
+		Endpoint: AccountEP,
+		EndpointArgs: client.EndpointArgs{
+			"id": &client.EndpointArg{PathParam: &id}},
+	}, &m)
 	return
 }
 
 func (p *Private) accounts(gen client.Connector) (m []*model.CoinbaseAccount, err error) {
-	err = gen.Decode(&m, AccountsEP, nil)
+	err = gen.Decode(client.DecodeInput{
+		Method: client.GET, Endpoint: AccountsEP}, &m)
 	return
 }
 
-func (p *Private) createLimitOrder(gen client.Connector, input *model.CoinbaseLimitOrderInput) (m *model.CoinbaseOrder, err error) {
-	// err = gen.Decode(&m, CreateOrderEP, input.Base.ClientOid, input.)
+func (p *Private) getLimitOrderBody(input *model.CoinbaseOrderInput) io.Reader {
+	return nil
+}
+
+func (p *Private) createLimitOrder(gen client.Connector, input *model.CoinbaseOrderInput) (m *model.CoinbaseOrder, err error) {
+	err = gen.Decode(client.DecodeInput{
+		Method:   client.POST,
+		Endpoint: CreateOrderEP,
+		Body: client.JSONBody(map[string]null.Interface{
+			"client_oid":    null.NewInterfaceString(input.ClientOid),
+			"type":          null.NewInterfaceString(StringStringPtr("limit")),
+			"side":          null.NewInterfaceString((*string)(&input.Side)),
+			"product_id":    null.NewInterfaceString(&input.ProductID),
+			"stp":           null.NewInterfaceString((*string)(input.Stp)),
+			"stop":          null.NewInterfaceString((*string)(input.Stop)),
+			"stop_price":    null.NewInterfaceString(input.StopPrice),
+			"price":         null.NewInterfaceFloat(&input.Price),
+			"size":          null.NewInterfaceFloat(&input.Size),
+			"time_in_force": null.NewInterfaceString((*string)(input.TimeInForce)),
+		})}, &m)
 	return
 }
 
@@ -84,6 +117,21 @@ func (p *Private) Accounts() ([]*model.CoinbaseAccount, error) {
 	return p.accounts(newClient)
 }
 
-func (p *Private) CreateLimitOrder(input *model.CoinbaseLimitOrderInput) (*model.CoinbaseOrder, error) {
+// CreateLimitOrder puts in a limit order, returning a CoinbaseOrder struct in
+// response.  Limit orders are both the default and basic order type. A limit
+// order requires specifying a price and size. The size is the number of base
+// currency to buy or sell, and the price is the price per base currency. The
+// limit order will be filled at the price specified or better. A sell order can
+// be filled at the specified price per base currency or a higher price per base
+// currency and a buy order can be filled at the specified price or a lower
+// price depending on market conditions. If market conditions cannot fill the
+// limit order immediately, then the limit order will become part of the open
+// order book until filled by another incoming order or canceled by the user.
+//
+// For limit buy orders, we will hold price x size x (1 + fee-percent) USD. For
+// sell orders, we will hold the number of base currency you wish to sell.
+// Actual fees are assessed at time of trade. If you cancel a partially filled
+// or unfilled order, any remaining funds will be released from hold.
+func (p *Private) CreateLimitOrder(input *model.CoinbaseOrderInput) (*model.CoinbaseOrder, error) {
 	return p.createLimitOrder(newClient, input)
 }

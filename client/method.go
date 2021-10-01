@@ -13,17 +13,19 @@ type Method int
 
 const (
 	GET Method = iota
+	POST
 )
 
 // String will return the string expectation of the method
 func (m Method) String() string {
 	return map[Method]string{
-		GET: "GET",
+		GET:  "GET",
+		POST: "POST",
 	}[m]
 }
 
 // LogInfo will long that a request was made for a method
-func (m Method) LogInfo(c C, endpoint Endpoint, args EndpointArgs) {
-	logrus.Info(fmt.Sprintf("/%s (%s) %s", m.String(), c.Identifier(),
-		endpoint.Get(args)))
+func (m Method) LogInfo(c C, endpoint Endpoint, args EndpointArgs, body Body) {
+	logrus.Info(fmt.Sprintf("/%s (%s) %v %s", m.String(), c.Identifier(),
+		endpoint.Get(args), body.Description))
 }

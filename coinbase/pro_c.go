@@ -1,6 +1,7 @@
 package coinbase
 
 import (
+	"bytes"
 	"cql/client"
 	"cql/env"
 	"crypto/hmac"
@@ -39,8 +40,8 @@ func (cb *proC) generateSig(secret, message string) (string, error) {
 }
 
 // generageMsg makes the message to be signed
-func (cb *proC) generageMsg(m client.Method, endpoint, data, timestamp string) string {
-	return fmt.Sprintf("%s%s%s%s", timestamp, m.String(), endpoint, data)
+func (cb *proC) generageMsg(m client.Method, endpoint, timestamp string, buf []byte) string {
+	return fmt.Sprintf("%s%s%s%s", timestamp, m.String(), endpoint, string(buf))
 }
 
 // setHeaders sets the headers for a coinbase api request, in particular:
@@ -49,15 +50,16 @@ func (cb *proC) generageMsg(m client.Method, endpoint, data, timestamp string) s
 // - CB-ACCESS-SIGN The base64-encoded signature (see Signing a Message).
 // - CB-ACCESS-TIMESTAMP A timestamp for your request.
 // - CB-ACCESS-PASSPHRASE The passphrase you specified when creating the API key.
-func (cb *proC) setHeaders(req *http.Request, m client.Method, endpoint, data string) (e error) {
+func (cb *proC) setHeaders(req *http.Request, m client.Method, endpoint string, buf []byte) (e error) {
 	// TODO depricate getting key/passphrase/secret with secret keeper
 	var (
 		key        = env.CoinbaseProAccessKey.Get()
 		passphrase = env.CoinbaseProAccessPassphrase.Get()
 		secret     = env.CoinbaseProSecret.Get()
 		timestamp  = strconv.FormatInt(time.Now().Unix(), 10)
-		msg        = cb.generageMsg(m, endpoint, data, timestamp)
+		msg        = cb.generageMsg(m, endpoint, timestamp, buf)
 	)
+	fmt.Println(msg)
 	var sig string
 	sig, e = cb.generateSig(secret, msg)
 	req.Header.Add("Accept", "application/json")
@@ -74,13 +76,13 @@ func (cb *proC) setHeaders(req *http.Request, m client.Method, endpoint, data st
 // endpoint.
 //
 // TODO make data-compatible for non-get requests
-func (cb *proC) request(m client.Method, endpoint string) (*http.Response, error) {
+func (cb *proC) request(m client.Method, endpoint string, buf []byte) (*http.Response, error) {
 	fullURL := env.CoinbaseProURL.Get() + endpoint
-	req, err := http.NewRequest(m.String(), fullURL, nil)
+	req, err := http.NewRequest(m.String(), fullURL, bytes.NewReader(buf))
 	if err != nil {
 		return nil, err
 	}
-	if err := cb.setHeaders(req, m, endpoint, ""); err != nil {
+	if err := cb.setHeaders(req, m, endpoint, buf); err != nil {
 		return nil, err
 	}
 	return cb.client.Do(req)
@@ -99,7 +101,11 @@ func (cb *proC) Identifier() string {
 
 // Get makes and http GET request, given a an endpoint
 func (cb *proC) Get(endpoint string) (*http.Response, error) {
-	return cb.request(client.GET, endpoint)
+	return cb.request(client.GET, endpoint, nil)
+}
+
+func (cb *proC) Post(endpoint string, buf []byte) (*http.Response, error) {
+	return cb.request(client.POST, endpoint, buf)
 }
 
 // newClient returns a new client interface.  This method is what we call a

@@ -151,5 +151,5 @@ type Mutation {
   the order. How much and which funds are put on hold depends on the order type
   and parameters specified. See the Holds details below.
   """
-  createCoinbaseLimitOrder(input: CoinbaseLimitOrderInput): CoinbaseOrder
+  createCoinbaseLimitOrder(input: CoinbaseOrderInput): CoinbaseOrder
 }

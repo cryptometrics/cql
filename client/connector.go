@@ -13,6 +13,13 @@ import (
 // it's own type for decoding purposes.
 type Connector func() (C, error)
 
+type DecodeInput struct {
+	Method       Method
+	Endpoint     Endpoint
+	EndpointArgs EndpointArgs
+	Body         Body
+}
+
 // parseErrorMessage takes a response and a status and builder an error message
 // to send to the server
 func parseErrorMessage(res *http.Response, status int) error {
@@ -33,22 +40,32 @@ func validateResponse(res *http.Response) (err error) {
 		err = parseErrorMessage(res, http.StatusBadRequest)
 	case http.StatusUnauthorized:
 		err = parseErrorMessage(res, http.StatusUnauthorized)
+	case http.StatusInternalServerError:
+		err = parseErrorMessage(res, http.StatusInternalServerError)
 	}
-	return nil
+	return
 }
 
 // fetch uses a client connector and an endpiont to fetch data from the client
-func (conn Connector) fetch(endpoint Endpoint, args EndpointArgs) (*http.Response, error) {
+func (conn Connector) fetch(input DecodeInput) (*http.Response, error) {
 	c, err := conn()
 	if err != nil {
 		return nil, err
 	}
 	c.Connect()
-	GET.LogInfo(c, endpoint, args)
-	res, err := c.Get(endpoint.Get(args))
+	input.Method.LogInfo(c, input.Endpoint, input.EndpointArgs, input.Body)
+
+	var res *http.Response
+	switch input.Method {
+	case GET:
+		res, err = c.Get(input.Endpoint.Get(input.EndpointArgs))
+	case POST:
+		res, err = c.Post(input.Endpoint.Get(input.EndpointArgs), input.Body.Buf)
+	}
 	if err != nil {
 		return nil, err
 	}
+
 	return res, nil
 }
 
@@ -62,12 +79,15 @@ func printBody(res *http.Response) {
 
 // decode will fetch the data and then try to decode it into v, which should be
 // the pointer to a struct
-func (conn Connector) Decode(v interface{}, endpoint Endpoint, args EndpointArgs) error {
-	res, err := conn.fetch(endpoint, args)
+func (conn Connector) Decode(input DecodeInput, v interface{}) error {
+	res, err := conn.fetch(input)
 	if err != nil {
 		return err
 	}
 	defer res.Body.Close()
+
+	// fmt.Println(res.StatusCode, res.Status)
+	// printBody(res)
 
 	if err := validateResponse(res); err != nil {
 		return err
