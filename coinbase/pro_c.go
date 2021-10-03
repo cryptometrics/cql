@@ -59,7 +59,6 @@ func (cb *proC) setHeaders(req *http.Request, m client.Method, endpoint string, 
 		timestamp  = strconv.FormatInt(time.Now().Unix(), 10)
 		msg        = cb.generageMsg(m, endpoint, timestamp, buf)
 	)
-	fmt.Println(msg)
 	var sig string
 	sig, e = cb.generateSig(secret, msg)
 	req.Header.Add("Accept", "application/json")

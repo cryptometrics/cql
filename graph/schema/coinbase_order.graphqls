@@ -17,6 +17,8 @@ type CoinbaseOrder {
   executedValue: Float
   status: String
   settled: Boolean
+  funds: Float
+  specifiedFunds: Float
 }
 
 input CoinbaseOrderInput {
@@ -99,4 +101,46 @@ input CoinbaseOrderInput {
   liquidity, the order will be rejected and no part of it will execute.
   """
   postOnly: Boolean
+}
+
+input CoinbaseOrderQueryParameters {
+  """
+  Limit list of orders to these statuses. Passing all returns orders of all
+  statuses. Valid statuses: 'open', 'pending', 'rejected', 'done', 'active'.
+
+  Default: 	['open', 'pending', 'active']
+  """
+  statuses: [String]
+
+  """
+  Only list orders for a specific product
+  """
+  products: [String]
+
+  """
+  Limit list of orders to after this start_date
+  """
+  startDate: String
+
+  """
+  Limit list of orders to before this end_date
+  """
+  endDate: String
+
+  """
+  Pagination parameter that requires a positive integer. If set, returns a list
+  of orders before the specified integer.
+  """
+  before: Int
+
+  """
+  Pagination parameter that requires a positive integer. If set, returns a list
+  of orders after the specified integer.
+  """
+  after: Int
+
+  """
+  Number of results per request. Maximum 1000. (default 1000)
+  """
+  limit: Int
 }

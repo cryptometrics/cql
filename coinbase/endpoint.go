@@ -12,10 +12,16 @@ const (
 	AccountHoldsEP
 	AccountEP
 	AccountsEP
-	AccountHistoryEP
+	AccountLedgerEP
+	AccountTransfersEP
+	CoinbaseAccountsEP
+
+	///////
+	ClientOrderEP
 	CreateOrderEP
 	CurrenciesEP
 	CurrencyEP
+	OrderEP
 	ProductsEP
 	ProductEP
 	ProductDailyStatsEP
@@ -25,24 +31,6 @@ const (
 	ProductTradesEP
 	TimeEP
 )
-
-// func setQueryParam(idx int, param string, values *url.Values, args ...*string) {
-// 	if len(args) > idx {
-// 		if v := args[idx]; v != nil {
-// 			values.Add(param, *v)
-// 		}
-// 	}
-// }
-
-// func queryParams(params []string, args client.EndpointArgs, argsToExclude ...string) *url.URL {
-// 	u, _ := url.Parse("")
-// 	q, _ := url.ParseQuery(u.RawQuery)
-// 	for idx, param := range params {
-// 		setQueryParam(idx, param, &q, args...)
-// 	}
-// 	u.RawQuery = q.Encode()
-// 	return u
-// }
 
 func (endpoint Endpoint) Get(args client.EndpointArgs) string {
 	return map[Endpoint]func(args client.EndpointArgs) string{
@@ -55,7 +43,7 @@ func (endpoint Endpoint) Get(args client.EndpointArgs) string {
 			return fmt.Sprintf("%s/%s", AccountsEP.Get(nil), *args["id"].PathParam)
 		},
 
-		AccountHistoryEP: func(args client.EndpointArgs) string {
+		AccountLedgerEP: func(args client.EndpointArgs) string {
 			return fmt.Sprintf("%s/ledger%s", AccountEP.Get(args), args.QueryPath())
 		},
 
@@ -63,9 +51,22 @@ func (endpoint Endpoint) Get(args client.EndpointArgs) string {
 			return fmt.Sprintf("%s/holds%s", AccountEP.Get(args), args.QueryPath())
 		},
 
+		AccountTransfersEP: func(args client.EndpointArgs) string {
+			return fmt.Sprintf("%s/transfers%s", AccountEP.Get(args), args.QueryPath())
+		},
+
+		CoinbaseAccountsEP: func(_ client.EndpointArgs) string {
+			return "/coinbase-accounts"
+		},
+
+		////////
+
+		ClientOrderEP: func(args client.EndpointArgs) string {
+			return fmt.Sprintf("/orders/client:%s", *args["client_oid"].PathParam)
+		},
+
 		CreateOrderEP: func(args client.EndpointArgs) string {
 			return fmt.Sprintf("/orders%s", args.QueryPath())
-
 		},
 
 		// List known currencies.
@@ -74,6 +75,10 @@ func (endpoint Endpoint) Get(args client.EndpointArgs) string {
 		// List the currency for specified id.
 		CurrencyEP: func(args client.EndpointArgs) string {
 			return fmt.Sprintf("%s/%s", CurrenciesEP.Get(nil), *args["id"].PathParam)
+		},
+
+		OrderEP: func(args client.EndpointArgs) string {
+			return fmt.Sprintf("/orders/%s", *args["id"].PathParam)
 		},
 
 		// list the available currency pairs for trading

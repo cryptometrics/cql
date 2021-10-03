@@ -4,7 +4,8 @@ import (
 	"cql/client"
 	"cql/model"
 	"cql/null"
-	"io"
+
+	"github.com/sirupsen/logrus"
 )
 
 type Private struct{}
@@ -15,58 +16,25 @@ func NewPrivate() *Private {
 	return &Private{}
 }
 
-func (p *Private) accountHistory(gen client.Connector, id string, before, after *int, startDate, endDate *string, limit *int) (m []*model.CoinbaseAccountHistory, err error) {
-	err = gen.Decode(client.DecodeInput{
+func (p *Private) clientOrder(conn client.Connector, clientOID string) (m *model.CoinbaseOrder, err error) {
+	err = conn.Decode(&client.Request{
 		Method:   client.GET,
-		Endpoint: AccountHistoryEP,
+		Endpoint: ClientOrderEP,
 		EndpointArgs: client.EndpointArgs{
-			"id":         &client.EndpointArg{PathParam: &id},
-			"before":     &client.EndpointArg{QueryParam: IntPtrStringPtr(before)},
-			"after":      &client.EndpointArg{QueryParam: IntPtrStringPtr(after)},
-			"start_date": &client.EndpointArg{QueryParam: startDate},
-			"end_date":   &client.EndpointArg{QueryParam: endDate},
-			"limit":      &client.EndpointArg{QueryParam: IntPtrStringPtr(limit)}},
+			"client_oid": &client.EndpointArg{PathParam: &clientOID}},
 	}, &m)
 	return
 }
 
-func (p *Private) accountHolds(gen client.Connector, id string, before, after, limit *int) (m []*model.CoinbaseAccountHold, err error) {
-	err = gen.Decode(client.DecodeInput{
-		Method:   client.GET,
-		Endpoint: AccountHoldsEP,
-		EndpointArgs: client.EndpointArgs{
-			"id":     &client.EndpointArg{PathParam: &id},
-			"before": &client.EndpointArg{QueryParam: IntPtrStringPtr(before)},
-			"after":  &client.EndpointArg{QueryParam: IntPtrStringPtr(after)},
-			"limit":  &client.EndpointArg{QueryParam: IntPtrStringPtr(limit)}},
-	}, &m)
-	return
-}
-
-func (p *Private) account(gen client.Connector, id string) (m *model.CoinbaseAccount, err error) {
-	err = gen.Decode(client.DecodeInput{
-		Method:   client.GET,
-		Endpoint: AccountEP,
-		EndpointArgs: client.EndpointArgs{
-			"id": &client.EndpointArg{PathParam: &id}},
-	}, &m)
-	return
-}
-
-func (p *Private) accounts(gen client.Connector) (m []*model.CoinbaseAccount, err error) {
-	err = gen.Decode(client.DecodeInput{
-		Method: client.GET, Endpoint: AccountsEP}, &m)
-	return
-}
-
-func (p *Private) getLimitOrderBody(input *model.CoinbaseOrderInput) io.Reader {
-	return nil
-}
-
-func (p *Private) createLimitOrder(gen client.Connector, input *model.CoinbaseOrderInput) (m *model.CoinbaseOrder, err error) {
-	err = gen.Decode(client.DecodeInput{
+func (p *Private) createLimitOrder(conn client.Connector, input *model.CoinbaseOrderInput) (m *model.CoinbaseOrder, err error) {
+	err = conn.Decode(&client.Request{
 		Method:   client.POST,
 		Endpoint: CreateOrderEP,
+		Callback: func(i interface{}, r *client.Request) error {
+			order := i.(**model.CoinbaseOrder)
+			logrus.Debug(r.Logf(`{order_id:%s}`, (*order).ID))
+			return nil
+		},
 		Body: client.JSONBody(map[string]null.Interface{
 			"client_oid":    null.NewInterfaceString(input.ClientOid),
 			"type":          null.NewInterfaceString(StringStringPtr("limit")),
@@ -82,39 +50,34 @@ func (p *Private) createLimitOrder(gen client.Connector, input *model.CoinbaseOr
 	return
 }
 
-// AccountHistory returns a list of account activity of the API key's profile
-func (p *Private) AccountHistory(id string, before, after *int, startDate, endDate *string, limit *int) ([]*model.CoinbaseAccountHistory, error) {
-	return p.accountHistory(newClient, id, before, after, startDate, endDate, limit)
+func (p *Private) order(conn client.Connector, id string) (m *model.CoinbaseOrder, err error) {
+	err = conn.Decode(&client.Request{
+		Method:   client.GET,
+		Endpoint: OrderEP,
+		EndpointArgs: client.EndpointArgs{
+			"id": &client.EndpointArg{PathParam: &id}},
+	}, &m)
+	return
 }
 
-// AccountHolds returns a list of holds of an account that belong to the same
-// profile as the API key. Holds are placed on an account for any active orders
-// or pending withdraw requests. As an order is filled, the hold amount is
-// updated. If an order is canceled, any remaining hold is removed. For a
-// withdraw, once it is completed, the hold is removed.
-//
-// before - Pagination parameter that requires a positive integer. If set, returns
-// a list of holds before the specified integer.
-//
-// after - Pagination parameter that requires a positive integer. If set, returns
-// a list of holds after the specified integer.
-//
-// limit - Number of results per request. Maximum 1000. (default 1000)
-//
-// source: https://docs.pro.coinbase.com/#get-holds
-func (p *Private) AccountHolds(id string, before, after, limit *int) ([]*model.CoinbaseAccountHold, error) {
-	return p.accountHolds(newClient, id, before, after, limit)
+func (p *Private) orders(conn client.Connector, params *model.CoinbaseOrderQueryParameters) (m *model.CoinbaseOrder, err error) {
+	err = conn.Decode(&client.Request{
+		Method:   client.GET,
+		Endpoint: OrderEP,
+		EndpointArgs: client.EndpointArgs{
+			"status": &client.EndpointArg{QueryParam: SlicePtrStringPtr(params.Statuses)},
+			// "product_id": &client.EndpointArg{QueryParam: params.ProductID},
+			// "start_date": &client.EndpointArg{QueryParam: params.StartDate},
+			// "end_date":   &client.EndpointArg{QueryParam: params.EndDate},
+			// "before": &flient.EndpointArgs{Query
+		},
+	}, &m)
+	return
 }
 
-// Account the trading accounts from the profile of the API key, given the
-// account id
-func (p *Private) Account(id string) (*model.CoinbaseAccount, error) {
-	return p.account(newClient, id)
-}
-
-// Accounts returns a list of trading accounts from the profile of the API key
-func (p *Private) Accounts() ([]*model.CoinbaseAccount, error) {
-	return p.accounts(newClient)
+// ClientOrder returns the order for a client's OID
+func (p *Private) ClientOrder(clientOID string) (*model.CoinbaseOrder, error) {
+	return p.clientOrder(newClient, clientOID)
 }
 
 // CreateLimitOrder puts in a limit order, returning a CoinbaseOrder struct in
@@ -134,4 +97,10 @@ func (p *Private) Accounts() ([]*model.CoinbaseAccount, error) {
 // or unfilled order, any remaining funds will be released from hold.
 func (p *Private) CreateLimitOrder(input *model.CoinbaseOrderInput) (*model.CoinbaseOrder, error) {
 	return p.createLimitOrder(newClient, input)
+}
+
+// Order will get a single order by order id from the profile that the API key
+// belongs to
+func (p *Private) Order(id string) (*model.CoinbaseOrder, error) {
+	return p.order(newClient, id)
 }

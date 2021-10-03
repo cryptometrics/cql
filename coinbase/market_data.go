@@ -13,14 +13,14 @@ func NewMarketData() *MarketData {
 	return &MarketData{}
 }
 
-func (md *MarketData) currencies(gen client.Connector) (m []*model.CoinbaseCurrency, err error) {
-	err = gen.Decode(client.DecodeInput{
+func (md *MarketData) currencies(conn client.Connector) (m []*model.CoinbaseCurrency, err error) {
+	err = conn.Decode(&client.Request{
 		Method: client.GET, Endpoint: CurrenciesEP}, &m)
 	return
 }
 
-func (md *MarketData) currency(gen client.Connector, id string) (m *model.CoinbaseCurrency, err error) {
-	err = gen.Decode(client.DecodeInput{
+func (md *MarketData) currency(conn client.Connector, id string) (m *model.CoinbaseCurrency, err error) {
+	err = conn.Decode(&client.Request{
 		Method:   client.GET,
 		Endpoint: CurrencyEP,
 		EndpointArgs: client.EndpointArgs{
@@ -29,14 +29,14 @@ func (md *MarketData) currency(gen client.Connector, id string) (m *model.Coinba
 	return
 }
 
-func (md *MarketData) products(gen client.Connector) (m []*model.CoinbaseProduct, err error) {
-	err = gen.Decode(client.DecodeInput{
+func (md *MarketData) products(conn client.Connector) (m []*model.CoinbaseProduct, err error) {
+	err = conn.Decode(&client.Request{
 		Method: client.GET, Endpoint: ProductsEP}, &m)
 	return
 }
 
-func (md *MarketData) product(gen client.Connector, id string) (m *model.CoinbaseProduct, err error) {
-	err = gen.Decode(client.DecodeInput{
+func (md *MarketData) product(conn client.Connector, id string) (m *model.CoinbaseProduct, err error) {
+	err = conn.Decode(&client.Request{
 		Method:   client.GET,
 		Endpoint: ProductEP,
 		EndpointArgs: client.EndpointArgs{
@@ -45,8 +45,8 @@ func (md *MarketData) product(gen client.Connector, id string) (m *model.Coinbas
 	return
 }
 
-func (md *MarketData) productDailyStats(gen client.Connector, id string) (m *model.CoinbaseProductDailyStats, err error) {
-	err = gen.Decode(client.DecodeInput{
+func (md *MarketData) productDailyStats(conn client.Connector, id string) (m *model.CoinbaseProductDailyStats, err error) {
+	err = conn.Decode(&client.Request{
 		Method:   client.GET,
 		Endpoint: ProductDailyStatsEP,
 		EndpointArgs: client.EndpointArgs{
@@ -55,8 +55,8 @@ func (md *MarketData) productDailyStats(gen client.Connector, id string) (m *mod
 	return
 }
 
-func (md *MarketData) productHistoricalRates(gen client.Connector, id, start, end string, granularity int) (m []*model.CoinbaseProductHistoricalRate, err error) {
-	err = gen.Decode(client.DecodeInput{
+func (md *MarketData) productHistoricalRates(conn client.Connector, id, start, end string, granularity int) (m []*model.CoinbaseProductHistoricalRate, err error) {
+	err = conn.Decode(&client.Request{
 		Method:   client.GET,
 		Endpoint: ProductHistoricalRatesEP,
 		EndpointArgs: client.EndpointArgs{
@@ -68,8 +68,8 @@ func (md *MarketData) productHistoricalRates(gen client.Connector, id, start, en
 	return
 }
 
-func (md *MarketData) productOrderBook(gen client.Connector, id, level string) (m *model.CoinbaseProductOrderBook, err error) {
-	err = gen.Decode(client.DecodeInput{
+func (md *MarketData) productOrderBook(conn client.Connector, id, level string) (m *model.CoinbaseProductOrderBook, err error) {
+	err = conn.Decode(&client.Request{
 		Method:   client.GET,
 		Endpoint: ProductOrderBookEP,
 		EndpointArgs: client.EndpointArgs{
@@ -79,8 +79,8 @@ func (md *MarketData) productOrderBook(gen client.Connector, id, level string) (
 	return
 }
 
-func (md *MarketData) productTicker(gen client.Connector, id string) (m *model.CoinbaseProductTicker, err error) {
-	err = gen.Decode(client.DecodeInput{
+func (md *MarketData) productTicker(conn client.Connector, id string) (m *model.CoinbaseProductTicker, err error) {
+	err = conn.Decode(&client.Request{
 		Method:   client.GET,
 		Endpoint: ProductTickerEP,
 		EndpointArgs: client.EndpointArgs{
@@ -89,8 +89,8 @@ func (md *MarketData) productTicker(gen client.Connector, id string) (m *model.C
 	return
 }
 
-func (md *MarketData) productTrades(gen client.Connector, id string) (m []*model.CoinbaseProductTrade, err error) {
-	err = gen.Decode(client.DecodeInput{
+func (md *MarketData) productTrades(conn client.Connector, id string) (m []*model.CoinbaseProductTrade, err error) {
+	err = conn.Decode(&client.Request{
 		Method:   client.GET,
 		Endpoint: ProductTradesEP,
 		EndpointArgs: client.EndpointArgs{
@@ -99,8 +99,8 @@ func (md *MarketData) productTrades(gen client.Connector, id string) (m []*model
 	return
 }
 
-func (md *MarketData) time(gen client.Connector) (m *model.CoinbaseTime, err error) {
-	err = gen.Decode(client.DecodeInput{Method: client.GET, Endpoint: TimeEP}, &m)
+func (md *MarketData) time(conn client.Connector) (m *model.CoinbaseTime, err error) {
+	err = conn.Decode(&client.Request{Method: client.GET, Endpoint: TimeEP}, &m)
 	return
 }
 

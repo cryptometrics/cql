@@ -1,0 +1,64 @@
+type CoinbaseBankCountry {
+  name: String
+  code: String
+}
+
+type CoinbaseSEPADepositInformation {
+  iban: String
+  swift: String
+  bankName: String
+  bankAddress: String
+  bankCountry: CoinbaseBankCountry
+  accountName: String
+  accountAddress: String
+  reference: String
+}
+
+type CoinbaseSWIFTDepositInformation {
+  accountNumber: String
+  bankName: String
+  bankAddress: String
+  bankCountry: CoinbaseBankCountry
+  accountName: String
+  accountAddress: String
+  reference: String
+}
+
+type CoinbaseUKDepositInformation {
+  sortCode: String
+  accountNumber: String
+  bankName: String
+  accountName: String
+  reference: String
+}
+
+type CoinbaseWireDepositInformation {
+  accountNumber: String
+  routingNumber: String
+  bankName: String
+  bankAddress: String
+  bankCountry: CoinbaseBankCountry
+  accountName: String
+  accountAddress: String
+  reference: String
+}
+
+type CoinbaseWallet {
+  id: String
+  name: String
+  balance: Float
+  currency: String
+  type: String
+  primary: Boolean
+  active: Boolean
+  availableOnConsumer: Boolean
+  ready: Boolean
+  wireDepositInformation: CoinbaseWireDepositInformation
+  swiftDepositInformation: CoinbaseSWIFTDepositInformation
+  sepaDepositInformation: CoinbaseSEPADepositInformation
+  ukDepositInformation: CoinbaseUKDepositInformation
+  destinationTagName: String
+  destinationTagRegex: String
+  holdBalance: Float
+  holdCurrency: String
+}

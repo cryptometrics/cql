@@ -34,11 +34,13 @@ func (hold *CoinbaseAccountHold) UnmarshalJSON(d []byte) error {
 		return err
 	}
 
-	if err := data.unmarshalTime("created_at", &hold.CreatedAt); err != nil {
+	err = data.unmarshalTime(time.RFC3339Nano, "created_at", &hold.CreatedAt)
+	if err != nil {
 		return err
 	}
 
-	if err := data.unmarshalTime("updated_at", &hold.UpdatedAt); err != nil {
+	err = data.unmarshalTime(time.RFC3339Nano, "updated_at", &hold.UpdatedAt)
+	if err != nil {
 		return err
 	}
 

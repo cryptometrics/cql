@@ -53,7 +53,8 @@ func (ticker *CoinbaseProductTicker) UnmarshalJSON(d []byte) error {
 		return err
 	}
 
-	if err := data.unmarshalTime("time", &ticker.Time); err != nil {
+	err = data.unmarshalTime(time.RFC3339Nano, "time", &ticker.Time)
+	if err != nil {
 		return err
 	}
 

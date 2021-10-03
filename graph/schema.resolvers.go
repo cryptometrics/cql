@@ -6,7 +6,7 @@ package graph
 import (
 	"context"
 	"cql/coinbase"
-	"cql/graph/generated"
+	generated1 "cql/graph/generated"
 	model1 "cql/model"
 )
 
@@ -15,24 +15,33 @@ func (r *mutationResolver) CreateCoinbaseLimitOrder(ctx context.Context, input *
 	return private.CreateLimitOrder(input)
 }
 
-func (r *queryResolver) CoinbaseAccountHistory(ctx context.Context, id string, before *int, after *int, startDate *string, endDate *string, limit *int) ([]*model1.CoinbaseAccountHistory, error) {
-	private := coinbase.NewPrivate()
-	return private.AccountHistory(id, before, after, startDate, endDate, limit)
+func (r *queryResolver) CoinbaseAccountLedger(ctx context.Context, id string, opts *model1.CoinbaseAccountLedgerOptions) ([]*model1.CoinbaseAccountLedger, error) {
+	return coinbase.NewAccounts().Ledger(id, opts)
 }
 
-func (r *queryResolver) CoinbaseAccountHold(ctx context.Context, id string, before *int, after *int, limit *int) ([]*model1.CoinbaseAccountHold, error) {
-	private := coinbase.NewPrivate()
-	return private.AccountHolds(id, before, after, limit)
+func (r *queryResolver) CoinbaseAccountHold(ctx context.Context, id string, opts *model1.CoinbaseAccountHoldOptions) ([]*model1.CoinbaseAccountHold, error) {
+	return coinbase.NewAccounts().Holds(id, opts)
 }
 
 func (r *queryResolver) CoinbaseAccount(ctx context.Context, id string) (*model1.CoinbaseAccount, error) {
-	private := coinbase.NewPrivate()
-	return private.Account(id)
+	return coinbase.NewAccounts().Find(id)
 }
 
 func (r *queryResolver) CoinbaseAccounts(ctx context.Context, test *string) ([]*model1.CoinbaseAccount, error) {
+	return coinbase.NewAccounts().All()
+}
+
+func (r *queryResolver) CoinbaseAccountTransfer(ctx context.Context, id string, opts *model1.CoinbaseAccountTransferOptions) ([]*model1.CoinbaseAccountTransfer, error) {
+	return coinbase.NewAccounts().Transfers(id, opts)
+}
+
+func (r *queryResolver) CoinbaseWallets(ctx context.Context, filler *string) ([]*model1.CoinbaseWallet, error) {
+	return coinbase.NewCoinbaseAccounts().Wallets()
+}
+
+func (r *queryResolver) ClinbaseClientOrder(ctx context.Context, clientOid string) (*model1.CoinbaseOrder, error) {
 	private := coinbase.NewPrivate()
-	return private.Accounts()
+	return private.ClientOrder(clientOid)
 }
 
 func (r *queryResolver) CoinbaseCurrencies(ctx context.Context, test *string) ([]*model1.CoinbaseCurrency, error) {
@@ -43,6 +52,11 @@ func (r *queryResolver) CoinbaseCurrencies(ctx context.Context, test *string) ([
 func (r *queryResolver) CoinbaseCurrency(ctx context.Context, id string) (*model1.CoinbaseCurrency, error) {
 	md := coinbase.NewMarketData()
 	return md.Currency(id)
+}
+
+func (r *queryResolver) CoinbaseOrder(ctx context.Context, id string) (*model1.CoinbaseOrder, error) {
+	private := coinbase.NewPrivate()
+	return private.Order(id)
 }
 
 func (r *queryResolver) CoinbaseProducts(ctx context.Context, test *string) ([]*model1.CoinbaseProduct, error) {
@@ -85,11 +99,11 @@ func (r *queryResolver) CoinbaseTime(ctx context.Context, test *string) (*model1
 	return md.Time()
 }
 
-// Mutation returns generated.MutationResolver implementation.
-func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
+// Mutation returns generated1.MutationResolver implementation.
+func (r *Resolver) Mutation() generated1.MutationResolver { return &mutationResolver{r} }
 
-// Query returns generated.QueryResolver implementation.
-func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
+// Query returns generated1.QueryResolver implementation.
+func (r *Resolver) Query() generated1.QueryResolver { return &queryResolver{r} }
 
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }

@@ -7,21 +7,23 @@ import (
 
 // CoinbaseOrder is the response to an order request through the cb api.
 type CoinbaseOrder struct {
-	ID            string             `json:"id"`
-	Price         float64            `json:"price"`
-	Size          float64            `json:"size"`
-	ProductID     string             `json:"product_id"`
-	Side          scalar.OrderSide   `json:"side"`
-	STP           scalar.OrderSTP    `json:"stp"`
-	Type          scalar.OrderType   `json:"type"`
-	TimeInForce   scalar.TimeInForce `json:"time_in_force"`
-	PostOnly      bool               `json:"post_only"`
-	CreatedAt     time.Time          `json:"created_at"`
-	FillFees      float64            `json:"fill_fees"`
-	FilledSize    float64            `json:"filled_size"`
-	ExecutedValue float64            `json:"executed_value"`
-	Status        string             `json:"status"`
-	Settled       bool               `json:"settled"`
+	ID             string             `json:"id"`
+	Price          float64            `json:"price"`
+	Size           float64            `json:"size"`
+	ProductID      string             `json:"product_id"`
+	Side           scalar.OrderSide   `json:"side"`
+	STP            scalar.OrderSTP    `json:"stp"`
+	Type           scalar.OrderType   `json:"type"`
+	TimeInForce    scalar.TimeInForce `json:"time_in_force"`
+	PostOnly       bool               `json:"post_only"`
+	CreatedAt      time.Time          `json:"created_at"`
+	FillFees       float64            `json:"fill_fees"`
+	FilledSize     float64            `json:"filled_size"`
+	ExecutedValue  float64            `json:"executed_value"`
+	Status         string             `json:"status"`
+	Settled        bool               `json:"settled"`
+	Funds          float64            `json:"funds"`
+	SpecifiedFunds float64            `json:"specified_funds"`
 }
 
 // UnmarshalJSON is an override required to parst strings from coinbases api
@@ -50,7 +52,8 @@ func (order *CoinbaseOrder) UnmarshalJSON(d []byte) error {
 		return err
 	}
 
-	if err := data.unmarshalTime("created_at", &order.CreatedAt); err != nil {
+	err = data.unmarshalTime(time.RFC3339Nano, "created_at", &order.CreatedAt)
+	if err != nil {
 		return err
 	}
 
@@ -65,6 +68,16 @@ func (order *CoinbaseOrder) UnmarshalJSON(d []byte) error {
 	}
 
 	err = data.unmarshalFloatFromString("executed_value", &order.ExecutedValue)
+	if err != nil {
+		return err
+	}
+
+	err = data.unmarshalFloatFromString("funds", &order.Funds)
+	if err != nil {
+		return err
+	}
+
+	err = data.unmarshalFloatFromString("specified_funds", &order.SpecifiedFunds)
 	if err != nil {
 		return err
 	}

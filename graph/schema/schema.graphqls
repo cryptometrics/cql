@@ -3,42 +3,10 @@
 # https://gqlgen.com/getting-started/
 
 type Query {
-  coinbaseAccountHistory(
-    """
-    Returns list of ledger entries from this account id.
-    """
+  coinbaseAccountLedger(
     id: String!
-
-    """
-    Parameter requires a positive integer. If set, returns ledger entries before
-    the specified integer.
-    """
-    before: Int
-
-    """
-    Parameter requires a positive integer. If set, returns ledger entries after
-    the specified integer.
-    """
-    after: Int
-
-    """
-    If set, returns ledger entries created after the start_date timestamp,
-    sorted by newest creation date. When combined with end_date, returns ledger
-    entries in the specified time range.
-    """
-    startDate: String
-
-    """
-    If set, returns ledger entries created before the end_date timestamp, sorted
-    by newest creation date.
-    """
-    endDate: String
-
-    """
-    Number of results per request. Maximum 1000. (default 1000)
-    """
-    limit: Int
-  ): [CoinbaseAccountHistory]
+    opts: CoinbaseAccountLedgerOptions
+  ): [CoinbaseAccountLedger]
 
   """
   List holds of an account that belong to the same profile as the API key. Holds
@@ -49,29 +17,34 @@ type Query {
   """
   coinbaseAccountHold(
     id: String!
-
-    """
-    Pagination parameter that requires a positive integer. If set, returns a
-    list of holds before the specified integer.
-    """
-    before: Int
-
-    """
-    Pagination parameter that requires a positive integer. If set, returns a
-    list of holds after the specified integer.
-    """
-    after: Int
-
-    """
-    Number of results per request. Maximum 1000. (default 1000)
-    """
-    limit: Int
+    opts: CoinbaseAccountHoldOptions
   ): [CoinbaseAccountHold]
 
   coinbaseAccount(id: String!): CoinbaseAccount
   coinbaseAccounts(test: String): [CoinbaseAccount]
+
+  coinbaseAccountTransfer(
+    id: String!
+    opts: CoinbaseAccountTransferOptions
+  ): [CoinbaseAccountTransfer]
+
+  coinbaseWallets(_filler_: String): [CoinbaseWallet]
+
+  ####
+
+  """
+  Get a single order by order id from the profile that the API key belongs to.
+  """
+  clinbaseClientOrder(clientOID: String!): CoinbaseOrder
+
   coinbaseCurrencies(test: String): [CoinbaseCurrency]
   coinbaseCurrency(id: String!): CoinbaseCurrency
+
+  """
+  Get a single order by order id from the profile that the API key belongs to.
+  """
+  coinbaseOrder(id: String!): CoinbaseOrder
+
   coinbaseProducts(test: String): [CoinbaseProduct]
 
   coinbaseProduct(

@@ -54,14 +54,20 @@ models:
       - github.com/99designs/gqlgen/graphql.Int
       - github.com/99designs/gqlgen/graphql.Int64
       - github.com/99designs/gqlgen/graphql.Int32
-  CoinbaseAccountHistoryDetails:
-    model: cql/model.CoinbaseAccountHistoryDetails
-  CoinbaseAccountHistory:
-    model: cql/model.CoinbaseAccountHistory
+  CoinbaseAccountLedgerDetails:
+    model: cql/model.CoinbaseAccountLedgerDetails
+  CoinbaseAccountLedger:
+    model: cql/model.CoinbaseAccountLedger
   CoinbaseAccountHold:
     model: cql/model.CoinbaseAccountHold
+  CoinbaseAccountTransfer:
+    model: cql/model.CoinbaseAccountTransfer
+  CoinbaseAccountTransferDetails:
+    model: cql/model.CoinbaseAccountTransferDetails
   CoinbaseAccount:
     model: cql/model.CoinbaseAccount
+  CoinbaseBankCountry:
+    model: cql/model.CoinbaseBankCountry
   CoinbaseCurrency:
     model: cql/model.CoinbaseCurrency
   CoinbaseCurrencyDetails:
@@ -82,8 +88,20 @@ models:
     model: cql/model.CoinbaseProductTicker
   CoinbaseProductTrade:
     model: cql/model.CoinbaseProductTrade
+  CoinbaseSEPADepositInformation:
+    model: cql/model.CoinbaseSEPADepositInformation
+  CoinbaseSWIFTDepositInformation:
+    model: cql/model.CoinbaseSWIFTDepositInformation
   CoinbaseTime:
     model: cql/model.CoinbaseTime
+  CoinbaseUKDepositInformation:
+    model: cql/model.CoinbaseUKDepositInformation
+  CoinbaseWallet:
+    model: cql/model.CoinbaseWallet
+  CoinbaseWireDepositInformation:
+    model: cql/model.CoinbaseWireDepositInformation
+  EntryType:
+    model: cql/scalar.EntryType
   OrderCancelTime:
     model: cql/scalar.OrderCancelTime
   OrderSide:

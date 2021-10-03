@@ -6,6 +6,46 @@ import (
 	"cql/scalar"
 )
 
+type CoinbaseAccountHoldOptions struct {
+	// Pagination parameter that requires a positive integer. If set, returns a
+	// list of holds before the specified integer.
+	Before *string `json:"before"`
+	// Pagination parameter that requires a positive integer. If set, returns a
+	// list of holds after the specified integer.
+	After *string `json:"after"`
+	// Number of results per request. Maximum 1000. (default 1000)
+	Limit *int `json:"limit"`
+}
+
+type CoinbaseAccountLedgerOptions struct {
+	// Parameter requires a positive integer. If set, returns ledger entries before
+	// the specified integer.
+	Before *string `json:"before"`
+	// Parameter requires a positive integer. If set, returns ledger entries after
+	// the specified integer.
+	After *string `json:"after"`
+	// If set, returns ledger entries created after the start_date timestamp,
+	// sorted by newest creation date. When combined with end_date, returns ledger
+	// entries in the specified time range.
+	StartDate *string `json:"startDate"`
+	// If set, returns ledger entries created before the end_date timestamp, sorted
+	// by newest creation date.
+	EndDate *string `json:"endDate"`
+	// Number of results per request. Maximum 1000. (default 1000)
+	Limit     *int    `json:"limit"`
+	ProfileID *string `json:"profileID"`
+}
+
+type CoinbaseAccountTransferOptions struct {
+	// Used for pagination. Sets start cursor to before date.
+	Before *string `json:"before"`
+	// Used for pagination. Sets end cursor to after date.
+	After *string `json:"after"`
+	// Limit on number of results to return.
+	Limit *int    `json:"limit"`
+	Type  *string `json:"type"`
+}
+
 type CoinbaseOrderInput struct {
 	// buy or sell
 	Side scalar.OrderSide `json:"side"`
@@ -54,4 +94,26 @@ type CoinbaseOrderInput struct {
 	// should only make liquidity. If any part of the order results in taking
 	// liquidity, the order will be rejected and no part of it will execute.
 	PostOnly *bool `json:"postOnly"`
+}
+
+type CoinbaseOrderQueryParameters struct {
+	// Limit list of orders to these statuses. Passing all returns orders of all
+	// statuses. Valid statuses: 'open', 'pending', 'rejected', 'done', 'active'.
+	//
+	// Default: 	['open', 'pending', 'active']
+	Statuses []*string `json:"statuses"`
+	// Only list orders for a specific product
+	Products []*string `json:"products"`
+	// Limit list of orders to after this start_date
+	StartDate *string `json:"startDate"`
+	// Limit list of orders to before this end_date
+	EndDate *string `json:"endDate"`
+	// Pagination parameter that requires a positive integer. If set, returns a list
+	// of orders before the specified integer.
+	Before *int `json:"before"`
+	// Pagination parameter that requires a positive integer. If set, returns a list
+	// of orders after the specified integer.
+	After *int `json:"after"`
+	// Number of results per request. Maximum 1000. (default 1000)
+	Limit *int `json:"limit"`
 }

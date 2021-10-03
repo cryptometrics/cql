@@ -14,3 +14,22 @@ type CoinbaseAccountHold {
   type: String
   ref: String
 }
+
+input CoinbaseAccountHoldOptions {
+  """
+  Pagination parameter that requires a positive integer. If set, returns a
+  list of holds before the specified integer.
+  """
+  before: String
+
+  """
+  Pagination parameter that requires a positive integer. If set, returns a
+  list of holds after the specified integer.
+  """
+  after: String
+
+  """
+  Number of results per request. Maximum 1000. (default 1000)
+  """
+  limit: Int
+}

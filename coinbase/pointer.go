@@ -3,6 +3,7 @@ package coinbase
 import (
 	"fmt"
 	"strconv"
+	"strings"
 )
 
 func IntPtrStringPtr(i *int) *string {
@@ -23,4 +24,15 @@ func FloatPtrStringPtr(f *float64) *string {
 
 func StringStringPtr(str string) *string {
 	return &str
+}
+
+func SlicePtrStringPtr(slice []*string) *string {
+	tmp := []string{}
+	for _, str := range slice {
+		if str != nil {
+			tmp = append(tmp, *str)
+		}
+	}
+	r := strings.Join(tmp, ",")
+	return &r
 }
