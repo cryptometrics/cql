@@ -5,23 +5,18 @@ import (
 	"cql/model"
 )
 
-type CoinbaseAccounts struct{}
-
-func NewCoinbaseAccounts() *CoinbaseAccounts { return &CoinbaseAccounts{} }
-
-func (accounts *CoinbaseAccounts) generateCryptoAddress(conn client.Connector, id string) (m *model.CoinbaseDepositAddress, err error) {
-	return m, conn.Decode(&client.Request{
-		Method:   client.POST,
-		Endpoint: CoinbaseAddressesEP,
-		EndpointArgs: client.EndpointArgs{
-			"id": &client.EndpointArg{PathParam: &id}},
-		// Body: client.JSONBody(map[string]null.Interface{}),
-	}, &m)
+// CoinbaseAccounts is an object used to query coinbase account data.
+type CoinbaseAccounts struct {
+	parent
 }
 
-func (account *CoinbaseAccounts) wallets(conn client.Connector) (m []*model.CoinbaseWallet, err error) {
-	return m, conn.Decode(&client.Request{Method: client.GET,
-		Endpoint: CoinbaseAccountsEP}, &m)
+// NewCoinbaseAccounts will return an object to query coinbase account data.
+// This is not the same as trading accounts, rather account associated with
+// coinbase wallets.
+func NewCoinbaseAccounts(conn client.Connector) *CoinbaseAccounts {
+	coinbaseAccounts := new(CoinbaseAccounts)
+	construct(&coinbaseAccounts.parent, conn)
+	return coinbaseAccounts
 }
 
 // GenerateCryptoAddress will generates a one-time crypto address for depositing
@@ -35,14 +30,22 @@ func (account *CoinbaseAccounts) wallets(conn client.Connector) (m []*model.Coin
 // default profile.
 //
 // source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postcoinbaseaccountaddresses
-func (accounts *CoinbaseAccounts) GenerateCryptoAddress(id string) (*model.CoinbaseDepositAddress, error) {
-	return accounts.generateCryptoAddress(newClient, id)
+func (accounts *CoinbaseAccounts) GenerateCryptoAddress(id string) (m *model.CoinbaseDepositAddress, err error) {
+	return m, accounts.conn.Decode(&client.Request{
+		Method:   client.POST,
+		Endpoint: CoinbaseAddressesEP,
+		EndpointArgs: client.EndpointArgs{
+			"id": &client.EndpointArg{PathParam: &id}},
+	}, &m)
 }
 
 // All lists all the user's available Coinbase wallets (These are the
 // wallets/accounts that are used for buying and selling on www.coinbase.com)
 //
 // source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_getcoinbaseaccounts
-func (accounts *CoinbaseAccounts) Wallets() ([]*model.CoinbaseWallet, error) {
-	return accounts.wallets(newClient)
+func (accounts *CoinbaseAccounts) Wallets() (m []*model.CoinbaseWallet, err error) {
+	return m, accounts.conn.Decode(&client.Request{
+		Method:   client.GET,
+		Endpoint: CoinbaseAccountsEP,
+	}, &m)
 }

@@ -11,7 +11,7 @@ import (
 )
 
 func (r *mutationResolver) CoinbaseGenerateCryptoAddress(ctx context.Context, id string) (*model1.CoinbaseDepositAddress, error) {
-	return coinbase.NewCoinbaseAccounts().GenerateCryptoAddress(id)
+	return coinbase.NewCoinbaseAccounts(coinbase.DefaultClient).GenerateCryptoAddress(id)
 }
 
 func (r *mutationResolver) CreateCoinbaseLimitOrder(ctx context.Context, input *model1.CoinbaseOrderInput) (*model1.CoinbaseOrder, error) {
@@ -20,27 +20,27 @@ func (r *mutationResolver) CreateCoinbaseLimitOrder(ctx context.Context, input *
 }
 
 func (r *queryResolver) CoinbaseAccountLedger(ctx context.Context, id string, opts *model1.CoinbaseAccountLedgerOptions) ([]*model1.CoinbaseAccountLedger, error) {
-	return coinbase.NewAccounts().Ledger(id, opts)
+	return coinbase.NewAccounts(coinbase.DefaultClient).Ledger(id, opts)
 }
 
 func (r *queryResolver) CoinbaseAccountHold(ctx context.Context, id string, opts *model1.CoinbaseAccountHoldOptions) ([]*model1.CoinbaseAccountHold, error) {
-	return coinbase.NewAccounts().Holds(id, opts)
+	return coinbase.NewAccounts(coinbase.DefaultClient).Holds(id, opts)
 }
 
 func (r *queryResolver) CoinbaseAccount(ctx context.Context, id string) (*model1.CoinbaseAccount, error) {
-	return coinbase.NewAccounts().Find(id)
+	return coinbase.NewAccounts(coinbase.DefaultClient).Find(id)
 }
 
 func (r *queryResolver) CoinbaseAccounts(ctx context.Context, test *string) ([]*model1.CoinbaseAccount, error) {
-	return coinbase.NewAccounts().All()
+	return coinbase.NewAccounts(coinbase.DefaultClient).All()
 }
 
 func (r *queryResolver) CoinbaseAccountTransfer(ctx context.Context, id string, opts *model1.CoinbaseAccountTransferOptions) ([]*model1.CoinbaseAccountTransfer, error) {
-	return coinbase.NewAccounts().Transfers(id, opts)
+	return coinbase.NewAccounts(coinbase.DefaultClient).Transfers(id, opts)
 }
 
 func (r *queryResolver) CoinbaseWallets(ctx context.Context, filler *string) ([]*model1.CoinbaseWallet, error) {
-	return coinbase.NewCoinbaseAccounts().Wallets()
+	return coinbase.NewCoinbaseAccounts(coinbase.DefaultClient).Wallets()
 }
 
 func (r *queryResolver) ClinbaseClientOrder(ctx context.Context, clientOid string) (*model1.CoinbaseOrder, error) {

@@ -113,3 +113,7 @@ func (cb *proC) Identifier() string {
 func newClient() (client.C, error) {
 	return &proC{}, nil
 }
+
+func DefaultClient() (client.C, error) {
+	return &proC{}, nil
+}
