@@ -12,6 +12,7 @@ type umap map[string]interface{}
 
 type umapStructSlice interface {
 	append(v interface{})
+	UntypedSlice() interface{}
 }
 
 func newUmap(d []byte) (umap, error) {

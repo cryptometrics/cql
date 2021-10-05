@@ -72,6 +72,12 @@ models:
     model: cql/model.CoinbaseCurrency
   CoinbaseCurrencyDetails:
     model: cql/model.CoinbaseCurrencyDetails
+  CoinbaseDepositAddressInfo:
+    model: cql/model.CoinbaseDepositAddressInfo
+  CoinbaseDepositAddressWarning:
+    model: cql/model.CoinbaseDepositAddressWarning
+  CoinbaseDepositAddress:
+    model: cql/model.CoinbaseDepositAddress
   CoinbaseOrder:
     model: cql/model.CoinbaseOrder
   CoinbaseProduct:

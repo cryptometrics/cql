@@ -11,6 +11,8 @@ import (
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/sirupsen/logrus"
 )
 
 // proC is the coinbase pro client
@@ -40,8 +42,9 @@ func (cb *proC) generateSig(secret, message string) (string, error) {
 }
 
 // generageMsg makes the message to be signed
-func (cb *proC) generageMsg(m client.Method, endpoint, timestamp string, buf []byte) string {
-	return fmt.Sprintf("%s%s%s%s", timestamp, m.String(), endpoint, string(buf))
+func (cb *proC) generageMsg(creq client.Request, timestamp string) string {
+	return fmt.Sprintf("%s%s%s%s", timestamp, creq.Method.String(),
+		creq.Endpoint.Get(creq.EndpointArgs), string(creq.Body.Buf))
 }
 
 // setHeaders sets the headers for a coinbase api request, in particular:
@@ -50,24 +53,28 @@ func (cb *proC) generageMsg(m client.Method, endpoint, timestamp string, buf []b
 // - CB-ACCESS-SIGN The base64-encoded signature (see Signing a Message).
 // - CB-ACCESS-TIMESTAMP A timestamp for your request.
 // - CB-ACCESS-PASSPHRASE The passphrase you specified when creating the API key.
-func (cb *proC) setHeaders(req *http.Request, m client.Method, endpoint string, buf []byte) (e error) {
+func (cb *proC) setHeaders(hreq *http.Request, creq client.Request) (e error) {
 	// TODO depricate getting key/passphrase/secret with secret keeper
 	var (
 		key        = env.CoinbaseProAccessKey.Get()
 		passphrase = env.CoinbaseProAccessPassphrase.Get()
 		secret     = env.CoinbaseProSecret.Get()
 		timestamp  = strconv.FormatInt(time.Now().Unix(), 10)
-		msg        = cb.generageMsg(m, endpoint, timestamp, buf)
+		msg        = cb.generageMsg(creq, timestamp)
 	)
 	var sig string
 	sig, e = cb.generateSig(secret, msg)
-	req.Header.Add("Accept", "application/json")
-	req.Header.Add("Content-Type", "application/json")
-	req.Header.Add("User-Agent", "Go coinbase Pro Client 1.0")
-	req.Header.Add("CB-ACCESS-KEY", key)
-	req.Header.Add("CB-ACCESS-PASSPHRASE", passphrase)
-	req.Header.Add("CB-ACCESS-TIMESTAMP", timestamp)
-	req.Header.Add("CB-ACCESS-SIGN", sig)
+	hreq.Header.Add("accept", "application/json")
+	hreq.Header.Add("content-type", "application/json")
+	// hreq.Header.Add("User-Agent", "Go coinbase Pro Client 1.0")
+	hreq.Header.Add("cb-access-key", key)
+	hreq.Header.Add("cb-access-passphrase", passphrase)
+	hreq.Header.Add("cb-access-sign", sig)
+	hreq.Header.Add("cb-access-timestamp", timestamp)
+
+	logrus.Debug(creq.Logf(
+		`{Client:{Access:{Key:%s,Passphrase:%s,Timestamp:%s,Sign:%s}}}`, key,
+		passphrase, timestamp, sig))
 	return
 }
 
@@ -75,16 +82,19 @@ func (cb *proC) setHeaders(req *http.Request, m client.Method, endpoint string, 
 // endpoint.
 //
 // TODO make data-compatible for non-get requests
-func (cb *proC) request(m client.Method, endpoint string, buf []byte) (*http.Response, error) {
-	fullURL := env.CoinbaseProURL.Get() + endpoint
-	req, err := http.NewRequest(m.String(), fullURL, bytes.NewReader(buf))
+func (cb *proC) Do(creq client.Request) (*http.Response, error) {
+	uri := env.CoinbaseProURL.Get() + creq.Endpoint.Get(creq.EndpointArgs)
+
+	logrus.Debug(creq.Logf(`{Client:{URI:%s}}`, uri))
+
+	hreq, err := http.NewRequest(creq.Method.String(), uri, bytes.NewReader(creq.Body.Buf))
 	if err != nil {
 		return nil, err
 	}
-	if err := cb.setHeaders(req, m, endpoint, buf); err != nil {
+	if err := cb.setHeaders(hreq, creq); err != nil {
 		return nil, err
 	}
-	return cb.client.Do(req)
+	return cb.client.Do(hreq)
 }
 
 // Connect creats a new client instance
@@ -96,15 +106,6 @@ func (cb *proC) Connect() error {
 // Identifier identifies requests
 func (cb *proC) Identifier() string {
 	return "Coinbase Pro"
-}
-
-// Get makes and http GET request, given a an endpoint
-func (cb *proC) Get(endpoint string) (*http.Response, error) {
-	return cb.request(client.GET, endpoint, nil)
-}
-
-func (cb *proC) Post(endpoint string, buf []byte) (*http.Response, error) {
-	return cb.request(client.POST, endpoint, buf)
 }
 
 // newClient returns a new client interface.  This method is what we call a

@@ -28,6 +28,10 @@ type Query {
     opts: CoinbaseAccountTransferOptions
   ): [CoinbaseAccountTransfer]
 
+  """
+  Gets all the user's available Coinbase wallets (These are the wallets/accounts
+  that are used for buying and selling on www.coinbase.com)
+  """
   coinbaseWallets(_filler_: String): [CoinbaseWallet]
 
   ####
@@ -115,6 +119,11 @@ type Query {
 }
 
 type Mutation {
+  """
+  Generates a one-time crypto address for depositing crypto.
+  """
+  coinbaseGenerateCryptoAddress(id: String!): CoinbaseDepositAddress
+
   """
   You can place two types of orders: limit and market. Orders can only be placed
   if your account has sufficient funds. Each profile can have a maximum of 500

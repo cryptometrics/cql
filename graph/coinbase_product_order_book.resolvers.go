@@ -7,15 +7,14 @@ import (
 	"context"
 	"cql/graph/generated"
 	"cql/model"
-	"fmt"
 )
 
 func (r *coinbaseProductOrderBookResolver) Bids(ctx context.Context, obj *model.CoinbaseProductOrderBook) ([]*model.CoinbaseProductOrderBookBidAsk, error) {
-	panic(fmt.Errorf("not implemented"))
+	return obj.Bids.UntypedSlice().([]*model.CoinbaseProductOrderBookBidAsk), nil
 }
 
 func (r *coinbaseProductOrderBookResolver) Asks(ctx context.Context, obj *model.CoinbaseProductOrderBook) ([]*model.CoinbaseProductOrderBookBidAsk, error) {
-	panic(fmt.Errorf("not implemented"))
+	return obj.Asks.UntypedSlice().([]*model.CoinbaseProductOrderBookBidAsk), nil
 }
 
 // CoinbaseProductOrderBook returns generated.CoinbaseProductOrderBookResolver implementation.

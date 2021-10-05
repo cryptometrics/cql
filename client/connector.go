@@ -38,12 +38,7 @@ func (conn Connector) fetch(req *Request) (*http.Response, error) {
 	req.logHTTPRequestBody()
 
 	var res *http.Response
-	switch req.Method {
-	case GET:
-		res, err = c.Get(req.Endpoint.Get(req.EndpointArgs))
-	case POST:
-		res, err = c.Post(req.Endpoint.Get(req.EndpointArgs), req.Body.Buf)
-	}
+	res, err = c.Do(*req)
 	if err != nil {
 		return nil, err
 	}

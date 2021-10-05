@@ -1,0 +1,29 @@
+type CoinbaseDepositAddressInfo {
+  address: String
+  destinationTag: String
+}
+
+type CoinbaseDepositAddressWarning {
+  title: String
+  details: String
+  imageURL: String
+}
+
+type CoinbaseDepositAddress {
+  id: String
+  address: String
+  addressInfo: CoinbaseDepositAddressInfo
+  name: String
+  createdAt: Time
+  updatedAt: Time
+  network: String
+  uriScheme: String
+  resource: String
+  resourcePath: String
+  warnings: [CoinbaseDepositAddressWarning]
+  legacyAddress: String
+  destinationTag: String
+  depositURI: String
+  callbackURL: String
+  exchagneDepositAddress: Boolean
+}

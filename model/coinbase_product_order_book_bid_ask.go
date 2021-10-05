@@ -54,3 +54,11 @@ func (quote *CoinbaseProductOrderBookBidAsk) UnmarshalJSON(d []byte) error {
 
 	return nil
 }
+
+func (quotes *CoinbaseProductOrderBookBidAsks) UntypedSlice() interface{} {
+	q := []*CoinbaseProductOrderBookBidAsk{}
+	for _, quote := range *quotes {
+		q = append(q, &quote)
+	}
+	return q
+}

@@ -10,6 +10,10 @@ import (
 	model1 "cql/model"
 )
 
+func (r *mutationResolver) CoinbaseGenerateCryptoAddress(ctx context.Context, id string) (*model1.CoinbaseDepositAddress, error) {
+	return coinbase.NewCoinbaseAccounts().GenerateCryptoAddress(id)
+}
+
 func (r *mutationResolver) CreateCoinbaseLimitOrder(ctx context.Context, input *model1.CoinbaseOrderInput) (*model1.CoinbaseOrder, error) {
 	private := coinbase.NewPrivate()
 	return private.CreateLimitOrder(input)
