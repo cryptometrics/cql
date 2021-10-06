@@ -48,17 +48,31 @@ func (mr *MockCMockRecorder) Connect() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Connect", reflect.TypeOf((*MockC)(nil).Connect))
 }
 
-// Get mocks base method.
-func (m *MockC) Get(endpoint string) (*http.Response, error) {
+// Do mocks base method.
+func (m *MockC) Do(arg0 Request) (*http.Response, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Get", endpoint)
+	ret := m.ctrl.Call(m, "Do", arg0)
 	ret0, _ := ret[0].(*http.Response)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// Get indicates an expected call of Get.
-func (mr *MockCMockRecorder) Get(endpoint interface{}) *gomock.Call {
+// Do indicates an expected call of Do.
+func (mr *MockCMockRecorder) Do(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockC)(nil).Get), endpoint)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Do", reflect.TypeOf((*MockC)(nil).Do), arg0)
+}
+
+// Identifier mocks base method.
+func (m *MockC) Identifier() string {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Identifier")
+	ret0, _ := ret[0].(string)
+	return ret0
+}
+
+// Identifier indicates an expected call of Identifier.
+func (mr *MockCMockRecorder) Identifier() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Identifier", reflect.TypeOf((*MockC)(nil).Identifier))
 }

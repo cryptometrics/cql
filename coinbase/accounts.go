@@ -18,6 +18,10 @@ func NewAccounts(conn client.Connector) *Accounts {
 	return accounts
 }
 
+func (accounts *Accounts) fetchAll() *client.FetchResponse {
+	return accounts.conn.Fetch(&client.Request{Method: client.GET, Endpoint: AccountsEP})
+}
+
 // All lists trading accounts from the profile of the API key.
 //
 // Your trading accounts are separate from your Coinbase accounts.  For
@@ -38,8 +42,16 @@ func NewAccounts(conn client.Connector) *Accounts {
 //
 // source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_getaccounts
 func (accounts *Accounts) All() (m []*model.CoinbaseAccount, err error) {
-	return m, accounts.conn.Decode(&client.Request{
-		Method: client.GET, Endpoint: AccountsEP}, &m)
+	return m, accounts.fetchAll().Assign(&m).Error
+}
+
+func (accounts *Accounts) fetchSingle(id string) *client.FetchResponse {
+	return accounts.conn.Fetch(&client.Request{
+		Method:   client.GET,
+		Endpoint: AccountEP,
+		EndpointArgs: client.EndpointArgs{
+			"id": &client.EndpointArg{PathParam: &id}},
+	})
 }
 
 // Find returns information for a single account. Use this endpoint when you
@@ -49,23 +61,11 @@ func (accounts *Accounts) All() (m []*model.CoinbaseAccount, err error) {
 //
 // source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_getaccount
 func (accounts *Accounts) Find(id string) (m *model.CoinbaseAccount, err error) {
-	return m, accounts.conn.Decode(&client.Request{
-		Method:   client.GET,
-		Endpoint: AccountEP,
-		EndpointArgs: client.EndpointArgs{
-			"id": &client.EndpointArg{PathParam: &id}},
-	}, &m)
+	return m, accounts.fetchSingle(id).Assign(&m).Error
 }
 
-// Holds returns a list of holds of an account that belong to the same profile
-// as the API key. Holds are placed on an account for any active orders or
-// pending withdraw requests. As an order is filled, the hold amount is updated.
-// If an order is canceled, any remaining hold is removed. For a withdraw, once
-// it is completed, the hold is removed.
-//
-// source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_getaccountholds
-func (account *Accounts) Holds(id string, opts *model.CoinbaseAccountHoldOptions) (m []*model.CoinbaseAccountHold, err error) {
-	return m, account.conn.Decode(&client.Request{
+func (account *Accounts) fetchHolds(id string, opts *model.CoinbaseAccountHoldOptions) *client.FetchResponse {
+	return account.conn.Fetch(&client.Request{
 		Method:   client.GET,
 		Endpoint: AccountHoldsEP,
 		EndpointArgs: client.EndpointArgs{
@@ -89,17 +89,22 @@ func (account *Accounts) Holds(id string, opts *model.CoinbaseAccountHoldOptions
 				return
 			}()},
 		},
-	}, &m)
+	})
 }
 
-// Ledger lists ledger activity for an account. This includes anything that
-// would affect the accounts balance - transfers, trades, fees, etc.
+// Holds returns a list of holds of an account that belong to the same profile
+// as the API key. Holds are placed on an account for any active orders or
+// pending withdraw requests. As an order is filled, the hold amount is updated.
+// If an order is canceled, any remaining hold is removed. For a withdraw, once
+// it is completed, the hold is removed.
 //
-// This endpoint requires either the "view" or "trade" permission.
-//
-// source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_getaccountledger
-func (accounts *Accounts) Ledger(id string, opts *model.CoinbaseAccountLedgerOptions) (m []*model.CoinbaseAccountLedger, err error) {
-	return m, accounts.conn.Decode(&client.Request{
+// source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_getaccountholds
+func (account *Accounts) Holds(id string, opts *model.CoinbaseAccountHoldOptions) (m []*model.CoinbaseAccountHold, err error) {
+	return m, account.fetchHolds(id, opts).Assign(&m).Error
+}
+
+func (accounts *Accounts) fetchLedger(id string, opts *model.CoinbaseAccountLedgerOptions) *client.FetchResponse {
+	return accounts.conn.Fetch(&client.Request{
 		Method:   client.GET,
 		Endpoint: AccountLedgerEP,
 		EndpointArgs: client.EndpointArgs{
@@ -141,14 +146,21 @@ func (accounts *Accounts) Ledger(id string, opts *model.CoinbaseAccountLedgerOpt
 				return
 			}()},
 		},
-	}, &m)
+	})
 }
 
-// Transfers lists past withdrawals and deposits for an account.
+// Ledger lists ledger activity for an account. This includes anything that
+// would affect the accounts balance - transfers, trades, fees, etc.
 //
-// source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_getaccounttransfers
-func (account *Accounts) Transfers(id string, opts *model.CoinbaseAccountTransferOptions) (m []*model.CoinbaseAccountTransfer, err error) {
-	return m, account.conn.Decode(&client.Request{
+// This endpoint requires either the "view" or "trade" permission.
+//
+// source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_getaccountledger
+func (accounts *Accounts) Ledger(id string, opts *model.CoinbaseAccountLedgerOptions) (m []*model.CoinbaseAccountLedger, err error) {
+	return m, accounts.fetchLedger(id, opts).Assign(&m).Error
+}
+
+func (account *Accounts) fetchTransfers(id string, opts *model.CoinbaseAccountTransferOptions) *client.FetchResponse {
+	return account.conn.Fetch(&client.Request{
 		Method:   client.GET,
 		Endpoint: AccountTransfersEP,
 		EndpointArgs: client.EndpointArgs{
@@ -178,5 +190,12 @@ func (account *Accounts) Transfers(id string, opts *model.CoinbaseAccountTransfe
 				return
 			}()},
 		},
-	}, &m)
+	})
+}
+
+// Transfers lists past withdrawals and deposits for an account.
+//
+// source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_getaccounttransfers
+func (account *Accounts) Transfers(id string, opts *model.CoinbaseAccountTransferOptions) (m []*model.CoinbaseAccountTransfer, err error) {
+	return m, account.fetchTransfers(id, opts).Assign(&m).Error
 }

@@ -19,6 +19,15 @@ func NewCoinbaseAccounts(conn client.Connector) *CoinbaseAccounts {
 	return coinbaseAccounts
 }
 
+func (accounts *CoinbaseAccounts) fetchGenerateCryptoAddress(id string) *client.FetchResponse {
+	return accounts.conn.Fetch(&client.Request{
+		Method:   client.POST,
+		Endpoint: CoinbaseAddressesEP,
+		EndpointArgs: client.EndpointArgs{
+			"id": &client.EndpointArg{PathParam: &id}},
+	})
+}
+
 // GenerateCryptoAddress will generates a one-time crypto address for depositing
 // crypto.
 //
@@ -31,12 +40,14 @@ func NewCoinbaseAccounts(conn client.Connector) *CoinbaseAccounts {
 //
 // source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postcoinbaseaccountaddresses
 func (accounts *CoinbaseAccounts) GenerateCryptoAddress(id string) (m *model.CoinbaseDepositAddress, err error) {
-	return m, accounts.conn.Decode(&client.Request{
-		Method:   client.POST,
-		Endpoint: CoinbaseAddressesEP,
-		EndpointArgs: client.EndpointArgs{
-			"id": &client.EndpointArg{PathParam: &id}},
-	}, &m)
+	return m, accounts.fetchGenerateCryptoAddress(id).Assign(&m).Error
+}
+
+func (accounts *CoinbaseAccounts) fetchWallets() *client.FetchResponse {
+	return accounts.conn.Fetch(&client.Request{
+		Method:   client.GET,
+		Endpoint: CoinbaseAccountsEP,
+	})
 }
 
 // All lists all the user's available Coinbase wallets (These are the
@@ -44,8 +55,5 @@ func (accounts *CoinbaseAccounts) GenerateCryptoAddress(id string) (m *model.Coi
 //
 // source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_getcoinbaseaccounts
 func (accounts *CoinbaseAccounts) Wallets() (m []*model.CoinbaseWallet, err error) {
-	return m, accounts.conn.Decode(&client.Request{
-		Method:   client.GET,
-		Endpoint: CoinbaseAccountsEP,
-	}, &m)
+	return m, accounts.fetchWallets().Assign(&m).Error
 }

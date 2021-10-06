@@ -1,30 +1,13 @@
 package client
 
 import (
-	"cql/model"
 	"encoding/json"
-	"fmt"
-	"io"
-	"log"
 	"net/http"
 )
 
 // connector is a client connector, such as the New function.  It's broken into
 // it's own type for decoding purposes.
 type Connector func() (C, error)
-
-// parseErrorMessage takes a response and a status and builder an error message
-// to send to the server
-func parseErrorMessage(res *http.Response, status int) error {
-	msg := model.CoinbaseMessage{}
-	decoder := json.NewDecoder(res.Body)
-	if err := decoder.Decode(&msg); err != nil {
-		return err
-	}
-	msg.Status = res.Status
-	msg.StatusCode = http.StatusText(status)
-	return fmt.Errorf("%+v", msg)
-}
 
 // fetch uses a client connector and an endpiont to fetch data from the client
 func (conn Connector) fetch(req *Request) (*http.Response, error) {
@@ -47,16 +30,9 @@ func (conn Connector) fetch(req *Request) (*http.Response, error) {
 	return res, nil
 }
 
-func printBody(res *http.Response) {
-	b, err := io.ReadAll(res.Body)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	fmt.Println(string(b))
-}
-
 // decode will fetch the data and then try to decode it into v, which should be
 // the pointer to a struct
+// ! deprecated
 func (conn Connector) Decode(req *Request, v interface{}) error {
 	req.generateSlug()
 	res, err := conn.fetch(req)
@@ -74,4 +50,30 @@ func (conn Connector) Decode(req *Request, v interface{}) error {
 		return cb(v, req)
 	}
 	return nil
+}
+
+// decode will fetch the data and then try to decode it into v, which should be
+// the pointer to a struct
+func (conn Connector) Fetch(req *Request) *FetchResponse {
+	fetchResponse := newFetchResponse()
+
+	// Generate the slug for identifying requests in async logging (if that ever
+	// happens)
+	req.generateSlug()
+
+	// Then fetch the request from the API
+	res, err := conn.fetch(req)
+	if err != nil {
+		return fetchResponse.setError(err)
+	}
+
+	// Validate the response, ensuring that there are no error codes or suspicious
+	// messages
+	if err := req.validateResponse(res); err != nil {
+		return fetchResponse.setError(err)
+	}
+
+	// If everything works out, set the body and the request on the fetch response
+	// to be used as needed.
+	return fetchResponse.setBody(res.Body).setReq(req)
 }

@@ -9,12 +9,14 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+type RequestCallback func(interface{}, *Request) error
+
 type Request struct {
 	Method       Method
 	Endpoint     Endpoint
 	EndpointArgs EndpointArgs
 	Body         Body
-	Callback     func(interface{}, *Request) error
+	Callback     RequestCallback
 
 	// slug is an 8 character randomly generated identifiery for the body, to be
 	// used to identify request info in logging.
