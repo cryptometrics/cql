@@ -220,6 +220,43 @@ func TestCoinbaseAccountJSON(t *testing.T) {
 	})
 }
 
+func TestCoinbaseCurrencyConversionUnmarshalJSON(t *testing.T) {
+	g := Goblin(t)
+	g.Describe("CoinbaseCurrencyConversion#UnmarshalJSON", func() {
+		test := func(desc string, buf []byte, expected CoinbaseCurrencyConversion) {
+			g.It(desc, func() {
+				v := CoinbaseCurrencyConversion{}
+				if err := json.Unmarshal(buf, &v); err != nil {
+					panic(err)
+				}
+				g.Assert(v).Equal(expected)
+			})
+		}
+		var buf []byte
+		var expected CoinbaseCurrencyConversion
+
+		buf = []byte(`{
+			"id": "c5aaf125-d99e-41fe-82ea-ad068038b278",
+			"amount": "11.00000000",
+			"from_account_id": "5dcc143c-fb96-4f72-aebf-a165e3d29b53",
+			"to_account_id": "6100247f-90fc-4335-ac17-d99839f0c909",
+			"from": "USDC",
+			"to": "USD"
+		}`)
+
+		expected = CoinbaseCurrencyConversion{
+			ID:            "c5aaf125-d99e-41fe-82ea-ad068038b278",
+			Amount:        11.00000000,
+			FromAccountID: "5dcc143c-fb96-4f72-aebf-a165e3d29b53",
+			ToAccountID:   "6100247f-90fc-4335-ac17-d99839f0c909",
+			From:          "USDC",
+			To:            "USD",
+		}
+
+		test("all fields", buf, expected)
+	})
+}
+
 func TestCoinbaseCurrencyUnmarshalJSON(t *testing.T) {
 	g := Goblin(t)
 	g.Describe("CoinbaseCurrency#UnmarshalJSON", func() {

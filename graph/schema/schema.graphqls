@@ -29,6 +29,14 @@ type Query {
   ): [CoinbaseAccountTransfer]
 
   """
+  Gets a currency conversion by id (i.e. USD -> USDC).
+  """
+  coinbaseCurrencyConversion(
+    id: String!
+    opts: CoinbaseCurrencyConversionOpts
+  ): CoinbaseCurrencyConversion
+
+  """
   Gets all the user's available Coinbase wallets (These are the wallets/accounts
   that are used for buying and selling on www.coinbase.com)
   """
@@ -119,6 +127,20 @@ type Query {
 }
 
 type Mutation {
+  """
+  Converts funds from from currency to to currency. Funds are converted on the from account in the
+  profile_id profile.
+
+  A successful conversion will be assigned a conversion id. The corresponding ledger entries for a
+  conversion will reference this conversion id.
+  """
+  coinbaseConvertCurrency(
+    from: String!
+    to: String!
+    amount: Float!
+    opts: CoinbaseCurrencyConversionOpts
+  ): CoinbaseCurrencyConversion
+
   """
   Generates a one-time crypto address for depositing crypto.
   """

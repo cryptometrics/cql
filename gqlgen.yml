@@ -68,6 +68,8 @@ models:
     model: cql/model.CoinbaseAccount
   CoinbaseBankCountry:
     model: cql/model.CoinbaseBankCountry
+  CoinbaseCurrencyConversion:
+    model: cql/model.CoinbaseCurrencyConversion
   CoinbaseCurrency:
     model: cql/model.CoinbaseCurrency
   CoinbaseCurrencyDetails:

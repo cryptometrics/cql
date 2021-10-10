@@ -17,29 +17,21 @@ type CoinbaseCurrencyConversion struct {
 // UnmarshalJSON is an override required to parst strings from coinbases api
 // into floats, specifically min_size and max_precision
 func (conversion *CoinbaseCurrencyConversion) UnmarshalJSON(d []byte) error {
-	_, err := serial.NewJSONTransform(d)
+	data, err := serial.NewJSONTransform(d)
 	if err != nil {
 		return err
 	}
 
-	// data.UnmarshalString("id", &account.ID)
-	// data.UnmarshalString("currency", &account.Currency)
-	// data.UnmarshalString("profile_id", &account.ProfileID)
-	// data.UnmarshalBool("trading_enabled", &account.TradingEnabled)
+	data.UnmarshalString("id", &conversion.ID)
+	data.UnmarshalString("from_account_id", &conversion.FromAccountID)
+	data.UnmarshalString("to_account_id", &conversion.ToAccountID)
+	data.UnmarshalString("from", &conversion.From)
+	data.UnmarshalString("to", &conversion.To)
 
-	// err = data.UnmarshalFloatFromString("balance", &account.Balance)
-	// if err != nil {
-	// 	return err
-	// }
-
-	// err = data.UnmarshalFloatFromString("available", &account.Available)
-	// if err != nil {
-	// 	return err
-	// }
-	// err = data.UnmarshalFloatFromString("hold", &account.Hold)
-	// if err != nil {
-	// 	return err
-	// }
+	err = data.UnmarshalFloatFromString("amount", &conversion.Amount)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

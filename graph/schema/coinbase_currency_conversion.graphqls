@@ -1,0 +1,13 @@
+"""
+CoinbaseCurrencyConversion corresponds with a successful conversion, which will be assigned a
+conversion id. The corresponding ledger entries for a conversion will reference this conversion
+id.
+"""
+type CoinbaseCurrencyConversion {
+  id: String
+  amount: Float
+  fromAccountID: String
+  toAccountID: String
+  from: String
+  to: String
+}

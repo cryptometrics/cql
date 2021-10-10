@@ -46,6 +46,11 @@ type CoinbaseAccountTransferOptions struct {
 	Type  *string `json:"type"`
 }
 
+type CoinbaseCurrencyConversionOpts struct {
+	ProfileID *string `json:"profileID"`
+	Nonce     *string `json:"nonce"`
+}
+
 type CoinbaseOrderInput struct {
 	// buy or sell
 	Side scalar.OrderSide `json:"side"`

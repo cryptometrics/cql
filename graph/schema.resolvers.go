@@ -10,6 +10,10 @@ import (
 	model1 "cql/model"
 )
 
+func (r *mutationResolver) CoinbaseConvertCurrency(ctx context.Context, from string, to string, amount float64, opts *model1.CoinbaseCurrencyConversionOpts) (*model1.CoinbaseCurrencyConversion, error) {
+	return coinbase.NewConversion(coinbase.DefaultClient).Make(from, to, amount, opts)
+}
+
 func (r *mutationResolver) CoinbaseGenerateCryptoAddress(ctx context.Context, id string) (*model1.CoinbaseDepositAddress, error) {
 	return coinbase.NewCoinbaseAccounts(coinbase.DefaultClient).GenerateCryptoAddress(id)
 }
@@ -37,6 +41,10 @@ func (r *queryResolver) CoinbaseAccounts(ctx context.Context, test *string) ([]*
 
 func (r *queryResolver) CoinbaseAccountTransfer(ctx context.Context, id string, opts *model1.CoinbaseAccountTransferOptions) ([]*model1.CoinbaseAccountTransfer, error) {
 	return coinbase.NewAccounts(coinbase.DefaultClient).Transfers(id, opts)
+}
+
+func (r *queryResolver) CoinbaseCurrencyConversion(ctx context.Context, id string, opts *model1.CoinbaseCurrencyConversionOpts) (*model1.CoinbaseCurrencyConversion, error) {
+	return coinbase.NewConversion(coinbase.DefaultClient).Get(id, opts)
 }
 
 func (r *queryResolver) CoinbaseWallets(ctx context.Context, filler *string) ([]*model1.CoinbaseWallet, error) {
