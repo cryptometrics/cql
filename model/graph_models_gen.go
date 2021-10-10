@@ -51,6 +51,13 @@ type CoinbaseCurrencyConversionOpts struct {
 	Nonce     *string `json:"nonce"`
 }
 
+type CoinbaseDepositInput struct {
+	Amount            float64 `json:"amount"`
+	CoinbaseAccountID string  `json:"coinbaseAccountID"`
+	Currency          string  `json:"currency"`
+	ProfileID         *string `json:"profileID"`
+}
+
 type CoinbaseOrderInput struct {
 	// buy or sell
 	Side scalar.OrderSide `json:"side"`

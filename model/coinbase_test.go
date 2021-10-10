@@ -293,12 +293,12 @@ func TestCoinbaseCurrencyUnmarshalJSON(t *testing.T) {
 				"group_types": [
 					"btc",
 					"crypto"
-				]
-			},
-			"display_name": "",
-			"processing_time_seconds": 0,
-			"min_withdrawal_amount": 0,
-			"max_withdrawal_amount": 1000
+				],
+				"display_name": "test",
+				"processing_time_seconds": 1.1,
+				"min_withdrawal_amount": 1.2,
+				"max_withdrawal_amount": 1.3
+			}
 		}`)
 		details := CoinbaseCurrencyDetails{
 			Type:                  "crypto",
@@ -309,20 +309,20 @@ func TestCoinbaseCurrencyUnmarshalJSON(t *testing.T) {
 			CryptoTransactionLink: "moop",
 			PushPaymentMethods:    []string{"crypto"},
 			GroupTypes:            []string{"btc", "crypto"},
+			DisplayName:           "test",
+			ProcessingTimeSeconds: 1.1,
+			MaxWithdrawalAmount:   1.3,
+			MinWithdrawalAmount:   1.2,
 		}
 		expected = CoinbaseCurrency{
-			ID:                    "BTC",
-			Name:                  "Bitcoin",
-			MinSize:               0.00000001,
-			Status:                "online",
-			Message:               "",
-			MaxPrecision:          0.00000001,
-			ConvertibleTo:         []string{"USDC"},
-			Details:               details,
-			DisplayName:           "",
-			ProcessingTimeSeconds: 0,
-			MinWithdrawalAmount:   0,
-			MaxWithdrawalAmount:   1000,
+			ID:            "BTC",
+			Name:          "Bitcoin",
+			MinSize:       0.00000001,
+			Status:        "online",
+			Message:       "",
+			MaxPrecision:  0.00000001,
+			ConvertibleTo: []string{"USDC"},
+			Details:       details,
 		}
 		test("all fields", buf, expected)
 	})
@@ -404,6 +404,41 @@ func TestCoinbaseDepositAddressUnmarshalJSON(t *testing.T) {
 			panic(err)
 		}
 
+		test("all fields", buf, expected)
+	})
+}
+
+func TestCoinbaseDeposit(t *testing.T) {
+	g := Goblin(t)
+	g.Describe("CoinbaseDeposit#UnmarshalJSON", func() {
+		test := func(desc string, buf []byte, expected CoinbaseDeposit) {
+			g.It(desc, func() {
+				v := CoinbaseDeposit{}
+				if err := json.Unmarshal(buf, &v); err != nil {
+					panic(err)
+				}
+				g.Assert(v).Equal(expected)
+			})
+		}
+		var buf []byte
+		var expected CoinbaseDeposit
+
+		buf = []byte(`{
+			"id": "string",
+			"amount": "1.1",
+			"currency": "string",
+			"payout_at": "string",
+			"fee": "1.2",
+			"subtotal": "1.3"
+		}`)
+		expected = CoinbaseDeposit{
+			ID:       "string",
+			Amount:   1.1,
+			Currency: "string",
+			PayoutAt: "string",
+			Fee:      1.2,
+			Subtotal: 1.3,
+		}
 		test("all fields", buf, expected)
 	})
 }

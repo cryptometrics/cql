@@ -37,6 +37,17 @@ type Query {
   ): CoinbaseCurrencyConversion
 
   """
+  Gets a list of all known currencies.
+  Note: Not all currencies may be currently in use for trading.
+  """
+  coinbaseCurrencies: [CoinbaseCurrency]
+
+  """
+  Gets a single currency by id.
+  """
+  coinbaseCurrency(id: String!): CoinbaseCurrency
+
+  """
   Gets all the user's available Coinbase wallets (These are the wallets/accounts
   that are used for buying and selling on www.coinbase.com)
   """
@@ -49,8 +60,7 @@ type Query {
   """
   clinbaseClientOrder(clientOID: String!): CoinbaseOrder
 
-  coinbaseCurrencies(test: String): [CoinbaseCurrency]
-  coinbaseCurrency(id: String!): CoinbaseCurrency
+  # coinbaseCurrency(id: String!): CoinbaseCurrency
 
   """
   Get a single order by order id from the profile that the API key belongs to.
@@ -145,6 +155,11 @@ type Mutation {
   Generates a one-time crypto address for depositing crypto.
   """
   coinbaseGenerateCryptoAddress(id: String!): CoinbaseDepositAddress
+
+  """
+  Deposits funds from a www.coinbase.com wallet to the specified profile_id.
+  """
+  coinbaseDepositFromAccount(input: CoinbaseDepositInput): CoinbaseDeposit
 
   """
   You can place two types of orders: limit and market. Orders can only be placed

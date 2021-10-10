@@ -80,6 +80,8 @@ models:
     model: cql/model.CoinbaseDepositAddressWarning
   CoinbaseDepositAddress:
     model: cql/model.CoinbaseDepositAddress
+  CoinbaseDeposit:
+    model: cql/model.CoinbaseDeposit
   CoinbaseOrder:
     model: cql/model.CoinbaseOrder
   CoinbaseProduct:

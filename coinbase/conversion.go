@@ -59,8 +59,8 @@ func (conversions *Conversions) fetchMake(from, to string, amount float64, opts 
 	})
 }
 
-// Get gets currency conversion by id (i.e. USD -> USDC).
-func (conversions *Conversions) Get(id string, opts *model.CoinbaseCurrencyConversionOpts) (m *model.CoinbaseCurrencyConversion, err error) {
+// Find gets currency conversion by id (i.e. USD -> USDC).
+func (conversions *Conversions) Find(id string, opts *model.CoinbaseCurrencyConversionOpts) (m *model.CoinbaseCurrencyConversion, err error) {
 	return m, conversions.fetchConversion(id, opts).Assign(&m).Error
 }
 

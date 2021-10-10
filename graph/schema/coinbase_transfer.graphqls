@@ -1,0 +1,15 @@
+type CoinbaseDeposit {
+  id: String
+  amount: Float
+  currency: String
+  payoutAt: String
+  fee: Float
+  subtotal: Float
+}
+
+input CoinbaseDepositInput {
+  amount: Float!
+  coinbaseAccountID: String!
+  currency: String!
+  profileID: String
+}

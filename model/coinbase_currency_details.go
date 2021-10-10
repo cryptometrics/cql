@@ -11,4 +11,8 @@ type CoinbaseCurrencyDetails struct {
 	CryptoTransactionLink string   `json:"crypto_transaction_link"`
 	PushPaymentMethods    []string `json:"push_payment_methods"`
 	GroupTypes            []string `json:"group_types"`
+	DisplayName           string   `json:"display_name"`
+	ProcessingTimeSeconds float64  `json:"processing_time_seconds"`
+	MinWithdrawalAmount   float64  `json:"min_withdrawal_amount"`
+	MaxWithdrawalAmount   float64  `json:"max_withdrawal_amount"`
 }

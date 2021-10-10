@@ -12,11 +12,11 @@ import (
 	"gopkg.in/guregu/null.v3"
 )
 
-func TestCoinbaseConversionGet(t *testing.T) {
+func TestCoinbaseConversionFind(t *testing.T) {
 	logrus.SetOutput(ioutil.Discard)
 
 	g := Goblin(t)
-	g.Describe("CoinbaseConversion#Get", func() {
+	g.Describe("CoinbaseConversion#Find", func() {
 		clientCtrl := gomock.NewController(t)
 		defer clientCtrl.Finish()
 
@@ -42,7 +42,7 @@ func TestCoinbaseConversionGet(t *testing.T) {
 			},
 			assert: func(g *G, c client.Connector) {
 				conv := NewConversion(c)
-				m, err := conv.Get(id1, &model.CoinbaseCurrencyConversionOpts{
+				m, err := conv.Find(id1, &model.CoinbaseCurrencyConversionOpts{
 					ProfileID: null.StringFrom(pid1).Ptr(),
 				})
 				if err != nil {

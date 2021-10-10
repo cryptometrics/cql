@@ -18,6 +18,10 @@ func (r *mutationResolver) CoinbaseGenerateCryptoAddress(ctx context.Context, id
 	return coinbase.NewCoinbaseAccounts(coinbase.DefaultClient).GenerateCryptoAddress(id)
 }
 
+func (r *mutationResolver) CoinbaseDepositFromAccount(ctx context.Context, input *model1.CoinbaseDepositInput) (*model1.CoinbaseDeposit, error) {
+	return coinbase.NewTransfer(coinbase.DefaultClient).DepositFromCoinbaseAccount(input)
+}
+
 func (r *mutationResolver) CreateCoinbaseLimitOrder(ctx context.Context, input *model1.CoinbaseOrderInput) (*model1.CoinbaseOrder, error) {
 	private := coinbase.NewPrivate()
 	return private.CreateLimitOrder(input)
@@ -44,7 +48,15 @@ func (r *queryResolver) CoinbaseAccountTransfer(ctx context.Context, id string, 
 }
 
 func (r *queryResolver) CoinbaseCurrencyConversion(ctx context.Context, id string, opts *model1.CoinbaseCurrencyConversionOpts) (*model1.CoinbaseCurrencyConversion, error) {
-	return coinbase.NewConversion(coinbase.DefaultClient).Get(id, opts)
+	return coinbase.NewConversion(coinbase.DefaultClient).Find(id, opts)
+}
+
+func (r *queryResolver) CoinbaseCurrencies(ctx context.Context) ([]*model1.CoinbaseCurrency, error) {
+	return coinbase.NewCurrency(coinbase.DefaultClient).All()
+}
+
+func (r *queryResolver) CoinbaseCurrency(ctx context.Context, id string) (*model1.CoinbaseCurrency, error) {
+	return coinbase.NewCurrency(coinbase.DefaultClient).Find(id)
 }
 
 func (r *queryResolver) CoinbaseWallets(ctx context.Context, filler *string) ([]*model1.CoinbaseWallet, error) {
@@ -54,16 +66,6 @@ func (r *queryResolver) CoinbaseWallets(ctx context.Context, filler *string) ([]
 func (r *queryResolver) ClinbaseClientOrder(ctx context.Context, clientOid string) (*model1.CoinbaseOrder, error) {
 	private := coinbase.NewPrivate()
 	return private.ClientOrder(clientOid)
-}
-
-func (r *queryResolver) CoinbaseCurrencies(ctx context.Context, test *string) ([]*model1.CoinbaseCurrency, error) {
-	md := coinbase.NewMarketData()
-	return md.Currencies()
-}
-
-func (r *queryResolver) CoinbaseCurrency(ctx context.Context, id string) (*model1.CoinbaseCurrency, error) {
-	md := coinbase.NewMarketData()
-	return md.Currency(id)
 }
 
 func (r *queryResolver) CoinbaseOrder(ctx context.Context, id string) (*model1.CoinbaseOrder, error) {
@@ -119,3 +121,13 @@ func (r *Resolver) Query() generated1.QueryResolver { return &queryResolver{r} }
 
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//    it when you're done.
+//  - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *mutationResolver) CoinbaseDeposit(ctx context.Context, input *model1.CoinbaseDepositInput) (*model1.CoinbaseDeposit, error) {
+	return coinbase.NewTransfer(coinbase.DefaultClient).DepositFromCoinbaseAccount(input)
+}

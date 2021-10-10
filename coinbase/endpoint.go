@@ -15,9 +15,11 @@ const (
 	AccountLedgerEP
 	AccountTransfersEP
 	CoinbaseAccountsEP
+	CoinbaseAccountDepositsEP
 	CoinbaseAddressesEP
 	CoinbaseConversionsEP
 	CoinbaseConversionEP
+	DepositsEP
 
 	///////
 	ClientOrderEP
@@ -62,6 +64,10 @@ func (endpoint Endpoint) Get(args client.EndpointArgs) string {
 			return "/coinbase-accounts"
 		},
 
+		CoinbaseAccountDepositsEP: func(_ client.EndpointArgs) string {
+			return client.JoinEndpointParts(DepositsEP.Get(nil), "coinbase-account")
+		},
+
 		CoinbaseAddressesEP: func(args client.EndpointArgs) string {
 			return fmt.Sprintf("%s/%s/addresses", CoinbaseAccountsEP.Get(nil), *args["id"].PathParam)
 		},
@@ -72,6 +78,10 @@ func (endpoint Endpoint) Get(args client.EndpointArgs) string {
 
 		CoinbaseConversionEP: func(_ client.EndpointArgs) string {
 			return fmt.Sprintf("%s/%s", CoinbaseConversionsEP.Get(nil), *args["id"].PathParam)
+		},
+
+		DepositsEP: func(_ client.EndpointArgs) string {
+			return "deposits"
 		},
 
 		////////

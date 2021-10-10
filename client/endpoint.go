@@ -1,6 +1,9 @@
 package client
 
-import "net/url"
+import (
+	"net/url"
+	"strings"
+)
 
 // EndpointArg is a wrapper to parse parameters for endpoints
 type EndpointArg struct {
@@ -27,4 +30,8 @@ func (args EndpointArgs) QueryPath() *url.URL {
 	}
 	u.RawQuery = q.Encode()
 	return u
+}
+
+func JoinEndpointParts(parts ...string) string {
+	return "/" + strings.Join(parts, "/")
 }
