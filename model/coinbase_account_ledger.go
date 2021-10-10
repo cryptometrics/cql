@@ -2,6 +2,7 @@ package model
 
 import (
 	"cql/scalar"
+	"cql/serial"
 	"time"
 )
 
@@ -24,31 +25,31 @@ type CoinbaseAccountLedger struct {
 // UnmarshalJSON is an override required to parst strings from coinbases api
 // into floats, specifically min_size and max_precision
 func (ledger *CoinbaseAccountLedger) UnmarshalJSON(d []byte) error {
-	data, err := newUmap(d)
+	data, err := serial.NewJSONTransform(d)
 	if err != nil {
 		return err
 	}
 
-	data.unmarshalString("id", &ledger.ID)
-	data.unmarshalEntryType("type", &ledger.Type)
+	data.UnmarshalString("id", &ledger.ID)
+	data.UnmarshalEntryType("type", &ledger.Type)
 
-	err = data.unmarshalTime(time.RFC3339Nano, "created_at", &ledger.CreatedAt)
+	err = data.UnmarshalTime(time.RFC3339Nano, "created_at", &ledger.CreatedAt)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshalFloatFromString("amount", &ledger.Amount)
+	err = data.UnmarshalFloatFromString("amount", &ledger.Amount)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshalFloatFromString("balance", &ledger.Balance)
+	err = data.UnmarshalFloatFromString("balance", &ledger.Balance)
 	if err != nil {
 		return err
 	}
 
 	ledger.Details = CoinbaseAccountLedgerDetails{}
-	if err := data.unmarshalStruct("details", &ledger.Details); err != nil {
+	if err := data.UnmarshalStruct("details", &ledger.Details); err != nil {
 		return err
 	}
 

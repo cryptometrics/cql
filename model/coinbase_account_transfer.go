@@ -1,6 +1,10 @@
 package model
 
-import "time"
+import (
+	"cql/serial"
+	"fmt"
+	"time"
+)
 
 var CoinbaseAccountTransferTimeLayout = "2006-01-02 15:04:05.999999999+00"
 
@@ -20,44 +24,45 @@ type CoinbaseAccountTransfer struct {
 // UnmarshalJSON is an override required to parst strings from coinbases api
 // into floats, specifically min_size and max_precision
 func (transfer *CoinbaseAccountTransfer) UnmarshalJSON(d []byte) error {
-	data, err := newUmap(d)
+	data, err := serial.NewJSONTransform(d)
 	if err != nil {
 		return err
 	}
 
-	data.unmarshalString("id", &transfer.ID)
-	data.unmarshalString("type", &transfer.Type)
-	data.unmarshalString("user_nonce", &transfer.UserNonce)
-	data.unmarshalFloatFromString("amount", &transfer.Amount)
+	data.UnmarshalString("id", &transfer.ID)
+	data.UnmarshalString("type", &transfer.Type)
+	data.UnmarshalString("user_nonce", &transfer.UserNonce)
+	data.UnmarshalFloatFromString("amount", &transfer.Amount)
 
-	err = data.unmarshalTime(CoinbaseAccountTransferTimeLayout,
+	err = data.UnmarshalTime(CoinbaseAccountTransferTimeLayout,
 		"created_at", &transfer.CreatedAt)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshalTime(CoinbaseAccountTransferTimeLayout,
+	err = data.UnmarshalTime(CoinbaseAccountTransferTimeLayout,
 		"completed_at", &transfer.CompletedAt)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshalTime(CoinbaseAccountTransferTimeLayout,
+	err = data.UnmarshalTime(CoinbaseAccountTransferTimeLayout,
 		"canceled_at", &transfer.CanceledAt)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshalTime(CoinbaseAccountTransferTimeLayout,
+	err = data.UnmarshalTime(CoinbaseAccountTransferTimeLayout,
 		"processed_at", &transfer.ProcessedAt)
 	if err != nil {
 		return err
 	}
 
 	transfer.Details = CoinbaseAccountTransferDetails{}
-	if err := data.unmarshalStruct("details", &transfer.Details); err != nil {
+	if err := data.UnmarshalStruct("details", &transfer.Details); err != nil {
 		return err
 	}
+	fmt.Println(transfer.Details)
 
 	return nil
 }

@@ -2,6 +2,7 @@ package model
 
 import (
 	"cql/scalar"
+	"cql/serial"
 	"time"
 )
 
@@ -29,55 +30,55 @@ type CoinbaseOrder struct {
 // UnmarshalJSON is an override required to parst strings from coinbases api
 // into floats, specifically min_size and max_precision
 func (order *CoinbaseOrder) UnmarshalJSON(d []byte) error {
-	data, err := newUmap(d)
+	data, err := serial.NewJSONTransform(d)
 	if err != nil {
 		return err
 	}
 
-	data.unmarshalOrderType("type", &order.Type)
-	data.unmarshalOrderSide("side", &order.Side)
-	data.unmarshalOrderTimeInForce("time_in_force", &order.TimeInForce)
-	data.unmarshalString("id", &order.ID)
-	data.unmarshalString("product_id", &order.ProductID)
-	data.unmarshalOrderSTP("stp", &order.STP)
-	data.unmarshalBool("post_only", &order.PostOnly)
-	data.unmarshalString("status", &order.Status)
-	data.unmarshalBool("settled", &order.Settled)
+	data.UnmarshalOrderType("type", &order.Type)
+	data.UnmarshalOrderSide("side", &order.Side)
+	data.UnmarshalOrderTimeInForce("time_in_force", &order.TimeInForce)
+	data.UnmarshalString("id", &order.ID)
+	data.UnmarshalString("product_id", &order.ProductID)
+	data.UnmarshalOrderSTP("stp", &order.STP)
+	data.UnmarshalBool("post_only", &order.PostOnly)
+	data.UnmarshalString("status", &order.Status)
+	data.UnmarshalBool("settled", &order.Settled)
 
-	if err := data.unmarshalFloatFromString("price", &order.Price); err != nil {
+	if err := data.UnmarshalFloatFromString("price", &order.Price); err != nil {
 		return err
 	}
 
-	if err := data.unmarshalFloatFromString("size", &order.Size); err != nil {
+	if err := data.UnmarshalFloatFromString("size", &order.Size); err != nil {
 		return err
 	}
 
-	err = data.unmarshalTime(time.RFC3339Nano, "created_at", &order.CreatedAt)
+	err = data.UnmarshalTime(time.RFC3339Nano, "created_at", &order.CreatedAt)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshalFloatFromString("fill_fees", &order.FillFees)
+	err = data.UnmarshalFloatFromString("fill_fees", &order.FillFees)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshalFloatFromString("filled_size", &order.FilledSize)
+	err = data.UnmarshalFloatFromString("filled_size", &order.FilledSize)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshalFloatFromString("executed_value", &order.ExecutedValue)
+	err = data.UnmarshalFloatFromString("executed_value", &order.ExecutedValue)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshalFloatFromString("funds", &order.Funds)
+	err = data.UnmarshalFloatFromString("funds", &order.Funds)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshalFloatFromString("specified_funds", &order.SpecifiedFunds)
+	err = data.UnmarshalFloatFromString("specified_funds", &order.SpecifiedFunds)
 	if err != nil {
 		return err
 	}

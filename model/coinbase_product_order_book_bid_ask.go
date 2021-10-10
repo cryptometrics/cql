@@ -1,7 +1,11 @@
 package model
 
 import (
+	"encoding/json"
 	"fmt"
+	"strconv"
+
+	"gopkg.in/guregu/null.v3"
 )
 
 // CoinbaseProductOrderBookBidAsk is the object encapsulation of the a list of
@@ -9,13 +13,13 @@ import (
 type CoinbaseProductOrderBookBidAsk struct {
 	Price     float64 `json:"price"`
 	Size      float64 `json:"size"`
-	NumOrders *int    `json:"num_orders"`
+	NumOrders *int64  `json:"num_orders"`
 	OrderID   *string `json:"order_id"`
 }
 
 type CoinbaseProductOrderBookBidAsks []CoinbaseProductOrderBookBidAsk
 
-func (quotes *CoinbaseProductOrderBookBidAsks) append(v interface{}) {
+func (quotes *CoinbaseProductOrderBookBidAsks) Append(v interface{}) {
 	*quotes = append(*quotes, *v.(*CoinbaseProductOrderBookBidAsk))
 }
 
@@ -29,24 +33,26 @@ func (quotes *CoinbaseProductOrderBookBidAsks) Slice() (s []*CoinbaseProductOrde
 // UnmarshalJSON is an override required to parst strings from coinbases api
 // into floats, specifically min_size and max_precision
 func (quote *CoinbaseProductOrderBookBidAsk) UnmarshalJSON(d []byte) error {
-	data, err := newUslice(d)
-	if err != nil {
+	data := []interface{}{}
+	if err := json.Unmarshal(d, &data); err != nil {
 		return err
 	}
 
-	if err := data.unmarshalFloatFromString(0, &quote.Price); err != nil {
+	var err error
+
+	if quote.Price, err = strconv.ParseFloat(data[0].(string), 64); err != nil {
 		return err
 	}
 
-	if err := data.unmarshalFloatFromString(1, &quote.Size); err != nil {
+	if quote.Size, err = strconv.ParseFloat(data[1].(string), 64); err != nil {
 		return err
 	}
 
 	switch data[2].(type) {
 	case string:
-		quote.OrderID = String(data[2].(string))
+		quote.OrderID = null.StringFrom(data[2].(string)).Ptr()
 	case float64:
-		quote.NumOrders = Int(int(data[2].(float64)))
+		quote.NumOrders = null.IntFrom(int64(data[2].(float64))).Ptr()
 	default:
 		msg := "unknown type unmarshalling CoinbaseProductOrderBookBidAsk"
 		return fmt.Errorf(msg)

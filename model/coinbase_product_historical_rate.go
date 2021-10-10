@@ -1,6 +1,7 @@
 package model
 
 import (
+	"encoding/json"
 	"time"
 )
 
@@ -35,8 +36,8 @@ type CoinbaseProductHistoricalRate struct {
 // UnmarshalJSON is an override required to parst strings from coinbases api
 // into floats, specifically min_size and max_precision
 func (rate *CoinbaseProductHistoricalRate) UnmarshalJSON(d []byte) error {
-	data, err := newUslice(d)
-	if err != nil {
+	data := []interface{}{}
+	if err := json.Unmarshal(d, &data); err != nil {
 		return err
 	}
 

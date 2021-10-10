@@ -9,4 +9,5 @@ require (
 	github.com/joho/godotenv v1.3.0 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/vektah/gqlparser/v2 v2.1.0 // indirect
+	gopkg.in/guregu/null.v3 v3.5.0 // indirect
 )

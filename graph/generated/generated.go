@@ -7447,9 +7447,9 @@ func (ec *executionContext) _CoinbaseProductOrderBookBidAsk_numOrders(ctx contex
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*int)
+	res := resTmp.(*int64)
 	fc.Result = res
-	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
+	return ec.marshalOInt2ᚖint64(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbaseProductOrderBookBidAsk_orderID(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseProductOrderBookBidAsk) (ret graphql.Marshaler) {
@@ -14120,6 +14120,21 @@ func (ec *executionContext) marshalOInt2ᚖint(ctx context.Context, sel ast.Sele
 		return graphql.Null
 	}
 	return graphql.MarshalInt(*v)
+}
+
+func (ec *executionContext) unmarshalOInt2ᚖint64(ctx context.Context, v interface{}) (*int64, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := graphql.UnmarshalInt64(v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOInt2ᚖint64(ctx context.Context, sel ast.SelectionSet, v *int64) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return graphql.MarshalInt64(*v)
 }
 
 func (ec *executionContext) unmarshalOOrderCancelTime2ᚖcqlᚋscalarᚐOrderCancelTime(ctx context.Context, v interface{}) (*scalar.OrderCancelTime, error) {

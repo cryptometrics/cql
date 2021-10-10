@@ -8,7 +8,7 @@ type CoinbaseDepositAddressWarning struct {
 	ImageURL string `json:"image_url"`
 }
 
-func (warnings *CoinbaseDepositAddressWarnings) append(v interface{}) {
+func (warnings *CoinbaseDepositAddressWarnings) Append(v interface{}) {
 	*warnings = append(*warnings, *v.(*CoinbaseDepositAddressWarning))
 }
 

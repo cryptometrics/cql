@@ -7,6 +7,7 @@ import (
 	"time"
 
 	. "github.com/franela/goblin"
+	"gopkg.in/guregu/null.v3"
 )
 
 func TestCoinbaseAccountLedgerJSON(t *testing.T) {
@@ -150,6 +151,10 @@ func TestCoinbaseAccountTransferJSON(t *testing.T) {
 			ID:     "19ac524d-8827-4246-a1b2-18dc5ca9472c",
 			Type:   "withdraw",
 			Amount: 1,
+			Details: CoinbaseAccountTransferDetails{
+				CoinbaseAccountID:     "2b760113-fbba-5600-ac74-36482c130768",
+				CoinbaseTransactionID: "5e697ed49f8417148f3366ea",
+			},
 		}
 		var err error
 		expected.CreatedAt, err = time.Parse(CoinbaseAccountTransferTimeLayout,
@@ -517,9 +522,9 @@ func TestCoinbaseProductOrderBookUnmarshalJSON(t *testing.T) {
 		expected = CoinbaseProductOrderBook{
 			Sequence: 3,
 			Bids: []CoinbaseProductOrderBookBidAsk{
-				{295.96, 4.39088265, Int(2), nil}},
+				{295.96, 4.39088265, null.NewInt(2, true).Ptr(), nil}},
 			Asks: []CoinbaseProductOrderBookBidAsk{
-				{295.97, 25.23542881, Int(12), nil}},
+				{295.97, 25.23542881, null.NewInt(12, true).Ptr(), nil}},
 		}
 		test("level 2, single", buf, expected)
 
@@ -535,9 +540,9 @@ func TestCoinbaseProductOrderBookUnmarshalJSON(t *testing.T) {
 		expected = CoinbaseProductOrderBook{
 			Sequence: 3,
 			Bids: []CoinbaseProductOrderBookBidAsk{{295.96, 0.05088265, nil,
-				String("3b0f1225-7f84-490b-a29f-0faef9de823a")}},
+				null.NewString("3b0f1225-7f84-490b-a29f-0faef9de823a", true).Ptr()}},
 			Asks: []CoinbaseProductOrderBookBidAsk{{295.97, 5.72036512, nil,
-				String("da863862-25f4-4868-ac41-005d11ab0a5f")}},
+				null.NewString("da863862-25f4-4868-ac41-005d11ab0a5f", true).Ptr()}},
 		}
 		test("level 3, single", buf, expected)
 
@@ -556,12 +561,12 @@ func TestCoinbaseProductOrderBookUnmarshalJSON(t *testing.T) {
 		expected = CoinbaseProductOrderBook{
 			Sequence: 3,
 			Bids: []CoinbaseProductOrderBookBidAsk{
-				{295.96, 4.39088265, Int(2), nil},
-				{295.96, 4.39088265, Int(2), nil},
+				{295.96, 4.39088265, null.NewInt(2, true).Ptr(), nil},
+				{295.96, 4.39088265, null.NewInt(2, true).Ptr(), nil},
 			},
 			Asks: []CoinbaseProductOrderBookBidAsk{
-				{295.97, 25.23542881, Int(12), nil},
-				{295.97, 25.23542881, Int(12), nil},
+				{295.97, 25.23542881, null.NewInt(12, true).Ptr(), nil},
+				{295.97, 25.23542881, null.NewInt(12, true).Ptr(), nil},
 			},
 		}
 		test("level 2, multiple", buf, expected)

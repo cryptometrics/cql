@@ -1,5 +1,7 @@
 package model
 
+import "cql/serial"
+
 // CoinbaseProduct returns the market data for a specific currency pair
 //
 // Only a maximum of one of trading_disabled, cancel_only, post_only,
@@ -61,50 +63,50 @@ type CoinbaseProduct struct {
 // UnmarshalJSON is an override required to parst strings from coinbases api
 // into floats
 func (product *CoinbaseProduct) UnmarshalJSON(d []byte) error {
-	data, err := newUmap(d)
+	data, err := serial.NewJSONTransform(d)
 	if err != nil {
 		return err
 	}
 
-	data.unmarshalString("id", &product.ID)
-	data.unmarshalString("display_name", &product.DisplayName)
-	data.unmarshalString("base_currency", &product.BaseCurrency)
-	data.unmarshalString("quote_currency", &product.QuoteCurrency)
-	data.unmarshalString("status", &product.Status)
-	data.unmarshalString("status_message", &product.StatusMessage)
-	data.unmarshalBool("cancel_only", &product.CancelOnly)
-	data.unmarshalBool("limit_only", &product.LimitOnly)
-	data.unmarshalBool("post_only", &product.PostOnly)
-	data.unmarshalBool("trading_disabled", &product.TradingDisabled)
-	data.unmarshalBool("fx_stablecoin", &product.FXStablecoin)
+	data.UnmarshalString("id", &product.ID)
+	data.UnmarshalString("display_name", &product.DisplayName)
+	data.UnmarshalString("base_currency", &product.BaseCurrency)
+	data.UnmarshalString("quote_currency", &product.QuoteCurrency)
+	data.UnmarshalString("status", &product.Status)
+	data.UnmarshalString("status_message", &product.StatusMessage)
+	data.UnmarshalBool("cancel_only", &product.CancelOnly)
+	data.UnmarshalBool("limit_only", &product.LimitOnly)
+	data.UnmarshalBool("post_only", &product.PostOnly)
+	data.UnmarshalBool("trading_disabled", &product.TradingDisabled)
+	data.UnmarshalBool("fx_stablecoin", &product.FXStablecoin)
 
-	err = data.unmarshalFloatFromString("base_increment", &product.BaseIncrement)
+	err = data.UnmarshalFloatFromString("base_increment", &product.BaseIncrement)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshalFloatFromString("quote_increment", &product.QuoteIncrement)
+	err = data.UnmarshalFloatFromString("quote_increment", &product.QuoteIncrement)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshalFloatFromString("base_min_size", &product.BaseMinSize)
+	err = data.UnmarshalFloatFromString("base_min_size", &product.BaseMinSize)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshalFloatFromString("base_max_size", &product.BaseMaxSize)
+	err = data.UnmarshalFloatFromString("base_max_size", &product.BaseMaxSize)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshalFloatFromString("min_market_funds",
+	err = data.UnmarshalFloatFromString("min_market_funds",
 		&product.MinMarketFunds)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshalFloatFromString("max_market_funds",
+	err = data.UnmarshalFloatFromString("max_market_funds",
 		&product.MaxMarketFunds)
 	if err != nil {
 		return err

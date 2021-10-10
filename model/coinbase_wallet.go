@@ -1,5 +1,7 @@
 package model
 
+import "cql/serial"
+
 type CoinbaseWallet struct {
 	ID                      string                          `json:"id"`
 	Name                    string                          `json:"name"`
@@ -23,56 +25,56 @@ type CoinbaseWallet struct {
 // UnmarshalJSON is an override required to parst strings from coinbases api
 // into floats, specifically min_size and max_precision
 func (wallet *CoinbaseWallet) UnmarshalJSON(d []byte) error {
-	data, err := newUmap(d)
+	data, err := serial.NewJSONTransform(d)
 	if err != nil {
 		return err
 	}
 
-	data.unmarshalString("id", &wallet.ID)
-	data.unmarshalString("name", &wallet.Name)
-	data.unmarshalString("currency", &wallet.Currency)
-	data.unmarshalString("type", &wallet.Type)
-	data.unmarshalString("destination_tag_name", &wallet.DestinationTagName)
-	data.unmarshalString("destination_tag_regex", &wallet.DestinationTagRegex)
-	data.unmarshalString("hold_currency", &wallet.HoldCurrency)
-	data.unmarshalBool("primary", &wallet.Primary)
-	data.unmarshalBool("active", &wallet.Active)
-	data.unmarshalBool("available_on_consumer", &wallet.AvailableOnConsumer)
-	data.unmarshalBool("ready", &wallet.Ready)
+	data.UnmarshalString("id", &wallet.ID)
+	data.UnmarshalString("name", &wallet.Name)
+	data.UnmarshalString("currency", &wallet.Currency)
+	data.UnmarshalString("type", &wallet.Type)
+	data.UnmarshalString("destination_tag_name", &wallet.DestinationTagName)
+	data.UnmarshalString("destination_tag_regex", &wallet.DestinationTagRegex)
+	data.UnmarshalString("hold_currency", &wallet.HoldCurrency)
+	data.UnmarshalBool("primary", &wallet.Primary)
+	data.UnmarshalBool("active", &wallet.Active)
+	data.UnmarshalBool("available_on_consumer", &wallet.AvailableOnConsumer)
+	data.UnmarshalBool("ready", &wallet.Ready)
 
-	err = data.unmarshalFloatFromString("balance", &wallet.Balance)
+	err = data.UnmarshalFloatFromString("balance", &wallet.Balance)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshalFloatFromString("hold_balance", &wallet.HoldBalance)
+	err = data.UnmarshalFloatFromString("hold_balance", &wallet.HoldBalance)
 	if err != nil {
 		return err
 	}
 
 	wallet.WireDepositInformation = CoinbaseWireDepositInformation{}
-	err = data.unmarshalStruct("wire_deposit_information",
+	err = data.UnmarshalStruct("wire_deposit_information",
 		&wallet.WireDepositInformation)
 	if err != nil {
 		return err
 	}
 
 	wallet.SWIFTDepositInformation = CoinbaseSWIFTDepositInformation{}
-	err = data.unmarshalStruct("swift_deposit_information",
+	err = data.UnmarshalStruct("swift_deposit_information",
 		&wallet.SWIFTDepositInformation)
 	if err != nil {
 		return err
 	}
 
 	wallet.SEPADepositInformation = CoinbaseSEPADepositInformation{}
-	err = data.unmarshalStruct("sepa_deposit_information",
+	err = data.UnmarshalStruct("sepa_deposit_information",
 		&wallet.SEPADepositInformation)
 	if err != nil {
 		return err
 	}
 
 	wallet.UKDepositInformation = CoinbaseUKDepositInformation{}
-	err = data.unmarshalStruct("uk_deposit_information",
+	err = data.UnmarshalStruct("uk_deposit_information",
 		&wallet.UKDepositInformation)
 	if err != nil {
 		return err

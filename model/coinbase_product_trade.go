@@ -1,6 +1,7 @@
 package model
 
 import (
+	"cql/serial"
 	"time"
 )
 
@@ -21,23 +22,23 @@ type CoinbaseProductTrade struct {
 // UnmarshalJSON is an override required to parst strings from coinbases api
 // into floats, specifically min_size and max_precision
 func (trade *CoinbaseProductTrade) UnmarshalJSON(d []byte) error {
-	data, err := newUmap(d)
+	data, err := serial.NewJSONTransform(d)
 	if err != nil {
 		return err
 	}
 
-	data.unmarshalInt("trade_id", &trade.TradeID)
-	data.unmarshalString("side", &trade.Side)
+	data.UnmarshalInt("trade_id", &trade.TradeID)
+	data.UnmarshalString("side", &trade.Side)
 
-	if err := data.unmarshalFloatFromString("price", &trade.Price); err != nil {
+	if err := data.UnmarshalFloatFromString("price", &trade.Price); err != nil {
 		return err
 	}
 
-	if err := data.unmarshalFloatFromString("size", &trade.Size); err != nil {
+	if err := data.UnmarshalFloatFromString("size", &trade.Size); err != nil {
 		return err
 	}
 
-	err = data.unmarshalTime(time.RFC3339Nano, "time", &trade.Time)
+	err = data.UnmarshalTime(time.RFC3339Nano, "time", &trade.Time)
 	if err != nil {
 		return err
 	}

@@ -1,6 +1,7 @@
 package model
 
 import (
+	"cql/serial"
 	"time"
 )
 
@@ -23,37 +24,37 @@ type CoinbaseProductTicker struct {
 // UnmarshalJSON is an override required to parst strings from coinbases api
 // into floats, specifically min_size and max_precision
 func (ticker *CoinbaseProductTicker) UnmarshalJSON(d []byte) error {
-	data, err := newUmap(d)
+	data, err := serial.NewJSONTransform(d)
 	if err != nil {
 		return err
 	}
 
-	if err := data.unmarshalInt("trade_id", &ticker.TradeID); err != nil {
+	if err := data.UnmarshalInt("trade_id", &ticker.TradeID); err != nil {
 		return err
 	}
 
-	if err := data.unmarshalFloatFromString("price", &ticker.Price); err != nil {
+	if err := data.UnmarshalFloatFromString("price", &ticker.Price); err != nil {
 		return err
 	}
 
-	if err := data.unmarshalFloatFromString("size", &ticker.Size); err != nil {
+	if err := data.UnmarshalFloatFromString("size", &ticker.Size); err != nil {
 		return err
 	}
 
-	if err := data.unmarshalFloatFromString("bid", &ticker.Bid); err != nil {
+	if err := data.UnmarshalFloatFromString("bid", &ticker.Bid); err != nil {
 		return err
 	}
 
-	if err := data.unmarshalFloatFromString("ask", &ticker.Ask); err != nil {
+	if err := data.UnmarshalFloatFromString("ask", &ticker.Ask); err != nil {
 		return err
 	}
 
-	err = data.unmarshalFloatFromString("volume", &ticker.Volume)
+	err = data.UnmarshalFloatFromString("volume", &ticker.Volume)
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshalTime(time.RFC3339Nano, "time", &ticker.Time)
+	err = data.UnmarshalTime(time.RFC3339Nano, "time", &ticker.Time)
 	if err != nil {
 		return err
 	}

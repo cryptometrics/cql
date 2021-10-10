@@ -1,7 +1,7 @@
 package model
 
 import (
-	"encoding/json"
+	"cql/serial"
 )
 
 // CoinbaseProductOrderBook holds bid/ask data as a list of open orders for a
@@ -22,25 +22,23 @@ type CoinbaseProductOrderBook struct {
 // UnmarshalJSON is an override required to parst strings from coinbases api
 // into floats, specifically min_size and max_precision
 func (book *CoinbaseProductOrderBook) UnmarshalJSON(d []byte) error {
-	data := make(umap)
-	if err := json.Unmarshal(d, &data); err != nil {
+	data, err := serial.NewJSONTransform(d)
+	if err != nil {
 		return err
 	}
 
-	var err error
-
-	err = data.unmarshal("sequence", func(v interface{}) error {
+	err = data.Unmarshal("sequence", func(v interface{}) error {
 		book.Sequence = int(v.(float64))
 		return nil
 	})
 
-	err = data.unmarshalStructSlice("bids", &book.Bids,
+	err = data.UnmarshalStructSlice("bids", &book.Bids,
 		&CoinbaseProductOrderBookBidAsk{})
 	if err != nil {
 		return err
 	}
 
-	err = data.unmarshalStructSlice("asks", &book.Asks,
+	err = data.UnmarshalStructSlice("asks", &book.Asks,
 		&CoinbaseProductOrderBookBidAsk{})
 	if err != nil {
 		return err
