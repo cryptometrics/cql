@@ -7,9 +7,16 @@ type CoinbaseDeposit {
   subtotal: Float
 }
 
-input CoinbaseDepositInput {
+input MakeCoinbaseAccountDepositInput {
   amount: Float!
   coinbaseAccountID: String!
+  currency: String!
+  profileID: String
+}
+
+input MakeCoinbasePaymentMethodInput {
+  amount: Float!
+  paymentMethodID: String!
   currency: String!
   profileID: String
 }

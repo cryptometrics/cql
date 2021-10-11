@@ -159,7 +159,9 @@ type Mutation {
   """
   Deposits funds from a www.coinbase.com wallet to the specified profile_id.
   """
-  coinbaseDepositFromAccount(input: CoinbaseDepositInput): CoinbaseDeposit
+  makeCoinbaseAccountDeposit(
+    input: MakeCoinbaseAccountDepositInput
+  ): CoinbaseDeposit
 
   """
   You can place two types of orders: limit and market. Orders can only be placed
@@ -171,4 +173,11 @@ type Mutation {
   and parameters specified. See the Holds details below.
   """
   createCoinbaseLimitOrder(input: CoinbaseOrderInput): CoinbaseOrder
+
+  """
+  Deposits funds from a linked external payment method to the specified profile_id.
+  """
+  makeCoinbasePaymentMethodDeposit(
+    input: MakeCoinbasePaymentMethodInput
+  ): CoinbaseDeposit
 }

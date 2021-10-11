@@ -12,17 +12,21 @@ type Transform interface {
 	UnmarshalBool(name string, v *bool) error
 	UnmarshalEntryType(name string, v *scalar.EntryType) error
 	UnmarshalFloatFromString(name string, v *float64) error
+	UnmarshalFloat(name string, v *float64) error
+	UnmarshalInt64(name string, v *int64) error
 	UnmarshalInt(name string, v *int) error
 	UnmarshalLocation(name string, v *time.Location) error
 	UnmarshalOrderSide(name string, v *scalar.OrderSide) error
 	UnmarshalOrderSTP(name string, v *scalar.OrderSTP) error
 	UnmarshalOrderTimeInForce(name string, v *scalar.TimeInForce) error
 	UnmarshalOrderType(name string, v *scalar.OrderType) error
+	UnmarshalPaymentMethod(name string, v *scalar.PaymentMethod) error
 	UnmarshalStringSlice(name string, v *[]string) error
 	UnmarshalString(name string, v *string) error
 	UnmarshalStructSlice(name string, v _jsonStructSlice, template interface{}) error
 	UnmarshalStruct(name string, v interface{}) error
 	UnmarshalTime(layout string, name string, v *time.Time) error
+	Value(key string) interface{}
 }
 
 // NewJSONTransform will return a new json transfrom that will create a map of objects from a byte

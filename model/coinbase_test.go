@@ -307,7 +307,7 @@ func TestCoinbaseCurrencyUnmarshalJSON(t *testing.T) {
 			SortOrder:             3,
 			CryptoAddressLink:     "meep",
 			CryptoTransactionLink: "moop",
-			PushPaymentMethods:    []string{"crypto"},
+			PushPaymentMethods:    []scalar.PaymentMethod{scalar.PaymentMethodCrypto},
 			GroupTypes:            []string{"btc", "crypto"},
 			DisplayName:           "test",
 			ProcessingTimeSeconds: 1.1,
@@ -494,6 +494,193 @@ func TestCoinbaseOrderJSON(t *testing.T) {
 		}
 		var err error
 		expected.CreatedAt, err = time.Parse(time.RFC3339Nano, "2016-12-08T20:02:28.53864Z")
+		if err != nil {
+			panic(err)
+		}
+		test("all fields", buf, expected)
+	})
+}
+
+func TestCoinbasePaymentMethod(t *testing.T) {
+	g := Goblin(t)
+	g.Describe("CoinbasePaymentMethod#UnmarshalJSON", func() {
+		test := func(desc string, buf []byte, expected CoinbasePaymentMethod) {
+			g.It(desc, func() {
+				v := CoinbasePaymentMethod{}
+				if err := json.Unmarshal(buf, &v); err != nil {
+					panic(err)
+				}
+				g.Assert(v.ID).Eql(expected.ID)
+				g.Assert(v.Type).Eql(expected.Type)
+				g.Assert(v.Name).Eql(expected.Name)
+				g.Assert(v.Currency).Eql(expected.Currency)
+				g.Assert(v.PrimaryBuy).Eql(expected.PrimaryBuy)
+				g.Assert(v.PrimarySell).Eql(expected.PrimarySell)
+				g.Assert(v.InstantBuy).Eql(expected.InstantBuy)
+				g.Assert(v.InstantSell).Eql(expected.InstantSell)
+				g.Assert(v.Verified).Eql(expected.Verified)
+				g.Assert(v.CreatedAt).Eql(expected.CreatedAt)
+				g.Assert(v.UpdatedAt).Eql(expected.UpdatedAt)
+				g.Assert(v.Resource).Eql(expected.Resource)
+				g.Assert(v.ResourcePath).Eql(expected.ResourcePath)
+				g.Assert(*v.Limits).Eql(*expected.Limits)
+				g.Assert(v.AllowBuy).Eql(expected.AllowBuy)
+				g.Assert(v.AllowSell).Eql(expected.AllowSell)
+				g.Assert(v.AllowDeposit).Eql(expected.AllowDeposit)
+				g.Assert(v.AllowWithdraw).Eql(expected.AllowWithdraw)
+				g.Assert(*v.PickerData).Eql(*expected.PickerData)
+				g.Assert(*v.FiatAccount).Eql(*expected.FiatAccount)
+				g.Assert(*v.AvailableBalance).Eql(*expected.AvailableBalance)
+				g.Assert(v.HoldBusinessDays).Eql(expected.HoldBusinessDays)
+				g.Assert(v.HoldDays).Eql(expected.HoldDays)
+				g.Assert(v.VerificationMethod).Eql(expected.VerificationMethod)
+				g.Assert(v.CDVStatus).Eql(expected.CDVStatus)
+				g.Assert(*v.CryptoAccount).Eql(*expected.CryptoAccount)
+			})
+		}
+		var buf []byte
+		var expected CoinbasePaymentMethod
+
+		buf = []byte(`{
+				"id": "cbdd9f28-34e7-5152-b1dc-d657bf8df858",
+				"type": "fiat_account",
+				"name": "Cash (USD)",
+				"currency": "USD",
+				"primary_buy": true,
+				"primary_sell": true,
+				"instant_buy": true,
+				"instant_sell": true,
+				"created_at": "2019-06-04T21:24:32Z",
+				"updated_at": "2019-06-04T21:24:32Z",
+				"resource": "payment_method",
+				"resource_path": "/v2/payment-methods/cbdd9f28-34e7-5152-b1dc-d657bf8df858",
+				"limits": {
+					"type": "fiat_account",
+					"name": "Coinbase Account"
+				},
+				"allow_buy": true,
+				"allow_sell": true,
+				"allow_deposit": false,
+				"allow_withdraw": false,
+				"fiat_account": {
+					"id": "2b760113-fbba-5600-ac74-36482c130768",
+					"resource": "account",
+					"resource_path": "/v2/accounts/2b760113-fbba-5600-ac74-36482c130768"
+				},
+				"crypto_account": {
+					"id": "2b760113-fbba-5600-ac74-36482c130768",
+					"resource": "account",
+					"resource_path": "/v2/accounts/2b760113-fbba-5600-ac74-36482c130768"
+				},
+				"verified": true,
+				"picker_data": {
+					"symbol": "fiat_account",
+					"balance": {
+						"amount": "1.00",
+						"currency": "USD",
+						"scale": "0.7"
+					},
+					"customer_name":"a",
+					"account_name":"b",
+					"account_number":"c",
+					"account_type":"d",
+					"institution_code":"e",
+					"institution_name":"f",
+					"iban":"g",
+					"swift":"h",
+					"paypal_email":"i",
+					"paypal_owner":"j",
+					"routing_number":"k",
+					"institution_identifier":"l",
+					"bank_name":"m",
+					"branch_name":"n",
+					"icon_url":"o"
+				},
+				"available_balance": {
+					"amount": "0.08",
+					"currency": "USD",
+					"scale": "0.0009"
+				},
+				"recurring_options": [
+					{"period":"x", "label":"y"},
+					{"period":"a", "label":"b"}
+				],
+				"hold_business_days": 0,
+				"hold_days": 0
+			}`)
+		expected = CoinbasePaymentMethod{
+			ID:           "cbdd9f28-34e7-5152-b1dc-d657bf8df858",
+			Type:         scalar.PaymentMethodFiatAccount,
+			Name:         "Cash (USD)",
+			Currency:     "USD",
+			PrimaryBuy:   true,
+			PrimarySell:  true,
+			InstantBuy:   true,
+			InstantSell:  true,
+			Resource:     "payment_method",
+			ResourcePath: "/v2/payment-methods/cbdd9f28-34e7-5152-b1dc-d657bf8df858",
+			Limits: &CoinbaseLimits{
+				Type: scalar.PaymentMethodFiatAccount,
+				Name: "Coinbase Account",
+			},
+			AllowBuy:      true,
+			AllowSell:     true,
+			AllowDeposit:  false,
+			AllowWithdraw: false,
+			FiatAccount: &CoinbaseResourceAccount{
+				ID:           "2b760113-fbba-5600-ac74-36482c130768",
+				Resource:     "account",
+				ResourcePath: "/v2/accounts/2b760113-fbba-5600-ac74-36482c130768",
+			},
+			Verified: true,
+			PickerData: &CoinbasePickerData{
+				Symbol: "fiat_account",
+				Balance: &CoinbaseAvailableBalance{
+					Amount:   1.0,
+					Currency: "USD",
+					Scale:    0.7,
+				},
+				CustomerName:          "a",
+				AccountName:           "b",
+				AccountNumber:         "c",
+				AccountType:           "d",
+				InstitutionCode:       "e",
+				InstitutionName:       "f",
+				IBAN:                  "g",
+				SWIFT:                 "h",
+				PaypalEmail:           "i",
+				PaypalOwner:           "j",
+				RoutingNumber:         "k",
+				InstitutionIdentifier: "l",
+				BankName:              "m",
+				BranchName:            "n",
+				IconURL:               "o",
+			},
+			AvailableBalance: &CoinbaseAvailableBalance{
+				Amount:   0.08,
+				Currency: "USD",
+				Scale:    0.0009,
+			},
+			CryptoAccount: &CoinbaseResourceAccount{
+				ID:           "2b760113-fbba-5600-ac74-36482c130768",
+				Resource:     "account",
+				ResourcePath: "/v2/accounts/2b760113-fbba-5600-ac74-36482c130768",
+			},
+			RecurringOptions: []*CoinbaseRecurringOption{
+				{Period: "x", Label: "y"},
+				{Period: "u", Label: "v"},
+			},
+			HoldBusinessDays: 0,
+			HoldDays:         0,
+		}
+
+		var err error
+		expected.CreatedAt, err = time.Parse(time.RFC3339Nano, "2019-06-04T21:24:32Z")
+		if err != nil {
+			panic(err)
+		}
+
+		expected.UpdatedAt, err = time.Parse(time.RFC3339Nano, "2019-06-04T21:24:32Z")
 		if err != nil {
 			panic(err)
 		}

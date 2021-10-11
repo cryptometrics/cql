@@ -8,6 +8,7 @@ import (
 	"cql/coinbase"
 	generated1 "cql/graph/generated"
 	model1 "cql/model"
+	"fmt"
 )
 
 func (r *mutationResolver) CoinbaseConvertCurrency(ctx context.Context, from string, to string, amount float64, opts *model1.CoinbaseCurrencyConversionOpts) (*model1.CoinbaseCurrencyConversion, error) {
@@ -18,13 +19,17 @@ func (r *mutationResolver) CoinbaseGenerateCryptoAddress(ctx context.Context, id
 	return coinbase.NewCoinbaseAccounts(coinbase.DefaultClient).GenerateCryptoAddress(id)
 }
 
-func (r *mutationResolver) CoinbaseDepositFromAccount(ctx context.Context, input *model1.CoinbaseDepositInput) (*model1.CoinbaseDeposit, error) {
-	return coinbase.NewTransfer(coinbase.DefaultClient).DepositFromCoinbaseAccount(input)
+func (r *mutationResolver) MakeCoinbaseAccountDeposit(ctx context.Context, input *model1.MakeCoinbaseAccountDepositInput) (*model1.CoinbaseDeposit, error) {
+	return coinbase.NewTransfer(coinbase.DefaultClient).MakeCoinbaseAccountDeposit(input)
 }
 
 func (r *mutationResolver) CreateCoinbaseLimitOrder(ctx context.Context, input *model1.CoinbaseOrderInput) (*model1.CoinbaseOrder, error) {
 	private := coinbase.NewPrivate()
 	return private.CreateLimitOrder(input)
+}
+
+func (r *mutationResolver) MakeCoinbasePaymentMethodDeposit(ctx context.Context, input *model1.MakeCoinbasePaymentMethodInput) (*model1.CoinbaseDeposit, error) {
+	panic(fmt.Errorf("not implemented"))
 }
 
 func (r *queryResolver) CoinbaseAccountLedger(ctx context.Context, id string, opts *model1.CoinbaseAccountLedgerOptions) ([]*model1.CoinbaseAccountLedger, error) {
@@ -121,13 +126,3 @@ func (r *Resolver) Query() generated1.QueryResolver { return &queryResolver{r} }
 
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//    it when you're done.
-//  - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *mutationResolver) CoinbaseDeposit(ctx context.Context, input *model1.CoinbaseDepositInput) (*model1.CoinbaseDeposit, error) {
-	return coinbase.NewTransfer(coinbase.DefaultClient).DepositFromCoinbaseAccount(input)
-}

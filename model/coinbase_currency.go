@@ -30,11 +30,6 @@ func (currency *CoinbaseCurrency) UnmarshalJSON(d []byte) error {
 	data.UnmarshalString("message", &currency.Message)
 	data.UnmarshalStringSlice("convertible_to", &currency.ConvertibleTo)
 
-	currency.Details = CoinbaseCurrencyDetails{}
-	if err := data.UnmarshalStruct("details", &currency.Details); err != nil {
-		return err
-	}
-
 	err = data.UnmarshalFloatFromString("min_size", &currency.MinSize)
 	if err != nil {
 		return err
@@ -42,6 +37,10 @@ func (currency *CoinbaseCurrency) UnmarshalJSON(d []byte) error {
 
 	err = data.UnmarshalFloatFromString("max_precision", &currency.MaxPrecision)
 	if err != nil {
+		return err
+	}
+
+	if err := data.UnmarshalStruct("details", &currency.Details); err != nil {
 		return err
 	}
 

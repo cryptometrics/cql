@@ -333,10 +333,11 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		CoinbaseConvertCurrency       func(childComplexity int, from string, to string, amount float64, opts *model.CoinbaseCurrencyConversionOpts) int
-		CoinbaseDepositFromAccount    func(childComplexity int, input *model.CoinbaseDepositInput) int
-		CoinbaseGenerateCryptoAddress func(childComplexity int, id string) int
-		CreateCoinbaseLimitOrder      func(childComplexity int, input *model.CoinbaseOrderInput) int
+		CoinbaseConvertCurrency          func(childComplexity int, from string, to string, amount float64, opts *model.CoinbaseCurrencyConversionOpts) int
+		CoinbaseGenerateCryptoAddress    func(childComplexity int, id string) int
+		CreateCoinbaseLimitOrder         func(childComplexity int, input *model.CoinbaseOrderInput) int
+		MakeCoinbaseAccountDeposit       func(childComplexity int, input *model.MakeCoinbaseAccountDepositInput) int
+		MakeCoinbasePaymentMethodDeposit func(childComplexity int, input *model.MakeCoinbasePaymentMethodInput) int
 	}
 
 	Query struct {
@@ -374,8 +375,9 @@ type CoinbaseProductOrderBookResolver interface {
 type MutationResolver interface {
 	CoinbaseConvertCurrency(ctx context.Context, from string, to string, amount float64, opts *model.CoinbaseCurrencyConversionOpts) (*model.CoinbaseCurrencyConversion, error)
 	CoinbaseGenerateCryptoAddress(ctx context.Context, id string) (*model.CoinbaseDepositAddress, error)
-	CoinbaseDepositFromAccount(ctx context.Context, input *model.CoinbaseDepositInput) (*model.CoinbaseDeposit, error)
+	MakeCoinbaseAccountDeposit(ctx context.Context, input *model.MakeCoinbaseAccountDepositInput) (*model.CoinbaseDeposit, error)
 	CreateCoinbaseLimitOrder(ctx context.Context, input *model.CoinbaseOrderInput) (*model.CoinbaseOrder, error)
+	MakeCoinbasePaymentMethodDeposit(ctx context.Context, input *model.MakeCoinbasePaymentMethodInput) (*model.CoinbaseDeposit, error)
 }
 type QueryResolver interface {
 	CoinbaseAccountLedger(ctx context.Context, id string, opts *model.CoinbaseAccountLedgerOptions) ([]*model.CoinbaseAccountLedger, error)
@@ -1840,18 +1842,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.CoinbaseConvertCurrency(childComplexity, args["from"].(string), args["to"].(string), args["amount"].(float64), args["opts"].(*model.CoinbaseCurrencyConversionOpts)), true
 
-	case "Mutation.coinbaseDepositFromAccount":
-		if e.complexity.Mutation.CoinbaseDepositFromAccount == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_coinbaseDepositFromAccount_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.CoinbaseDepositFromAccount(childComplexity, args["input"].(*model.CoinbaseDepositInput)), true
-
 	case "Mutation.coinbaseGenerateCryptoAddress":
 		if e.complexity.Mutation.CoinbaseGenerateCryptoAddress == nil {
 			break
@@ -1875,6 +1865,30 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.CreateCoinbaseLimitOrder(childComplexity, args["input"].(*model.CoinbaseOrderInput)), true
+
+	case "Mutation.makeCoinbaseAccountDeposit":
+		if e.complexity.Mutation.MakeCoinbaseAccountDeposit == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_makeCoinbaseAccountDeposit_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.MakeCoinbaseAccountDeposit(childComplexity, args["input"].(*model.MakeCoinbaseAccountDepositInput)), true
+
+	case "Mutation.makeCoinbasePaymentMethodDeposit":
+		if e.complexity.Mutation.MakeCoinbasePaymentMethodDeposit == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_makeCoinbasePaymentMethodDeposit_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.MakeCoinbasePaymentMethodDeposit(childComplexity, args["input"].(*model.MakeCoinbasePaymentMethodInput)), true
 
 	case "Query.clinbaseClientOrder":
 		if e.complexity.Query.ClinbaseClientOrder == nil {
@@ -2803,9 +2817,16 @@ type CoinbaseTime {
   subtotal: Float
 }
 
-input CoinbaseDepositInput {
+input MakeCoinbaseAccountDepositInput {
   amount: Float!
   coinbaseAccountID: String!
+  currency: String!
+  profileID: String
+}
+
+input MakeCoinbasePaymentMethodInput {
+  amount: Float!
+  paymentMethodID: String!
   currency: String!
   profileID: String
 }
@@ -3060,7 +3081,9 @@ type Mutation {
   """
   Deposits funds from a www.coinbase.com wallet to the specified profile_id.
   """
-  coinbaseDepositFromAccount(input: CoinbaseDepositInput): CoinbaseDeposit
+  makeCoinbaseAccountDeposit(
+    input: MakeCoinbaseAccountDepositInput
+  ): CoinbaseDeposit
 
   """
   You can place two types of orders: limit and market. Orders can only be placed
@@ -3072,6 +3095,13 @@ type Mutation {
   and parameters specified. See the Holds details below.
   """
   createCoinbaseLimitOrder(input: CoinbaseOrderInput): CoinbaseOrder
+
+  """
+  Deposits funds from a linked external payment method to the specified profile_id.
+  """
+  makeCoinbasePaymentMethodDeposit(
+    input: MakeCoinbasePaymentMethodInput
+  ): CoinbaseDeposit
 }
 `, BuiltIn: false},
 }
@@ -3123,21 +3153,6 @@ func (ec *executionContext) field_Mutation_coinbaseConvertCurrency_args(ctx cont
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_coinbaseDepositFromAccount_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 *model.CoinbaseDepositInput
-	if tmp, ok := rawArgs["input"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalOCoinbaseDepositInput2ᚖcqlᚋmodelᚐCoinbaseDepositInput(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["input"] = arg0
-	return args, nil
-}
-
 func (ec *executionContext) field_Mutation_coinbaseGenerateCryptoAddress_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -3160,6 +3175,36 @@ func (ec *executionContext) field_Mutation_createCoinbaseLimitOrder_args(ctx con
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
 		arg0, err = ec.unmarshalOCoinbaseOrderInput2ᚖcqlᚋmodelᚐCoinbaseOrderInput(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_makeCoinbaseAccountDeposit_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *model.MakeCoinbaseAccountDepositInput
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg0, err = ec.unmarshalOMakeCoinbaseAccountDepositInput2ᚖcqlᚋmodelᚐMakeCoinbaseAccountDepositInput(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_makeCoinbasePaymentMethodDeposit_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *model.MakeCoinbasePaymentMethodInput
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg0, err = ec.unmarshalOMakeCoinbasePaymentMethodInput2ᚖcqlᚋmodelᚐMakeCoinbasePaymentMethodInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -10111,7 +10156,7 @@ func (ec *executionContext) _Mutation_coinbaseGenerateCryptoAddress(ctx context.
 	return ec.marshalOCoinbaseDepositAddress2ᚖcqlᚋmodelᚐCoinbaseDepositAddress(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Mutation_coinbaseDepositFromAccount(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+func (ec *executionContext) _Mutation_makeCoinbaseAccountDeposit(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -10128,7 +10173,7 @@ func (ec *executionContext) _Mutation_coinbaseDepositFromAccount(ctx context.Con
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := ec.field_Mutation_coinbaseDepositFromAccount_args(ctx, rawArgs)
+	args, err := ec.field_Mutation_makeCoinbaseAccountDeposit_args(ctx, rawArgs)
 	if err != nil {
 		ec.Error(ctx, err)
 		return graphql.Null
@@ -10136,7 +10181,7 @@ func (ec *executionContext) _Mutation_coinbaseDepositFromAccount(ctx context.Con
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().CoinbaseDepositFromAccount(rctx, args["input"].(*model.CoinbaseDepositInput))
+		return ec.resolvers.Mutation().MakeCoinbaseAccountDeposit(rctx, args["input"].(*model.MakeCoinbaseAccountDepositInput))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -10187,6 +10232,45 @@ func (ec *executionContext) _Mutation_createCoinbaseLimitOrder(ctx context.Conte
 	res := resTmp.(*model.CoinbaseOrder)
 	fc.Result = res
 	return ec.marshalOCoinbaseOrder2ᚖcqlᚋmodelᚐCoinbaseOrder(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Mutation_makeCoinbasePaymentMethodDeposit(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_makeCoinbasePaymentMethodDeposit_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().MakeCoinbasePaymentMethodDeposit(rctx, args["input"].(*model.MakeCoinbasePaymentMethodInput))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.CoinbaseDeposit)
+	fc.Result = res
+	return ec.marshalOCoinbaseDeposit2ᚖcqlᚋmodelᚐCoinbaseDeposit(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_coinbaseAccountLedger(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -12249,50 +12333,6 @@ func (ec *executionContext) unmarshalInputCoinbaseCurrencyConversionOpts(ctx con
 	return it, nil
 }
 
-func (ec *executionContext) unmarshalInputCoinbaseDepositInput(ctx context.Context, obj interface{}) (model.CoinbaseDepositInput, error) {
-	var it model.CoinbaseDepositInput
-	var asMap = obj.(map[string]interface{})
-
-	for k, v := range asMap {
-		switch k {
-		case "amount":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("amount"))
-			it.Amount, err = ec.unmarshalNFloat2float64(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "coinbaseAccountID":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("coinbaseAccountID"))
-			it.CoinbaseAccountID, err = ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "currency":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("currency"))
-			it.Currency, err = ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "profileID":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("profileID"))
-			it.ProfileID, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		}
-	}
-
-	return it, nil
-}
-
 func (ec *executionContext) unmarshalInputCoinbaseOrderInput(ctx context.Context, obj interface{}) (model.CoinbaseOrderInput, error) {
 	var it model.CoinbaseOrderInput
 	var asMap = obj.(map[string]interface{})
@@ -12452,6 +12492,94 @@ func (ec *executionContext) unmarshalInputCoinbaseOrderQueryParameters(ctx conte
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("limit"))
 			it.Limit, err = ec.unmarshalOInt2ᚖint(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputMakeCoinbaseAccountDepositInput(ctx context.Context, obj interface{}) (model.MakeCoinbaseAccountDepositInput, error) {
+	var it model.MakeCoinbaseAccountDepositInput
+	var asMap = obj.(map[string]interface{})
+
+	for k, v := range asMap {
+		switch k {
+		case "amount":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("amount"))
+			it.Amount, err = ec.unmarshalNFloat2float64(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "coinbaseAccountID":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("coinbaseAccountID"))
+			it.CoinbaseAccountID, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "currency":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("currency"))
+			it.Currency, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "profileID":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("profileID"))
+			it.ProfileID, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputMakeCoinbasePaymentMethodInput(ctx context.Context, obj interface{}) (model.MakeCoinbasePaymentMethodInput, error) {
+	var it model.MakeCoinbasePaymentMethodInput
+	var asMap = obj.(map[string]interface{})
+
+	for k, v := range asMap {
+		switch k {
+		case "amount":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("amount"))
+			it.Amount, err = ec.unmarshalNFloat2float64(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "paymentMethodID":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("paymentMethodID"))
+			it.PaymentMethodID, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "currency":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("currency"))
+			it.Currency, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "profileID":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("profileID"))
+			it.ProfileID, err = ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -13550,10 +13678,12 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			out.Values[i] = ec._Mutation_coinbaseConvertCurrency(ctx, field)
 		case "coinbaseGenerateCryptoAddress":
 			out.Values[i] = ec._Mutation_coinbaseGenerateCryptoAddress(ctx, field)
-		case "coinbaseDepositFromAccount":
-			out.Values[i] = ec._Mutation_coinbaseDepositFromAccount(ctx, field)
+		case "makeCoinbaseAccountDeposit":
+			out.Values[i] = ec._Mutation_makeCoinbaseAccountDeposit(ctx, field)
 		case "createCoinbaseLimitOrder":
 			out.Values[i] = ec._Mutation_createCoinbaseLimitOrder(ctx, field)
+		case "makeCoinbasePaymentMethodDeposit":
+			out.Values[i] = ec._Mutation_makeCoinbasePaymentMethodDeposit(ctx, field)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -14733,14 +14863,6 @@ func (ec *executionContext) marshalOCoinbaseDepositAddressWarning2ᚖcqlᚋmodel
 	return ec._CoinbaseDepositAddressWarning(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalOCoinbaseDepositInput2ᚖcqlᚋmodelᚐCoinbaseDepositInput(ctx context.Context, v interface{}) (*model.CoinbaseDepositInput, error) {
-	if v == nil {
-		return nil, nil
-	}
-	res, err := ec.unmarshalInputCoinbaseDepositInput(ctx, v)
-	return &res, graphql.ErrorOnPath(ctx, err)
-}
-
 func (ec *executionContext) marshalOCoinbaseOrder2ᚖcqlᚋmodelᚐCoinbaseOrder(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseOrder) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
@@ -15091,6 +15213,22 @@ func (ec *executionContext) marshalOInt2ᚖint64(ctx context.Context, sel ast.Se
 		return graphql.Null
 	}
 	return graphql.MarshalInt64(*v)
+}
+
+func (ec *executionContext) unmarshalOMakeCoinbaseAccountDepositInput2ᚖcqlᚋmodelᚐMakeCoinbaseAccountDepositInput(ctx context.Context, v interface{}) (*model.MakeCoinbaseAccountDepositInput, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputMakeCoinbaseAccountDepositInput(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalOMakeCoinbasePaymentMethodInput2ᚖcqlᚋmodelᚐMakeCoinbasePaymentMethodInput(ctx context.Context, v interface{}) (*model.MakeCoinbasePaymentMethodInput, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputMakeCoinbasePaymentMethodInput(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) unmarshalOOrderCancelTime2ᚖcqlᚋscalarᚐOrderCancelTime(ctx context.Context, v interface{}) (*scalar.OrderCancelTime, error) {

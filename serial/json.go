@@ -68,6 +68,13 @@ func (m _json) UnmarshalOrderTimeInForce(name string, v *scalar.TimeInForce) err
 	return nil
 }
 
+func (m _json) UnmarshalPaymentMethod(name string, v *scalar.PaymentMethod) error {
+	if val := m[name]; val != nil {
+		*v = scalar.PaymentMethod(val.(string))
+	}
+	return nil
+}
+
 func (m _json) UnmarshalOrderType(name string, v *scalar.OrderType) error {
 	if val := m[name]; val != nil {
 		*v = scalar.OrderType(val.(string))
@@ -80,6 +87,20 @@ func (m _json) UnmarshalFloatFromString(name string, v *float64) (err error) {
 		*v, err = strconv.ParseFloat(val.(string), 64)
 	}
 	return err
+}
+
+func (m _json) UnmarshalFloat(name string, v *float64) (err error) {
+	if val := m[name]; val != nil {
+		*v = val.(float64)
+	}
+	return err
+}
+
+func (m _json) UnmarshalInt64(name string, v *int64) error {
+	if val := m[name]; val != nil {
+		*v = int64(val.(float64))
+	}
+	return nil
 }
 
 func (m _json) UnmarshalInt(name string, v *int) error {
@@ -143,4 +164,8 @@ func (m _json) UnmarshalTime(layout string, name string, v *time.Time) (err erro
 		}
 	}
 	return err
+}
+
+func (m _json) Value(key string) interface{} {
+	return m[key]
 }

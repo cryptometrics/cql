@@ -51,13 +51,6 @@ type CoinbaseCurrencyConversionOpts struct {
 	Nonce     *string `json:"nonce"`
 }
 
-type CoinbaseDepositInput struct {
-	Amount            float64 `json:"amount"`
-	CoinbaseAccountID string  `json:"coinbaseAccountID"`
-	Currency          string  `json:"currency"`
-	ProfileID         *string `json:"profileID"`
-}
-
 type CoinbaseOrderInput struct {
 	// buy or sell
 	Side scalar.OrderSide `json:"side"`
@@ -128,4 +121,18 @@ type CoinbaseOrderQueryParameters struct {
 	After *int `json:"after"`
 	// Number of results per request. Maximum 1000. (default 1000)
 	Limit *int `json:"limit"`
+}
+
+type MakeCoinbaseAccountDepositInput struct {
+	Amount            float64 `json:"amount"`
+	CoinbaseAccountID string  `json:"coinbaseAccountID"`
+	Currency          string  `json:"currency"`
+	ProfileID         *string `json:"profileID"`
+}
+
+type MakeCoinbasePaymentMethodInput struct {
+	Amount          float64 `json:"amount"`
+	PaymentMethodID string  `json:"paymentMethodID"`
+	Currency        string  `json:"currency"`
+	ProfileID       *string `json:"profileID"`
 }
