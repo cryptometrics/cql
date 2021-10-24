@@ -1,7 +1,7 @@
 package coinbase
 
 import (
-	"cql/client"
+	"cql/client2"
 	"cql/model"
 )
 
@@ -13,19 +13,10 @@ type CoinbaseAccounts struct {
 // NewCoinbaseAccounts will return an object to query coinbase account data.
 // This is not the same as trading accounts, rather account associated with
 // coinbase wallets.
-func NewCoinbaseAccounts(conn client.Connector) *CoinbaseAccounts {
+func NewCoinbaseAccounts(conn client2.Connector) *CoinbaseAccounts {
 	coinbaseAccounts := new(CoinbaseAccounts)
 	construct(&coinbaseAccounts.parent, conn)
 	return coinbaseAccounts
-}
-
-func (accounts *CoinbaseAccounts) fetchGenerateCryptoAddress(id string) *client.FetchResponse {
-	return accounts.conn.Fetch(&client.Request{
-		Method:   client.POST,
-		Endpoint: CoinbaseAddressesEP,
-		EndpointArgs: client.EndpointArgs{
-			"id": &client.EndpointArg{PathParam: &id}},
-	})
 }
 
 // GenerateCryptoAddress will generates a one-time crypto address for depositing
@@ -38,22 +29,17 @@ func (accounts *CoinbaseAccounts) fetchGenerateCryptoAddress(id string) *client.
 // This endpoint requires the "transfer" permission. API key must belong to
 // default profile.
 //
-// source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postcoinbaseaccountaddresses
+// * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postcoinbaseaccountaddresses
 func (accounts *CoinbaseAccounts) GenerateCryptoAddress(id string) (m *model.CoinbaseDepositAddress, err error) {
-	return m, accounts.fetchGenerateCryptoAddress(id).Assign(&m).Error
-}
-
-func (accounts *CoinbaseAccounts) fetchWallets() *client.FetchResponse {
-	return accounts.conn.Fetch(&client.Request{
-		Method:   client.GET,
-		Endpoint: CoinbaseAccountsEP,
-	})
+	req := accounts.get(ENDPOINT_COINBASE_ACCOUNT_ADDRESSES)
+	return m, req.PathParam("id", id).Fetch().Assign(&m).JoinMessages()
 }
 
 // All lists all the user's available Coinbase wallets (These are the
 // wallets/accounts that are used for buying and selling on www.coinbase.com)
 //
-// source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_getcoinbaseaccounts
+// * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_getcoinbaseaccounts
 func (accounts *CoinbaseAccounts) Wallets() (m []*model.CoinbaseWallet, err error) {
-	return m, accounts.fetchWallets().Assign(&m).Error
+	req := accounts.get(ENDPOINT_COINBASE_ACCOUNTS)
+	return m, req.Fetch().Assign(&m).JoinMessages()
 }

@@ -9,23 +9,27 @@ type Endpoint int
 
 const (
 	_ Endpoint = iota
-	AccountHoldsEP
-	AccountEP
-	AccountsEP
-	AccountLedgerEP
-	AccountTransfersEP
-	CoinbaseAccountsEP
-	CoinbaseAccountDepositsEP
-	CoinbaseAddressesEP
-	CoinbaseConversionsEP
-	CoinbaseConversionEP
+	ENDPOINT_ACCOUNT_HOLDS
+	ENDPOINT_ACCOUNT
+	ENDPOINT_ACCOUNTS
+	ENDPOINT_ACCOUNT_LEDGER
+	ENDPOINT_ACCOUNT_TRANSFERS
+	ENDPOINT_COINBASE_ACCOUNTS
+	ENDPOINT_COINBASE_ACCOUNT_DEPOSITS
+	ENDPOINT_COINBASE_ACCOUNT_ADDRESSES
+	ENDPOINT_COINBASE_CONVERSIONS
+	ENDPOINT_COINBASE_CONVERSION
+	ENDPOINT_CURRENCIES
+	ENDPOINT_CURRENCY
+	ENDPOINT_TRANSFERS_PAYMENT_METHODS
+
 	DepositsEP
 
 	///////
 	ClientOrderEP
 	CreateOrderEP
-	CurrenciesEP
-	CurrencyEP
+	// CurrenciesEP
+	// CurrencyEP
 	OrderEP
 	ProductsEP
 	ProductEP
@@ -40,48 +44,46 @@ const (
 func (endpoint Endpoint) Get(args client.EndpointArgs) string {
 	return map[Endpoint]func(args client.EndpointArgs) string{
 
-		// List trading accounts from the profile of the API key
-		AccountsEP: func(_ client.EndpointArgs) string { return "/accounts" },
+		ENDPOINT_ACCOUNTS: func(_ client.EndpointArgs) string { return "/accounts" },
 
-		// get trading accouns from the profile of the API key using account id
-		AccountEP: func(args client.EndpointArgs) string {
-			return fmt.Sprintf("%s/%s", AccountsEP.Get(nil), *args["id"].PathParam)
+		ENDPOINT_ACCOUNT: func(args client.EndpointArgs) string {
+			return fmt.Sprintf("%s/%s", ENDPOINT_ACCOUNTS.Get(nil), *args["id"].PathParam)
 		},
 
-		AccountLedgerEP: func(args client.EndpointArgs) string {
-			return fmt.Sprintf("%s/ledger%s", AccountEP.Get(args), args.QueryPath())
+		ENDPOINT_ACCOUNT_LEDGER: func(args client.EndpointArgs) string {
+			return fmt.Sprintf("%s/ledger%s", ENDPOINT_ACCOUNT.Get(args), args.QueryPath())
 		},
 
-		AccountHoldsEP: func(args client.EndpointArgs) string {
-			return fmt.Sprintf("%s/holds%s", AccountEP.Get(args), args.QueryPath())
+		ENDPOINT_ACCOUNT_HOLDS: func(args client.EndpointArgs) string {
+			return fmt.Sprintf("%s/holds%s", ENDPOINT_ACCOUNT.Get(args), args.QueryPath())
 		},
 
-		AccountTransfersEP: func(args client.EndpointArgs) string {
-			return fmt.Sprintf("%s/transfers%s", AccountEP.Get(args), args.QueryPath())
+		ENDPOINT_ACCOUNT_TRANSFERS: func(args client.EndpointArgs) string {
+			return fmt.Sprintf("%s/transfers%s", ENDPOINT_ACCOUNT.Get(args), args.QueryPath())
 		},
 
-		CoinbaseAccountsEP: func(_ client.EndpointArgs) string {
+		ENDPOINT_COINBASE_ACCOUNTS: func(_ client.EndpointArgs) string {
 			return "/coinbase-accounts"
 		},
 
-		CoinbaseAccountDepositsEP: func(_ client.EndpointArgs) string {
+		ENDPOINT_COINBASE_ACCOUNT_DEPOSITS: func(_ client.EndpointArgs) string {
 			return client.JoinEndpointParts(DepositsEP.Get(nil), "coinbase-account")
 		},
 
-		CoinbaseAddressesEP: func(args client.EndpointArgs) string {
-			return fmt.Sprintf("%s/%s/addresses", CoinbaseAccountsEP.Get(nil), *args["id"].PathParam)
+		ENDPOINT_COINBASE_ACCOUNT_ADDRESSES: func(args client.EndpointArgs) string {
+			return fmt.Sprintf("%s/%s/addresses", ENDPOINT_COINBASE_ACCOUNTS.Get(nil), *args["id"].PathParam)
 		},
 
-		CoinbaseConversionsEP: func(_ client.EndpointArgs) string {
+		ENDPOINT_COINBASE_CONVERSIONS: func(_ client.EndpointArgs) string {
 			return "/conversions"
 		},
 
-		CoinbaseConversionEP: func(_ client.EndpointArgs) string {
-			return fmt.Sprintf("%s/%s", CoinbaseConversionsEP.Get(nil), *args["id"].PathParam)
+		ENDPOINT_COINBASE_CONVERSION: func(_ client.EndpointArgs) string {
+			return fmt.Sprintf("%s/%s", ENDPOINT_COINBASE_CONVERSIONS.Get(nil), *args["id"].PathParam)
 		},
 
-		DepositsEP: func(_ client.EndpointArgs) string {
-			return "deposits"
+		ENDPOINT_TRANSFERS_PAYMENT_METHODS: func(_ client.EndpointArgs) string {
+			return "/payment-methods"
 		},
 
 		////////
@@ -95,11 +97,11 @@ func (endpoint Endpoint) Get(args client.EndpointArgs) string {
 		},
 
 		// List known currencies.
-		CurrenciesEP: func(_ client.EndpointArgs) string { return "/currencies" },
+		ENDPOINT_CURRENCIES: func(_ client.EndpointArgs) string { return "/currencies" },
 
 		// List the currency for specified id.
-		CurrencyEP: func(args client.EndpointArgs) string {
-			return fmt.Sprintf("%s/%s", CurrenciesEP.Get(nil), *args["id"].PathParam)
+		ENDPOINT_CURRENCY: func(args client.EndpointArgs) string {
+			return fmt.Sprintf("%s/%s", ENDPOINT_CURRENCIES.Get(nil), *args["id"].PathParam)
 		},
 
 		OrderEP: func(args client.EndpointArgs) string {

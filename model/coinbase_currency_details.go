@@ -36,7 +36,7 @@ func (detail *CoinbaseCurrencyDetails) UnmarshalJSON(d []byte) error {
 	data.UnmarshalString("crypto_transaction_link", &detail.CryptoTransactionLink)
 	data.UnmarshalString("display_name", &detail.DisplayName)
 	data.UnmarshalFloat("min_withdrawal_amount", &detail.MinWithdrawalAmount)
-	data.UnmarshalFloat("max_withdrawal_amount", &detail.MinWithdrawalAmount)
+	data.UnmarshalFloat("max_withdrawal_amount", &detail.MaxWithdrawalAmount)
 	data.UnmarshalFloat("processing_time_seconds", &detail.ProcessingTimeSeconds)
 
 	if err := data.UnmarshalStringSlice("group_types", &detail.GroupTypes); err != nil {

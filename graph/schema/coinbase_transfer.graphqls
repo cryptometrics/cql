@@ -1,3 +1,9 @@
+type CoinbaseAvailableBalance {
+  amount: Float
+  currency: String
+  scale: Float
+}
+
 type CoinbaseDeposit {
   id: String
   amount: Float
@@ -5,6 +11,42 @@ type CoinbaseDeposit {
   payoutAt: String
   fee: Float
   subtotal: Float
+}
+
+type CoinbaseLimits {
+  type: PaymentMethod
+  name: String
+}
+
+type CoinbasePickerData {
+  symbol: String
+  customerName: String
+  accountName: String
+  accountNumber: String
+  accountType: String
+  institutionCode: String
+  institutionName: String
+  iban: String
+  swift: String
+  paypalEmail: String
+  paypalOwner: String
+  routingNumber: String
+  institutionIdentifier: String
+  bankName: String
+  branchName: String
+  iconURL: String
+  balance: CoinbaseAvailableBalance
+}
+
+type CoinbaseRecurringOption {
+  period: String
+  label: String
+}
+
+type CoinbaseResourceAccount {
+  id: String
+  resource: String
+  resourcePath: String
 }
 
 input MakeCoinbaseAccountDepositInput {
@@ -19,4 +61,34 @@ input MakeCoinbasePaymentMethodInput {
   paymentMethodID: String!
   currency: String!
   profileID: String
+}
+
+type CoinbasePaymentMethod {
+  id: String
+  type: PaymentMethod
+  name: String
+  currency: String
+  primaryBuy: Boolean
+  primarySell: Boolean
+  instantBuy: Boolean
+  instantSell: Boolean
+  verified: Boolean
+  createdAt: Time
+  updatedAt: Time
+  resource: String
+  resourcePath: String
+  limits: CoinbaseLimits
+  allowBuy: Boolean
+  allowSell: Boolean
+  allowDeposit: Boolean
+  allowWithdraw: Boolean
+  pickerData: CoinbasePickerData
+  fiatAccount: CoinbaseResourceAccount
+  cryptoAccount: CoinbaseResourceAccount
+  recurringOptions: [CoinbaseRecurringOption]
+  availableBalance: CoinbaseAvailableBalance
+  holdBusinessDays: Int
+  holdDays: Int
+  verificationMethod: String
+  cdvStatus: String
 }

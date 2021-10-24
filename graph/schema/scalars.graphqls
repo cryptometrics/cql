@@ -4,5 +4,6 @@ scalar OrderSide
 scalar OrderStop
 scalar OrderSTP
 scalar OrderType
+scalar PaymentMethod
 scalar TimeInForce
 scalar Time

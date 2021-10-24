@@ -1,8 +1,9 @@
 package coinbase
 
 import (
-	"cql/client"
+	"cql/client2"
 	"cql/model"
+	"cql/scalar"
 	"io/ioutil"
 	"testing"
 
@@ -24,7 +25,7 @@ func TestCoinbaseCurrencyFind(t *testing.T) {
 			desc:     "should correctly assign object",
 			g:        g,
 			ctrl:     clientCtrl,
-			endpoint: CurrencyEP,
+			endpoint: ENDPOINT_CURRENCY,
 			data: []byte(`{
 				"id": "USD",
 				"name": "United States Dollar",
@@ -48,12 +49,12 @@ func TestCoinbaseCurrencyFind(t *testing.T) {
 					]
 				}
 			}`),
-			assertReq: func(g *G, r client.Request) {
-				g.Assert(r.Method).Eql(client.GET)
-				g.Assert(r.Endpoint).Eql(CurrencyEP)
-				g.Assert(*r.EndpointArgs["id"].PathParam).Eql(id1)
+			assertReq: func(g *G, r client2.Request) {
+				g.Assert(r.Method).Eql(client2.GET)
+				g.Assert(r.Endpoint).Eql(ENDPOINT_CURRENCY)
+				g.Assert(*r.EndpointArgs()["id"].PathParam).Eql(id1)
 			},
-			assert: func(g *G, c client.Connector) {
+			assert: func(g *G, c client2.Connector) {
 				conv := NewCurrency(c)
 				m, err := conv.Find(id1)
 				if err != nil {
@@ -71,11 +72,11 @@ func TestCoinbaseCurrencyFind(t *testing.T) {
 						Type:      "fiat",
 						Symbol:    "$",
 						SortOrder: 1,
-						PushPaymentMethods: []string{
-							"bank_wire",
-							"fedwire",
-							"swift_bank_account",
-							"intra_bank_account",
+						PushPaymentMethods: []scalar.PaymentMethod{
+							scalar.PaymentMethodBankWire,
+							scalar.PaymentMethodFedwire,
+							scalar.PaymentMethodSWIFTBankAccount,
+							scalar.PaymentMethodIntraBankAccount,
 						},
 						DisplayName: "US Dollar",
 						GroupTypes: []string{
@@ -97,14 +98,14 @@ func TestCoinbaseCurrencyFind(t *testing.T) {
 			desc:     "should correctly assign slice",
 			g:        g,
 			ctrl:     clientCtrl,
-			endpoint: CurrenciesEP,
+			endpoint: ENDPOINT_CURRENCIES,
 			data:     []byte(`[{"id":"USD"},{"id":"BTC"}]`),
-			assertReq: func(g *G, r client.Request) {
-				g.Assert(r.Method).Eql(client.GET)
-				g.Assert(r.Endpoint).Eql(CurrenciesEP)
+			assertReq: func(g *G, r client2.Request) {
+				g.Assert(r.Method).Eql(client2.GET)
+				g.Assert(r.Endpoint).Eql(ENDPOINT_CURRENCIES)
 				g.Assert(r.EndpointArgs).IsZero()
 			},
-			assert: func(g *G, c client.Connector) {
+			assert: func(g *G, c client2.Connector) {
 				conv := NewCurrency(c)
 				m, err := conv.All()
 				if err != nil {

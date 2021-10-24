@@ -8,7 +8,6 @@ import (
 	"cql/coinbase"
 	generated1 "cql/graph/generated"
 	model1 "cql/model"
-	"fmt"
 )
 
 func (r *mutationResolver) CoinbaseConvertCurrency(ctx context.Context, from string, to string, amount float64, opts *model1.CoinbaseCurrencyConversionOpts) (*model1.CoinbaseCurrencyConversion, error) {
@@ -24,12 +23,12 @@ func (r *mutationResolver) MakeCoinbaseAccountDeposit(ctx context.Context, input
 }
 
 func (r *mutationResolver) CreateCoinbaseLimitOrder(ctx context.Context, input *model1.CoinbaseOrderInput) (*model1.CoinbaseOrder, error) {
-	private := coinbase.NewPrivate()
-	return private.CreateLimitOrder(input)
+	// private := coinbase.NewPrivate()
+	return nil, nil // private.CreateLimitOrder(input)
 }
 
 func (r *mutationResolver) MakeCoinbasePaymentMethodDeposit(ctx context.Context, input *model1.MakeCoinbasePaymentMethodInput) (*model1.CoinbaseDeposit, error) {
-	panic(fmt.Errorf("not implemented"))
+	return coinbase.NewTransfer(coinbase.DefaultClient).MakePaymentMethodDeposit(input)
 }
 
 func (r *queryResolver) CoinbaseAccountLedger(ctx context.Context, id string, opts *model1.CoinbaseAccountLedgerOptions) ([]*model1.CoinbaseAccountLedger, error) {
@@ -64,58 +63,62 @@ func (r *queryResolver) CoinbaseCurrency(ctx context.Context, id string) (*model
 	return coinbase.NewCurrency(coinbase.DefaultClient).Find(id)
 }
 
+func (r *queryResolver) CoinbasePaymentMethods(ctx context.Context) ([]*model1.CoinbasePaymentMethod, error) {
+	return coinbase.NewTransfer(coinbase.DefaultClient).PaymentMethods()
+}
+
 func (r *queryResolver) CoinbaseWallets(ctx context.Context, filler *string) ([]*model1.CoinbaseWallet, error) {
 	return coinbase.NewCoinbaseAccounts(coinbase.DefaultClient).Wallets()
 }
 
 func (r *queryResolver) ClinbaseClientOrder(ctx context.Context, clientOid string) (*model1.CoinbaseOrder, error) {
-	private := coinbase.NewPrivate()
-	return private.ClientOrder(clientOid)
+	// private := coinbase.NewPrivate()
+	return nil, nil // private.ClientOrder(clientOid)
 }
 
 func (r *queryResolver) CoinbaseOrder(ctx context.Context, id string) (*model1.CoinbaseOrder, error) {
-	private := coinbase.NewPrivate()
-	return private.Order(id)
+	// private := coinbase.NewPrivate()
+	return nil, nil // private.Order(id)
 }
 
 func (r *queryResolver) CoinbaseProducts(ctx context.Context, test *string) ([]*model1.CoinbaseProduct, error) {
-	md := coinbase.NewMarketData()
-	return md.Products()
+	// md := coinbase.NewMarketData()
+	return nil, nil // md.Products()
 }
 
 func (r *queryResolver) CoinbaseProduct(ctx context.Context, id string) (*model1.CoinbaseProduct, error) {
-	md := coinbase.NewMarketData()
-	return md.Product(id)
+	// md := coinbase.NewMarketData()
+	return nil, nil // md.Product(id)
 }
 
 func (r *queryResolver) CoinbaseProductDailyStats(ctx context.Context, id string) (*model1.CoinbaseProductDailyStats, error) {
-	md := coinbase.NewMarketData()
-	return md.ProductDailyStats(id)
+	// md := coinbase.NewMarketData()
+	return nil, nil // md.ProductDailyStats(id)
 }
 
 func (r *queryResolver) CoinbaseProductHistoricalRate(ctx context.Context, id string, start string, end string, granularity int) ([]*model1.CoinbaseProductHistoricalRate, error) {
-	md := coinbase.NewMarketData()
-	return md.ProductHistoricalRates(id, start, end, granularity)
+	// md := coinbase.NewMarketData()
+	return nil, nil // md.ProductHistoricalRates(id, start, end, granularity)
 }
 
 func (r *queryResolver) CoinbaseProductOrderBook(ctx context.Context, id string, level string) (*model1.CoinbaseProductOrderBook, error) {
-	md := coinbase.NewMarketData()
-	return md.ProductOrderBook(id, level)
+	// md := coinbase.NewMarketData()
+	return nil, nil // md.ProductOrderBook(id, level)
 }
 
 func (r *queryResolver) CoinbaseProductTicker(ctx context.Context, id string) (*model1.CoinbaseProductTicker, error) {
-	md := coinbase.NewMarketData()
-	return md.ProductTicker(id)
+	// md := coinbase.NewMarketData()
+	return nil, nil // md.ProductTicker(id)
 }
 
 func (r *queryResolver) CoinbaseProductTrade(ctx context.Context, id string) ([]*model1.CoinbaseProductTrade, error) {
-	md := coinbase.NewMarketData()
-	return md.ProductTrades(id)
+	// md := coinbase.NewMarketData()
+	return nil, nil // md.ProductTrades(id)
 }
 
 func (r *queryResolver) CoinbaseTime(ctx context.Context, test *string) (*model1.CoinbaseTime, error) {
-	md := coinbase.NewMarketData()
-	return md.Time()
+	// md := coinbase.NewMarketData()
+	return nil, nil // md.Time()
 }
 
 // Mutation returns generated1.MutationResolver implementation.

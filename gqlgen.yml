@@ -66,6 +66,8 @@ models:
     model: cql/model.CoinbaseAccountTransferDetails
   CoinbaseAccount:
     model: cql/model.CoinbaseAccount
+  CoinbaseAvailableBalance:
+    model: cql/model.CoinbaseAvailableBalance
   CoinbaseBankCountry:
     model: cql/model.CoinbaseBankCountry
   CoinbaseCurrencyConversion:
@@ -82,8 +84,14 @@ models:
     model: cql/model.CoinbaseDepositAddress
   CoinbaseDeposit:
     model: cql/model.CoinbaseDeposit
+  CoinbaseLimits:
+    model: cql/model.CoinbaseLimits
   CoinbaseOrder:
     model: cql/model.CoinbaseOrder
+  CoinbasePaymentMethod:
+    model: cql/model.CoinbasePaymentMethod
+  CoinbasePickerData:
+    model: cql/model.CoinbasePickerData
   CoinbaseProduct:
     model: cql/model.CoinbaseProduct
   CoinbaseProductDailyStats:
@@ -98,6 +106,10 @@ models:
     model: cql/model.CoinbaseProductTicker
   CoinbaseProductTrade:
     model: cql/model.CoinbaseProductTrade
+  CoinbaseRecurringOption:
+    model: cql/model.CoinbaseRecurringOption
+  CoinbaseResourceAccount:
+    model: cql/model.CoinbaseResourceAccount
   CoinbaseSEPADepositInformation:
     model: cql/model.CoinbaseSEPADepositInformation
   CoinbaseSWIFTDepositInformation:
@@ -122,5 +134,7 @@ models:
     model: cql/scalar.OrderSTP
   OrderType:
     model: cql/scalar.OrderType
+  PaymentMethod:
+    model: cql/scalar.PaymentMethod
   TimeInForce:
     model: cql/scalar.TimeInForce

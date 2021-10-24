@@ -2,6 +2,7 @@ package coinbase
 
 import (
 	"cql/client"
+	"cql/client2"
 	"cql/model"
 	"io/ioutil"
 	"testing"
@@ -26,7 +27,7 @@ func TestCoinbaseConversionFind(t *testing.T) {
 			desc:     "should correctly assign object",
 			g:        g,
 			ctrl:     clientCtrl,
-			endpoint: CoinbaseConversionEP,
+			endpoint: ENDPOINT_COINBASE_CONVERSION,
 			data: []byte(`{
 				"id": "85e5fb8e-13c0-471f-b9a7-367076b443c7",
 				"to": "",
@@ -34,13 +35,13 @@ func TestCoinbaseConversionFind(t *testing.T) {
 				"to_account_id": "efd6e38b-0449-484d-aa1e-daa0a04ab49a",
 				"from_account_id": "ccb0db90-3476-4573-9a71-5c88b3f38b6b"
 			}`),
-			assertReq: func(g *G, r client.Request) {
+			assertReq: func(g *G, r client2.Request) {
 				g.Assert(r.Method).Eql(client.GET)
-				g.Assert(r.Endpoint).Eql(CoinbaseConversionEP)
-				g.Assert(*r.EndpointArgs["id"].PathParam).Eql(id1)
-				g.Assert(*r.EndpointArgs["profile_id"].QueryParam).Eql(pid1)
+				g.Assert(r.Endpoint).Eql(ENDPOINT_COINBASE_CONVERSION)
+				g.Assert(*r.EndpointArgs()["id"].PathParam).Eql(id1)
+				g.Assert(*r.EndpointArgs()["profile_id"].QueryParam).Eql(pid1)
 			},
-			assert: func(g *G, c client.Connector) {
+			assert: func(g *G, c client2.Connector) {
 				conv := NewConversion(c)
 				m, err := conv.Find(id1, &model.CoinbaseCurrencyConversionOpts{
 					ProfileID: null.StringFrom(pid1).Ptr(),
@@ -75,7 +76,7 @@ func TestCoinbaseConversionFind(t *testing.T) {
 			desc:     "should correctly assign object",
 			g:        g,
 			ctrl:     clientCtrl,
-			endpoint: CoinbaseConversionsEP,
+			endpoint: ENDPOINT_COINBASE_CONVERSIONS,
 			data: []byte(`{
 				"id": "85e5fb8e-13c0-471f-b9a7-367076b443c7",
 				"to": "",
@@ -83,12 +84,12 @@ func TestCoinbaseConversionFind(t *testing.T) {
 				"to_account_id": "efd6e38b-0449-484d-aa1e-daa0a04ab49a",
 				"from_account_id": "ccb0db90-3476-4573-9a71-5c88b3f38b6b"
 			}`),
-			assertReq: func(g *G, r client.Request) {
+			assertReq: func(g *G, r client2.Request) {
 				g.Assert(r.Method).Eql(client.POST)
-				g.Assert(r.Endpoint).Eql(CoinbaseConversionsEP)
-				g.Assert(r.EndpointArgs).IsZero()
+				g.Assert(r.Endpoint).Eql(ENDPOINT_COINBASE_CONVERSIONS)
+				g.Assert(r.EndpointArgs()).IsZero()
 			},
-			assert: func(g *G, c client.Connector) {
+			assert: func(g *G, c client2.Connector) {
 				conv := NewConversion(c)
 				m, err := conv.Make(from, to, amount, &model.CoinbaseCurrencyConversionOpts{
 					ProfileID: null.StringFrom(pid).Ptr(),

@@ -7,14 +7,15 @@ import (
 	"context"
 	"cql/graph/generated"
 	"cql/model"
+	"fmt"
 )
 
 func (r *coinbaseDepositAddressResolver) Warnings(ctx context.Context, obj *model.CoinbaseDepositAddress) ([]*model.CoinbaseDepositAddressWarning, error) {
-	return obj.Warnings.UntypedSlice().([]*model.CoinbaseDepositAddressWarning), nil
+	panic(fmt.Errorf("not implemented"))
 }
 
 func (r *coinbaseDepositAddressResolver) ExchagneDepositAddress(ctx context.Context, obj *model.CoinbaseDepositAddress) (*bool, error) {
-	return &obj.ExchangeDepositAddress, nil
+	panic(fmt.Errorf("not implemented"))
 }
 
 // CoinbaseDepositAddress returns generated.CoinbaseDepositAddressResolver implementation.

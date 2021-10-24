@@ -2,6 +2,7 @@ package coinbase
 
 import (
 	"cql/client"
+	"cql/client2"
 	"cql/model"
 	"fmt"
 	"io/ioutil"
@@ -24,13 +25,13 @@ func TestCoinbaseAccountsWallets(t *testing.T) {
 			desc:     "should correctly assign slice",
 			g:        g,
 			ctrl:     clientCtrl,
-			endpoint: CoinbaseAccountsEP,
+			endpoint: ENDPOINT_COINBASE_ACCOUNTS,
 			data:     []byte(`[{"id":"test"}]`),
-			assertReq: func(g *G, r client.Request) {
+			assertReq: func(g *G, r client2.Request) {
 				g.Assert(r.Method).Eql(client.GET)
-				g.Assert(r.EndpointArgs).IsZero()
+				g.Assert(r.EndpointArgs()).IsZero()
 			},
-			assert: func(g *G, c client.Connector) {
+			assert: func(g *G, c client2.Connector) {
 				ca := NewCoinbaseAccounts(c)
 				m, err := ca.Wallets()
 				if err != nil {
@@ -60,13 +61,13 @@ func TestCoinbaseAccountsGenerateCryptoAddress(t *testing.T) {
 			desc:     "should correctly assign object",
 			g:        g,
 			ctrl:     clientCtrl,
-			endpoint: CoinbaseAddressesEP,
+			endpoint: ENDPOINT_COINBASE_ACCOUNT_ADDRESSES,
 			data:     []byte(fmt.Sprintf(`{"id":"%s"}`, depositID)),
-			assertReq: func(g *G, r client.Request) {
+			assertReq: func(g *G, r client2.Request) {
 				g.Assert(r.Method).Eql(client.POST)
-				g.Assert(*r.EndpointArgs["id"].PathParam).Eql(id1)
+				g.Assert(*r.EndpointArgs()["id"].PathParam).Eql(id1)
 			},
-			assert: func(g *G, c client.Connector) {
+			assert: func(g *G, c client2.Connector) {
 				ca := NewCoinbaseAccounts(c)
 				m, err := ca.GenerateCryptoAddress(id1)
 				if err != nil {
