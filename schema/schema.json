@@ -20,7 +20,7 @@
       "description": "Fields to generate golang packages to store and access data from iex api requests",
       "items": {
         "type": "object",
-        "required": ["identifier", "type"],
+        "required": ["identifier", "goType"],
         "properties": {
           "identifier": {
             "type": "string",
@@ -30,7 +30,7 @@
             "type": "string",
             "description": "json type"
           },
-          "type": {
+          "goType": {
             "type": "string",
             "description": "go type"
           },

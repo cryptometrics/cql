@@ -5,34 +5,34 @@
 	"modelFields": [
 		{
 			"identifier": "id",
-			"type": "string"
+			"goType": "string"
 		},
 		{
 			"identifier": "currency",
-			"type": "string"
+			"goType": "string"
 		},
 		{
 			"identifier": "balance",
-			"type": "float64",
+			"goType": "float64",
 			"unmarshaller": "UnmarshalFloatFromString"
 		},
 		{
 			"identifier": "available",
-			"type": "float64",
+			"goType": "float64",
 			"unmarshaller": "UnmarshalFloatFromString"
 		},
 		{
 			"identifier": "hold",
-			"type": "float64",
+			"goType": "float64",
 			"unmarshaller": "UnmarshalFloatFromString"
 		},
 		{
 			"identifier": "profile_id",
-			"type": "string"
+			"goType": "string"
 		},
 		{
 			"identifier": "trading_enabled",
-			"type": "bool"
+			"goType": "bool"
 		}
 	],
 	"modelTests": [

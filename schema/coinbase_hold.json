@@ -5,23 +5,23 @@
 	"modelFields": [
 		{
 			"identifier": "id",
-			"type": "string"
+			"goType": "string"
 		},
 		{
 			"identifier": "created_at",
-			"type": "time.Time"
+			"goType": "time.Time"
 		},
 		{
 			"identifier": "updated_at",
-			"type": "time.Time"
+			"goType": "time.Time"
 		},
 		{
 			"identifier": "type",
-			"type": "string"
+			"goType": "string"
 		},
 		{
 			"identifier": "ref",
-			"type": "string"
+			"goType": "string"
 		}
 	]
 }

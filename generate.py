@@ -25,7 +25,7 @@ MODEL_FIELDS = "modelFields"
 MODEL_FIELD_DATETIME_LAYOUT = "datetimeLayout"
 MODEL_FIELD_NAME = "name"
 MODEL_FIELD_IDENTIFIER = "identifier"
-MODEL_FIELD_TYPE = "type"
+MODEL_FIELD_GO_TYPE = "goType"
 MODEL_FIELD_UNMARSHALLER = "unmarshaller"
 MODEL_TESTS = "modelTests"
 MODEL_TEST_DESCRIPTION = "description"
@@ -159,7 +159,7 @@ def go_model_struct(data):
     """
     fields = []
     for field in data[MODEL_FIELDS]:
-        literal = f"{go_model_field_name(field)} {field[MODEL_FIELD_TYPE]}"
+        literal = f"{go_model_field_name(field)} {field[MODEL_FIELD_GO_TYPE]}"
         literal += f'`json:"{field[MODEL_FIELD_IDENTIFIER]}"`'
         fields.append(literal)
     fields.sort()
@@ -236,7 +236,7 @@ def field_deserializer_undefined(data, field):
     types defined on a field blob
     """
     sig = go_model_struct_unmarshal_fn_sig(data, field)
-    go_type = field[MODEL_FIELD_TYPE]
+    go_type = field[MODEL_FIELD_GO_TYPE]
     if go_type == "string":
         return f'\ndata.UnmarshalString({sig})'
     if go_type == "bool":
@@ -293,7 +293,7 @@ def graphqls_type(field):
         "bool": "Boolean",
         "time.Time": "Time",
     }
-    return switch[field[MODEL_FIELD_TYPE]]
+    return switch[field[MODEL_FIELD_GO_TYPE]]
 
 
 def json_go_type_dictionary(data):
@@ -304,7 +304,7 @@ def json_go_type_dictionary(data):
     """
     d = {}
     for field in data[MODEL_FIELDS]:
-        d[field[MODEL_FIELD_IDENTIFIER]] = field[MODEL_FIELD_TYPE]
+        d[field[MODEL_FIELD_IDENTIFIER]] = field[MODEL_FIELD_GO_TYPE]
     return d
 
 
