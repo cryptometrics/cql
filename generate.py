@@ -1,5 +1,5 @@
 # generate.py is a script that generates the model and graphsql schema from the
-# json data in the schema package, which follows the sturcutre of
+# json data in the schema package, which follows the structure of
 # schema/schema.json
 
 import json
@@ -24,7 +24,7 @@ MODEL_DESCRIPTION = "modelDescription"
 MODEL_FIELDS = "modelFields"
 MODEL_FIELD_DATETIME_LAYOUT = "datetimeLayout"
 MODEL_FIELD_NAME = "name"
-MODEL_FIELD_JSON = "json"
+MODEL_FIELD_IDENTIFIER = "identifier"
 MODEL_FIELD_TYPE = "type"
 MODEL_FIELD_UNMARSHALLER = "unmarshaller"
 MODEL_TESTS = "modelTests"
@@ -42,8 +42,9 @@ schema_filenames.remove(SCHEMA_FILENAME)
 # Try to follow the PEP 8 style guide:
 # * https://www.python.org/dev/peps/pep-0008
 
-# Try to keep functions alphabetal, with dependency exceptions.  In the case of
-# a functional dependency, put the dependent function after the dependency.
+# Try to keep functions alphabetical, with dependency exceptions.  In the case
+# of a functional dependency, put the dependent function after the dependency
+# function.
 
 
 def _80_char_go_comment(str):
@@ -107,7 +108,7 @@ def constantize_json_go_tag(field):
     constantize_json_go_tag returns a json name fully capitalized, i.e. a constant
     in our go repo: SOMETHING_LIKE_THIS.
     """
-    return inflection.camelize("json_tag_"+field[MODEL_FIELD_JSON], False)
+    return inflection.camelize("json_tag_"+field[MODEL_FIELD_IDENTIFIER], False)
 
 
 def constantize_json_go_tags(data):
@@ -117,7 +118,7 @@ def constantize_json_go_tags(data):
     """
     consts = []
     for field in data[MODEL_FIELDS]:
-        const = f'{constantize_json_go_tag(field)} = "{field[MODEL_FIELD_JSON]}"'
+        const = f'{constantize_json_go_tag(field)} = "{field[MODEL_FIELD_IDENTIFIER]}"'
         consts.append(const)
     consts.sort()
     return f'const({";".join(consts)})'
@@ -144,7 +145,7 @@ def go_datetime_layout(field):
 
 
 def go_model_field_name(field):
-    return stringcase.pascalcase(field[MODEL_FIELD_NAME])
+    return inflection.camelize(field[MODEL_FIELD_IDENTIFIER])
 
 
 def go_model_struct_name(data):
@@ -159,7 +160,7 @@ def go_model_struct(data):
     fields = []
     for field in data[MODEL_FIELDS]:
         literal = f"{go_model_field_name(field)} {field[MODEL_FIELD_TYPE]}"
-        literal += f'`json:"{field[MODEL_FIELD_JSON]}"`'
+        literal += f'`json:"{field[MODEL_FIELD_IDENTIFIER]}"`'
         fields.append(literal)
     fields.sort()
     return f'type {go_model_struct_name(data)} struct {{{";".join(fields)}}}'
@@ -219,7 +220,7 @@ def go_time_unmarshal_block(data, field):
     """
     sig = []
     sig.append(go_datetime_layout(field))
-    sig.append(f'"{field[MODEL_FIELD_JSON]}"')
+    sig.append(constantize_json_go_tag(field))
     sig.append(f"&{go_struct_access_var(data, field)}")
 
     unmarshaller = []
@@ -295,18 +296,6 @@ def graphqls_type(field):
     return switch[field[MODEL_FIELD_TYPE]]
 
 
-def json_go_model_struct_dictionary(data):
-    """
-    json_go_model_struct_dictionary will return dictionary where keys are the json
-    formatted data and the values are go struct fields.  i.e.
-    {this_thing: ThisThing}
-    """
-    d = {}
-    for field in data[MODEL_FIELDS]:
-        d[field[MODEL_FIELD_JSON]] = field[MODEL_FIELD_NAME]
-    return d
-
-
 def json_go_type_dictionary(data):
     """
     json_go_type_dictionary will return a dictionary where keys are the json
@@ -315,7 +304,7 @@ def json_go_type_dictionary(data):
     """
     d = {}
     for field in data[MODEL_FIELDS]:
-        d[field[MODEL_FIELD_JSON]] = field[MODEL_FIELD_TYPE]
+        d[field[MODEL_FIELD_IDENTIFIER]] = field[MODEL_FIELD_TYPE]
     return d
 
 
@@ -390,7 +379,8 @@ def create_go_model_test(data, test):
     expected = []
     json_to_type = json_go_type_dictionary(data)
     test = json.loads(model_json)
-    for key, value in json_go_model_struct_dictionary(data).items():
+    for field in data[MODEL_FIELDS]:
+        key = field[MODEL_FIELD_IDENTIFIER]
         val = None
         if json_to_type[key] == "string":
             val = f'"{test[key]}"'
@@ -399,7 +389,7 @@ def create_go_model_test(data, test):
         elif json_to_type[key] == "bool":
             val = "true" if test[key] else "false"
 
-        expected.append(f'{value}: {val}')
+        expected.append(f'{go_model_field_name(field)}: {val}')
 
     expectedStr = ",".join(expected)
     goblin.append(f"expected := {model_name}{{{expectedStr}}}")
@@ -409,7 +399,7 @@ def create_go_model_test(data, test):
 
     assertions = []
     for field in data[MODEL_FIELDS]:
-        name = field[MODEL_FIELD_NAME]
+        name = go_model_field_name(field)
         assertions.append(f"g.Assert(actual.{name}).Eql(expected.{name})")
 
     assertsionsStr = ";".join(assertions)
@@ -455,7 +445,7 @@ def create_graphqls_scheme(data):
     fields = []
     for field in data[MODEL_FIELDS]:
         fields.append(
-            f"  {camelcase(field[MODEL_FIELD_NAME])}: {graphqls_type(field)}")
+            f"  {inflection.camelize(go_model_field_name(field), False)}: {graphqls_type(field)}")
 
     fieldsStr = "\n".join(fields)
     go_file.write(_80_char_graphqls_comment(data[MODEL_DESCRIPTION]))

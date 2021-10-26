@@ -14,7 +14,7 @@ import (
 // is removed after it is complet
 type CoinbaseHold struct {
 	CreatedAt time.Time `json:"created_at"`
-	ID        string    `json:"id"`
+	Id        string    `json:"id"`
 	Ref       string    `json:"ref"`
 	Type      string    `json:"type"`
 	UpdatedAt time.Time `json:"updated_at"`
@@ -33,14 +33,14 @@ func (coinbaseHold *CoinbaseHold) UnmarshalJSON(d []byte) error {
 	if err != nil {
 		return err
 	}
-	data.UnmarshalString(jsonTagId, &coinbaseHold.ID)
+	data.UnmarshalString(jsonTagId, &coinbaseHold.Id)
 	data.UnmarshalString(jsonTagRef, &coinbaseHold.Ref)
 	data.UnmarshalString(jsonTagType, &coinbaseHold.Type)
-	err = data.UnmarshalTime(time.RFC3339Nano, "created_at", &coinbaseHold.CreatedAt)
+	err = data.UnmarshalTime(time.RFC3339Nano, jsonTagCreatedAt, &coinbaseHold.CreatedAt)
 	if err != nil {
 		return err
 	}
-	err = data.UnmarshalTime(time.RFC3339Nano, "updated_at", &coinbaseHold.UpdatedAt)
+	err = data.UnmarshalTime(time.RFC3339Nano, jsonTagUpdatedAt, &coinbaseHold.UpdatedAt)
 	if err != nil {
 		return err
 	}

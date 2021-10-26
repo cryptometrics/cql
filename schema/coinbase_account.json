@@ -4,41 +4,34 @@
 	"modelDescription": "CoinbaseAccount holds data for trading account from the profile of the API key",
 	"modelFields": [
 		{
-			"name": "ID",
-			"json": "id",
+			"identifier": "id",
 			"type": "string"
 		},
 		{
-			"name": "Currency",
-			"json": "currency",
+			"identifier": "currency",
 			"type": "string"
 		},
 		{
-			"name": "Balance",
-			"json": "balance",
+			"identifier": "balance",
 			"type": "float64",
 			"unmarshaller": "UnmarshalFloatFromString"
 		},
 		{
-			"name": "Available",
-			"json": "available",
+			"identifier": "available",
 			"type": "float64",
 			"unmarshaller": "UnmarshalFloatFromString"
 		},
 		{
-			"name": "Hold",
-			"json": "hold",
+			"identifier": "hold",
 			"type": "float64",
 			"unmarshaller": "UnmarshalFloatFromString"
 		},
 		{
-			"name": "ProfileID",
-			"json": "profile_id",
+			"identifier": "profile_id",
 			"type": "string"
 		},
 		{
-			"name": "TradingEnabled",
-			"json": "trading_enabled",
+			"identifier": "trading_enabled",
 			"type": "bool"
 		}
 	],

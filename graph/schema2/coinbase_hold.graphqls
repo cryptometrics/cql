@@ -6,9 +6,9 @@ order is canceled, any remaining hold is removed. For withdrawals, the hold is
 removed after it is complet
 """
 type CoinbaseHold {
-  None: String
-  None: Time
-  None: Time
-  None: String
-  None: String
+  id: String
+  createdAt: Time
+  updatedAt: Time
+  type: String
+  ref: String
 }

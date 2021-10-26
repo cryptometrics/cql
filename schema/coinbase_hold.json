@@ -4,28 +4,23 @@
 	"modelDescription": "CoinbaseHolds list the holds of an account that belong to the same profile as the API key. Holds are placed on an account for any active orders or pending withdraw requests. As an order is filled, the hold amount is updated. If an order is canceled, any remaining hold is removed. For withdrawals, the hold is removed after it is complet",
 	"modelFields": [
 		{
-			"name": "ID",
-			"json": "id",
+			"identifier": "id",
 			"type": "string"
 		},
 		{
-			"name": "CreatedAt",
-			"json": "created_at",
+			"identifier": "created_at",
 			"type": "time.Time"
 		},
 		{
-			"name": "UpdatedAt",
-			"json": "updated_at",
+			"identifier": "updated_at",
 			"type": "time.Time"
 		},
 		{
-			"name": "Type",
-			"json": "type",
+			"identifier": "type",
 			"type": "string"
 		},
 		{
-			"name": "Ref",
-			"json": "ref",
+			"identifier": "ref",
 			"type": "string"
 		}
 	]

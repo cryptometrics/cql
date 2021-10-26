@@ -11,8 +11,8 @@ type CoinbaseAccount struct {
 	Balance        float64 `json:"balance"`
 	Currency       string  `json:"currency"`
 	Hold           float64 `json:"hold"`
-	ID             string  `json:"id"`
-	ProfileID      string  `json:"profile_id"`
+	Id             string  `json:"id"`
+	ProfileId      string  `json:"profile_id"`
 	TradingEnabled bool    `json:"trading_enabled"`
 }
 
@@ -36,7 +36,7 @@ func (coinbaseAccount *CoinbaseAccount) UnmarshalJSON(d []byte) error {
 	data.UnmarshalFloatFromString(jsonTagBalance, &coinbaseAccount.Balance)
 	data.UnmarshalFloatFromString(jsonTagHold, &coinbaseAccount.Hold)
 	data.UnmarshalString(jsonTagCurrency, &coinbaseAccount.Currency)
-	data.UnmarshalString(jsonTagId, &coinbaseAccount.ID)
-	data.UnmarshalString(jsonTagProfileId, &coinbaseAccount.ProfileID)
+	data.UnmarshalString(jsonTagId, &coinbaseAccount.Id)
+	data.UnmarshalString(jsonTagProfileId, &coinbaseAccount.ProfileId)
 	return nil
 }
