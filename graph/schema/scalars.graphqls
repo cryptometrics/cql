@@ -7,3 +7,4 @@ scalar OrderType
 scalar PaymentMethod
 scalar TimeInForce
 scalar Time
+scalar TransferMethod

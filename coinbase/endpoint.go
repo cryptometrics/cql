@@ -22,6 +22,8 @@ const (
 	ENDPOINT_CURRENCIES
 	ENDPOINT_CURRENCY
 	ENDPOINT_TRANSFERS_PAYMENT_METHODS
+	ENDPOINT_TRANSFERS
+	ENDPOINT_TRANSFER
 
 	DepositsEP
 
@@ -84,6 +86,14 @@ func (endpoint Endpoint) Get(args client.EndpointArgs) string {
 
 		ENDPOINT_TRANSFERS_PAYMENT_METHODS: func(_ client.EndpointArgs) string {
 			return "/payment-methods"
+		},
+
+		ENDPOINT_TRANSFERS: func(_ client.EndpointArgs) string {
+			return "/transfers"
+		},
+
+		ENDPOINT_TRANSFER: func(_ client.EndpointArgs) string {
+			return client.JoinEndpointParts(ENDPOINT_TRANSFERS.Get(nil), *args["id"].PathParam)
 		},
 
 		////////

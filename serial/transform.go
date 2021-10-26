@@ -26,6 +26,7 @@ type Transform interface {
 	UnmarshalStructSlice(name string, v _jsonStructSlice, template interface{}) error
 	UnmarshalStruct(name string, v interface{}) error
 	UnmarshalTime(layout string, name string, v *time.Time) error
+	UnmarshalTransferMethod(name string, v *scalar.TransferMethod) error
 	Value(key string) interface{}
 }
 

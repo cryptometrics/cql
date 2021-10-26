@@ -33,5 +33,5 @@ func (args EndpointArgs) QueryPath() *url.URL {
 }
 
 func JoinEndpointParts(parts ...string) string {
-	return "/" + strings.Join(parts, "/")
+	return strings.Join(parts, "/")
 }

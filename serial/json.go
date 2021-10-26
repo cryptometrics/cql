@@ -166,6 +166,13 @@ func (m _json) UnmarshalTime(layout string, name string, v *time.Time) (err erro
 	return err
 }
 
+func (m _json) UnmarshalTransferMethod(name string, v *scalar.TransferMethod) error {
+	if val := m[name]; val != nil {
+		*v = scalar.TransferMethod(val.(string))
+	}
+	return nil
+}
+
 func (m _json) Value(key string) interface{} {
 	return m[key]
 }

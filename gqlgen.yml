@@ -116,6 +116,10 @@ models:
     model: cql/model.CoinbaseSWIFTDepositInformation
   CoinbaseTime:
     model: cql/model.CoinbaseTime
+  CoinbaseTransferDetails:
+    model: cql/model.CoinbaseTransferDetails
+  CoinbaseTransfer:
+    model: cql/model.CoinbaseTransfer
   CoinbaseUKDepositInformation:
     model: cql/model.CoinbaseUKDepositInformation
   CoinbaseWallet:
@@ -138,3 +142,5 @@ models:
     model: cql/scalar.PaymentMethod
   TimeInForce:
     model: cql/scalar.TimeInForce
+  TransferMethod:
+    model: cql/scalar.TransferMethod

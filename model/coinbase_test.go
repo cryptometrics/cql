@@ -999,6 +999,83 @@ func TestCoinbaseTimeJSON(t *testing.T) {
 	})
 }
 
+func TestCoinbaseTransfer(t *testing.T) {
+	g := Goblin(t)
+	g.Describe("CoinbaseTransfer#UnmarshalJSON", func() {
+		test := func(desc string, buf []byte, expected CoinbaseTransfer) {
+			g.It(desc, func() {
+				v := CoinbaseTransfer{}
+				if err := json.Unmarshal(buf, &v); err != nil {
+					panic(err)
+				}
+				g.Assert(v.ID).Eql(expected.ID)
+				g.Assert(v.Type).Eql(expected.Type)
+				g.Assert(v.CreatedAt).Eql(expected.CreatedAt)
+				g.Assert(v.CompletedAt).Eql(expected.CompletedAt)
+				g.Assert(v.CanceledAt).Eql(expected.CanceledAt)
+				g.Assert(v.ProcessedAt).Eql(expected.ProcessedAt)
+				g.Assert(v.Amount).Eql(expected.Amount)
+				g.Assert(v.Details.CoinbaseAccountID).Eql(expected.Details.CoinbaseAccountID)
+				g.Assert(v.Details.CoinbasePaymentMethodID).Eql(expected.Details.CoinbasePaymentMethodID)
+				g.Assert(v.Details.CoinbaseTransactionID).Eql(expected.Details.CoinbaseTransactionID)
+			})
+		}
+		var buf []byte
+		var expected CoinbaseTransfer
+
+		buf = []byte(`{
+			"id": "19ac524d-8827-4246-a1b2-18dc5ca9472c",
+			"type": "withdraw",
+			"created_at": "2020-03-12 00:14:12.397805+00",
+			"completed_at": "2020-03-12 00:14:13.021626+00",
+			"canceled_at": "2020-03-12 00:14:14.021626+00",
+			"processed_at": "2020-03-12 00:14:15.021626+00",
+			"user_nonce": "meep",
+			"amount": "1.00000000",
+			"details": {
+				"coinbase_account_id": "2b760113-fbba-5600-ac74-36482c130768",
+				"coinbase_transaction_id": "5e697ed49f8417148f3366ea",
+				"coinbase_payment_method_id": "moop"
+			}
+		}`)
+		expected = CoinbaseTransfer{
+			ID:        "19ac524d-8827-4246-a1b2-18dc5ca9472c",
+			Type:      scalar.TransferMethodWithdraw,
+			UserNonce: "meep",
+			Amount:    1.0,
+			Details: &CoinbaseTransferDetails{
+				CoinbaseAccountID:       "2b760113-fbba-5600-ac74-36482c130768",
+				CoinbaseTransactionID:   "5e697ed49f8417148f3366ea",
+				CoinbasePaymentMethodID: "moop",
+			},
+		}
+
+		var err error
+		expected.CreatedAt, err = time.Parse(CoinbaseAccountTransferTimeLayout,
+			"2020-03-12 00:14:12.397805+00")
+		if err != nil {
+			panic(err)
+		}
+		expected.CompletedAt, err = time.Parse(CoinbaseAccountTransferTimeLayout,
+			"2020-03-12 00:14:13.021626+00")
+		if err != nil {
+			panic(err)
+		}
+		expected.CanceledAt, err = time.Parse(CoinbaseAccountTransferTimeLayout,
+			"2020-03-12 00:14:14.021626+00")
+		if err != nil {
+			panic(err)
+		}
+		expected.ProcessedAt, err = time.Parse(CoinbaseAccountTransferTimeLayout,
+			"2020-03-12 00:14:15.021626+00")
+		if err != nil {
+			panic(err)
+		}
+
+		test("all fields", buf, expected)
+	})
+}
+
 func TestCoinbaseWalletUnmarshalJSON(t *testing.T) {
 	g := Goblin(t)
 	g.Describe("CoinbaseWallet#UnmarshalJSON", func() {

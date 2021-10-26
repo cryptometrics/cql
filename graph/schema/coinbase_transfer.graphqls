@@ -92,3 +92,21 @@ type CoinbasePaymentMethod {
   verificationMethod: String
   cdvStatus: String
 }
+
+type CoinbaseTransferDetails {
+  coinbaseAccountID: String
+  coinbaseTransactionID: String
+  coinbasePaymentMethodID: String
+}
+
+type CoinbaseTransfer {
+  id: String
+  type: TransferMethod
+  createdAt: Time
+  completedAt: Time
+  canceledAt: Time
+  processedAt: Time
+  amount: Float
+  details: CoinbaseTransferDetails
+  userNonce: String
+}

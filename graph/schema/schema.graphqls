@@ -53,6 +53,17 @@ type Query {
   coinbasePaymentMethods: [CoinbasePaymentMethod]
 
   """
+  Gets a list of in-progress and completed transfers of funds in/out of any of
+  the user's accounts.
+  """
+  coinbaseTransfers: [CoinbaseTransfer]
+
+  """
+  Get information on a single transfer.
+  """
+  coinbaseTransfer(id: String!): CoinbaseTransfer
+
+  """
   Gets all the user's available Coinbase wallets (These are the wallets/accounts
   that are used for buying and selling on www.coinbase.com)
   """

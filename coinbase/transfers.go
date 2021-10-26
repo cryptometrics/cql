@@ -18,6 +18,26 @@ func NewTransfer(conn client2.Connector) *Transfer {
 	return transfer
 }
 
+// All gets a list of in-progress and completed transfers of funds in/out of any
+// of the user's accounts.
+//
+// This endpoint requires either the "view" or "trade" permission.
+//
+// * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_gettransfers
+func (transfer *Transfer) All() (m []*model.CoinbaseTransfer, err error) {
+	return m, transfer.get(ENDPOINT_TRANSFERS).Fetch().Assign(&m).JoinMessages()
+}
+
+// Find get information on a single transfer.
+//
+// This endpoint requires either the "view" or "trade" permission.
+//
+// * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_gettransfers
+func (transfer *Transfer) Find(id string) (m *model.CoinbaseTransfer, err error) {
+	req := transfer.get(ENDPOINT_TRANSFER)
+	return m, req.PathParam("id", id).Fetch().Assign(&m).JoinMessages()
+}
+
 // MakeCoinbaseAccountDeposit will deposit funds from a www.coinbase.com wallet
 // to the specified profile_id.
 //

@@ -1,0 +1,52 @@
+{
+	"api": "coinbase",
+	"model": "coinbase_account",
+	"modelDescription": "CoinbaseAccount holds data for trading account from the profile of the API key",
+	"modelFields": [
+		{
+			"name": "ID",
+			"json": "id",
+			"type": "string"
+		},
+		{
+			"name": "Currency",
+			"json": "currency",
+			"type": "string"
+		},
+		{
+			"name": "Balance",
+			"json": "balance",
+			"type": "float64",
+			"unmarshaller": "UnmarshalFloatFromString"
+		},
+		{
+			"name": "Available",
+			"json": "available",
+			"type": "float64",
+			"unmarshaller": "UnmarshalFloatFromString"
+		},
+		{
+			"name": "Hold",
+			"json": "hold",
+			"type": "float64",
+			"unmarshaller": "UnmarshalFloatFromString"
+		},
+		{
+			"name": "ProfileID",
+			"json": "profile_id",
+			"type": "string"
+		},
+		{
+			"name": "TradingEnabled",
+			"json": "trading_enabled",
+			"type": "bool"
+		}
+	],
+	"modelTests": [
+		{
+			"name": "200_1",
+			"description": "200 status example from coinbase",
+			"json": "{\"id\":\"7fd0abc0-e5ad-4cbb-8d54-f2b3f43364da\",\"currency\":\"USD\",\"balance\":\"0.0000000000000000\",\"available\":\"0\",\"hold\":\"0.0000000000000000\",\"profile_id\":\"8058d771-2d88-4f0f-ab6e-299c153d4308\",\"trading_enabled\":true}"
+		}
+	]
+}

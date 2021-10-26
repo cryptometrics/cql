@@ -1,0 +1,75 @@
+{
+	"type": "object",
+	"description": "Schema for cql API data structures",
+	"required": ["api", "model", "modelDescription", "modelFields"],
+	"properties": {
+		"api": {
+			"type": "string",
+			"description": "Name of the API you're pulling from (i.e. coinbase, polygoin, etc)"
+		},
+		"model": {
+			"type": "string",
+			"description": "camelcase name of the model"
+		},
+		"modelDescription": {
+			"type": "string",
+			"description": "A short description of generate go model"
+		},
+		"modelFields": {
+      "type": "array",
+      "description": "Fields to generate golang packages to store and access data from iex api requests",
+      "items": {
+        "type": "object",
+        "required": ["name", "json", "type"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "name of the column to store on the db table"
+          },
+					"json": {
+            "type": "string",
+            "description": "json type"
+          },
+          "type": {
+            "type": "string",
+            "description": "go type"
+          },
+					"datetimeLayout": {
+            "type": "string",
+            "description": "layout to use to unmarshal date time"
+          },
+          "description": {
+            "type": "string",
+            "description": "a description of the column that will appears a comment above the resource"
+          },
+					"unmarshaller": {
+            "type": "string",
+            "description": "name of the function to unmarshal with"
+          }
+        }
+      }
+		},
+		"modelTests": {
+			"type": "array",
+      "description": "Tests for the model",
+      "items": {
+        "type": "object",
+				"required": ["name"],
+        "properties": {
+					"name": {
+            "type": "string",
+            "description": "name of the test"
+          },
+					"description": {
+            "type": "string",
+            "description": "name of the test"
+          },
+					"json": {
+            "type": "string",
+            "description": "json value for the type"
+          }
+				}
+			}
+		}
+	}
+}

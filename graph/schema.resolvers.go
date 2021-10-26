@@ -67,6 +67,14 @@ func (r *queryResolver) CoinbasePaymentMethods(ctx context.Context) ([]*model1.C
 	return coinbase.NewTransfer(coinbase.DefaultClient).PaymentMethods()
 }
 
+func (r *queryResolver) CoinbaseTransfers(ctx context.Context) ([]*model1.CoinbaseTransfer, error) {
+	return coinbase.NewTransfer(coinbase.DefaultClient).All()
+}
+
+func (r *queryResolver) CoinbaseTransfer(ctx context.Context, id string) (*model1.CoinbaseTransfer, error) {
+	return coinbase.NewTransfer(coinbase.DefaultClient).Find(id)
+}
+
 func (r *queryResolver) CoinbaseWallets(ctx context.Context, filler *string) ([]*model1.CoinbaseWallet, error) {
 	return coinbase.NewCoinbaseAccounts(coinbase.DefaultClient).Wallets()
 }
