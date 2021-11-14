@@ -23,24 +23,24 @@ type CoinbaseHold struct {
 // UnmarshalJSON will deserialize bytes into a CoinbaseHold model
 func (coinbaseHold *CoinbaseHold) UnmarshalJSON(d []byte) error {
 	const (
-		jsonTagCreatedAt = "created_at"
-		jsonTagId        = "id"
-		jsonTagRef       = "ref"
-		jsonTagType      = "type"
-		jsonTagUpdatedAt = "updated_at"
+		createdAtJsonTag = "created_at"
+		idJsonTag        = "id"
+		refJsonTag       = "ref"
+		typeJsonTag      = "type"
+		updatedAtJsonTag = "updated_at"
 	)
 	data, err := serial.NewJSONTransform(d)
 	if err != nil {
 		return err
 	}
-	data.UnmarshalString(jsonTagId, &coinbaseHold.Id)
-	data.UnmarshalString(jsonTagRef, &coinbaseHold.Ref)
-	data.UnmarshalString(jsonTagType, &coinbaseHold.Type)
-	err = data.UnmarshalTime(time.RFC3339Nano, jsonTagCreatedAt, &coinbaseHold.CreatedAt)
+	data.UnmarshalString(idJsonTag, &coinbaseHold.Id)
+	data.UnmarshalString(refJsonTag, &coinbaseHold.Ref)
+	data.UnmarshalString(typeJsonTag, &coinbaseHold.Type)
+	err = data.UnmarshalTime(time.RFC3339Nano, createdAtJsonTag, &coinbaseHold.CreatedAt)
 	if err != nil {
 		return err
 	}
-	err = data.UnmarshalTime(time.RFC3339Nano, jsonTagUpdatedAt, &coinbaseHold.UpdatedAt)
+	err = data.UnmarshalTime(time.RFC3339Nano, updatedAtJsonTag, &coinbaseHold.UpdatedAt)
 	if err != nil {
 		return err
 	}
