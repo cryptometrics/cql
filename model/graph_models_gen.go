@@ -4,7 +4,23 @@ package model
 
 import (
 	"cql/scalar"
+	"time"
 )
+
+// CoinbaseAccountHold represents a hold of an account that belong to the same
+// profile as the API key. Holds are placed on an account for any active orders
+// or pending withdraw requests. As an order is filled, the hold amount is
+// updated. If an order is canceled, any remaining hold is removed. For a
+// withdraw, once it is completed, the hold is removed
+type CoinbaseAccountHold struct {
+	ID        *string    `json:"id"`
+	AccountID *string    `json:"accountID"`
+	CreatedAt *time.Time `json:"createdAt"`
+	UpdatedAt *time.Time `json:"updatedAt"`
+	Amount    *float64   `json:"amount"`
+	Type      *string    `json:"type"`
+	Ref       *string    `json:"ref"`
+}
 
 type CoinbaseAccountHoldOptions struct {
 	// Pagination parameter that requires a positive integer. If set, returns a
@@ -15,6 +31,26 @@ type CoinbaseAccountHoldOptions struct {
 	After *string `json:"after"`
 	// Number of results per request. Maximum 1000. (default 1000)
 	Limit *int `json:"limit"`
+}
+
+// CoinbaseAccountHistory encapsulates data for account activity of the API
+// key's profile. Account activity either increases or decreases your account
+// balance. Items are paginated and sorted latest first. See the Pagination
+// section for retrieving additional entries after the first page.
+type CoinbaseAccountLedger struct {
+	ID        *string                       `json:"id"`
+	CreatedAt *time.Time                    `json:"createdAt"`
+	Amount    *float64                      `json:"amount"`
+	Balance   *float64                      `json:"balance"`
+	Type      *scalar.EntryType             `json:"type"`
+	Details   *CoinbaseAccountLedgerDetails `json:"details"`
+}
+
+// CoinbaseAccountLedgerDetails are the details for account history
+type CoinbaseAccountLedgerDetails struct {
+	OrderID   *string `json:"orderID"`
+	TradeID   *string `json:"tradeID"`
+	ProductID *string `json:"productID"`
 }
 
 type CoinbaseAccountLedgerOptions struct {
@@ -36,6 +72,25 @@ type CoinbaseAccountLedgerOptions struct {
 	ProfileID *string `json:"profileID"`
 }
 
+// CoinbaseAccountTransfer lists past withdrawals and deposits for an account.
+type CoinbaseAccountTransfer struct {
+	ID          *string                         `json:"id"`
+	Type        *string                         `json:"type"`
+	CreatedAt   *time.Time                      `json:"createdAt"`
+	CompletedAt *time.Time                      `json:"completedAt"`
+	CanceledAt  *time.Time                      `json:"canceledAt"`
+	ProcessedAt *time.Time                      `json:"processedAt"`
+	Amount      *float64                        `json:"amount"`
+	UserNonce   *string                         `json:"userNonce"`
+	Details     *CoinbaseAccountTransferDetails `json:"details"`
+}
+
+type CoinbaseAccountTransferDetails struct {
+	CoinbaseAccountID       *string `json:"coinbaseAccountID"`
+	CoinbaseTransactionID   *string `json:"coinbaseTransactionID"`
+	CoinbasePaymentMethodID *string `json:"coinbasePaymentMethodID"`
+}
+
 type CoinbaseAccountTransferOptions struct {
 	// Used for pagination. Sets start cursor to before date.
 	Before *string `json:"before"`
@@ -46,9 +101,128 @@ type CoinbaseAccountTransferOptions struct {
 	Type  *string `json:"type"`
 }
 
+type CoinbaseAvailableBalance struct {
+	Amount   *float64 `json:"amount"`
+	Currency *string  `json:"currency"`
+	Scale    *float64 `json:"scale"`
+}
+
+type CoinbaseBankCountry struct {
+	Name *string `json:"name"`
+	Code *string `json:"code"`
+}
+
+// CoinbaseCurrency holds currency data from the coinbase API. Currency codes will
+// conform to the ISO 4217 standard where possible. Currencies which have or had no
+// representation in ISO 4217 may use a custom code.
+type CoinbaseCurrency struct {
+	// id is the code coinbase uses to recognize an asset, e.g. BTC, ETH, etc
+	ID string `json:"id"`
+	// name is the full name associated with the id/code
+	Name          string                   `json:"name"`
+	MinSize       *float64                 `json:"minSize"`
+	Status        *string                  `json:"status"`
+	Message       *string                  `json:"message"`
+	MaxPrecision  *float64                 `json:"maxPrecision"`
+	ConvertibleTo []*string                `json:"convertibleTo"`
+	Details       *CoinbaseCurrencyDetails `json:"details"`
+}
+
+// CoinbaseCurrencyConversion corresponds with a successful conversion, which will be assigned a
+// conversion id. The corresponding ledger entries for a conversion will reference this conversion
+// id.
+type CoinbaseCurrencyConversion struct {
+	ID            *string  `json:"id"`
+	Amount        *float64 `json:"amount"`
+	FromAccountID *string  `json:"fromAccountID"`
+	ToAccountID   *string  `json:"toAccountID"`
+	From          *string  `json:"from"`
+	To            *string  `json:"to"`
+}
+
 type CoinbaseCurrencyConversionOpts struct {
 	ProfileID *string `json:"profileID"`
 	Nonce     *string `json:"nonce"`
+}
+
+type CoinbaseCurrencyDetails struct {
+	Type                  *string   `json:"type"`
+	Symbol                *string   `json:"symbol"`
+	NetworkConfirmations  *int      `json:"networkConfirmations"`
+	SortOrder             *int      `json:"sortOrder"`
+	CryptoAddressLink     *string   `json:"cryptoAddressLink"`
+	CryptoTransactionLink *string   `json:"cryptoTransactionLink"`
+	PushPaymentMethods    []*string `json:"pushPaymentMethods"`
+	GroupTypes            []*string `json:"groupTypes"`
+	DisplayName           *string   `json:"displayName"`
+	ProcessingTimeSeconds *float64  `json:"processingTimeSeconds"`
+	MinWithdrawalAmount   *float64  `json:"minWithdrawalAmount"`
+	MaxWithdrawalAmount   *float64  `json:"maxWithdrawalAmount"`
+}
+
+type CoinbaseDeposit struct {
+	ID       *string  `json:"id"`
+	Amount   *float64 `json:"amount"`
+	Currency *string  `json:"currency"`
+	PayoutAt *string  `json:"payoutAt"`
+	Fee      *float64 `json:"fee"`
+	Subtotal *float64 `json:"subtotal"`
+}
+
+type CoinbaseDepositAddress struct {
+	ID                     *string                          `json:"id"`
+	Address                *string                          `json:"address"`
+	AddressInfo            *CoinbaseDepositAddressInfo      `json:"addressInfo"`
+	Name                   *string                          `json:"name"`
+	CreatedAt              *time.Time                       `json:"createdAt"`
+	UpdatedAt              *time.Time                       `json:"updatedAt"`
+	Network                *string                          `json:"network"`
+	URIScheme              *string                          `json:"uriScheme"`
+	Resource               *string                          `json:"resource"`
+	ResourcePath           *string                          `json:"resourcePath"`
+	Warnings               []*CoinbaseDepositAddressWarning `json:"warnings"`
+	LegacyAddress          *string                          `json:"legacyAddress"`
+	DestinationTag         *string                          `json:"destinationTag"`
+	DepositURI             *string                          `json:"depositURI"`
+	CallbackURL            *string                          `json:"callbackURL"`
+	ExchagneDepositAddress *bool                            `json:"exchagneDepositAddress"`
+}
+
+type CoinbaseDepositAddressInfo struct {
+	Address        *string `json:"address"`
+	DestinationTag *string `json:"destinationTag"`
+}
+
+type CoinbaseDepositAddressWarning struct {
+	Title    *string `json:"title"`
+	Details  *string `json:"details"`
+	ImageURL *string `json:"imageURL"`
+}
+
+type CoinbaseLimits struct {
+	Type *scalar.PaymentMethod `json:"type"`
+	Name *string               `json:"name"`
+}
+
+// CoinbaseOrder is the response to an order request in the coinbase API
+type CoinbaseOrder struct {
+	ID             *string             `json:"id"`
+	Price          *float64            `json:"price"`
+	Size           *float64            `json:"size"`
+	ProductID      *string             `json:"productID"`
+	Side           *scalar.OrderSide   `json:"side"`
+	Stp            *scalar.OrderSTP    `json:"stp"`
+	Type           *scalar.OrderType   `json:"type"`
+	TimeInForce    *scalar.TimeInForce `json:"timeInForce"`
+	PostOnly       *bool               `json:"postOnly"`
+	CreatedAt      *time.Time          `json:"createdAt"`
+	FillFees       *float64            `json:"fillFees"`
+	FilledSize     *float64            `json:"filledSize"`
+	ExecutedValue  *float64            `json:"executedValue"`
+	Status         *string             `json:"status"`
+	Settled        *bool               `json:"settled"`
+	Funds          *float64            `json:"funds"`
+	SpecifiedFunds *float64            `json:"specifiedFunds"`
 }
 
 type CoinbaseOrderInput struct {
@@ -121,6 +295,293 @@ type CoinbaseOrderQueryParameters struct {
 	After *int `json:"after"`
 	// Number of results per request. Maximum 1000. (default 1000)
 	Limit *int `json:"limit"`
+}
+
+type CoinbasePaymentMethod struct {
+	ID                 *string                    `json:"id"`
+	Type               *scalar.PaymentMethod      `json:"type"`
+	Name               *string                    `json:"name"`
+	Currency           *string                    `json:"currency"`
+	PrimaryBuy         *bool                      `json:"primaryBuy"`
+	PrimarySell        *bool                      `json:"primarySell"`
+	InstantBuy         *bool                      `json:"instantBuy"`
+	InstantSell        *bool                      `json:"instantSell"`
+	Verified           *bool                      `json:"verified"`
+	CreatedAt          *time.Time                 `json:"createdAt"`
+	UpdatedAt          *time.Time                 `json:"updatedAt"`
+	Resource           *string                    `json:"resource"`
+	ResourcePath       *string                    `json:"resourcePath"`
+	Limits             *CoinbaseLimits            `json:"limits"`
+	AllowBuy           *bool                      `json:"allowBuy"`
+	AllowSell          *bool                      `json:"allowSell"`
+	AllowDeposit       *bool                      `json:"allowDeposit"`
+	AllowWithdraw      *bool                      `json:"allowWithdraw"`
+	PickerData         *CoinbasePickerData        `json:"pickerData"`
+	FiatAccount        *CoinbaseResourceAccount   `json:"fiatAccount"`
+	CryptoAccount      *CoinbaseResourceAccount   `json:"cryptoAccount"`
+	RecurringOptions   []*CoinbaseRecurringOption `json:"recurringOptions"`
+	AvailableBalance   *CoinbaseAvailableBalance  `json:"availableBalance"`
+	HoldBusinessDays   *int                       `json:"holdBusinessDays"`
+	HoldDays           *int                       `json:"holdDays"`
+	VerificationMethod *string                    `json:"verificationMethod"`
+	CdvStatus          *string                    `json:"cdvStatus"`
+}
+
+type CoinbasePickerData struct {
+	Symbol                *string                   `json:"symbol"`
+	CustomerName          *string                   `json:"customerName"`
+	AccountName           *string                   `json:"accountName"`
+	AccountNumber         *string                   `json:"accountNumber"`
+	AccountType           *string                   `json:"accountType"`
+	InstitutionCode       *string                   `json:"institutionCode"`
+	InstitutionName       *string                   `json:"institutionName"`
+	Iban                  *string                   `json:"iban"`
+	Swift                 *string                   `json:"swift"`
+	PaypalEmail           *string                   `json:"paypalEmail"`
+	PaypalOwner           *string                   `json:"paypalOwner"`
+	RoutingNumber         *string                   `json:"routingNumber"`
+	InstitutionIdentifier *string                   `json:"institutionIdentifier"`
+	BankName              *string                   `json:"bankName"`
+	BranchName            *string                   `json:"branchName"`
+	IconURL               *string                   `json:"iconURL"`
+	Balance               *CoinbaseAvailableBalance `json:"balance"`
+}
+
+// CoinbaseProduct returns the market data for a specific currency pair. Only a
+// maximum of one of trading_disabled, cancel_only, post_only, limit_only can be
+// true at once. If none are true, the product is trading normally.
+type CoinbaseProduct struct {
+	// id specifies the product as a pair on the coinbase app in the form
+	// {baseCurrency}-{quoteCurrency}, e.g. BTC-USD, ETH-BTC, etc
+	ID *string `json:"id"`
+	// displayName is a human-readable format of id i.e. {baseCurrency} per
+	// {quoteCurrency}
+	DisplayName *string `json:"displayName"`
+	// baseCurrency is the currency we are measuring in terms of the quote currency
+	BaseCurrency *string `json:"baseCurrency"`
+	// quoteCurrency is the currency we are using to compare with the baseCurrency
+	QuoteCurrency *string `json:"quoteCurrency"`
+	// baseIncrement specifies the minimum increment for the base_currency
+	BaseIncrement *float64 `json:"baseIncrement"`
+	// quoteIncrement field specifies the min order price as well as the price
+	// increment.  The order price must be a multiple of this increment (i.e. if the
+	// increment is 0.01, order prices of 0.001 or 0.021 would be rejected
+	QuoteIncrement *float64 `json:"quoteIncrement"`
+	// baseMinSize defines the min order size
+	BaseMinSize *float64 `json:"baseMinSize"`
+	// baseMaxSize defines the max order siz
+	BaseMaxSize *float64 `json:"baseMaxSize"`
+	// minMarketFunds defines the min funds allowed in a market order
+	MinMarketFunds *float64 `json:"minMarketFunds"`
+	// maxMarketFunds defines the max funds allowed in a market orde
+	MaxMarketFunds *float64 `json:"maxMarketFunds"`
+	// status reflects the condition of the product on coinbase, whether it's online,
+	// etc
+	Status *string `json:"status"`
+	// statusMessage provides any extra information regarding the status if
+	// available
+	StatusMessage *string `json:"statusMessage"`
+	// cancelOnly indicates whether this product only accepts cancel requests for
+	// orders
+	CancelOnly *bool `json:"cancelOnly"`
+	// limitOnly indicates whether this product only accepts limit orders
+	LimitOnly *bool `json:"limitOnly"`
+	// postOnly indicates whether only maker orders can be placed. No orders will be
+	// matched when post_only mode is active
+	PostOnly *bool `json:"postOnly"`
+	// tradingDisabled indicates whether trading is currently restricted on this
+	// product, this includes whether both new orders and order cancelations are
+	// restricted.
+	TradingDisabled *bool `json:"tradingDisabled"`
+	// fxStablecoin indicates whether the currency pair is a Stable Pair
+	FxStablecoin *bool `json:"fxStablecoin"`
+}
+
+// CoinbaseProductDailyStats encapsulates 24 hr stats for the product
+type CoinbaseProductDailyStats struct {
+	// open is in quote currency units; product={base}-{quote}
+	Open *float64 `json:"open"`
+	// high is in quote currency units; product={base}-{quote}
+	High *float64 `json:"high"`
+	Low  *float64 `json:"low"`
+	// Volume is in base currency units; product={base}-{quote}
+	Volume      *float64 `json:"volume"`
+	Last        *float64 `json:"last"`
+	Volume30Day *float64 `json:"volume30Day"`
+}
+
+// CoinbaseProductHistoricalRate are historic rates for a product. Rates are
+// returned in grouped buckets based on requested granularity.
+//
+// Historical rate data may be incomplete. No data is published for intervals
+// where there are no ticks.
+//
+// Historical rates should not be polled frequently. If you need real-time
+// information, use the trade and book endpoints along with the websocket feed.
+type CoinbaseProductHistoricalRate struct {
+	// Time is the bucket start time
+	Time *time.Time `json:"time"`
+	// Low is the lowest price during the bucket interval
+	Low *float64 `json:"low"`
+	// High is the highest price during the bucket interval
+	High *float64 `json:"high"`
+	// Open is the opening price (first trade) in the bucket interval
+	Open *float64 `json:"open"`
+	// Close is the closing price (last trade) in the bucket interval
+	Close *float64 `json:"close"`
+	// Volume is the volume of trading activity during the bucket interval
+	Volume *float64 `json:"volume"`
+}
+
+// CoinbaseProductOrderBook holds bid/ask data as a list of open orders for a
+// product. The amount of detail shown can be customized with the level
+// parameter
+type CoinbaseProductOrderBook struct {
+	// sequence represents the nth iterration of the order book update
+	Sequence *int `json:"sequence"`
+	// bids are the object encapsulations of the list of data returned by coinbase.
+	// More specifically, a bid price refer to the highest price that traders are
+	// willing to pay for a product
+	Bids []*CoinbaseProductOrderBookBidAsk `json:"bids"`
+	// asks are the object encapsulations of the list of data returned by coinbase.
+	// More specifically, ab ask price refers to the lowest price that the owners of
+	// that product are willing to sell it for
+	Asks []*CoinbaseProductOrderBookBidAsk `json:"asks"`
+}
+
+// CoinbaseProductOrderBookBidAsk is the object encapsulation of the a list of
+// values defined by the level passed to the client
+type CoinbaseProductOrderBookBidAsk struct {
+	// price is either bid/ask price
+	Price *float64 `json:"price"`
+	// size is the amount of the product purchased at the bid/ask price
+	Size *float64 `json:"size"`
+	// numOrders orders executed at the price, specific to level 2
+	NumOrders *int `json:"numOrders"`
+	// orderID is the uuid associated with the order, specific to level 3
+	OrderID *string `json:"orderID"`
+}
+
+// CoinbaseProductTicket encapsulates snapshot information about the last trade
+// (tick), best bid/ask and 24h volume.  Polling is discouraged in favor of
+// connecting via the websocket stream and listening for match messages
+type CoinbaseProductTicker struct {
+	TradeID *int       `json:"tradeID"`
+	Price   *float64   `json:"price"`
+	Size    *float64   `json:"size"`
+	Bid     *float64   `json:"bid"`
+	Ask     *float64   `json:"ask"`
+	Volume  *float64   `json:"volume"`
+	Time    *time.Time `json:"time"`
+}
+
+// CoinbaseProductTrade lists the latest trades for a product
+type CoinbaseProductTrade struct {
+	Time    *time.Time `json:"time"`
+	TradeID *int       `json:"tradeID"`
+	Price   *float64   `json:"price"`
+	Size    *float64   `json:"size"`
+	// side indicates the maker order side. The maker order is the order that was
+	// open on the order book. buy side indicates a down-tick because the maker was a
+	// buy order and their order was removed. Conversely, sell side indicates an
+	// up-tick.
+	Side *string `json:"side"`
+}
+
+type CoinbaseRecurringOption struct {
+	Period *string `json:"period"`
+	Label  *string `json:"label"`
+}
+
+type CoinbaseResourceAccount struct {
+	ID           *string `json:"id"`
+	Resource     *string `json:"resource"`
+	ResourcePath *string `json:"resourcePath"`
+}
+
+type CoinbaseSEPADepositInformation struct {
+	Iban           *string              `json:"iban"`
+	Swift          *string              `json:"swift"`
+	BankName       *string              `json:"bankName"`
+	BankAddress    *string              `json:"bankAddress"`
+	BankCountry    *CoinbaseBankCountry `json:"bankCountry"`
+	AccountName    *string              `json:"accountName"`
+	AccountAddress *string              `json:"accountAddress"`
+	Reference      *string              `json:"reference"`
+}
+
+type CoinbaseSWIFTDepositInformation struct {
+	AccountNumber  *string              `json:"accountNumber"`
+	BankName       *string              `json:"bankName"`
+	BankAddress    *string              `json:"bankAddress"`
+	BankCountry    *CoinbaseBankCountry `json:"bankCountry"`
+	AccountName    *string              `json:"accountName"`
+	AccountAddress *string              `json:"accountAddress"`
+	Reference      *string              `json:"reference"`
+}
+
+// CoinbaseTime encapsulates the coinbase API server time
+type CoinbaseTime struct {
+	Iso *string `json:"iso"`
+	// epoch represents decimal seconds since Unix Epoch
+	Epoch *float64 `json:"epoch"`
+}
+
+type CoinbaseTransfer struct {
+	ID          *string                  `json:"id"`
+	Type        *scalar.TransferMethod   `json:"type"`
+	CreatedAt   *time.Time               `json:"createdAt"`
+	CompletedAt *time.Time               `json:"completedAt"`
+	CanceledAt  *time.Time               `json:"canceledAt"`
+	ProcessedAt *time.Time               `json:"processedAt"`
+	Amount      *float64                 `json:"amount"`
+	Details     *CoinbaseTransferDetails `json:"details"`
+	UserNonce   *string                  `json:"userNonce"`
+}
+
+type CoinbaseTransferDetails struct {
+	CoinbaseAccountID       *string `json:"coinbaseAccountID"`
+	CoinbaseTransactionID   *string `json:"coinbaseTransactionID"`
+	CoinbasePaymentMethodID *string `json:"coinbasePaymentMethodID"`
+}
+
+type CoinbaseUKDepositInformation struct {
+	SortCode      *string `json:"sortCode"`
+	AccountNumber *string `json:"accountNumber"`
+	BankName      *string `json:"bankName"`
+	AccountName   *string `json:"accountName"`
+	Reference     *string `json:"reference"`
+}
+
+type CoinbaseWallet struct {
+	ID                      *string                          `json:"id"`
+	Name                    *string                          `json:"name"`
+	Balance                 *float64                         `json:"balance"`
+	Currency                *string                          `json:"currency"`
+	Type                    *string                          `json:"type"`
+	Primary                 *bool                            `json:"primary"`
+	Active                  *bool                            `json:"active"`
+	AvailableOnConsumer     *bool                            `json:"availableOnConsumer"`
+	Ready                   *bool                            `json:"ready"`
+	WireDepositInformation  *CoinbaseWireDepositInformation  `json:"wireDepositInformation"`
+	SwiftDepositInformation *CoinbaseSWIFTDepositInformation `json:"swiftDepositInformation"`
+	SepaDepositInformation  *CoinbaseSEPADepositInformation  `json:"sepaDepositInformation"`
+	UkDepositInformation    *CoinbaseUKDepositInformation    `json:"ukDepositInformation"`
+	DestinationTagName      *string                          `json:"destinationTagName"`
+	DestinationTagRegex     *string                          `json:"destinationTagRegex"`
+	HoldBalance             *float64                         `json:"holdBalance"`
+	HoldCurrency            *string                          `json:"holdCurrency"`
+}
+
+type CoinbaseWireDepositInformation struct {
+	AccountNumber  *string              `json:"accountNumber"`
+	RoutingNumber  *string              `json:"routingNumber"`
+	BankName       *string              `json:"bankName"`
+	BankAddress    *string              `json:"bankAddress"`
+	BankCountry    *CoinbaseBankCountry `json:"bankCountry"`
+	AccountName    *string              `json:"accountName"`
+	AccountAddress *string              `json:"accountAddress"`
+	Reference      *string              `json:"reference"`
 }
 
 type MakeCoinbaseAccountDepositInput struct {

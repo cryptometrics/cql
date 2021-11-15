@@ -2,7 +2,7 @@ package protomodel
 
 import "cql/serial"
 
-// ! This is a generated file, do not edit
+// * This is a generated file, do not edit
 
 // CoinbaseAccount holds data for trading account from the profile of the API
 // key

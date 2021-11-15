@@ -12,18 +12,24 @@ from jsonschema import validate
 import jsonschema
 from re import A
 import json
+import yaml
 
 
 # put global constants here, to avoid magic strings
 FILENAME = "generate.py"
-GENERATED_MSG = "// ! This is a generated file, do not edit"
+PROTOMODEL_GENERATED_MSG = "// * This is a generated file, do not edit"
+MODEL_GENERATED_MSG = "// * This file was initialized by schema/generate.py, but is open to extension"
 GO_DEFAULT_DATETIME_LAYOUT = "time.RFC3339Nano"
 GO_EXT = ".go"
 GRAPHQLS_EXT = ".graphqls"
 GRAPHQLS_DIR = "graph/schema2"
+GQLGEN_DIR = "./"
+GQLGEN_FILENAME = "gqlgen.yml"
+GQLGEN_PROTOMODELS = "models"
 MODEL_API = "api"
-MODEL_PKG = "protomodel"
+PROTOMODEL_PKG = "protomodel"
 MODEL = "model"
+MODEL_PKG = "model2"
 MODEL_DESCRIPTION = "modelDescription"
 MODEL_FIELDS = "modelFields"
 MODEL_FIELD_DATETIME_LAYOUT = "datetimeLayout"
@@ -35,12 +41,13 @@ MODEL_TESTS = "modelTests"
 MODEL_TEST_DESCRIPTION = "description"
 MODEL_TEST_NAME = "name"
 MODEL_TEST_JSON = "json"
-SCHEMA_DIR = "schema"
+SCHEMA_DIR = os.getcwd()
 SCHEMA_FILENAME = "schema.json"
-ROOT_DIR = "/Users/richardvasquez/Developer/cql"
+SCHEMA_MODEL_DIR = f'{SCHEMA_DIR}/model'
+ROOT_DIR = os.path.dirname(os.getcwd())
 
 # get all of the relavent json files from the schema, all except the schema
-schema_filenames = os.listdir()
+schema_filenames = os.listdir(SCHEMA_MODEL_DIR)
 schema_filenames.remove(SCHEMA_FILENAME)
 
 # Try to follow the PEP 8 style guide:
@@ -85,15 +92,15 @@ class Scheme:
         self.description = ""
         self.go_comment = ""
         self.go_model_filename = ""
+        self.go_model_filename = ""
         self.go_model_name = ""
-        self.go_model_variable_name = ""
         self.model = ""
         self.filename = filename
         self.go_test_filename = ""
+        self.graphql_filename = ""
         self.fields = []
         self.tests = []
-
-        chdir(SCHEMA_DIR)
+        chdir(SCHEMA_MODEL_DIR)
         with open(self.filename) as json_file:
             data = json.load(json_file)
             is_valid = self.validate_json(data)
@@ -107,7 +114,10 @@ class Scheme:
                 self.model = data[MODEL]
                 self.go_test_filename = Path(
                     f'{self.model}_test').with_suffix(GO_EXT)
-                self.go_model_filename = Path(self.model).with_suffix(GO_EXT)
+                self.go_model_filename = Path(
+                    self.model).with_suffix(GO_EXT)
+                self.graphql_filename = Path(
+                    self.model).with_suffix(GRAPHQLS_EXT)
 
                 for field_dic in data[MODEL_FIELDS]:
                     field = Field(field_dic)
@@ -129,7 +139,6 @@ class Scheme:
         try:
             validate(instance=data, schema=self.schema())
         except jsonschema.exceptions.ValidationError as err:
-            print(err)
             return False
         return True
 
@@ -171,12 +180,20 @@ def _80_char_graphqls_comment(comment: str):
     return "\n".join(['"""', "".join(partitioned_comment), '"""'])
 
 
-def package_name():
+def protomodel_package_name():
+    return f"package {PROTOMODEL_PKG}"
+
+
+def model_package_name():
     return f"package {MODEL_PKG}"
 
 
-def generated_message():
-    return f"\n{GENERATED_MSG}\n"
+def model_generated_message():
+    return f"\n{MODEL_GENERATED_MSG}\n"
+
+
+def protomodel_generated_message():
+    return f"\n{PROTOMODEL_GENERATED_MSG}\n"
 
 
 def camelcase(string_to_camelcase: str):
@@ -219,9 +236,9 @@ def format_go(filename: str):
     subprocess.run(["goimports", "-w", filename])
 
 
-def go_model_struct(scheme: Scheme):
+def go_protomodel_struct(scheme: Scheme):
     """
-    go_model_struct will construct the the go code for a go struct, i.e.
+    go_protomodel_struct will construct the the go code for a go struct, i.e.
     `type GoModel struct { Field1: string `json:field1` }`
     """
     fields = []
@@ -233,9 +250,17 @@ def go_model_struct(scheme: Scheme):
     return f'type {scheme.go_model_name} struct {{{";".join(fields)}}}'
 
 
-def go_model_struct_unmarshal_fn_sig(scheme: Scheme, field: Field):
+def go_model_struct(scheme: Scheme):
     """
-    go_model_struct_unmarshal_fn_sig provides the function signature for the
+    go_model_struct will construct the the go code for a go struct, i.e.
+    `type GoModel struct { protomodel.GoModel }`
+    """
+    return f'type {scheme.go_model_name} struct {{{PROTOMODEL_PKG}.{scheme.go_model_name}}}'
+
+
+def go_protomodel_struct_unmarshal_fn_sig(scheme: Scheme, field: Field):
+    """
+    go_protomodel_struct_unmarshal_fn_sig provides the function signature for the
     go model's unmarshal method.
     """
     return f"{field.go_field_tag}, &{scheme.go_model_variable_name}.{field.go_field_name}"
@@ -246,7 +271,7 @@ def field_deserializer_defined(scheme: Scheme, field: Field):
     field_deserialized_defined will return the go friendly unmarshal function
     if it is defined on the field json blob, otherwise it returns None.
     """
-    sig = go_model_struct_unmarshal_fn_sig(scheme, field)
+    sig = go_protomodel_struct_unmarshal_fn_sig(scheme, field)
     if field.has_deserializer and field.deserializer == "UnmarshalFloatFromString":
         return f'\ndata.UnmarshalFloatFromString({sig})'
     return None
@@ -298,7 +323,7 @@ def field_deserializer_undefined(scheme: Scheme, field: Field):
     field_deserializer_undefined gets the unmarshalX function names from the go
     types defined on a field blob
     """
-    sig = go_model_struct_unmarshal_fn_sig(scheme, field)
+    sig = go_protomodel_struct_unmarshal_fn_sig(scheme, field)
     if field.go_type == "string":
         return f'\ndata.UnmarshalString({sig})'
     if field.go_type == "bool":
@@ -322,9 +347,9 @@ def go_model_deserializer_fn_calls(scheme: Scheme):
     return ";".join(deserializers)
 
 
-def go_model_struct_unmarshal_json_block(scheme: Scheme):
+def go_protomodel_struct_unmarshal_json_block(scheme: Scheme):
     """
-    go_model_struct_json_unmarshaller create the UnmarshalJSON function for a
+    go_protomodel_struct_json_unmarshaller create the UnmarshalJSON function for a
     go model's struct.
     """
     fn = []
@@ -341,15 +366,15 @@ def go_model_struct_unmarshal_json_block(scheme: Scheme):
     return "".join([go_comment, function])
 
 
-def create_go_model(scheme: Scheme):
+def create_go_protomodel(scheme: Scheme):
     """generate the code for a go model"""
-    chdir(MODEL_PKG)
+    chdir(PROTOMODEL_PKG)
     with open(scheme.go_model_filename, "w+") as go_file:
-        go_file.write(package_name())
-        go_file.write(generated_message())
+        go_file.write(protomodel_package_name())
+        go_file.write(protomodel_generated_message())
         go_file.write(f"\n{scheme.go_comment}")
-        go_file.write(f"\n{go_model_struct(scheme)}")
-        go_file.write(f"\n{go_model_struct_unmarshal_json_block(scheme)}")
+        go_file.write(f"\n{go_protomodel_struct(scheme)}")
+        go_file.write(f"\n{go_protomodel_struct_unmarshal_json_block(scheme)}")
         go_file.close()
         format_go(scheme.go_model_filename)
 
@@ -439,7 +464,11 @@ def goblin_test(scheme: Scheme, test: Test):
     return ";".join(goblin)
 
 
-def create_go_model_test(scheme: Scheme, test: Test):
+def create_go_protomodel_test(scheme: Scheme, test: Test):
+    """
+    create_go_protomodel_test will generate a go file for a single goblin test using
+    the expected data from the schema
+    """
     fn = []
     fn.append("g := goblin.Goblin(t)")
     fn.append(
@@ -447,57 +476,94 @@ def create_go_model_test(scheme: Scheme, test: Test):
     return f'func Test{scheme.go_model_name}{test.name}(t *testing.T) {{{";".join(fn)}}}'
 
 
-def create_go_model_tests(scheme: Scheme):
+def create_go_protomodel_tests(scheme: Scheme):
+    """
+    create_go_protomodel_tests will generate all the goblin tests in the tests array
+    in the model schema.
+    """
     if len(scheme.tests) == 0:
         return
 
-    chdir(MODEL_PKG)
+    chdir(PROTOMODEL_PKG)
     with open(scheme.go_test_filename, "w+") as go_file:
      # write data to the model file
-        go_file.write(package_name())
-        go_file.write(generated_message())
+        go_file.write(protomodel_package_name())
+        go_file.write(protomodel_generated_message())
         for test in scheme.tests:
-            go_file.write(f"\n{create_go_model_test(scheme, test)}")
+            go_file.write(f"\n{create_go_protomodel_test(scheme, test)}")
         go_file.close()
     format_go(scheme.go_test_filename)
 
-# def create_graphqls_scheme(data):
-#     chdir(GRAPHQLS_DIR)
-#     go_filename = Path(data[MODEL]).with_suffix(GRAPHQLS_EXT)
 
-#     # open the go model file
-#     with open(go_filename, "w+") as go_file:
-#         fields = []
-#         for field in data[MODEL_FIELDS]:
-#             fields.append(
-#                 f"  {inflection.camelize(go_model_field_name(field), False)}: {graphqls_type(field)}")
+def create_graphqls_scheme(scheme: Scheme):
+    """
+    create_graphqls_scheme will create the scheme for the graphqls object that
+    should be 1-1 with the corresponding protomodel.
+    """
+    chdir(GRAPHQLS_DIR)
+    with open(scheme.graphql_filename, "w+") as graphql_file:
+        fields = []
+        for field in scheme.fields:
+            fields.append(
+                f"  {inflection.camelize(field.go_field_name, False)}: {graphqls_type(field)}")
 
-#         fieldsStr = "\n".join(fields)
-#         go_file.write(_80_char_graphqls_comment(data[MODEL_DESCRIPTION]))
-#         go_file.write(
-#             f"\ntype {go_model_struct_name(data)} {{\n{fieldsStr}\n}}\n")
+        fieldsStr = "\n".join(fields)
+        graphql_file.write(_80_char_graphqls_comment(scheme.description))
+        graphql_file.write(
+            f"\ntype {scheme.go_model_name} {{\n{fieldsStr}\n}}\n")
 
-#         # close the go file
-#         go_file.close()
-
-
-# loop over the schemas to generate the model files
-for filename in schema_filenames:
-    # don't try to generate data from the generate.py file
-    if filename == FILENAME:
-        continue
-
-    scheme = Scheme(filename)
-    create_go_model(scheme)
-    create_go_model_tests(scheme)
-
-# print(schema.api)
-
-    # first let's read the filename into a dictionary
-    # data = load_json(filename)
-    # create_go_model(data)
-    # create_go_model_tests(data)
-    # create_graphqls_scheme(data)
+        # close the go file
+        graphql_file.close()
 
 
-# print(inflection.camelize(inflection.underscore("ThisField"), False))
+def gqlgen_protomodel(scheme: Scheme):
+    """
+    gqlgen_protomodels will return the list of protomodels for gqlgen
+    """
+    return {"model": f'cql/{MODEL_PKG}.{scheme.go_model_name}'}
+
+
+def update_gqlgen(scheme: Scheme):
+    """
+    update_gqlgen will update the gqlgen.yml file with data from the current
+    schema
+    """
+    chdir(GQLGEN_DIR)
+    with open(GQLGEN_FILENAME) as gqlgen_file:
+        configs = yaml.load(gqlgen_file, Loader=yaml.Loader)
+        if GQLGEN_PROTOMODELS not in configs:
+            configs[GQLGEN_PROTOMODELS] = {}
+        configs[GQLGEN_PROTOMODELS][scheme.go_model_name] = gqlgen_protomodel(
+            scheme)
+        stream = open(GQLGEN_FILENAME, 'w')
+        yaml.dump(configs, stream)
+
+
+def create_go_model(scheme: Scheme):
+    """
+    create_go_model will create the extendable go model
+    """
+    chdir(MODEL_PKG)
+    if os.path.exists(scheme.go_model_filename):
+        return
+
+    with open(scheme.go_model_filename, "w+") as go_file:
+        go_file.write(model_package_name())
+        go_file.write(model_generated_message())
+        go_file.write(f"\n{scheme.go_comment}")
+        go_file.write(f"\n{go_model_struct(scheme)}")
+        go_file.close()
+        format_go(scheme.go_model_filename)
+
+
+def generate_models():
+    for filename in schema_filenames:
+        scheme = Scheme(filename)
+        create_go_protomodel(scheme)
+        create_go_protomodel_tests(scheme)
+        create_go_model(scheme)
+        create_graphqls_scheme(scheme)
+        update_gqlgen(scheme)
+
+
+generate_models()

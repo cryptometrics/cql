@@ -1,141 +1,35 @@
-# Where are all the schema files located? globs are supported eg  src/**/*.graphqls
-schema:
-  - graph/schema/*.graphqls
-
-# Where should the generated server code go?
 exec:
   filename: graph/generated/generated.go
   package: generated
-
-# Uncomment to enable federation
-# federation:
-#   filename: graph/generated/federation.go
-#   package: generated
-
-# Where should any generated models go?
 model:
-  filename: model/graph_models_gen.go
-  package: model
-
-# Where should the resolver implementations go?
-resolver:
-  layout: follow-schema
-  dir: graph
-  package: graph
-
-# Optional: turn on use `gqlgen:"fieldName"` tags in your models
-# struct_tag: json
-
-# Optional: turn on to use []Thing instead of []*Thing
-# omit_slice_element_pointers: false
-
-# Optional: set to speed up generation time by not performing a final validation pass.
-# skip_validation: true
-
-# gqlgen will search for any type names in the schema in these go packages
-# if they match it will use them, otherwise it will generate them.
-# autobind:
-#   - "cql/model"
-
-# This section declares type mapping between the GraphQL and go type systems
-#
-# The first line in each type will be used as defaults for resolver arguments and
-# modelgen, the others will be allowed when binding to fields. Configure them to
-# your liking
+  filename: model2/graph_models_gen.go
+  package: model2
 models:
-  ID:
-    model:
-      - github.com/99designs/gqlgen/graphql.ID
-      - github.com/99designs/gqlgen/graphql.Int
-      - github.com/99designs/gqlgen/graphql.Int64
-      - github.com/99designs/gqlgen/graphql.Int32
-  Int:
-    model:
-      - github.com/99designs/gqlgen/graphql.Int
-      - github.com/99designs/gqlgen/graphql.Int64
-      - github.com/99designs/gqlgen/graphql.Int32
-  CoinbaseAccountLedgerDetails:
-    model: cql/model.CoinbaseAccountLedgerDetails
-  CoinbaseAccountLedger:
-    model: cql/model.CoinbaseAccountLedger
-  CoinbaseAccountHold:
-    model: cql/model.CoinbaseAccountHold
-  CoinbaseAccountTransfer:
-    model: cql/model.CoinbaseAccountTransfer
-  CoinbaseAccountTransferDetails:
-    model: cql/model.CoinbaseAccountTransferDetails
   CoinbaseAccount:
-    model: cql/model.CoinbaseAccount
-  CoinbaseAvailableBalance:
-    model: cql/model.CoinbaseAvailableBalance
-  CoinbaseBankCountry:
-    model: cql/model.CoinbaseBankCountry
-  CoinbaseCurrencyConversion:
-    model: cql/model.CoinbaseCurrencyConversion
-  CoinbaseCurrency:
-    model: cql/model.CoinbaseCurrency
-  CoinbaseCurrencyDetails:
-    model: cql/model.CoinbaseCurrencyDetails
-  CoinbaseDepositAddressInfo:
-    model: cql/model.CoinbaseDepositAddressInfo
-  CoinbaseDepositAddressWarning:
-    model: cql/model.CoinbaseDepositAddressWarning
-  CoinbaseDepositAddress:
-    model: cql/model.CoinbaseDepositAddress
-  CoinbaseDeposit:
-    model: cql/model.CoinbaseDeposit
-  CoinbaseLimits:
-    model: cql/model.CoinbaseLimits
-  CoinbaseOrder:
-    model: cql/model.CoinbaseOrder
-  CoinbasePaymentMethod:
-    model: cql/model.CoinbasePaymentMethod
-  CoinbasePickerData:
-    model: cql/model.CoinbasePickerData
-  CoinbaseProduct:
-    model: cql/model.CoinbaseProduct
-  CoinbaseProductDailyStats:
-    model: cql/model.CoinbaseProductDailyStats
-  CoinbaseProductHistoricalRate:
-    model: cql/model.CoinbaseProductHistoricalRate
-  CoinbaseProductOrderBook:
-    model: cql/model.CoinbaseProductOrderBook
-  CoinbaseProductOrderBookBidAsk:
-    model: cql/model.CoinbaseProductOrderBookBidAsk
-  CoinbaseProductTicker:
-    model: cql/model.CoinbaseProductTicker
-  CoinbaseProductTrade:
-    model: cql/model.CoinbaseProductTrade
-  CoinbaseRecurringOption:
-    model: cql/model.CoinbaseRecurringOption
-  CoinbaseResourceAccount:
-    model: cql/model.CoinbaseResourceAccount
-  CoinbaseSEPADepositInformation:
-    model: cql/model.CoinbaseSEPADepositInformation
-  CoinbaseSWIFTDepositInformation:
-    model: cql/model.CoinbaseSWIFTDepositInformation
-  CoinbaseTime:
-    model: cql/model.CoinbaseTime
-  CoinbaseTransferDetails:
-    model: cql/model.CoinbaseTransferDetails
-  CoinbaseTransfer:
-    model: cql/model.CoinbaseTransfer
-  CoinbaseUKDepositInformation:
-    model: cql/model.CoinbaseUKDepositInformation
-  CoinbaseWallet:
-    model: cql/model.CoinbaseWallet
-  CoinbaseWireDepositInformation:
-    model: cql/model.CoinbaseWireDepositInformation
+    model: cql/model2.CoinbaseAccount
+  CoinbaseHold:
+    model: cql/model2.CoinbaseHold
   EntryType:
     model: cql/scalar.EntryType
+  ID:
+    model:
+    - github.com/99designs/gqlgen/graphql.ID
+    - github.com/99designs/gqlgen/graphql.Int
+    - github.com/99designs/gqlgen/graphql.Int64
+    - github.com/99designs/gqlgen/graphql.Int32
+  Int:
+    model:
+    - github.com/99designs/gqlgen/graphql.Int
+    - github.com/99designs/gqlgen/graphql.Int64
+    - github.com/99designs/gqlgen/graphql.Int32
   OrderCancelTime:
     model: cql/scalar.OrderCancelTime
+  OrderSTP:
+    model: cql/scalar.OrderSTP
   OrderSide:
     model: cql/scalar.OrderSide
   OrderStop:
     model: cql/scalar.OrderSide
-  OrderSTP:
-    model: cql/scalar.OrderSTP
   OrderType:
     model: cql/scalar.OrderType
   PaymentMethod:
@@ -144,3 +38,9 @@ models:
     model: cql/scalar.TimeInForce
   TransferMethod:
     model: cql/scalar.TransferMethod
+resolver:
+  dir: graph
+  layout: follow-schema
+  package: graph
+schema:
+- graph/schema/*.graphqls

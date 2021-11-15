@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"context"
 	"cql/model"
+	"cql/protomodel"
 	"cql/scalar"
 	"errors"
 	"strconv"
@@ -52,8 +53,8 @@ type ComplexityRoot struct {
 		Balance        func(childComplexity int) int
 		Currency       func(childComplexity int) int
 		Hold           func(childComplexity int) int
-		ID             func(childComplexity int) int
-		ProfileID      func(childComplexity int) int
+		Id             func(childComplexity int) int
+		ProfileId      func(childComplexity int) int
 		TradingEnabled func(childComplexity int) int
 	}
 
@@ -479,8 +480,8 @@ type MutationResolver interface {
 type QueryResolver interface {
 	CoinbaseAccountLedger(ctx context.Context, id string, opts *model.CoinbaseAccountLedgerOptions) ([]*model.CoinbaseAccountLedger, error)
 	CoinbaseAccountHold(ctx context.Context, id string, opts *model.CoinbaseAccountHoldOptions) ([]*model.CoinbaseAccountHold, error)
-	CoinbaseAccount(ctx context.Context, id string) (*model.CoinbaseAccount, error)
-	CoinbaseAccounts(ctx context.Context, test *string) ([]*model.CoinbaseAccount, error)
+	CoinbaseAccount(ctx context.Context, id string) (*protomodel.CoinbaseAccount, error)
+	CoinbaseAccounts(ctx context.Context, test *string) ([]*protomodel.CoinbaseAccount, error)
 	CoinbaseAccountTransfer(ctx context.Context, id string, opts *model.CoinbaseAccountTransferOptions) ([]*model.CoinbaseAccountTransfer, error)
 	CoinbaseCurrencyConversion(ctx context.Context, id string, opts *model.CoinbaseCurrencyConversionOpts) (*model.CoinbaseCurrencyConversion, error)
 	CoinbaseCurrencies(ctx context.Context) ([]*model.CoinbaseCurrency, error)
@@ -545,18 +546,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		return e.complexity.CoinbaseAccount.Hold(childComplexity), true
 
 	case "CoinbaseAccount.id":
-		if e.complexity.CoinbaseAccount.ID == nil {
+		if e.complexity.CoinbaseAccount.Id == nil {
 			break
 		}
 
-		return e.complexity.CoinbaseAccount.ID(childComplexity), true
+		return e.complexity.CoinbaseAccount.Id(childComplexity), true
 
 	case "CoinbaseAccount.profileID":
-		if e.complexity.CoinbaseAccount.ProfileID == nil {
+		if e.complexity.CoinbaseAccount.ProfileId == nil {
 			break
 		}
 
-		return e.complexity.CoinbaseAccount.ProfileID(childComplexity), true
+		return e.complexity.CoinbaseAccount.ProfileId(childComplexity), true
 
 	case "CoinbaseAccount.tradingEnabled":
 		if e.complexity.CoinbaseAccount.TradingEnabled == nil {
@@ -4319,7 +4320,7 @@ func (ec *executionContext) field___Type_fields_args(ctx context.Context, rawArg
 
 // region    **************************** field.gotpl *****************************
 
-func (ec *executionContext) _CoinbaseAccount_id(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseAccount) (ret graphql.Marshaler) {
+func (ec *executionContext) _CoinbaseAccount_id(ctx context.Context, field graphql.CollectedField, obj *protomodel.CoinbaseAccount) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -4337,7 +4338,7 @@ func (ec *executionContext) _CoinbaseAccount_id(ctx context.Context, field graph
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.ID, nil
+		return obj.Id, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -4351,7 +4352,7 @@ func (ec *executionContext) _CoinbaseAccount_id(ctx context.Context, field graph
 	return ec.marshalOString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _CoinbaseAccount_currency(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseAccount) (ret graphql.Marshaler) {
+func (ec *executionContext) _CoinbaseAccount_currency(ctx context.Context, field graphql.CollectedField, obj *protomodel.CoinbaseAccount) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -4383,7 +4384,7 @@ func (ec *executionContext) _CoinbaseAccount_currency(ctx context.Context, field
 	return ec.marshalOString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _CoinbaseAccount_balance(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseAccount) (ret graphql.Marshaler) {
+func (ec *executionContext) _CoinbaseAccount_balance(ctx context.Context, field graphql.CollectedField, obj *protomodel.CoinbaseAccount) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -4415,7 +4416,7 @@ func (ec *executionContext) _CoinbaseAccount_balance(ctx context.Context, field 
 	return ec.marshalOFloat2float64(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _CoinbaseAccount_available(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseAccount) (ret graphql.Marshaler) {
+func (ec *executionContext) _CoinbaseAccount_available(ctx context.Context, field graphql.CollectedField, obj *protomodel.CoinbaseAccount) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -4447,7 +4448,7 @@ func (ec *executionContext) _CoinbaseAccount_available(ctx context.Context, fiel
 	return ec.marshalOFloat2float64(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _CoinbaseAccount_hold(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseAccount) (ret graphql.Marshaler) {
+func (ec *executionContext) _CoinbaseAccount_hold(ctx context.Context, field graphql.CollectedField, obj *protomodel.CoinbaseAccount) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -4479,7 +4480,7 @@ func (ec *executionContext) _CoinbaseAccount_hold(ctx context.Context, field gra
 	return ec.marshalOFloat2float64(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _CoinbaseAccount_profileID(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseAccount) (ret graphql.Marshaler) {
+func (ec *executionContext) _CoinbaseAccount_profileID(ctx context.Context, field graphql.CollectedField, obj *protomodel.CoinbaseAccount) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -4497,7 +4498,7 @@ func (ec *executionContext) _CoinbaseAccount_profileID(ctx context.Context, fiel
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.ProfileID, nil
+		return obj.ProfileId, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -4511,7 +4512,7 @@ func (ec *executionContext) _CoinbaseAccount_profileID(ctx context.Context, fiel
 	return ec.marshalOString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _CoinbaseAccount_tradingEnabled(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseAccount) (ret graphql.Marshaler) {
+func (ec *executionContext) _CoinbaseAccount_tradingEnabled(ctx context.Context, field graphql.CollectedField, obj *protomodel.CoinbaseAccount) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -13208,9 +13209,9 @@ func (ec *executionContext) _Query_coinbaseAccount(ctx context.Context, field gr
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*model.CoinbaseAccount)
+	res := resTmp.(*protomodel.CoinbaseAccount)
 	fc.Result = res
-	return ec.marshalOCoinbaseAccount2ᚖcqlᚋmodelᚐCoinbaseAccount(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseAccount2ᚖcqlᚋprotomodelᚐCoinbaseAccount(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_coinbaseAccounts(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -13247,9 +13248,9 @@ func (ec *executionContext) _Query_coinbaseAccounts(ctx context.Context, field g
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.([]*model.CoinbaseAccount)
+	res := resTmp.([]*protomodel.CoinbaseAccount)
 	fc.Result = res
-	return ec.marshalOCoinbaseAccount2ᚕᚖcqlᚋmodelᚐCoinbaseAccount(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseAccount2ᚕᚖcqlᚋprotomodelᚐCoinbaseAccount(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_coinbaseAccountTransfer(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -15525,7 +15526,7 @@ func (ec *executionContext) unmarshalInputMakeCoinbasePaymentMethodInput(ctx con
 
 var coinbaseAccountImplementors = []string{"CoinbaseAccount"}
 
-func (ec *executionContext) _CoinbaseAccount(ctx context.Context, sel ast.SelectionSet, obj *model.CoinbaseAccount) graphql.Marshaler {
+func (ec *executionContext) _CoinbaseAccount(ctx context.Context, sel ast.SelectionSet, obj *protomodel.CoinbaseAccount) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, coinbaseAccountImplementors)
 
 	out := graphql.NewFieldSet(fields)
@@ -17784,7 +17785,7 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	return graphql.MarshalBoolean(*v)
 }
 
-func (ec *executionContext) marshalOCoinbaseAccount2ᚕᚖcqlᚋmodelᚐCoinbaseAccount(ctx context.Context, sel ast.SelectionSet, v []*model.CoinbaseAccount) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseAccount2ᚕᚖcqlᚋprotomodelᚐCoinbaseAccount(ctx context.Context, sel ast.SelectionSet, v []*protomodel.CoinbaseAccount) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -17811,7 +17812,7 @@ func (ec *executionContext) marshalOCoinbaseAccount2ᚕᚖcqlᚋmodelᚐCoinbase
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOCoinbaseAccount2ᚖcqlᚋmodelᚐCoinbaseAccount(ctx, sel, v[i])
+			ret[i] = ec.marshalOCoinbaseAccount2ᚖcqlᚋprotomodelᚐCoinbaseAccount(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -17824,7 +17825,7 @@ func (ec *executionContext) marshalOCoinbaseAccount2ᚕᚖcqlᚋmodelᚐCoinbase
 	return ret
 }
 
-func (ec *executionContext) marshalOCoinbaseAccount2ᚖcqlᚋmodelᚐCoinbaseAccount(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseAccount) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseAccount2ᚖcqlᚋprotomodelᚐCoinbaseAccount(ctx context.Context, sel ast.SelectionSet, v *protomodel.CoinbaseAccount) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
