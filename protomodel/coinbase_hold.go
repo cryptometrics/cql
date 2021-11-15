@@ -1,4 +1,4 @@
-package model2
+package protomodel
 
 import (
 	"cql/serial"

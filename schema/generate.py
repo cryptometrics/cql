@@ -22,7 +22,7 @@ GO_EXT = ".go"
 GRAPHQLS_EXT = ".graphqls"
 GRAPHQLS_DIR = "graph/schema2"
 MODEL_API = "api"
-MODEL_PKG = "model2"
+MODEL_PKG = "protomodel"
 MODEL = "model"
 MODEL_DESCRIPTION = "modelDescription"
 MODEL_FIELDS = "modelFields"
@@ -72,6 +72,13 @@ class Field:
             self.deserializer = field_dic[MODEL_FIELD_DESERIALIZER]
 
 
+class Test:
+    def __init__(self, test_dic: hash):
+        self.name = test_dic[MODEL_TEST_NAME]
+        self.description = test_dic[MODEL_TEST_DESCRIPTION]
+        self.json = test_dic[MODEL_TEST_JSON]
+
+
 class Scheme:
     def __init__(self, filename: str):
         self.api = ""
@@ -82,7 +89,9 @@ class Scheme:
         self.go_model_variable_name = ""
         self.model = ""
         self.filename = filename
+        self.go_test_filename = ""
         self.fields = []
+        self.tests = []
 
         chdir(SCHEMA_DIR)
         with open(self.filename) as json_file:
@@ -96,16 +105,24 @@ class Scheme:
                 self.go_model_variable_name = stringcase.camelcase(
                     self.go_model_name)
                 self.model = data[MODEL]
+                self.go_test_filename = Path(
+                    f'{self.model}_test').with_suffix(GO_EXT)
                 self.go_model_filename = Path(self.model).with_suffix(GO_EXT)
+
                 for field_dic in data[MODEL_FIELDS]:
                     field = Field(field_dic)
                     self.fields.append(field)
 
-    def schema(self):
+                if MODEL_TESTS in data:
+                    for test_dic in data[MODEL_TESTS]:
+                        test = Test(test_dic)
+                        self.tests.append(test)
+
+    @staticmethod
+    def schema():
         """This function loads the given schema available"""
         with open(SCHEMA_FILENAME, 'r') as file:
             return json.load(file)
-        None
 
     def validate_json(self, data: hash):
         """REF: https://json-schema.org/ """
@@ -152,6 +169,14 @@ def _80_char_graphqls_comment(comment: str):
             line = word
     partitioned_comment.append(line)
     return "\n".join(['"""', "".join(partitioned_comment), '"""'])
+
+
+def package_name():
+    return f"package {MODEL_PKG}"
+
+
+def generated_message():
+    return f"\n{GENERATED_MSG}\n"
 
 
 def camelcase(string_to_camelcase: str):
@@ -229,6 +254,10 @@ def field_deserializer_defined(scheme: Scheme, field: Field):
 
 def go_return_error():
     return "if err != nil { return err }"
+
+
+def go_panic_error():
+    return "if err != nil { panic(err) }"
 
 
 def go_model_json_deserializer_block():
@@ -315,13 +344,13 @@ def go_model_struct_unmarshal_json_block(scheme: Scheme):
 def create_go_model(scheme: Scheme):
     """generate the code for a go model"""
     chdir(MODEL_PKG)
-    with open(scheme.go_model_filename, "w+") as goFile:
-        goFile.write(" ".join(["package", MODEL_PKG]))
-        goFile.write(f"\n{GENERATED_MSG}\n")
-        goFile.write(f"\n{scheme.go_comment}")
-        goFile.write(f"\n{go_model_struct(scheme)}")
-        goFile.write(f"\n{go_model_struct_unmarshal_json_block(scheme)}")
-        goFile.close()
+    with open(scheme.go_model_filename, "w+") as go_file:
+        go_file.write(package_name())
+        go_file.write(generated_message())
+        go_file.write(f"\n{scheme.go_comment}")
+        go_file.write(f"\n{go_model_struct(scheme)}")
+        go_file.write(f"\n{go_model_struct_unmarshal_json_block(scheme)}")
+        go_file.close()
         format_go(scheme.go_model_filename)
 
 
@@ -339,10 +368,10 @@ def graphqls_type(field: Field):
     return switch[field.go_type]
 
 
-def json_go_type_dictionary(scheme: Scheme):
+def tag_to_go_type(scheme: Scheme):
     """
-    json_go_type_dictionary will return a dictionary where keys are the json
-    formatted data and the values are the go struct field types.  i.e.
+    tag_to_go_type will return a dictionary where keys are the json formatted
+    data and the values are the go struct field types.  i.e.
     {this_thing: string, that_think: float64}
     """
     dictionary = {}
@@ -351,75 +380,86 @@ def json_go_type_dictionary(scheme: Scheme):
     return dictionary
 
 
-# def create_go_model_test(scheme: Scheme, test):
-#     name = test[MODEL_TEST_NAME]
-#     description = test[MODEL_TEST_DESCRIPTION]
-#     model_json = test[MODEL_TEST_JSON]
-
-#     fn = []
-#     fn.append("g := goblin.Goblin(t)")
-
-#     goblin = []
-#     goblin.append(f"response := []byte(`{model_json}`)")
-
-#     expected = []
-#     json_to_type = json_go_type_dictionary(data)
-#     test = json.loads(model_json)
-#     for field in data[MODEL_FIELDS]:
-#         key = field[MODEL_FIELD_IDENTIFIER]
-#         val = None
-#         if json_to_type[key] == "string":
-#             val = f'"{test[key]}"'
-#         elif json_to_type[key] == "float64":
-#             val = float(test[key])
-#         elif json_to_type[key] == "bool":
-#             val = "true" if test[key] else "false"
-
-#         expected.append(f'{go_model_field_name(field)}: {val}')
-
-#     expectedStr = ",".join(expected)
-#     goblin.append(f"expected := {model_name}{{{expectedStr}}}")
-#     goblin.append(f"actual := {model_name}{{}}")
-#     goblin.append(
-#         "if err := json.Unmarshal(response, &actual); err != nil {panic(err)}")
-
-#     assertions = []
-#     for field in data[MODEL_FIELDS]:
-#         name = go_model_field_name(field)
-#         assertions.append(f"g.Assert(actual.{name}).Eql(expected.{name})")
-
-#     assertsionsStr = ";".join(assertions)
-#     goblin.append(
-#         f'g.It("should pass with all struct assertions", func(){{{assertsionsStr}}})')
-#     goblinStr = ";".join(goblin)
-#     fn.append(f'g.Describe("{description}", func() {{{goblinStr}}})')
-#     fnStr = ";".join(fn)
-#     return f"func Test{model_name}{name}(t *testing.T) {{{fnStr}}}"
+def goblin_assertions(scheme: Scheme):
+    """
+    goblin_assertions writes the assertion list for the model we're trying to
+    test, comparing the expected value passed by the user in the json schema
+    to the actual value after deserialization
+    """
+    assertions = []
+    for field in scheme.fields:
+        name = field.go_field_name
+        assertions.append(f"g.Assert(actual.{name}).Eql(expected.{name})")
+    return ";".join(assertions)
 
 
-# def create_go_model_tests(data):
-#     if not MODEL_TESTS in data:
-#         return
+def goblin_deserializer(scheme: Scheme):
+    """
+    goblin_deserializer will generate the code used to deserialize the test json
+    into a model instance
+    """
+    deserializer = []
+    deserializer.append("err := json.Unmarshal(response, &actual)")
+    deserializer.append(go_panic_error())
+    msg = "should pass with all struct assertions"
+    return f'g.It("{msg}", func(){{{";".join(deserializer)}; {goblin_assertions(scheme)}}})'
 
-#     chdir(MODEL_PKG)
-#     go_filename = Path(data[MODEL] + "_test").with_suffix(GO_EXT)
 
-#     # open the go model file
-#     go_file = open(go_filename, "w+")
+def goblin_expected(scheme: Scheme, test: Test):
+    """
+    go_model_test_expected_instance will create the expected instance (of a
+    go struct) for testing.  It's what we will compare the unmarshalled data to.
+    """
+    partitions = []
+    tag_go_type = tag_to_go_type(scheme)
+    test_json = json.loads(test.json)
+    for field in scheme.fields:
+        tag = field.identifier
+        val = None
+        if tag_go_type[tag] == "string":
+            val = f'"{test_json[tag]}"'
+        elif tag_go_type[tag] == "float64":
+            val = float(test_json[tag])
+        elif tag_go_type[tag] == "bool":
+            val = "true" if test_json[tag] else "false"
+        partitions.append(f'{field.go_field_name}: {val}')
+    return f'{scheme.go_model_name}{{{",".join(partitions)}}}'
 
-#     # write data to the model file
-#     go_file.write(" ".join(["package", MODEL_PKG]))
-#     go_file.write(f"\n{GENERATED_MSG}\n")
 
-#     for test in data[MODEL_TESTS]:
-#         go_file.write(f"\n{create_go_model_test(data, test)}")
+def goblin_test(scheme: Scheme, test: Test):
+    """
+    goblin_test generates the code to test the scheme-defined tests, comparing
+    an expected struct to an actual struct per the schema.
+    """
+    goblin = []
+    goblin.append(f"response := []byte(`{test.json}`)")
+    goblin.append(f"expected := {goblin_expected(scheme, test)}")
+    goblin.append(f"actual := {scheme.go_model_name}{{}}")
+    goblin.append(goblin_deserializer(scheme))
+    return ";".join(goblin)
 
-#     # close the go file
-#     go_file.close()
 
-#     # format the file and add necessary imports
-#     format_go(go_filename)
+def create_go_model_test(scheme: Scheme, test: Test):
+    fn = []
+    fn.append("g := goblin.Goblin(t)")
+    fn.append(
+        f'g.Describe("{test.description}", func() {{{goblin_test(scheme, test)}}})')
+    return f'func Test{scheme.go_model_name}{test.name}(t *testing.T) {{{";".join(fn)}}}'
 
+
+def create_go_model_tests(scheme: Scheme):
+    if len(scheme.tests) == 0:
+        return
+
+    chdir(MODEL_PKG)
+    with open(scheme.go_test_filename, "w+") as go_file:
+     # write data to the model file
+        go_file.write(package_name())
+        go_file.write(generated_message())
+        for test in scheme.tests:
+            go_file.write(f"\n{create_go_model_test(scheme, test)}")
+        go_file.close()
+    format_go(scheme.go_test_filename)
 
 # def create_graphqls_scheme(data):
 #     chdir(GRAPHQLS_DIR)
@@ -440,7 +480,8 @@ def json_go_type_dictionary(scheme: Scheme):
 #         # close the go file
 #         go_file.close()
 
-    # loop over the schemas to generate the model files
+
+# loop over the schemas to generate the model files
 for filename in schema_filenames:
     # don't try to generate data from the generate.py file
     if filename == FILENAME:
@@ -448,6 +489,7 @@ for filename in schema_filenames:
 
     scheme = Scheme(filename)
     create_go_model(scheme)
+    create_go_model_tests(scheme)
 
 # print(schema.api)
 
