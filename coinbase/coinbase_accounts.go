@@ -29,11 +29,11 @@ func NewCoinbaseAccounts(conn client.Connector) *CoinbaseAccounts {
 // This endpoint requires the "transfer" permission. API key must belong to
 // default profile.
 //
-// // * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postcoinbaseaccountaddresses
-// func (accounts *CoinbaseAccounts) GenerateCryptoAddress(id string) (m *model.CoinbaseDepositAddress, err error) {
-// 	req := accounts.get(ENDPOINT_COINBASE_ACCOUNT_ADDRESSES)
-// 	return m, req.PathParam("id", id).Fetch().Assign(&m).JoinMessages()
-// }
+// * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postcoinbaseaccountaddresses
+func (accounts *CoinbaseAccounts) GenerateCryptoAddress(walletId string) (m *model.CoinbaseCryptoAddress, err error) {
+	req := accounts.Post(AddressesEndpoint)
+	return m, req.PathParam("account_id", walletId).Fetch().Assign(&m).JoinMessages()
+}
 
 // All lists all the user's available Coinbase wallets (These are the
 // wallets/accounts that are used for buying and selling on www.coinbase.com)

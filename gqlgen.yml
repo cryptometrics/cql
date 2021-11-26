@@ -21,6 +21,12 @@ models:
     model: cql/model.CoinbaseAccountTransfers
   CoinbaseBankCountry:
     model: cql/model.CoinbaseBankCountry
+  CoinbaseCryptoAddress:
+    model: cql/model.CoinbaseCryptoAddress
+  CoinbaseCryptoAddressInfo:
+    model: cql/model.CoinbaseCryptoAddressInfo
+  CoinbaseCryptoAddressWarning:
+    model: cql/model.CoinbaseCryptoAddressWarning
   CoinbaseHold:
     model: cql/model.CoinbaseHold
   CoinbaseSEPADepositInformation:

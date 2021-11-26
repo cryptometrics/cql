@@ -2,6 +2,22 @@ package model
 
 // * This is a generated file, do not edit
 
+// AddressInfo converts the native protomodel ProtoAddressInfo to a local
+// CoinbaseCryptoAddressInfo.
+func (m *CoinbaseCryptoAddress) AddressInfo() *CoinbaseCryptoAddressInfo {
+	return &CoinbaseCryptoAddressInfo{
+		CoinbaseCryptoAddressInfo: m.ProtoAddressInfo}
+}
+
+// Warnings converts the native protomodel ProtoWarnings to a local
+// []*CoinbaseCryptoAddressWarning.
+func (m *CoinbaseCryptoAddress) Warnings() (slice []*CoinbaseCryptoAddressWarning) {
+	for _, v := range m.ProtoWarnings {
+		slice = append(slice, &CoinbaseCryptoAddressWarning{CoinbaseCryptoAddressWarning: *v})
+	}
+	return
+}
+
 // Details converts the native protomodel ProtoDetails to a local
 // CoinbaseAccountTransferDetails.
 func (m *CoinbaseAccountTransfer) Details() *CoinbaseAccountTransferDetails {

@@ -36,6 +36,7 @@ type Config struct {
 }
 
 type ResolverRoot interface {
+	Mutation() MutationResolver
 	Query() QueryResolver
 }
 
@@ -97,6 +98,35 @@ type ComplexityRoot struct {
 	CoinbaseBankCountry struct {
 		Code func(childComplexity int) int
 		Name func(childComplexity int) int
+	}
+
+	CoinbaseCryptoAddress struct {
+		Address        func(childComplexity int) int
+		AddressInfo    func(childComplexity int) int
+		CallbackUrl    func(childComplexity int) int
+		CreateAt       func(childComplexity int) int
+		DepositUri     func(childComplexity int) int
+		DestinationTag func(childComplexity int) int
+		Id             func(childComplexity int) int
+		LegacyAddress  func(childComplexity int) int
+		Name           func(childComplexity int) int
+		Network        func(childComplexity int) int
+		Resource       func(childComplexity int) int
+		ResourcePath   func(childComplexity int) int
+		UpdatedAt      func(childComplexity int) int
+		UriScheme      func(childComplexity int) int
+		Warnings       func(childComplexity int) int
+	}
+
+	CoinbaseCryptoAddressInfo struct {
+		Address        func(childComplexity int) int
+		DestinationTag func(childComplexity int) int
+	}
+
+	CoinbaseCryptoAddressWarning struct {
+		Details  func(childComplexity int) int
+		ImageUrl func(childComplexity int) int
+		Title    func(childComplexity int) int
 	}
 
 	CoinbaseSepaDepositInformation struct {
@@ -203,6 +233,10 @@ type ComplexityRoot struct {
 		Timestamp func(childComplexity int) int
 	}
 
+	Mutation struct {
+		GenerateCryptoAddress func(childComplexity int, walletID string) int
+	}
+
 	Query struct {
 		CoinbaseAccount          func(childComplexity int, accountID string) int
 		CoinbaseAccountHolds     func(childComplexity int, accountID string, opts *model.CoinbaseAccountHoldsOptions) int
@@ -217,6 +251,9 @@ type ComplexityRoot struct {
 	}
 }
 
+type MutationResolver interface {
+	GenerateCryptoAddress(ctx context.Context, walletID string) (*model.CoinbaseCryptoAddress, error)
+}
 type QueryResolver interface {
 	CoinbaseAccount(ctx context.Context, accountID string) (*model.CoinbaseAccount, error)
 	CoinbaseAccounts(ctx context.Context) ([]*model.CoinbaseAccount, error)
@@ -489,6 +526,146 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.CoinbaseBankCountry.Name(childComplexity), true
+
+	case "CoinbaseCryptoAddress.address":
+		if e.complexity.CoinbaseCryptoAddress.Address == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseCryptoAddress.Address(childComplexity), true
+
+	case "CoinbaseCryptoAddress.addressInfo":
+		if e.complexity.CoinbaseCryptoAddress.AddressInfo == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseCryptoAddress.AddressInfo(childComplexity), true
+
+	case "CoinbaseCryptoAddress.callbackUrl":
+		if e.complexity.CoinbaseCryptoAddress.CallbackUrl == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseCryptoAddress.CallbackUrl(childComplexity), true
+
+	case "CoinbaseCryptoAddress.createAt":
+		if e.complexity.CoinbaseCryptoAddress.CreateAt == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseCryptoAddress.CreateAt(childComplexity), true
+
+	case "CoinbaseCryptoAddress.depositUri":
+		if e.complexity.CoinbaseCryptoAddress.DepositUri == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseCryptoAddress.DepositUri(childComplexity), true
+
+	case "CoinbaseCryptoAddress.destinationTag":
+		if e.complexity.CoinbaseCryptoAddress.DestinationTag == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseCryptoAddress.DestinationTag(childComplexity), true
+
+	case "CoinbaseCryptoAddress.id":
+		if e.complexity.CoinbaseCryptoAddress.Id == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseCryptoAddress.Id(childComplexity), true
+
+	case "CoinbaseCryptoAddress.legacyAddress":
+		if e.complexity.CoinbaseCryptoAddress.LegacyAddress == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseCryptoAddress.LegacyAddress(childComplexity), true
+
+	case "CoinbaseCryptoAddress.name":
+		if e.complexity.CoinbaseCryptoAddress.Name == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseCryptoAddress.Name(childComplexity), true
+
+	case "CoinbaseCryptoAddress.network":
+		if e.complexity.CoinbaseCryptoAddress.Network == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseCryptoAddress.Network(childComplexity), true
+
+	case "CoinbaseCryptoAddress.resource":
+		if e.complexity.CoinbaseCryptoAddress.Resource == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseCryptoAddress.Resource(childComplexity), true
+
+	case "CoinbaseCryptoAddress.resourcePath":
+		if e.complexity.CoinbaseCryptoAddress.ResourcePath == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseCryptoAddress.ResourcePath(childComplexity), true
+
+	case "CoinbaseCryptoAddress.updatedAt":
+		if e.complexity.CoinbaseCryptoAddress.UpdatedAt == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseCryptoAddress.UpdatedAt(childComplexity), true
+
+	case "CoinbaseCryptoAddress.uriScheme":
+		if e.complexity.CoinbaseCryptoAddress.UriScheme == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseCryptoAddress.UriScheme(childComplexity), true
+
+	case "CoinbaseCryptoAddress.warnings":
+		if e.complexity.CoinbaseCryptoAddress.Warnings == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseCryptoAddress.Warnings(childComplexity), true
+
+	case "CoinbaseCryptoAddressInfo.address":
+		if e.complexity.CoinbaseCryptoAddressInfo.Address == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseCryptoAddressInfo.Address(childComplexity), true
+
+	case "CoinbaseCryptoAddressInfo.destinationTag":
+		if e.complexity.CoinbaseCryptoAddressInfo.DestinationTag == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseCryptoAddressInfo.DestinationTag(childComplexity), true
+
+	case "CoinbaseCryptoAddressWarning.details":
+		if e.complexity.CoinbaseCryptoAddressWarning.Details == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseCryptoAddressWarning.Details(childComplexity), true
+
+	case "CoinbaseCryptoAddressWarning.imageUrl":
+		if e.complexity.CoinbaseCryptoAddressWarning.ImageUrl == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseCryptoAddressWarning.ImageUrl(childComplexity), true
+
+	case "CoinbaseCryptoAddressWarning.title":
+		if e.complexity.CoinbaseCryptoAddressWarning.Title == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseCryptoAddressWarning.Title(childComplexity), true
 
 	case "CoinbaseSepaDepositInformation.accountAddress":
 		if e.complexity.CoinbaseSepaDepositInformation.AccountAddress == nil {
@@ -966,6 +1143,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.KrakenSystemStatusResult.Timestamp(childComplexity), true
 
+	case "Mutation.generateCryptoAddress":
+		if e.complexity.Mutation.GenerateCryptoAddress == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_generateCryptoAddress_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.GenerateCryptoAddress(childComplexity, args["walletId"].(string)), true
+
 	case "Query.coinbaseAccount":
 		if e.complexity.Query.CoinbaseAccount == nil {
 			break
@@ -1078,6 +1267,20 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 			}
 			first = false
 			data := ec._Query(ctx, rc.Operation.SelectionSet)
+			var buf bytes.Buffer
+			data.MarshalGQL(&buf)
+
+			return &graphql.Response{
+				Data: buf.Bytes(),
+			}
+		}
+	case ast.Mutation:
+		return func(ctx context.Context) *graphql.Response {
+			if !first {
+				return nil
+			}
+			first = false
+			data := ec._Mutation(ctx, rc.Operation.SelectionSet)
 			var buf bytes.Buffer
 			data.MarshalGQL(&buf)
 
@@ -1243,6 +1446,51 @@ a wallet
 type CoinbaseBankCountry {
   name: String
   code: String
+}
+`, BuiltIn: false},
+	{Name: "graph/schema/coinbase_crypto_address.graphqls", Input: `# * This is a generated file, do not edit
+
+"""
+CoinbaseCryptoAddress is used for a one-time crypto address for depositing
+crypto.
+"""
+type CoinbaseCryptoAddress {
+  id: String
+  address: String
+  addressInfo: CoinbaseCryptoAddressInfo
+  name: String
+  createAt: Time
+  updatedAt: Time
+  network: String
+  uriScheme: String
+  resource: String
+  resourcePath: String
+  warnings: [CoinbaseCryptoAddressWarning]
+  legacyAddress: String
+  destinationTag: String
+  depositUri: String
+  callbackUrl: String
+}
+`, BuiltIn: false},
+	{Name: "graph/schema/coinbase_crypto_address_info.graphqls", Input: `# * This is a generated file, do not edit
+
+"""
+CoinbaseCryptoAddressInfo holds info for a crypto address
+"""
+type CoinbaseCryptoAddressInfo {
+  address: String
+  destinationTag: String
+}
+`, BuiltIn: false},
+	{Name: "graph/schema/coinbase_crypto_address_warning.graphqls", Input: `# * This is a generated file, do not edit
+
+"""
+CoinbaseCryptoAddressWarning is a warning for generating a crypting address
+"""
+type CoinbaseCryptoAddressWarning {
+  title: String
+  details: String
+  imageUrl: String
 }
 `, BuiltIn: false},
 	{Name: "graph/schema/coinbase_sepa_deposit_information.graphqls", Input: `# * This is a generated file, do not edit
@@ -1462,6 +1710,9 @@ type Query {
   krakenServerTime: KrakenServerTime
   krakenSystemStatus: KrakenSystemStatus
 }
+type Mutation {
+  generateCryptoAddress(walletId: String!): CoinbaseCryptoAddress
+}
 `, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
@@ -1469,6 +1720,21 @@ var parsedSchema = gqlparser.MustLoadSchema(sources...)
 // endregion ************************** generated!.gotpl **************************
 
 // region    ***************************** args.gotpl *****************************
+
+func (ec *executionContext) field_Mutation_generateCryptoAddress_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["walletId"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("walletId"))
+		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["walletId"] = arg0
+	return args, nil
+}
 
 func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
@@ -2732,6 +2998,646 @@ func (ec *executionContext) _CoinbaseBankCountry_code(ctx context.Context, field
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
 		return obj.Code, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseCryptoAddress_id(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseCryptoAddress) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseCryptoAddress",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Id, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseCryptoAddress_address(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseCryptoAddress) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseCryptoAddress",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Address, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseCryptoAddress_addressInfo(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseCryptoAddress) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseCryptoAddress",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AddressInfo(), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.CoinbaseCryptoAddressInfo)
+	fc.Result = res
+	return ec.marshalOCoinbaseCryptoAddressInfo2ᚖcqlᚋmodelᚐCoinbaseCryptoAddressInfo(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseCryptoAddress_name(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseCryptoAddress) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseCryptoAddress",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Name, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseCryptoAddress_createAt(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseCryptoAddress) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseCryptoAddress",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreateAt, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseCryptoAddress_updatedAt(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseCryptoAddress) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseCryptoAddress",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UpdatedAt, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseCryptoAddress_network(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseCryptoAddress) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseCryptoAddress",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Network, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseCryptoAddress_uriScheme(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseCryptoAddress) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseCryptoAddress",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UriScheme, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseCryptoAddress_resource(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseCryptoAddress) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseCryptoAddress",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Resource, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseCryptoAddress_resourcePath(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseCryptoAddress) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseCryptoAddress",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ResourcePath, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseCryptoAddress_warnings(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseCryptoAddress) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseCryptoAddress",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Warnings(), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.CoinbaseCryptoAddressWarning)
+	fc.Result = res
+	return ec.marshalOCoinbaseCryptoAddressWarning2ᚕᚖcqlᚋmodelᚐCoinbaseCryptoAddressWarning(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseCryptoAddress_legacyAddress(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseCryptoAddress) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseCryptoAddress",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.LegacyAddress, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseCryptoAddress_destinationTag(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseCryptoAddress) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseCryptoAddress",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DestinationTag, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseCryptoAddress_depositUri(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseCryptoAddress) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseCryptoAddress",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DepositUri, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseCryptoAddress_callbackUrl(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseCryptoAddress) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseCryptoAddress",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CallbackUrl, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseCryptoAddressInfo_address(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseCryptoAddressInfo) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseCryptoAddressInfo",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Address, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseCryptoAddressInfo_destinationTag(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseCryptoAddressInfo) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseCryptoAddressInfo",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DestinationTag, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseCryptoAddressWarning_title(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseCryptoAddressWarning) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseCryptoAddressWarning",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Title, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseCryptoAddressWarning_details(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseCryptoAddressWarning) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseCryptoAddressWarning",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Details, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CoinbaseCryptoAddressWarning_imageUrl(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseCryptoAddressWarning) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseCryptoAddressWarning",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ImageUrl, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -4921,6 +5827,45 @@ func (ec *executionContext) _KrakenSystemStatusResult_timestamp(ctx context.Cont
 	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Mutation_generateCryptoAddress(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_generateCryptoAddress_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().GenerateCryptoAddress(rctx, args["walletId"].(string))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.CoinbaseCryptoAddress)
+	fc.Result = res
+	return ec.marshalOCoinbaseCryptoAddress2ᚖcqlᚋmodelᚐCoinbaseCryptoAddress(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Query_coinbaseAccount(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -6850,6 +7795,112 @@ func (ec *executionContext) _CoinbaseBankCountry(ctx context.Context, sel ast.Se
 	return out
 }
 
+var coinbaseCryptoAddressImplementors = []string{"CoinbaseCryptoAddress"}
+
+func (ec *executionContext) _CoinbaseCryptoAddress(ctx context.Context, sel ast.SelectionSet, obj *model.CoinbaseCryptoAddress) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, coinbaseCryptoAddressImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("CoinbaseCryptoAddress")
+		case "id":
+			out.Values[i] = ec._CoinbaseCryptoAddress_id(ctx, field, obj)
+		case "address":
+			out.Values[i] = ec._CoinbaseCryptoAddress_address(ctx, field, obj)
+		case "addressInfo":
+			out.Values[i] = ec._CoinbaseCryptoAddress_addressInfo(ctx, field, obj)
+		case "name":
+			out.Values[i] = ec._CoinbaseCryptoAddress_name(ctx, field, obj)
+		case "createAt":
+			out.Values[i] = ec._CoinbaseCryptoAddress_createAt(ctx, field, obj)
+		case "updatedAt":
+			out.Values[i] = ec._CoinbaseCryptoAddress_updatedAt(ctx, field, obj)
+		case "network":
+			out.Values[i] = ec._CoinbaseCryptoAddress_network(ctx, field, obj)
+		case "uriScheme":
+			out.Values[i] = ec._CoinbaseCryptoAddress_uriScheme(ctx, field, obj)
+		case "resource":
+			out.Values[i] = ec._CoinbaseCryptoAddress_resource(ctx, field, obj)
+		case "resourcePath":
+			out.Values[i] = ec._CoinbaseCryptoAddress_resourcePath(ctx, field, obj)
+		case "warnings":
+			out.Values[i] = ec._CoinbaseCryptoAddress_warnings(ctx, field, obj)
+		case "legacyAddress":
+			out.Values[i] = ec._CoinbaseCryptoAddress_legacyAddress(ctx, field, obj)
+		case "destinationTag":
+			out.Values[i] = ec._CoinbaseCryptoAddress_destinationTag(ctx, field, obj)
+		case "depositUri":
+			out.Values[i] = ec._CoinbaseCryptoAddress_depositUri(ctx, field, obj)
+		case "callbackUrl":
+			out.Values[i] = ec._CoinbaseCryptoAddress_callbackUrl(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var coinbaseCryptoAddressInfoImplementors = []string{"CoinbaseCryptoAddressInfo"}
+
+func (ec *executionContext) _CoinbaseCryptoAddressInfo(ctx context.Context, sel ast.SelectionSet, obj *model.CoinbaseCryptoAddressInfo) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, coinbaseCryptoAddressInfoImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("CoinbaseCryptoAddressInfo")
+		case "address":
+			out.Values[i] = ec._CoinbaseCryptoAddressInfo_address(ctx, field, obj)
+		case "destinationTag":
+			out.Values[i] = ec._CoinbaseCryptoAddressInfo_destinationTag(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var coinbaseCryptoAddressWarningImplementors = []string{"CoinbaseCryptoAddressWarning"}
+
+func (ec *executionContext) _CoinbaseCryptoAddressWarning(ctx context.Context, sel ast.SelectionSet, obj *model.CoinbaseCryptoAddressWarning) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, coinbaseCryptoAddressWarningImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("CoinbaseCryptoAddressWarning")
+		case "title":
+			out.Values[i] = ec._CoinbaseCryptoAddressWarning_title(ctx, field, obj)
+		case "details":
+			out.Values[i] = ec._CoinbaseCryptoAddressWarning_details(ctx, field, obj)
+		case "imageUrl":
+			out.Values[i] = ec._CoinbaseCryptoAddressWarning_imageUrl(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
 var coinbaseSepaDepositInformationImplementors = []string{"CoinbaseSepaDepositInformation"}
 
 func (ec *executionContext) _CoinbaseSepaDepositInformation(ctx context.Context, sel ast.SelectionSet, obj *model.CoinbaseSepaDepositInformation) graphql.Marshaler {
@@ -7239,6 +8290,34 @@ func (ec *executionContext) _KrakenSystemStatusResult(ctx context.Context, sel a
 			out.Values[i] = ec._KrakenSystemStatusResult_status(ctx, field, obj)
 		case "timestamp":
 			out.Values[i] = ec._KrakenSystemStatusResult_timestamp(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var mutationImplementors = []string{"Mutation"}
+
+func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, mutationImplementors)
+
+	ctx = graphql.WithFieldContext(ctx, &graphql.FieldContext{
+		Object: "Mutation",
+	})
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("Mutation")
+		case "generateCryptoAddress":
+			out.Values[i] = ec._Mutation_generateCryptoAddress(ctx, field)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -8149,6 +9228,67 @@ func (ec *executionContext) marshalOCoinbaseBankCountry2ᚖcqlᚋmodelᚐCoinbas
 		return graphql.Null
 	}
 	return ec._CoinbaseBankCountry(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOCoinbaseCryptoAddress2ᚖcqlᚋmodelᚐCoinbaseCryptoAddress(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseCryptoAddress) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._CoinbaseCryptoAddress(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOCoinbaseCryptoAddressInfo2ᚖcqlᚋmodelᚐCoinbaseCryptoAddressInfo(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseCryptoAddressInfo) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._CoinbaseCryptoAddressInfo(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOCoinbaseCryptoAddressWarning2ᚕᚖcqlᚋmodelᚐCoinbaseCryptoAddressWarning(ctx context.Context, sel ast.SelectionSet, v []*model.CoinbaseCryptoAddressWarning) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalOCoinbaseCryptoAddressWarning2ᚖcqlᚋmodelᚐCoinbaseCryptoAddressWarning(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+	return ret
+}
+
+func (ec *executionContext) marshalOCoinbaseCryptoAddressWarning2ᚖcqlᚋmodelᚐCoinbaseCryptoAddressWarning(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseCryptoAddressWarning) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._CoinbaseCryptoAddressWarning(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalOCoinbaseSepaDepositInformation2ᚖcqlᚋmodelᚐCoinbaseSepaDepositInformation(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseSepaDepositInformation) graphql.Marshaler {

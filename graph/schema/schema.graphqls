@@ -23,3 +23,6 @@ type Query {
   krakenServerTime: KrakenServerTime
   krakenSystemStatus: KrakenSystemStatus
 }
+type Mutation {
+  generateCryptoAddress(walletId: String!): CoinbaseCryptoAddress
+}

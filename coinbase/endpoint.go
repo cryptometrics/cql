@@ -17,6 +17,7 @@ const (
 	AccountLedgerEndpoint
 	AccountTransfersEndpoint
 	AccountsEndpoint
+	AddressesEndpoint
 	WalletsEndpoint
 )
 
@@ -64,6 +65,13 @@ func AccountsPath(_ client.EndpointArgs) string {
 	return path.Join("/accounts")
 }
 
+// Generates a one-time crypto address for depositing crypto, using a wallet
+// account id.  This endpoint requires the "transfer" permission. API key must
+// belong to default profile.
+func AddressesPath(args client.EndpointArgs) string {
+	return path.Join("/coinbase-accounts", *args["account_id"].PathParam, "addresses")
+}
+
 // Gets all the user's available Coinbase wallets (These are the
 // wallets/accounts that are used for buying and selling on www.coinbase.com)
 func WalletsPath(_ client.EndpointArgs) string {
@@ -79,6 +87,7 @@ func (endpoint Endpoint) Path(args client.EndpointArgs) string {
 		AccountLedgerEndpoint:    AccountLedgerPath,
 		AccountTransfersEndpoint: AccountTransfersPath,
 		AccountsEndpoint:         AccountsPath,
+		AddressesEndpoint:        AddressesPath,
 		WalletsEndpoint:          WalletsPath,
 	}[endpoint](args)
 }

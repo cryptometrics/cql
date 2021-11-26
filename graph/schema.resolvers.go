@@ -12,6 +12,10 @@ import (
 	"cql/model"
 )
 
+func (r *mutationResolver) GenerateCryptoAddress(ctx context.Context, walletID string) (*model.CoinbaseCryptoAddress, error) {
+	return coinbase.NewCoinbaseAccounts(coinbase.DefaultClient).GenerateCryptoAddress(walletID)
+}
+
 func (r *queryResolver) CoinbaseAccount(ctx context.Context, accountID string) (*model.CoinbaseAccount, error) {
 	return coinbase.NewAccounts(coinbase.DefaultClient).Find(accountID)
 }
@@ -52,7 +56,11 @@ func (r *queryResolver) KrakenSystemStatus(ctx context.Context) (*model.KrakenSy
 	return kraken.NewMarketData(kraken.DefaultClient).SystemStatus()
 }
 
+// Mutation returns generated.MutationResolver implementation.
+func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
+
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
+type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
