@@ -1,0 +1,73 @@
+{
+	"api": "coinbase",
+	"model": "coinbase_account_transfer",
+	"modelDescription": "CoinbaseAccountTransfer will lists past withdrawals and deposits for an account.",
+	"endpoints": [
+		{
+			"path": "/accounts/{account_id}/transfers",
+			"enumRoot": "AccountTransfers",
+			"queryParams": [
+				{
+					"identifier": "before",
+					"goType": "string"
+				},
+				{
+					"identifier": "after",
+					"goType": "string"
+				},
+				{
+					"identifier": "limit",
+					"goType": "int"
+				},
+				{
+					"identifier": "type",
+					"goType": "string"
+				}
+			],
+			"description": "Lists past withdrawals and deposits for an account."
+		}
+	],
+	"modelFields": [
+		{
+			"identifier": "id",
+			"goType": "string"
+		},
+		{
+			"identifier": "type",
+			"goType": "string"
+		},
+		{
+			"identifier": "created_at",
+			"goType": "time.Time",
+			"datetimeLayout": "CoinbaseTimeLayout1"
+		},
+		{
+			"identifier": "completed_at",
+			"goType": "time.Time",
+			"datetimeLayout": "CoinbaseTimeLayout1"
+		},
+		{
+			"identifier": "canceled_at",
+			"goType": "time.Time",
+			"datetimeLayout": "CoinbaseTimeLayout1"
+		},
+		{
+			"identifier": "processed_at",
+			"goType": "time.Time",
+			"datetimeLayout": "CoinbaseTimeLayout1"
+		},
+		{
+			"identifier": "amount",
+			"goType": "float64",
+			"unmarshaller": "UnmarshalFloatFromString"
+		},
+		{
+			"identifier": "user_nonce",
+			"goType": "string"
+		},
+		{
+			"identifier": "details",
+			"goType": "CoinbaseAccountTransferDetails"
+		}
+	]
+}

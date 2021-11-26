@@ -1,4 +1,0 @@
-input CoinbaseCurrencyConversionOpts {
-  profileID: String
-  nonce: String
-}

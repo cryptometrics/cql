@@ -1,48 +1,9 @@
-type CoinbaseBankCountry {
-  name: String
-  code: String
-}
+# * This is a generated file, do not edit
 
-type CoinbaseSEPADepositInformation {
-  iban: String
-  swift: String
-  bankName: String
-  bankAddress: String
-  bankCountry: CoinbaseBankCountry
-  accountName: String
-  accountAddress: String
-  reference: String
-}
-
-type CoinbaseSWIFTDepositInformation {
-  accountNumber: String
-  bankName: String
-  bankAddress: String
-  bankCountry: CoinbaseBankCountry
-  accountName: String
-  accountAddress: String
-  reference: String
-}
-
-type CoinbaseUKDepositInformation {
-  sortCode: String
-  accountNumber: String
-  bankName: String
-  accountName: String
-  reference: String
-}
-
-type CoinbaseWireDepositInformation {
-  accountNumber: String
-  routingNumber: String
-  bankName: String
-  bankAddress: String
-  bankCountry: CoinbaseBankCountry
-  accountName: String
-  accountAddress: String
-  reference: String
-}
-
+"""
+CoinbaseWallet represents a user's available Coinbase wallet (These are the
+wallets/accounts that are used for buying and selling on www.coinbase.com)
+"""
 type CoinbaseWallet {
   id: String
   name: String
@@ -54,9 +15,9 @@ type CoinbaseWallet {
   availableOnConsumer: Boolean
   ready: Boolean
   wireDepositInformation: CoinbaseWireDepositInformation
-  swiftDepositInformation: CoinbaseSWIFTDepositInformation
-  sepaDepositInformation: CoinbaseSEPADepositInformation
-  ukDepositInformation: CoinbaseUKDepositInformation
+  swiftDepositInformation: CoinbaseSwiftDepositInformation
+  sepaDepositInformation: CoinbaseSepaDepositInformation
+  ukDepositInformation: CoinbaseUkDepositInformation
   destinationTagName: String
   destinationTagRegex: String
   holdBalance: Float

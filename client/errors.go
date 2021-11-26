@@ -21,7 +21,9 @@ func newError(err error) Error {
 
 // Add will add a new error object to the errors list
 func (errors *Errors) add(err error) {
-	errors.List = append(errors.List, newError(err))
+	if err != nil {
+		errors.List = append(errors.List, newError(err))
+	}
 }
 
 // Any will return true if there are errors, otherwise false
@@ -38,6 +40,9 @@ func (errors Errors) Messages() (messages []string) {
 }
 
 // JoinMessages will join all the messages associated with an Errors object as a single go error
-func (errors Errors) JoinMessages() error {
-	return fmt.Errorf(strings.Join(errors.Messages(), ", "))
+func (errors Errors) JoinMessages() (err error) {
+	if errors.Any() {
+		err = fmt.Errorf(strings.Join(errors.Messages(), ", "))
+	}
+	return
 }

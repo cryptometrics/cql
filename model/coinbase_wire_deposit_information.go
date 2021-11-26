@@ -1,12 +1,10 @@
 package model
 
+import "cql/protomodel"
+
+// * This file was initialized by schema/generate.py, but is open to extension
+
+// CoinbaseWireDepositInformation information regarding a wallet's deposits
 type CoinbaseWireDepositInformation struct {
-	AccountNumber  string              `json:"account_number"`
-	RoutingNumber  string              `json:"routing_number"`
-	BankName       string              `json:"bank_name"`
-	BankAddress    string              `json:"bank_address"`
-	BankCountry    CoinbaseBankCountry `json:"bank_country"`
-	AccountName    string              `json:"account_name"`
-	AccountAddress string              `json:"account_address"`
-	Reference      string              `json:"reference"`
+	protomodel.CoinbaseWireDepositInformation
 }

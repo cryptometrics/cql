@@ -15,8 +15,8 @@ type EndpointArgs map[string]*EndpointArg
 
 // Endpoint is an interface to build an endpiont from a list of string args
 type Endpoint interface {
-	// Get takes a list of strings as arguments to build an endpoint
-	Get(EndpointArgs) string
+	// Path takes a list of strings as arguments to build an endpoint
+	Path(EndpointArgs) string
 }
 
 // QueryPath get the query path for an endpoint arg
@@ -33,5 +33,5 @@ func (args EndpointArgs) QueryPath() *url.URL {
 }
 
 func JoinEndpointParts(parts ...string) string {
-	return strings.Join(parts, "/")
+	return "/" + strings.Join(parts, "/")
 }

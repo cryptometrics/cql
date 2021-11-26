@@ -47,6 +47,13 @@ func (m _json) UnmarshalEntryType(name string, v *scalar.EntryType) error {
 	return nil
 }
 
+func (m _json) UnmarshalSystemStatus(name string, v *scalar.SystemStatus) error {
+	if val := m[name]; val != nil {
+		*v = scalar.SystemStatus(val.(string))
+	}
+	return nil
+}
+
 func (m _json) UnmarshalOrderSide(name string, v *scalar.OrderSide) error {
 	if val := m[name]; val != nil {
 		*v = scalar.OrderSide(val.(string))

@@ -2,13 +2,45 @@ exec:
   filename: graph/generated/generated.go
   package: generated
 model:
-  filename: model2/graph_models_gen.go
-  package: model2
+  filename: model/graph_models_gen.go
+  package: model
 models:
   CoinbaseAccount:
-    model: cql/model2.CoinbaseAccount
+    model: cql/model.CoinbaseAccount
+  CoinbaseAccountHold:
+    model: cql/model.CoinbaseAccountHold
+  CoinbaseAccountLedger:
+    model: cql/model.CoinbaseAccountLedger
+  CoinbaseAccountLedgerDetails:
+    model: cql/model.CoinbaseAccountLedgerDetails
+  CoinbaseAccountTransfer:
+    model: cql/model.CoinbaseAccountTransfer
+  CoinbaseAccountTransferDetails:
+    model: cql/model.CoinbaseAccountTransferDetails
+  CoinbaseAccountTransfers:
+    model: cql/model.CoinbaseAccountTransfers
+  CoinbaseBankCountry:
+    model: cql/model.CoinbaseBankCountry
   CoinbaseHold:
-    model: cql/model2.CoinbaseHold
+    model: cql/model.CoinbaseHold
+  CoinbaseSEPADepositInformation:
+    model: cql/model.CoinbaseSEPADepositInformation
+  CoinbaseSWIFTDepositInformation:
+    model: cql/model.CoinbaseSWIFTDepositInformation
+  CoinbaseSepaDepositInformation:
+    model: cql/model.CoinbaseSepaDepositInformation
+  CoinbaseSepaaDepositInformation:
+    model: cql/model.CoinbaseSepaaDepositInformation
+  CoinbaseSwiftDepositInformation:
+    model: cql/model.CoinbaseSwiftDepositInformation
+  CoinbaseUKDepositInformation:
+    model: cql/model.CoinbaseUKDepositInformation
+  CoinbaseUkDepositInformation:
+    model: cql/model.CoinbaseUkDepositInformation
+  CoinbaseWallet:
+    model: cql/model.CoinbaseWallet
+  CoinbaseWireDepositInformation:
+    model: cql/model.CoinbaseWireDepositInformation
   EntryType:
     model: cql/scalar.EntryType
   ID:
@@ -17,11 +49,25 @@ models:
     - github.com/99designs/gqlgen/graphql.Int
     - github.com/99designs/gqlgen/graphql.Int64
     - github.com/99designs/gqlgen/graphql.Int32
+  IexRule:
+    model: cql/model.IexRule
+  IexRulesSchema:
+    model: cql/model.IexRulesSchema
+  IexRulesScheme:
+    model: cql/model.IexRulesScheme
   Int:
     model:
     - github.com/99designs/gqlgen/graphql.Int
     - github.com/99designs/gqlgen/graphql.Int64
     - github.com/99designs/gqlgen/graphql.Int32
+  KrakenServerTime:
+    model: cql/model.KrakenServerTime
+  KrakenServerTimeResult:
+    model: cql/model.KrakenServerTimeResult
+  KrakenSystemStatus:
+    model: cql/model.KrakenSystemStatus
+  KrakenSystemStatusResult:
+    model: cql/model.KrakenSystemStatusResult
   OrderCancelTime:
     model: cql/scalar.OrderCancelTime
   OrderSTP:
@@ -34,6 +80,8 @@ models:
     model: cql/scalar.OrderType
   PaymentMethod:
     model: cql/scalar.PaymentMethod
+  SystemStatus:
+    model: cql/scalar.SystemStatus
   TimeInForce:
     model: cql/scalar.TimeInForce
   TransferMethod:

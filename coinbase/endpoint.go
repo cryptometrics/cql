@@ -2,158 +2,83 @@ package coinbase
 
 import (
 	"cql/client"
-	"fmt"
+	"path"
+	"strings"
 )
+
+// * This is a generated file, do not edit
 
 type Endpoint int
 
 const (
 	_ Endpoint = iota
-	ENDPOINT_ACCOUNT_HOLDS
-	ENDPOINT_ACCOUNT
-	ENDPOINT_ACCOUNTS
-	ENDPOINT_ACCOUNT_LEDGER
-	ENDPOINT_ACCOUNT_TRANSFERS
-	ENDPOINT_COINBASE_ACCOUNTS
-	ENDPOINT_COINBASE_ACCOUNT_DEPOSITS
-	ENDPOINT_COINBASE_ACCOUNT_ADDRESSES
-	ENDPOINT_COINBASE_CONVERSIONS
-	ENDPOINT_COINBASE_CONVERSION
-	ENDPOINT_CURRENCIES
-	ENDPOINT_CURRENCY
-	ENDPOINT_TRANSFERS_PAYMENT_METHODS
-	ENDPOINT_TRANSFERS
-	ENDPOINT_TRANSFER
-
-	DepositsEP
-
-	///////
-	ClientOrderEP
-	CreateOrderEP
-	// CurrenciesEP
-	// CurrencyEP
-	OrderEP
-	ProductsEP
-	ProductEP
-	ProductDailyStatsEP
-	ProductHistoricalRatesEP
-	ProductOrderBookEP
-	ProductTickerEP
-	ProductTradesEP
-	TimeEP
+	AccountEndpoint
+	AccountHoldsEndpoint
+	AccountLedgerEndpoint
+	AccountTransfersEndpoint
+	AccountsEndpoint
+	WalletsEndpoint
 )
 
-func (endpoint Endpoint) Get(args client.EndpointArgs) string {
+// Information for a single account. Use this endpoint when you know the
+// account_id. API key must belong to the same profile as the account.
+func AccountPath(args client.EndpointArgs) string {
+	return path.Join("/accounts", *args["account_id"].PathParam)
+}
+
+// List the holds of an account that belong to the same profile as the API key.
+// Holds are placed on an account for any active orders or pending withdraw
+// requests. As an order is filled, the hold amount is updated. If an order is
+// canceled, any remaining hold is removed. For withdrawals, the hold is removed
+// after it is completed.
+func AccountHoldsPath(args client.EndpointArgs) (p string) {
+	p = path.Join("/accounts", *args["account_id"].PathParam, "holds")
+	var sb strings.Builder
+	sb.WriteString(p)
+	sb.WriteString(args.QueryPath().String())
+	return sb.String()
+}
+
+// Lists ledger activity for an account. This includes anything that would
+// affect the accounts balance - transfers, trades, fees, etc. This endpoint
+// requires either the "view" or "trade" permission.
+func AccountLedgerPath(args client.EndpointArgs) (p string) {
+	p = path.Join("/accounts", *args["account_id"].PathParam, "ledger")
+	var sb strings.Builder
+	sb.WriteString(p)
+	sb.WriteString(args.QueryPath().String())
+	return sb.String()
+}
+
+// Lists past withdrawals and deposits for an account.
+func AccountTransfersPath(args client.EndpointArgs) (p string) {
+	p = path.Join("/accounts", *args["account_id"].PathParam, "transfers")
+	var sb strings.Builder
+	sb.WriteString(p)
+	sb.WriteString(args.QueryPath().String())
+	return sb.String()
+}
+
+// Get a list of trading accounts from the profile of the API key.
+func AccountsPath(_ client.EndpointArgs) string {
+	return path.Join("/accounts")
+}
+
+// Gets all the user's available Coinbase wallets (These are the
+// wallets/accounts that are used for buying and selling on www.coinbase.com)
+func WalletsPath(_ client.EndpointArgs) string {
+	return path.Join("/coinbase-accounts")
+}
+
+// Get takes an endpoint const and endpoint arguments to parse the URL endpoint
+// path.
+func (endpoint Endpoint) Path(args client.EndpointArgs) string {
 	return map[Endpoint]func(args client.EndpointArgs) string{
-
-		ENDPOINT_ACCOUNTS: func(_ client.EndpointArgs) string { return "/accounts" },
-
-		ENDPOINT_ACCOUNT: func(args client.EndpointArgs) string {
-			return fmt.Sprintf("%s/%s", ENDPOINT_ACCOUNTS.Get(nil), *args["id"].PathParam)
-		},
-
-		ENDPOINT_ACCOUNT_LEDGER: func(args client.EndpointArgs) string {
-			return fmt.Sprintf("%s/ledger%s", ENDPOINT_ACCOUNT.Get(args), args.QueryPath())
-		},
-
-		ENDPOINT_ACCOUNT_HOLDS: func(args client.EndpointArgs) string {
-			return fmt.Sprintf("%s/holds%s", ENDPOINT_ACCOUNT.Get(args), args.QueryPath())
-		},
-
-		ENDPOINT_ACCOUNT_TRANSFERS: func(args client.EndpointArgs) string {
-			return fmt.Sprintf("%s/transfers%s", ENDPOINT_ACCOUNT.Get(args), args.QueryPath())
-		},
-
-		ENDPOINT_COINBASE_ACCOUNTS: func(_ client.EndpointArgs) string {
-			return "/coinbase-accounts"
-		},
-
-		ENDPOINT_COINBASE_ACCOUNT_DEPOSITS: func(_ client.EndpointArgs) string {
-			return client.JoinEndpointParts(DepositsEP.Get(nil), "coinbase-account")
-		},
-
-		ENDPOINT_COINBASE_ACCOUNT_ADDRESSES: func(args client.EndpointArgs) string {
-			return fmt.Sprintf("%s/%s/addresses", ENDPOINT_COINBASE_ACCOUNTS.Get(nil), *args["id"].PathParam)
-		},
-
-		ENDPOINT_COINBASE_CONVERSIONS: func(_ client.EndpointArgs) string {
-			return "/conversions"
-		},
-
-		ENDPOINT_COINBASE_CONVERSION: func(_ client.EndpointArgs) string {
-			return fmt.Sprintf("%s/%s", ENDPOINT_COINBASE_CONVERSIONS.Get(nil), *args["id"].PathParam)
-		},
-
-		ENDPOINT_TRANSFERS_PAYMENT_METHODS: func(_ client.EndpointArgs) string {
-			return "/payment-methods"
-		},
-
-		ENDPOINT_TRANSFERS: func(_ client.EndpointArgs) string {
-			return "/transfers"
-		},
-
-		ENDPOINT_TRANSFER: func(_ client.EndpointArgs) string {
-			return client.JoinEndpointParts(ENDPOINT_TRANSFERS.Get(nil), *args["id"].PathParam)
-		},
-
-		////////
-
-		ClientOrderEP: func(args client.EndpointArgs) string {
-			return fmt.Sprintf("/orders/client:%s", *args["client_oid"].PathParam)
-		},
-
-		CreateOrderEP: func(args client.EndpointArgs) string {
-			return fmt.Sprintf("/orders%s", args.QueryPath())
-		},
-
-		// List known currencies.
-		ENDPOINT_CURRENCIES: func(_ client.EndpointArgs) string { return "/currencies" },
-
-		// List the currency for specified id.
-		ENDPOINT_CURRENCY: func(args client.EndpointArgs) string {
-			return fmt.Sprintf("%s/%s", ENDPOINT_CURRENCIES.Get(nil), *args["id"].PathParam)
-		},
-
-		OrderEP: func(args client.EndpointArgs) string {
-			return fmt.Sprintf("/orders/%s", *args["id"].PathParam)
-		},
-
-		// list the available currency pairs for trading
-		ProductsEP: func(_ client.EndpointArgs) string { return "/products" },
-
-		// market data for a specific currency pair
-		ProductEP: func(args client.EndpointArgs) string {
-			return fmt.Sprintf("%s/%s", ProductsEP.Get(nil), *args["id"].PathParam)
-		},
-
-		// get 24 hr stats for the product. volume is in base currency units. open,
-		// high, low are in quote currency units.
-		ProductDailyStatsEP: func(args client.EndpointArgs) string {
-			return fmt.Sprintf("%s/stats", ProductEP.Get(args))
-		},
-
-		// List of historic rates for a product. Rates are returned in grouped
-		// buckets based on requested granularity.
-		ProductHistoricalRatesEP: func(args client.EndpointArgs) string {
-			return fmt.Sprintf("%s/candles%s", ProductEP.Get(args), args.QueryPath())
-		},
-
-		// List of open orders for a product
-		ProductOrderBookEP: func(args client.EndpointArgs) string {
-			return fmt.Sprintf("%s/book%s", ProductEP.Get(args), args.QueryPath())
-		},
-
-		// Snapshot information about the last trade (tick), best bid/ask and 24h
-		// volume
-		ProductTickerEP: func(args client.EndpointArgs) string {
-			return fmt.Sprintf("%s/ticker", ProductEP.Get(args))
-		},
-
-		// List the latest trades for a product
-		ProductTradesEP: func(args client.EndpointArgs) string {
-			return fmt.Sprintf("%s/trades", ProductEP.Get(args))
-		},
-
-		TimeEP: func(_ client.EndpointArgs) string { return "/time" },
+		AccountEndpoint:          AccountPath,
+		AccountHoldsEndpoint:     AccountHoldsPath,
+		AccountLedgerEndpoint:    AccountLedgerPath,
+		AccountTransfersEndpoint: AccountTransfersPath,
+		AccountsEndpoint:         AccountsPath,
+		WalletsEndpoint:          WalletsPath,
 	}[endpoint](args)
 }

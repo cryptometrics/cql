@@ -2,7 +2,7 @@ package coinbase
 
 import (
 	"bytes"
-	"cql/client2"
+	"cql/client"
 	"cql/env"
 	"crypto/hmac"
 	"crypto/sha256"
@@ -42,8 +42,8 @@ func (cb *proC) generateSig(secret, message string) (string, error) {
 }
 
 // generageMsg makes the message to be signed
-func (cb *proC) generageMsg(creq client2.Request, timestamp string) string {
-	return fmt.Sprintf("%s%s%s%s", timestamp, creq.MethodStr(), creq.EndpointStr(), string(creq.GetBody().Bytes()))
+func (cb *proC) generageMsg(creq client.Request, timestamp string) string {
+	return fmt.Sprintf("%s%s%s%s", timestamp, creq.MethodStr(), creq.EndpointPath(), string(creq.GetBody().Bytes()))
 }
 
 // setHeaders sets the headers for a coinbase api request, in particular:
@@ -52,7 +52,7 @@ func (cb *proC) generageMsg(creq client2.Request, timestamp string) string {
 // - CB-ACCESS-SIGN The base64-encoded signature (see Signing a Message).
 // - CB-ACCESS-TIMESTAMP A timestamp for your request.
 // - CB-ACCESS-PASSPHRASE The passphrase you specified when creating the API key.
-func (cb *proC) setHeaders(hreq *http.Request, creq client2.Request) (e error) {
+func (cb *proC) setHeaders(hreq *http.Request, creq client.Request) (e error) {
 	// TODO depricate getting key/passphrase/secret with secret keeper
 	var (
 		key        = env.CoinbaseProAccessKey.Get()
@@ -72,7 +72,7 @@ func (cb *proC) setHeaders(hreq *http.Request, creq client2.Request) (e error) {
 	hreq.Header.Add("cb-access-timestamp", timestamp)
 
 	logMsg := `{Client:{Access:{Key:%s,Passphrase:%s,Timestamp:%s,Sign:%s}}}`
-	logrus.Debug(client2.Logf(&creq, logMsg, key, passphrase, timestamp, sig))
+	logrus.Debug(client.Logf(&creq, logMsg, key, passphrase, timestamp, sig))
 	return
 }
 
@@ -80,10 +80,10 @@ func (cb *proC) setHeaders(hreq *http.Request, creq client2.Request) (e error) {
 // endpoint.
 //
 // TODO make data-compatible for non-get requests
-func (cb *proC) Do(creq client2.Request) (*http.Response, error) {
-	uri := env.CoinbaseProURL.Get() + creq.EndpointStr()
+func (cb *proC) Do(creq client.Request) (*http.Response, error) {
+	uri := env.CoinbaseProURL.Get() + creq.EndpointPath()
 
-	// logrus.Debug(creq.Logf(`{Client:{URI:%s}}`, uri))
+	logrus.Debug(client.Logf(&creq, `{Client:{URI:%s}}`, uri))
 
 	hreq, err := http.NewRequest(creq.MethodStr(), uri, bytes.NewReader(creq.GetBody().Bytes()))
 	if err != nil {
@@ -108,10 +108,10 @@ func (cb *proC) Identifier() string {
 
 // newClient returns a new client interface.  This method is what we call a
 // "connector"
-func newClient() (client2.C, error) {
+func newClient() (client.C, error) {
 	return &proC{}, nil
 }
 
-func DefaultClient() (client2.C, error) {
+func DefaultClient() (client.C, error) {
 	return &proC{}, nil
 }

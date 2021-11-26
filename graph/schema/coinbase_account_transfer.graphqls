@@ -1,11 +1,7 @@
-type CoinbaseAccountTransferDetails {
-  coinbaseAccountID: String
-  coinbaseTransactionID: String
-  coinbasePaymentMethodID: String
-}
+# * This is a generated file, do not edit
 
 """
-CoinbaseAccountTransfer lists past withdrawals and deposits for an account.
+CoinbaseAccountTransfer will lists past withdrawals and deposits for an account.
 """
 type CoinbaseAccountTransfer {
   id: String
@@ -17,23 +13,4 @@ type CoinbaseAccountTransfer {
   amount: Float
   userNonce: String
   details: CoinbaseAccountTransferDetails
-}
-
-input CoinbaseAccountTransferOptions {
-  """
-  Used for pagination. Sets start cursor to before date.
-  """
-  before: String
-
-  """
-  Used for pagination. Sets end cursor to after date.
-  """
-  after: String
-
-  """
-  Limit on number of results to return.
-  """
-  limit: Int
-
-  type: String
 }

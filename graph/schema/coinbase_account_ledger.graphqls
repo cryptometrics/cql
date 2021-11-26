@@ -1,57 +1,14 @@
-"""
-CoinbaseAccountLedgerDetails are the details for account history
-"""
-type CoinbaseAccountLedgerDetails {
-  orderID: String
-  tradeID: String
-  productID: String
-}
+# * This is a generated file, do not edit
 
 """
-CoinbaseAccountHistory encapsulates data for account activity of the API
-key's profile. Account activity either increases or decreases your account
-balance. Items are paginated and sorted latest first. See the Pagination
-section for retrieving additional entries after the first page.
+CoinbaseAccountLedger lists ledger activity for an account. This includes
+anything that would affect the accounts balance - transfers, trades, fees, etc.
 """
 type CoinbaseAccountLedger {
   id: String
-  createdAt: Time
   amount: Float
+  createdAt: Time
   balance: Float
   type: EntryType
   details: CoinbaseAccountLedgerDetails
-}
-
-input CoinbaseAccountLedgerOptions {
-  """
-  Parameter requires a positive integer. If set, returns ledger entries before
-  the specified integer.
-  """
-  before: String
-
-  """
-  Parameter requires a positive integer. If set, returns ledger entries after
-  the specified integer.
-  """
-  after: String
-
-  """
-  If set, returns ledger entries created after the start_date timestamp,
-  sorted by newest creation date. When combined with end_date, returns ledger
-  entries in the specified time range.
-  """
-  startDate: String
-
-  """
-  If set, returns ledger entries created before the end_date timestamp, sorted
-  by newest creation date.
-  """
-  endDate: String
-
-  """
-  Number of results per request. Maximum 1000. (default 1000)
-  """
-  limit: Int
-
-  profileID: String
 }

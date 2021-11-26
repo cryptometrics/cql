@@ -2,6 +2,18 @@
 	"api": "coinbase",
 	"model": "coinbase_account",
 	"modelDescription": "CoinbaseAccount holds data for trading account from the profile of the API key",
+	"endpoints": [
+		{
+			"path": "/accounts",
+			"enumRoot": "Accounts",
+			"description": "Get a list of trading accounts from the profile of the API key."
+		},
+		{
+			"path": "/accounts/{account_id}",
+			"enumRoot": "Account",
+			"description": "Information for a single account. Use this endpoint when you know the account_id. API key must belong to the same profile as the account."
+		}
+	],
 	"modelFields": [
 		{
 			"identifier": "id",

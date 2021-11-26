@@ -10,6 +10,12 @@ const (
 	CoinbaseProAccessPassphrase
 	CoinbaseProAccessKey
 	CoinbaseProSecret
+	IEXURL
+	IEXKey
+	IEXSecret
+	KrakenURL
+	KrakenKey
+	KrakenSecret
 )
 
 // Name will return the variable name of the env variable.
@@ -19,6 +25,12 @@ func (variable Variable) Name() string {
 		CoinbaseProAccessPassphrase: "CB_PRO_ACCESS_PASSPHRASE",
 		CoinbaseProAccessKey:        "CB_PRO_ACCESS_KEY",
 		CoinbaseProSecret:           "CB_PRO_SECRET",
+		IEXURL:                      "IEX_URL",
+		IEXKey:                      "IEX_KEY",
+		IEXSecret:                   "IEX_SECRET",
+		KrakenURL:                   "KRAKEN_URL",
+		KrakenKey:                   "KRAKEN_KEY",
+		KrakenSecret:                "KRAKEN_SECRET",
 	}[variable]
 }
 

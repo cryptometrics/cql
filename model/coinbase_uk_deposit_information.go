@@ -1,9 +1,10 @@
 package model
 
-type CoinbaseUKDepositInformation struct {
-	SortCode      string `json:"sort_code"`
-	AccountNumber string `json:"account_number"`
-	BankName      string `json:"bank_name"`
-	AccountName   string `json:"account_name"`
-	Reference     string `json:"reference"`
+import "cql/protomodel"
+
+// * This file was initialized by schema/generate.py, but is open to extension
+
+// CoinbaseUkDepositInformation information regarding a wallet's deposits.
+type CoinbaseUkDepositInformation struct {
+	protomodel.CoinbaseUkDepositInformation
 }

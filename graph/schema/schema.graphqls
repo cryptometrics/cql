@@ -3,197 +3,23 @@
 # https://gqlgen.com/getting-started/
 
 type Query {
+  coinbaseAccount(accountId: String!): CoinbaseAccount
+  coinbaseAccounts: [CoinbaseAccount]
+  coinbaseAccountHolds(
+    accountId: String!
+    opts: CoinbaseAccountHoldsOptions
+  ): [CoinbaseAccountHold]
   coinbaseAccountLedger(
-    id: String!
+    accountId: String!
     opts: CoinbaseAccountLedgerOptions
   ): [CoinbaseAccountLedger]
-
-  """
-  List holds of an account that belong to the same profile as the API key. Holds
-  are placed on an account for any active orders or pending withdraw requests.
-  As an order is filled, the hold amount is updated. If an order is canceled,
-  any remaining hold is removed. For a withdraw, once it is completed, the hold
-  is removed
-  """
-  coinbaseAccountHold(
-    id: String!
-    opts: CoinbaseAccountHoldOptions
-  ): [CoinbaseAccountHold]
-
-  coinbaseAccount(id: String!): CoinbaseAccount
-  coinbaseAccounts(test: String): [CoinbaseAccount]
-
-  coinbaseAccountTransfer(
-    id: String!
+  coinbaseAccountTransfers(
+    accountId: String!
     opts: CoinbaseAccountTransferOptions
   ): [CoinbaseAccountTransfer]
-
-  """
-  Gets a currency conversion by id (i.e. USD -> USDC).
-  """
-  coinbaseCurrencyConversion(
-    id: String!
-    opts: CoinbaseCurrencyConversionOpts
-  ): CoinbaseCurrencyConversion
-
-  """
-  Gets a list of all known currencies.
-  Note: Not all currencies may be currently in use for trading.
-  """
-  coinbaseCurrencies: [CoinbaseCurrency]
-
-  """
-  Gets a single currency by id.
-  """
-  coinbaseCurrency(id: String!): CoinbaseCurrency
-
-  """
-  Gets a list of the user's linked payment methods.
-  """
-  coinbasePaymentMethods: [CoinbasePaymentMethod]
-
-  """
-  Gets a list of in-progress and completed transfers of funds in/out of any of
-  the user's accounts.
-  """
-  coinbaseTransfers: [CoinbaseTransfer]
-
-  """
-  Get information on a single transfer.
-  """
-  coinbaseTransfer(id: String!): CoinbaseTransfer
-
-  """
-  Gets all the user's available Coinbase wallets (These are the wallets/accounts
-  that are used for buying and selling on www.coinbase.com)
-  """
-  coinbaseWallets(_filler_: String): [CoinbaseWallet]
-
-  ####
-
-  """
-  Get a single order by order id from the profile that the API key belongs to.
-  """
-  clinbaseClientOrder(clientOID: String!): CoinbaseOrder
-
-  # coinbaseCurrency(id: String!): CoinbaseCurrency
-
-  """
-  Get a single order by order id from the profile that the API key belongs to.
-  """
-  coinbaseOrder(id: String!): CoinbaseOrder
-
-  coinbaseProducts(test: String): [CoinbaseProduct]
-
-  coinbaseProduct(
-    """
-    id is the product of the form {baseCurrency}-{quoteCurrency}
-    """
-    id: String!
-  ): CoinbaseProduct
-
-  coinbaseProductDailyStats(
-    """
-    id is the product of the form {baseCurrency}-{quoteCurrency}
-    """
-    id: String!
-  ): CoinbaseProductDailyStats
-
-  coinbaseProductHistoricalRate(
-    """
-    id is the product of the form {baseCurrency}-{quoteCurrency}
-    """
-    id: String!
-
-    """
-    start time in ISO 8601
-    """
-    start: String!
-
-    """
-    end time in ISO 8601
-    """
-    end: String!
-
-    """
-    granularity must be one of the following values:
-
-    	{60, 300, 900, 3600, 21600, 86400}
-
-    Otherwise, your request will be rejected. These values correspond to
-    timeslices representing one minute, five minutes, fifteen minutes, one hour,
-    six hours, and one day, respectively.
-    """
-    granularity: Int!
-  ): [CoinbaseProductHistoricalRate]
-
-  coinbaseProductOrderBook(
-    """
-    id is the product of the form {baseCurrency}-{quoteCurrency}
-    """
-    id: String!
-    level: String!
-  ): CoinbaseProductOrderBook
-
-  coinbaseProductTicker(
-    """
-    id is the product of the form {baseCurrency}-{quoteCurrency}
-    """
-    id: String!
-  ): CoinbaseProductTicker
-
-  coinbaseProductTrade(
-    """
-    id is the product of the form {baseCurrency}-{quoteCurrency}
-    """
-    id: String!
-  ): [CoinbaseProductTrade]
-
-  coinbaseTime(test: String): CoinbaseTime
-}
-
-type Mutation {
-  """
-  Converts funds from from currency to to currency. Funds are converted on the from account in the
-  profile_id profile.
-
-  A successful conversion will be assigned a conversion id. The corresponding ledger entries for a
-  conversion will reference this conversion id.
-  """
-  coinbaseConvertCurrency(
-    from: String!
-    to: String!
-    amount: Float!
-    opts: CoinbaseCurrencyConversionOpts
-  ): CoinbaseCurrencyConversion
-
-  """
-  Generates a one-time crypto address for depositing crypto.
-  """
-  coinbaseGenerateCryptoAddress(id: String!): CoinbaseDepositAddress
-
-  """
-  Deposits funds from a www.coinbase.com wallet to the specified profile_id.
-  """
-  makeCoinbaseAccountDeposit(
-    input: MakeCoinbaseAccountDepositInput
-  ): CoinbaseDeposit
-
-  """
-  You can place two types of orders: limit and market. Orders can only be placed
-  if your account has sufficient funds. Each profile can have a maximum of 500
-  open orders on a product. Once reached, the profile will not be able to place
-  any new orders until the total number of open orders is below 500. Once an
-  order is placed, your account funds will be put on hold for the duration of
-  the order. How much and which funds are put on hold depends on the order type
-  and parameters specified. See the Holds details below.
-  """
-  createCoinbaseLimitOrder(input: CoinbaseOrderInput): CoinbaseOrder
-
-  """
-  Deposits funds from a linked external payment method to the specified profile_id.
-  """
-  makeCoinbasePaymentMethodDeposit(
-    input: MakeCoinbasePaymentMethodInput
-  ): CoinbaseDeposit
+  coinbaseWallets: [CoinbaseWallet]
+  iexRules(value: String!): [IexRule]
+  iexRulesSchema: IexRulesSchema
+  krakenServerTime: KrakenServerTime
+  krakenSystemStatus: KrakenSystemStatus
 }
