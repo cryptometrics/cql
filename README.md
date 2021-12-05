@@ -1,12 +1,16 @@
 # cql
 
+cql takes json models in schema/model and generates a corresponding go models, graphql types, endpoint references. The idea is to programtically generate the more mundane boilerplate work in building api pipelines.  cql package can be used as a general-purpose microserverice for algorithm work, data analysis, etc.
+
 ## Installation
 
-To start the server run
+To start the graphql server run
 
 ```sh
 $ go run server.go
 ```
+
+Then go to http://localhost:8080/
 
 ## Usage
 
@@ -14,6 +18,11 @@ To re-generate a change to the schema:
 
 ```sh
 $ go run github.com/99designs/gqlgen generate
+```
+
+To add new endpoints, add a json file to schema/model and run the generate script:
+```sh
+python3 generate.py
 ```
 
 ## cql/model V. cql/graph/model
