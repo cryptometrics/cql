@@ -1,6 +1,6 @@
 # cql
 
-cql takes json models in schema/model and generates a corresponding go models, graphql types, endpoint references. The idea is to programtically generate the. more mundane boilerplate work in building api pipelines.  The package can be used as a general-purpose microserverice for algorithm work, data analysis, etc.
+cql takes json models in schema/model and generates a corresponding go models, graphql types, endpoint references. The idea is to programtically generate the more mundane boilerplate work in building api pipelines.  cql package can be used as a general-purpose microserverice for algorithm work, data analysis, etc.
 
 ## Installation
 
