@@ -22,6 +22,27 @@ KRAKEN_KEY=somekrakenkey
 KRAKEN_SECRET=somekrakensecret
 ```
 
+Currently the supported keys dataare the following:
+
+### Coinbase Pro
+
+```
+CB_PRO_URL=
+CB_PRO_ACCESS_PASSPHRASE=
+CB_PRO_ACCESS_KEY=
+CB_PRO_SECRET=
+```
+
+### IEX
+
+```
+IEX_URL=
+IEX_KEY=
+IEX_SECRET=
+```
+
+
+
 ## Usage
 
 To re-generate a change to the schema:
