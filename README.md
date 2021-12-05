@@ -4,7 +4,7 @@ cql takes json models in schema/model and generates a corresponding go models, g
 
 ## Installation
 
-Cone the repository and run `go build`
+Clone the repository and run `go build`
 
 ## .env
 
