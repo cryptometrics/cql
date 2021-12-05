@@ -38,6 +38,13 @@ type CoinbaseAccountTransfersOptions struct {
 	Type   *string `json:"type"`
 }
 
+type CoinbaseAccountWithdrawalOptions struct {
+	ProfileID         *string `json:"profileId"`
+	Amount            float64 `json:"amount"`
+	CoinbaseAccountID string  `json:"coinbaseAccountId"`
+	Currency          string  `json:"currency"`
+}
+
 type CoinbaseCoinbaseAccountDepositOptions struct {
 	ProfileID         *string  `json:"profileId"`
 	Amount            *float64 `json:"amount"`

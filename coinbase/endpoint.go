@@ -17,6 +17,7 @@ const (
 	AccountHoldsEndpoint
 	AccountLedgerEndpoint
 	AccountTransfersEndpoint
+	AccountWithdrawalEndpoint
 	AccountsEndpoint
 	AddressesEndpoint
 	ConversionEndpoint
@@ -25,6 +26,8 @@ const (
 	CurrencyEndpoint
 	PaymentMethodEndpoint
 	PaymentMethodDepositEndpoint
+	TransferEndpoint
+	TransfersEndpoint
 	WalletsEndpoint
 )
 
@@ -70,6 +73,20 @@ func AccountLedgerPath(args client.EndpointArgs) (p string) {
 // Lists past withdrawals and deposits for an account.
 func AccountTransfersPath(args client.EndpointArgs) (p string) {
 	p = path.Join("/accounts", *args["account_id"].PathParam, "transfers")
+	var sb strings.Builder
+	sb.WriteString(p)
+	sb.WriteString(args.QueryPath().String())
+	return sb.String()
+}
+
+// Withdraws funds from the specified profile_id to a www.coinbase.com wallet.
+// Withdraw funds to a coinbase account. You can move funds between your
+// Coinbase accounts and your Coinbase Exchange trading accounts within your
+// daily limits. Moving funds between Coinbase and Coinbase Exchange is instant
+// and free. See the Coinbase Accounts section for retrieving your Coinbase
+// accounts.  This endpoint requires the "transfer" permission.
+func AccountWithdrawalPath(args client.EndpointArgs) (p string) {
+	p = path.Join("/withdrawals", "coinbase-account")
 	var sb strings.Builder
 	sb.WriteString(p)
 	sb.WriteString(args.QueryPath().String())
@@ -136,6 +153,17 @@ func PaymentMethodDepositPath(args client.EndpointArgs) (p string) {
 	return sb.String()
 }
 
+// Get information on a single transfer.
+func TransferPath(args client.EndpointArgs) string {
+	return path.Join("/transfers", *args["transfer_id"].PathParam)
+}
+
+// Gets a list of in-progress and completed transfers of funds in/out of any of
+// the user's accounts.
+func TransfersPath(_ client.EndpointArgs) string {
+	return path.Join("/transfers")
+}
+
 // Gets all the user's available Coinbase wallets (These are the
 // wallets/accounts that are used for buying and selling on www.coinbase.com)
 func WalletsPath(_ client.EndpointArgs) string {
@@ -151,6 +179,7 @@ func (endpoint Endpoint) Path(args client.EndpointArgs) string {
 		AccountHoldsEndpoint:         AccountHoldsPath,
 		AccountLedgerEndpoint:        AccountLedgerPath,
 		AccountTransfersEndpoint:     AccountTransfersPath,
+		AccountWithdrawalEndpoint:    AccountWithdrawalPath,
 		AccountsEndpoint:             AccountsPath,
 		AddressesEndpoint:            AddressesPath,
 		ConversionEndpoint:           ConversionPath,
@@ -159,6 +188,8 @@ func (endpoint Endpoint) Path(args client.EndpointArgs) string {
 		CurrencyEndpoint:             CurrencyPath,
 		PaymentMethodEndpoint:        PaymentMethodPath,
 		PaymentMethodDepositEndpoint: PaymentMethodDepositPath,
+		TransferEndpoint:             TransferPath,
+		TransfersEndpoint:            TransfersPath,
 		WalletsEndpoint:              WalletsPath,
 	}[endpoint](args)
 }

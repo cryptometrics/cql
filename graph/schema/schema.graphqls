@@ -24,6 +24,9 @@ type Query {
   ): CoinbaseCurrencyConversion
   coinbaseCurrency(currentId: String!): CoinbaseCurrency
   coinbasePaymentMethods: [CoinbasePaymentMethod]
+  coinbaseTransfers: [CoinbaseAccountTransfer]
+  coinbaseTransfer(transferId: String!): CoinbaseAccountTransfer
+  coinbaseWallets: [CoinbaseWallet]
   iexRules(value: String!): [IexRule]
   iexRulesSchema: IexRulesSchema
   krakenServerTime: KrakenServerTime
@@ -38,4 +41,7 @@ type Mutation {
   coinbasePaymentMethodDeposit(
     opts: CoinbasePaymentMethodDepositOptions
   ): CoinbaseDeposit
+  coinbaseAccountWithdrawal(
+    opts: CoinbaseAccountWithdrawalOptions
+  ): CoinbaseWithdrawal
 }

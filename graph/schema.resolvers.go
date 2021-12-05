@@ -28,6 +28,10 @@ func (r *mutationResolver) CoinbasePaymentMethodDeposit(ctx context.Context, opt
 	return coinbase.NewTransfer(coinbase.DefaultClient).MakePaymentMethodDeposit(opts)
 }
 
+func (r *mutationResolver) CoinbaseAccountWithdrawal(ctx context.Context, opts *model.CoinbaseAccountWithdrawalOptions) (*model.CoinbaseWithdrawal, error) {
+	return coinbase.NewTransfer(coinbase.DefaultClient).AccountWithdrawal(opts)
+}
+
 func (r *queryResolver) CoinbaseAccount(ctx context.Context, accountID string) (*model.CoinbaseAccount, error) {
 	return coinbase.NewAccounts(coinbase.DefaultClient).Find(accountID)
 }
@@ -64,6 +68,18 @@ func (r *queryResolver) CoinbasePaymentMethods(ctx context.Context) ([]*model.Co
 	return coinbase.NewTransfer(coinbase.DefaultClient).PaymentMethods()
 }
 
+func (r *queryResolver) CoinbaseTransfers(ctx context.Context) ([]*model.CoinbaseAccountTransfer, error) {
+	return coinbase.NewTransfer(coinbase.DefaultClient).All()
+}
+
+func (r *queryResolver) CoinbaseTransfer(ctx context.Context, transferID string) (*model.CoinbaseAccountTransfer, error) {
+	return coinbase.NewTransfer(coinbase.DefaultClient).Find(transferID)
+}
+
+func (r *queryResolver) CoinbaseWallets(ctx context.Context) ([]*model.CoinbaseWallet, error) {
+	return coinbase.NewCoinbaseAccounts(coinbase.DefaultClient).Wallets()
+}
+
 func (r *queryResolver) IexRules(ctx context.Context, value string) ([]*model.IexRule, error) {
 	return iex.NewRulesEngine(iex.DefaultClient).Rules(value)
 }
@@ -88,13 +104,3 @@ func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//    it when you're done.
-//  - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *queryResolver) CoinbaseWallets(ctx context.Context) ([]*model.CoinbaseWallet, error) {
-	return coinbase.NewCoinbaseAccounts(coinbase.DefaultClient).Wallets()
-}

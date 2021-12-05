@@ -17,25 +17,47 @@ func NewTransfer(conn client.Connector) *Transfer {
 	return transfer
 }
 
-// // All gets a list of in-progress and completed transfers of funds in/out of any
-// // of the user's accounts.
-// //
-// // This endpoint requires either the "view" or "trade" permission.
-// //
-// // * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_gettransfers
-// func (transfer *Transfer) All() (m []*model.CoinbaseTransfer, err error) {
-// 	return m, transfer.get(ENDPOINT_TRANSFERS).Fetch().Assign(&m).JoinMessages()
-// }
+// AccountWithdrawal Withdraws funds from the specified profile_id to a
+// www.coinbase.com wallet.
+//
+// Withdraw funds to a coinbase account. You can move funds between your
+// Coinbase accounts and your Coinbase Exchange trading accounts within your
+// daily limits. Moving funds between Coinbase and Coinbase Exchange is instant
+// and free. See the Coinbase Accounts section for retrieving your Coinbase
+// accounts.
+//
+// * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postwithdrawcoinbaseaccount
+func (transfer *Transfer) AccountWithdrawal(
+	opts *model.CoinbaseAccountWithdrawalOptions,
+) (m *model.CoinbaseWithdrawal, err error) {
+	return m, transfer.Post(AccountWithdrawalEndpoint).
+		Body(client.NewBody(client.BODY_TYPE_JSON).
+			SetString("profile_id", opts.ProfileID).
+			SetFloat("amount", &opts.Amount).
+			SetString("coinbase_account_id", &opts.CoinbaseAccountID).
+			SetString("currency", &opts.Currency)).
+		Fetch().Assign(&m).JoinMessages()
+}
 
-// // Find get information on a single transfer.
-// //
-// // This endpoint requires either the "view" or "trade" permission.
-// //
-// // * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_gettransfers
-// func (transfer *Transfer) Find(id string) (m *model.CoinbaseTransfer, err error) {
-// 	req := transfer.get(ENDPOINT_TRANSFER)
-// 	return m, req.PathParam("id", id).Fetch().Assign(&m).JoinMessages()
-// }
+// All gets a list of in-progress and completed transfers of funds in/out of any
+// of the user's accounts.
+//
+// This endpoint requires either the "view" or "trade" permission.
+//
+// * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_gettransfers
+func (transfer *Transfer) All() (m []*model.CoinbaseAccountTransfer, err error) {
+	return m, transfer.Get(TransfersEndpoint).Fetch().Assign(&m).JoinMessages()
+}
+
+// Find get information on a single transfer.
+//
+// This endpoint requires either the "view" or "trade" permission.
+//
+// * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_gettransfers
+func (transfer *Transfer) Find(id string) (m *model.CoinbaseAccountTransfer, err error) {
+	req := transfer.Get(TransferEndpoint)
+	return m, req.PathParam("transfer_id", id).Fetch().Assign(&m).JoinMessages()
+}
 
 // MakeCoinbaseAccountDeposit will deposit funds from a www.coinbase.com wallet
 // to the specified profile_id.

@@ -19,6 +19,8 @@ models:
     model: cql/model.CoinbaseAccountTransferDetails
   CoinbaseAccountTransfers:
     model: cql/model.CoinbaseAccountTransfers
+  CoinbaseAccountWithdrawal:
+    model: cql/model.CoinbaseAccountWithdrawal
   CoinbaseAvailableBalance:
     model: cql/model.CoinbaseAvailableBalance
   CoinbaseBalance:
@@ -71,6 +73,8 @@ models:
     model: cql/model.CoinbaseWallet
   CoinbaseWireDepositInformation:
     model: cql/model.CoinbaseWireDepositInformation
+  CoinbaseWithdrawal:
+    model: cql/model.CoinbaseWithdrawal
   EntryType:
     model: cql/scalar.EntryType
   ID:
