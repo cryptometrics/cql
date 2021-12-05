@@ -2,11 +2,13 @@
 
 ## Installation
 
-To start the server run
+To start the graphql server run
 
 ```sh
 $ go run server.go
 ```
+
+Then go to http://localhost:8080/
 
 ## Usage
 
