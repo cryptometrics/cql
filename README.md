@@ -20,6 +20,11 @@ To re-generate a change to the schema:
 $ go run github.com/99designs/gqlgen generate
 ```
 
+To add new endpoints, add a json file to schema/model and run the generate script:
+```sh
+python3 generate.py
+```
+
 ## cql/model V. cql/graph/model
 
 There may be cases where the json being returned by a service is in snake case, rather than camel case. In this instances, we can't rely on gqlgen to generate the models. Instead, we have to make custom models. This is really straightforward, all you you need to do is add the custom model to cql/model and update the gqlgen.yml file:
