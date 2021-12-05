@@ -14,15 +14,7 @@ Then go to http://localhost:8080/
 
 ## .env
 
-To use the api create a cql/.env file and add your keys.  For example, this is the kraken keyset:
-
-```
-KRAKEN_URL=https://api.kraken.com
-KRAKEN_KEY=somekrakenkey
-KRAKEN_SECRET=somekrakensecret
-```
-
-Currently the supported keys dataare the following:
+To use the api create a cql/.env file and add your keys.
 
 ### Coinbase Pro
 
@@ -31,6 +23,15 @@ CB_PRO_URL=
 CB_PRO_ACCESS_PASSPHRASE=
 CB_PRO_ACCESS_KEY=
 CB_PRO_SECRET=
+```
+
+### Kraken 
+
+```
+```
+KRAKEN_URL=
+KRAKEN_KEY=
+KRAKEN_SECRET=
 ```
 
 ### IEX
