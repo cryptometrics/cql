@@ -48,15 +48,15 @@ func NewTransfer(conn client.Connector) *Transfer {
 // This endpoint requires the "transfer" permission.
 //
 // * source https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postdepositcoinbaseaccount
-func (transfer *Transfer) MakeCoinbaseAccountDeposit(input *model.MakeCoinbaseAccountDepositInput) (m *model.CoinbaseDeposit, err error) {
-	return m, transfer.post(ENDPOINT_COINBASE_ACCOUNT_DEPOSITS).
-		Body(client.NewBody(client.BODY_TYPE_JSON).
-			SetString("profile_id", input.ProfileID).
-			SetString("coinbase_account_id", &input.CoinbaseAccountID).
-			SetString("currency", &input.Currency).
-			SetFloat("amount", &input.Amount)).
-		Fetch().Assign(&m).JoinMessages()
-}
+// func (transfer *Transfer) MakeCoinbaseAccountDeposit(input *model.MakeCoinbaseAccountDepositInput) (m *model.CoinbaseDeposit, err error) {
+// 	return m, transfer.post(ENDPOINT_COINBASE_ACCOUNT_DEPOSITS).
+// 		Body(client.NewBody(client.BODY_TYPE_JSON).
+// 			SetString("profile_id", input.ProfileID).
+// 			SetString("coinbase_account_id", &input.CoinbaseAccountID).
+// 			SetString("currency", &input.Currency).
+// 			SetFloat("amount", &input.Amount)).
+// 		Fetch().Assign(&m).JoinMessages()
+// }
 
 // // MakePaymentMethodDeposit will deposits funds from a linked external payment
 // // method to the specified profile_id.
