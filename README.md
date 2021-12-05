@@ -28,7 +28,6 @@ CB_PRO_SECRET=
 ### Kraken 
 
 ```
-```
 KRAKEN_URL=
 KRAKEN_KEY=
 KRAKEN_SECRET=
