@@ -33,6 +33,8 @@ models:
     model: cql/model.CoinbaseCurrencyConversion
   CoinbaseCurrencyDetails:
     model: cql/model.CoinbaseCurrencyDetails
+  CoinbaseDeposit:
+    model: cql/model.CoinbaseDeposit
   CoinbaseHold:
     model: cql/model.CoinbaseHold
   CoinbaseSEPADepositInformation:

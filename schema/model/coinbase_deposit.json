@@ -1,0 +1,59 @@
+{
+	"api": "coinbase",
+	"model": "coinbase_deposit",
+	"modelDescription": "CoinbaseDeposit is the response for deposited funds from a www.coinbase.com wallet to the specified profile_id.",
+	"endpoints": [
+		{
+			"path": "/deposits/coinbase-account",
+			"enumRoot": "CoinbaseAccountDeposit",
+			"description": "Deposits funds from a www.coinbase.com wallet to the specified profile_id.",
+			"queryParams": [
+				{
+					"identifier": "profile_id",
+					"goType": "string"
+				},
+				{
+					"identifier": "amount",
+					"goType": "float64"
+				},
+				{
+					"identifier": "coinbase_account_id",
+					"goType": "string"
+				},
+				{
+					"identifier": "currency",
+					"goType": "string"
+				}
+			]
+		}
+	],
+	"modelFields": [
+		{
+			"identifier": "id",
+			"goType": "string"
+		},
+		{
+			"identifier": "amount",
+			"goType": "float64",
+			"unmarshaller": "UnmarshalFloatFromString"
+		},
+		{
+			"identifier": "currency",
+			"goType": "string"
+		},
+		{
+			"identifier": "payout_at",
+			"goType": "string"
+		},
+		{
+			"identifier": "fee",
+			"goType": "float64",
+			"unmarshaller": "UnmarshalFloatFromString"
+		},
+		{
+			"identifier": "subtotal",
+			"goType": "float64",
+			"unmarshaller": "UnmarshalFloatFromString"
+		}
+	]
+}

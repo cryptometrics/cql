@@ -18,6 +18,7 @@ const (
 	AccountTransfersEndpoint
 	AccountsEndpoint
 	AddressesEndpoint
+	CoinbaseAccountDepositEndpoint
 	ConversionEndpoint
 	ConversionsEndpoint
 	CurrenciesEndpoint
@@ -76,6 +77,15 @@ func AddressesPath(args client.EndpointArgs) string {
 	return path.Join("/coinbase-accounts", *args["account_id"].PathParam, "addresses")
 }
 
+// Deposits funds from a www.coinbase.com wallet to the specified profile_id.
+func CoinbaseAccountDepositPath(args client.EndpointArgs) (p string) {
+	p = path.Join("/deposits", "coinbase-account")
+	var sb strings.Builder
+	sb.WriteString(p)
+	sb.WriteString(args.QueryPath().String())
+	return sb.String()
+}
+
 // Gets a currency conversion by id (i.e. USD -> USDC).
 func ConversionPath(args client.EndpointArgs) (p string) {
 	p = path.Join("/conversions", *args["conversion_id"].PathParam)
@@ -119,16 +129,17 @@ func WalletsPath(_ client.EndpointArgs) string {
 // path.
 func (endpoint Endpoint) Path(args client.EndpointArgs) string {
 	return map[Endpoint]func(args client.EndpointArgs) string{
-		AccountEndpoint:          AccountPath,
-		AccountHoldsEndpoint:     AccountHoldsPath,
-		AccountLedgerEndpoint:    AccountLedgerPath,
-		AccountTransfersEndpoint: AccountTransfersPath,
-		AccountsEndpoint:         AccountsPath,
-		AddressesEndpoint:        AddressesPath,
-		ConversionEndpoint:       ConversionPath,
-		ConversionsEndpoint:      ConversionsPath,
-		CurrenciesEndpoint:       CurrenciesPath,
-		CurrencyEndpoint:         CurrencyPath,
-		WalletsEndpoint:          WalletsPath,
+		AccountEndpoint:                AccountPath,
+		AccountHoldsEndpoint:           AccountHoldsPath,
+		AccountLedgerEndpoint:          AccountLedgerPath,
+		AccountTransfersEndpoint:       AccountTransfersPath,
+		AccountsEndpoint:               AccountsPath,
+		AddressesEndpoint:              AddressesPath,
+		CoinbaseAccountDepositEndpoint: CoinbaseAccountDepositPath,
+		ConversionEndpoint:             ConversionPath,
+		ConversionsEndpoint:            ConversionsPath,
+		CurrenciesEndpoint:             CurrenciesPath,
+		CurrencyEndpoint:               CurrencyPath,
+		WalletsEndpoint:                WalletsPath,
 	}[endpoint](args)
 }
