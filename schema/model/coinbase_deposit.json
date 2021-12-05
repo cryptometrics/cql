@@ -5,7 +5,7 @@
 	"endpoints": [
 		{
 			"path": "/deposits/coinbase-account",
-			"enumRoot": "CoinbaseAccountDeposit",
+			"enumRoot": "AccountDeposit",
 			"description": "Deposits funds from a www.coinbase.com wallet to the specified profile_id.",
 			"queryParams": [
 				{
@@ -14,15 +14,44 @@
 				},
 				{
 					"identifier": "amount",
-					"goType": "float64"
+					"goType": "float64",
+					"required": true
 				},
 				{
 					"identifier": "coinbase_account_id",
-					"goType": "string"
+					"goType": "string",
+					"required": true
 				},
 				{
 					"identifier": "currency",
+					"goType": "string",
+					"required": true
+				}
+			]
+		},
+		{
+			"path": "/deposits/payment-method",
+			"enumRoot": "PaymentMethodDeposit",
+			"description": "Deposits funds from a linked external payment method to the specified profile_id.",
+			"queryParams": [
+				{
+					"identifier": "profile_id",
 					"goType": "string"
+				},
+				{
+					"identifier": "amount",
+					"goType": "float64",
+					"required": true
+				},
+				{
+					"identifier": "payment_method_id",
+					"goType": "string",
+					"required": true
+				},
+				{
+					"identifier": "currency",
+					"goType": "string",
+					"required": true
 				}
 			]
 		}

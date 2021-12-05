@@ -23,15 +23,19 @@ type Query {
     opts: CoinbaseConversionOptions
   ): CoinbaseCurrencyConversion
   coinbaseCurrency(currentId: String!): CoinbaseCurrency
-  coinbaseWallets: [CoinbaseWallet]
+  coinbasePaymentMethods: [CoinbasePaymentMethod]
   iexRules(value: String!): [IexRule]
   iexRulesSchema: IexRulesSchema
   krakenServerTime: KrakenServerTime
   krakenSystemStatus: KrakenSystemStatus
 }
 type Mutation {
+  coinbaseAccountDeposit(opts: CoinbaseAccountDepositOptions): CoinbaseDeposit
   coinbaseConvertCurrency(
     opts: CoinbaseConversionsOptions!
   ): CoinbaseCurrencyConversion
   coinbaseGenerateCryptoAddress(walletId: String!): CoinbaseCryptoAddress
+  coinbasePaymentMethodDeposit(
+    opts: CoinbasePaymentMethodDepositOptions
+  ): CoinbaseDeposit
 }

@@ -2,6 +2,7 @@ package coinbase
 
 import (
 	"cql/client"
+	"cql/model"
 )
 
 // CoinbaseAccounts is an object used to query coinbase account data.
@@ -48,41 +49,44 @@ func NewTransfer(conn client.Connector) *Transfer {
 // This endpoint requires the "transfer" permission.
 //
 // * source https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postdepositcoinbaseaccount
-// func (transfer *Transfer) MakeCoinbaseAccountDeposit(input *model.MakeCoinbaseAccountDepositInput) (m *model.CoinbaseDeposit, err error) {
-// 	return m, transfer.post(ENDPOINT_COINBASE_ACCOUNT_DEPOSITS).
-// 		Body(client.NewBody(client.BODY_TYPE_JSON).
-// 			SetString("profile_id", input.ProfileID).
-// 			SetString("coinbase_account_id", &input.CoinbaseAccountID).
-// 			SetString("currency", &input.Currency).
-// 			SetFloat("amount", &input.Amount)).
-// 		Fetch().Assign(&m).JoinMessages()
-// }
+func (transfer *Transfer) MakeCoinbaseAccountDeposit(
+	opts *model.CoinbaseAccountDepositOptions,
+) (m *model.CoinbaseDeposit, err error) {
+	return m, transfer.Post(AccountDepositEndpoint).
+		Body(client.NewBody(client.BODY_TYPE_JSON).
+			SetString("profile_id", opts.ProfileID).
+			SetString("coinbase_account_id", &opts.CoinbaseAccountID).
+			SetString("currency", &opts.Currency).
+			SetFloat("amount", &opts.Amount)).
+		Fetch().Assign(&m).JoinMessages()
+}
 
-// // MakePaymentMethodDeposit will deposits funds from a linked external payment
-// // method to the specified profile_id.
-// //
-// // Deposit funds from a payment method. See the Payment Methods section for
-// // retrieving your payment methods.
-// //
-// // This endpoint requires the "transfer" permission. API key must belong to
-// // default profile.
-// //
-// // * source https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postdepositpaymentmethod
-// func (transfer *Transfer) MakePaymentMethodDeposit(input *model.MakeCoinbasePaymentMethodInput) (m *model.CoinbaseDeposit, err error) {
-// 	return m, transfer.post(ENDPOINT_COINBASE_ACCOUNT_DEPOSITS).
-// 		Body(client.NewBody(client.BODY_TYPE_JSON).
-// 			SetString("profile_id", input.ProfileID).
-// 			SetString("payment_method_id", &input.PaymentMethodID).
-// 			SetString("currency", &input.Currency).
-// 			SetFloat("amount", &input.Amount)).
-// 		Fetch().Assign(&m).JoinMessages()
-// }
+// MakePaymentMethodDeposit will deposits funds from a linked external payment
+// method to the specified profile_id.
+//
+// Deposit funds from a payment method. See the Payment Methods section for
+// retrieving your payment methods.
+//
+// This endpoint requires the "transfer" permission. API key must belong to
+// default profile.
+//
+// * source https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postdepositpaymentmethod
+func (transfer *Transfer) MakePaymentMethodDeposit(
+	opts *model.CoinbasePaymentMethodDepositOptions,
+) (m *model.CoinbaseDeposit, err error) {
+	return m, transfer.Post(PaymentMethodDepositEndpoint).
+		Body(client.NewBody(client.BODY_TYPE_JSON).
+			SetString("profile_id", opts.ProfileID).
+			SetString("payment_method_id", &opts.PaymentMethodID).
+			SetString("currency", &opts.Currency).
+			SetFloat("amount", &opts.Amount)).
+		Fetch().Assign(&m).JoinMessages()
+}
 
-// // PaymentMethods gets a list of the user's linked payment methods
-// //
-// //
-// // * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_getpaymentmethods
-// func (transfer *Transfer) PaymentMethods() (m []*model.CoinbasePaymentMethod, err error) {
-// 	req := transfer.get(ENDPOINT_TRANSFERS_PAYMENT_METHODS)
-// 	return m, req.Fetch().Assign(&m).JoinMessages()
-// }
+// PaymentMethods gets a list of the user's linked payment methods
+//
+// * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_getpaymentmethods
+func (transfer *Transfer) PaymentMethods() (m []*model.CoinbasePaymentMethod, err error) {
+	req := transfer.Get(PaymentMethodEndpoint)
+	return m, req.Fetch().Assign(&m).JoinMessages()
+}

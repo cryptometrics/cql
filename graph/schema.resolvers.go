@@ -12,12 +12,20 @@ import (
 	"cql/model"
 )
 
+func (r *mutationResolver) CoinbaseAccountDeposit(ctx context.Context, opts *model.CoinbaseAccountDepositOptions) (*model.CoinbaseDeposit, error) {
+	return coinbase.NewTransfer(coinbase.DefaultClient).MakeCoinbaseAccountDeposit(opts)
+}
+
 func (r *mutationResolver) CoinbaseConvertCurrency(ctx context.Context, opts model.CoinbaseConversionsOptions) (*model.CoinbaseCurrencyConversion, error) {
 	return coinbase.NewConversion(coinbase.DefaultClient).Make(opts)
 }
 
 func (r *mutationResolver) CoinbaseGenerateCryptoAddress(ctx context.Context, walletID string) (*model.CoinbaseCryptoAddress, error) {
 	return coinbase.NewCoinbaseAccounts(coinbase.DefaultClient).GenerateCryptoAddress(walletID)
+}
+
+func (r *mutationResolver) CoinbasePaymentMethodDeposit(ctx context.Context, opts *model.CoinbasePaymentMethodDepositOptions) (*model.CoinbaseDeposit, error) {
+	return coinbase.NewTransfer(coinbase.DefaultClient).MakePaymentMethodDeposit(opts)
 }
 
 func (r *queryResolver) CoinbaseAccount(ctx context.Context, accountID string) (*model.CoinbaseAccount, error) {
@@ -52,8 +60,8 @@ func (r *queryResolver) CoinbaseCurrency(ctx context.Context, currentID string) 
 	return coinbase.NewCurrency(coinbase.DefaultClient).Find(currentID)
 }
 
-func (r *queryResolver) CoinbaseWallets(ctx context.Context) ([]*model.CoinbaseWallet, error) {
-	return coinbase.NewCoinbaseAccounts(coinbase.DefaultClient).Wallets()
+func (r *queryResolver) CoinbasePaymentMethods(ctx context.Context) ([]*model.CoinbasePaymentMethod, error) {
+	return coinbase.NewTransfer(coinbase.DefaultClient).PaymentMethods()
 }
 
 func (r *queryResolver) IexRules(ctx context.Context, value string) ([]*model.IexRule, error) {
@@ -80,3 +88,13 @@ func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//    it when you're done.
+//  - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *queryResolver) CoinbaseWallets(ctx context.Context) ([]*model.CoinbaseWallet, error) {
+	return coinbase.NewCoinbaseAccounts(coinbase.DefaultClient).Wallets()
+}

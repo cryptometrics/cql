@@ -19,8 +19,14 @@ models:
     model: cql/model.CoinbaseAccountTransferDetails
   CoinbaseAccountTransfers:
     model: cql/model.CoinbaseAccountTransfers
+  CoinbaseAvailableBalance:
+    model: cql/model.CoinbaseAvailableBalance
+  CoinbaseBalance:
+    model: cql/model.CoinbaseBalance
   CoinbaseBankCountry:
     model: cql/model.CoinbaseBankCountry
+  CoinbaseCryptoAccount:
+    model: cql/model.CoinbaseCryptoAccount
   CoinbaseCryptoAddress:
     model: cql/model.CoinbaseCryptoAddress
   CoinbaseCryptoAddressInfo:
@@ -35,8 +41,18 @@ models:
     model: cql/model.CoinbaseCurrencyDetails
   CoinbaseDeposit:
     model: cql/model.CoinbaseDeposit
+  CoinbaseFiatAccount:
+    model: cql/model.CoinbaseFiatAccount
   CoinbaseHold:
     model: cql/model.CoinbaseHold
+  CoinbaseLimits:
+    model: cql/model.CoinbaseLimits
+  CoinbasePaymentMethod:
+    model: cql/model.CoinbasePaymentMethod
+  CoinbasePickerData:
+    model: cql/model.CoinbasePickerData
+  CoinbaseRecurringOptions:
+    model: cql/model.CoinbaseRecurringOptions
   CoinbaseSEPADepositInformation:
     model: cql/model.CoinbaseSEPADepositInformation
   CoinbaseSWIFTDepositInformation:

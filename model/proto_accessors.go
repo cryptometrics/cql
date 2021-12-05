@@ -32,6 +32,13 @@ func (m *CoinbaseSwiftDepositInformation) BankCountry() *CoinbaseBankCountry {
 		CoinbaseBankCountry: m.ProtoBankCountry}
 }
 
+// Balance converts the native protomodel ProtoBalance to a local
+// CoinbaseBalance.
+func (m *CoinbasePickerData) Balance() *CoinbaseBalance {
+	return &CoinbaseBalance{
+		CoinbaseBalance: m.ProtoBalance}
+}
+
 // Result converts the native protomodel ProtoResult to a local
 // KrakenServerTimeResult.
 func (m *KrakenServerTime) Result() *KrakenServerTimeResult {
@@ -74,6 +81,49 @@ func (m *KrakenSystemStatus) Result() *KrakenSystemStatusResult {
 func (m *CoinbaseSepaDepositInformation) BankCountry() *CoinbaseBankCountry {
 	return &CoinbaseBankCountry{
 		CoinbaseBankCountry: m.ProtoBankCountry}
+}
+
+// Limits converts the native protomodel ProtoLimits to a local CoinbaseLimits.
+func (m *CoinbasePaymentMethod) Limits() *CoinbaseLimits {
+	return &CoinbaseLimits{
+		CoinbaseLimits: m.ProtoLimits}
+}
+
+// FiatAccount converts the native protomodel ProtoFiatAccount to a local
+// CoinbaseFiatAccount.
+func (m *CoinbasePaymentMethod) FiatAccount() *CoinbaseFiatAccount {
+	return &CoinbaseFiatAccount{
+		CoinbaseFiatAccount: m.ProtoFiatAccount}
+}
+
+// CryptoAccount converts the native protomodel ProtoCryptoAccount to a local
+// CoinbaseCryptoAccount.
+func (m *CoinbasePaymentMethod) CryptoAccount() *CoinbaseCryptoAccount {
+	return &CoinbaseCryptoAccount{
+		CoinbaseCryptoAccount: m.ProtoCryptoAccount}
+}
+
+// RecurringOptions converts the native protomodel ProtoRecurringOptions to a
+// local []*CoinbaseRecurringOptions.
+func (m *CoinbasePaymentMethod) RecurringOptions() (slice []*CoinbaseRecurringOptions) {
+	for _, v := range m.ProtoRecurringOptions {
+		slice = append(slice, &CoinbaseRecurringOptions{CoinbaseRecurringOptions: *v})
+	}
+	return
+}
+
+// AvailableBalance converts the native protomodel ProtoAvailableBalance to a
+// local CoinbaseAvailableBalance.
+func (m *CoinbasePaymentMethod) AvailableBalance() *CoinbaseAvailableBalance {
+	return &CoinbaseAvailableBalance{
+		CoinbaseAvailableBalance: m.ProtoAvailableBalance}
+}
+
+// PickerData converts the native protomodel ProtoPickerData to a local
+// CoinbasePickerData.
+func (m *CoinbasePaymentMethod) PickerData() *CoinbasePickerData {
+	return &CoinbasePickerData{
+		CoinbasePickerData: m.ProtoPickerData}
 }
 
 // BankCountry converts the native protomodel ProtoBankCountry to a local

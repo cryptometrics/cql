@@ -2,6 +2,13 @@
 
 package model
 
+type CoinbaseAccountDepositOptions struct {
+	ProfileID         *string `json:"profileId"`
+	Amount            float64 `json:"amount"`
+	CoinbaseAccountID string  `json:"coinbaseAccountId"`
+	Currency          string  `json:"currency"`
+}
+
 type CoinbaseAccountHoldsOptions struct {
 	Before *string `json:"before"`
 	After  *string `json:"after"`
@@ -48,4 +55,11 @@ type CoinbaseConversionsOptions struct {
 	To        string  `json:"to"`
 	Amount    float64 `json:"amount"`
 	Nonce     *string `json:"nonce"`
+}
+
+type CoinbasePaymentMethodDepositOptions struct {
+	ProfileID       *string `json:"profileId"`
+	Amount          float64 `json:"amount"`
+	PaymentMethodID string  `json:"paymentMethodId"`
+	Currency        string  `json:"currency"`
 }

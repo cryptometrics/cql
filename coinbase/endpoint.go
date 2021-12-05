@@ -13,16 +13,18 @@ type Endpoint int
 const (
 	_ Endpoint = iota
 	AccountEndpoint
+	AccountDepositEndpoint
 	AccountHoldsEndpoint
 	AccountLedgerEndpoint
 	AccountTransfersEndpoint
 	AccountsEndpoint
 	AddressesEndpoint
-	CoinbaseAccountDepositEndpoint
 	ConversionEndpoint
 	ConversionsEndpoint
 	CurrenciesEndpoint
 	CurrencyEndpoint
+	PaymentMethodEndpoint
+	PaymentMethodDepositEndpoint
 	WalletsEndpoint
 )
 
@@ -30,6 +32,15 @@ const (
 // account_id. API key must belong to the same profile as the account.
 func AccountPath(args client.EndpointArgs) string {
 	return path.Join("/accounts", *args["account_id"].PathParam)
+}
+
+// Deposits funds from a www.coinbase.com wallet to the specified profile_id.
+func AccountDepositPath(args client.EndpointArgs) (p string) {
+	p = path.Join("/deposits", "coinbase-account")
+	var sb strings.Builder
+	sb.WriteString(p)
+	sb.WriteString(args.QueryPath().String())
+	return sb.String()
 }
 
 // List the holds of an account that belong to the same profile as the API key.
@@ -77,15 +88,6 @@ func AddressesPath(args client.EndpointArgs) string {
 	return path.Join("/coinbase-accounts", *args["account_id"].PathParam, "addresses")
 }
 
-// Deposits funds from a www.coinbase.com wallet to the specified profile_id.
-func CoinbaseAccountDepositPath(args client.EndpointArgs) (p string) {
-	p = path.Join("/deposits", "coinbase-account")
-	var sb strings.Builder
-	sb.WriteString(p)
-	sb.WriteString(args.QueryPath().String())
-	return sb.String()
-}
-
 // Gets a currency conversion by id (i.e. USD -> USDC).
 func ConversionPath(args client.EndpointArgs) (p string) {
 	p = path.Join("/conversions", *args["conversion_id"].PathParam)
@@ -119,6 +121,21 @@ func CurrencyPath(args client.EndpointArgs) string {
 	return path.Join("/currencies", *args["currency_id"].PathParam)
 }
 
+// Gets a list of the user's linked payment methods.
+func PaymentMethodPath(_ client.EndpointArgs) string {
+	return path.Join("/payment-methods")
+}
+
+// Deposits funds from a linked external payment method to the specified
+// profile_id.
+func PaymentMethodDepositPath(args client.EndpointArgs) (p string) {
+	p = path.Join("/deposits", "payment-method")
+	var sb strings.Builder
+	sb.WriteString(p)
+	sb.WriteString(args.QueryPath().String())
+	return sb.String()
+}
+
 // Gets all the user's available Coinbase wallets (These are the
 // wallets/accounts that are used for buying and selling on www.coinbase.com)
 func WalletsPath(_ client.EndpointArgs) string {
@@ -129,17 +146,19 @@ func WalletsPath(_ client.EndpointArgs) string {
 // path.
 func (endpoint Endpoint) Path(args client.EndpointArgs) string {
 	return map[Endpoint]func(args client.EndpointArgs) string{
-		AccountEndpoint:                AccountPath,
-		AccountHoldsEndpoint:           AccountHoldsPath,
-		AccountLedgerEndpoint:          AccountLedgerPath,
-		AccountTransfersEndpoint:       AccountTransfersPath,
-		AccountsEndpoint:               AccountsPath,
-		AddressesEndpoint:              AddressesPath,
-		CoinbaseAccountDepositEndpoint: CoinbaseAccountDepositPath,
-		ConversionEndpoint:             ConversionPath,
-		ConversionsEndpoint:            ConversionsPath,
-		CurrenciesEndpoint:             CurrenciesPath,
-		CurrencyEndpoint:               CurrencyPath,
-		WalletsEndpoint:                WalletsPath,
+		AccountEndpoint:              AccountPath,
+		AccountDepositEndpoint:       AccountDepositPath,
+		AccountHoldsEndpoint:         AccountHoldsPath,
+		AccountLedgerEndpoint:        AccountLedgerPath,
+		AccountTransfersEndpoint:     AccountTransfersPath,
+		AccountsEndpoint:             AccountsPath,
+		AddressesEndpoint:            AddressesPath,
+		ConversionEndpoint:           ConversionPath,
+		ConversionsEndpoint:          ConversionsPath,
+		CurrenciesEndpoint:           CurrenciesPath,
+		CurrencyEndpoint:             CurrencyPath,
+		PaymentMethodEndpoint:        PaymentMethodPath,
+		PaymentMethodDepositEndpoint: PaymentMethodDepositPath,
+		WalletsEndpoint:              WalletsPath,
 	}[endpoint](args)
 }
