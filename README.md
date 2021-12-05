@@ -4,17 +4,11 @@ cql takes json models in schema/model and generates a corresponding go models, g
 
 ## Installation
 
-To start the graphql server run
-
-```sh
-$ go run server.go
-```
-
-Then go to http://localhost:8080/
+Cone the repository and run `go build`
 
 ## .env
 
-To use the api create a cql/.env file and add your keys.
+To use api endpoints that require authentication, create a cql/.env file and add your keys.  The following are the supported APIs
 
 ### Coinbase Pro
 
@@ -41,19 +35,27 @@ IEX_KEY=
 IEX_SECRET=
 ```
 
-
-
 ## Usage
+
+To start the graphql server run
+
+```sh
+$ go run server.go
+```
+
+Then go to http://localhost:8080/
+
+## Updating the Schema 
+
+To add new endpoints, add a json file to schema/model and run the generate script:
+```sh
+python3 generate.py
+```
 
 To re-generate a change to the schema:
 
 ```sh
 $ go run github.com/99designs/gqlgen generate
-```
-
-To add new endpoints, add a json file to schema/model and run the generate script:
-```sh
-python3 generate.py
 ```
 
 ## cql/model V. cql/graph/model
