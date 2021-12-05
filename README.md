@@ -12,6 +12,16 @@ $ go run server.go
 
 Then go to http://localhost:8080/
 
+## .env
+
+To use the api create a cql/.env file and add your keys.  For example, this is the kraken keyset:
+
+```
+KRAKEN_URL=https://api.kraken.com
+KRAKEN_KEY=somekrakenkey
+KRAKEN_SECRET=somekrakensecret
+```
+
 ## Usage
 
 To re-generate a change to the schema:
