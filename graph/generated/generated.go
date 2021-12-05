@@ -327,6 +327,10 @@ type ComplexityRoot struct {
 		Subtotal func(childComplexity int) int
 	}
 
+	CoinbaseWithdrawalFeeEstimate struct {
+		Fee func(childComplexity int) int
+	}
+
 	IexRule struct {
 		Formula func(childComplexity int) int
 		Label   func(childComplexity int) int
@@ -370,30 +374,33 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		CoinbaseAccountDeposit        func(childComplexity int, opts *model.CoinbaseAccountDepositOptions) int
-		CoinbaseAccountWithdrawal     func(childComplexity int, opts *model.CoinbaseAccountWithdrawalOptions) int
-		CoinbaseConvertCurrency       func(childComplexity int, opts model.CoinbaseConversionsOptions) int
-		CoinbaseGenerateCryptoAddress func(childComplexity int, walletID string) int
-		CoinbasePaymentMethodDeposit  func(childComplexity int, opts *model.CoinbasePaymentMethodDepositOptions) int
+		CoinbaseAccountDeposit          func(childComplexity int, opts *model.CoinbaseAccountDepositOptions) int
+		CoinbaseAccountWithdrawal       func(childComplexity int, opts *model.CoinbaseAccountWithdrawalOptions) int
+		CoinbaseConvertCurrency         func(childComplexity int, opts model.CoinbaseConversionsOptions) int
+		CoinbaseCryptoWithdrawal        func(childComplexity int, opts *model.CoinbaseCryptoWithdrawalOptions) int
+		CoinbaseGenerateCryptoAddress   func(childComplexity int, walletID string) int
+		CoinbasePaymentMethodDeposit    func(childComplexity int, opts *model.CoinbasePaymentMethodDepositOptions) int
+		CoinbasePaymentMethodWithdrawal func(childComplexity int, opts *model.CoinbasePaymentMethodWithdrawalOptions) int
 	}
 
 	Query struct {
-		CoinbaseAccount            func(childComplexity int, accountID string) int
-		CoinbaseAccountHolds       func(childComplexity int, accountID string, opts *model.CoinbaseAccountHoldsOptions) int
-		CoinbaseAccountLedger      func(childComplexity int, accountID string, opts *model.CoinbaseAccountLedgerOptions) int
-		CoinbaseAccountTransfers   func(childComplexity int, accountID string, opts *model.CoinbaseAccountTransferOptions) int
-		CoinbaseAccounts           func(childComplexity int) int
-		CoinbaseCurrencies         func(childComplexity int) int
-		CoinbaseCurrency           func(childComplexity int, currentID string) int
-		CoinbaseCurrencyConversion func(childComplexity int, conversionID string, opts *model.CoinbaseConversionOptions) int
-		CoinbasePaymentMethods     func(childComplexity int) int
-		CoinbaseTransfer           func(childComplexity int, transferID string) int
-		CoinbaseTransfers          func(childComplexity int) int
-		CoinbaseWallets            func(childComplexity int) int
-		IexRules                   func(childComplexity int, value string) int
-		IexRulesSchema             func(childComplexity int) int
-		KrakenServerTime           func(childComplexity int) int
-		KrakenSystemStatus         func(childComplexity int) int
+		CoinbaseAccount               func(childComplexity int, accountID string) int
+		CoinbaseAccountHolds          func(childComplexity int, accountID string, opts *model.CoinbaseAccountHoldsOptions) int
+		CoinbaseAccountLedger         func(childComplexity int, accountID string, opts *model.CoinbaseAccountLedgerOptions) int
+		CoinbaseAccountTransfers      func(childComplexity int, accountID string, opts *model.CoinbaseAccountTransferOptions) int
+		CoinbaseAccounts              func(childComplexity int) int
+		CoinbaseCurrencies            func(childComplexity int) int
+		CoinbaseCurrency              func(childComplexity int, currentID string) int
+		CoinbaseCurrencyConversion    func(childComplexity int, conversionID string, opts *model.CoinbaseConversionOptions) int
+		CoinbasePaymentMethods        func(childComplexity int) int
+		CoinbaseTransfer              func(childComplexity int, transferID string) int
+		CoinbaseTransfers             func(childComplexity int) int
+		CoinbaseWallets               func(childComplexity int) int
+		CoinbaseWithdrawalFeeEstimate func(childComplexity int, opts *model.CoinbaseWithdrawalFeeEstimateOptions) int
+		IexRules                      func(childComplexity int, value string) int
+		IexRulesSchema                func(childComplexity int) int
+		KrakenServerTime              func(childComplexity int) int
+		KrakenSystemStatus            func(childComplexity int) int
 	}
 }
 
@@ -402,7 +409,9 @@ type MutationResolver interface {
 	CoinbaseConvertCurrency(ctx context.Context, opts model.CoinbaseConversionsOptions) (*model.CoinbaseCurrencyConversion, error)
 	CoinbaseGenerateCryptoAddress(ctx context.Context, walletID string) (*model.CoinbaseCryptoAddress, error)
 	CoinbasePaymentMethodDeposit(ctx context.Context, opts *model.CoinbasePaymentMethodDepositOptions) (*model.CoinbaseDeposit, error)
+	CoinbasePaymentMethodWithdrawal(ctx context.Context, opts *model.CoinbasePaymentMethodWithdrawalOptions) (*model.CoinbaseWithdrawal, error)
 	CoinbaseAccountWithdrawal(ctx context.Context, opts *model.CoinbaseAccountWithdrawalOptions) (*model.CoinbaseWithdrawal, error)
+	CoinbaseCryptoWithdrawal(ctx context.Context, opts *model.CoinbaseCryptoWithdrawalOptions) (*model.CoinbaseWithdrawal, error)
 }
 type QueryResolver interface {
 	CoinbaseAccount(ctx context.Context, accountID string) (*model.CoinbaseAccount, error)
@@ -417,6 +426,7 @@ type QueryResolver interface {
 	CoinbaseTransfers(ctx context.Context) ([]*model.CoinbaseAccountTransfer, error)
 	CoinbaseTransfer(ctx context.Context, transferID string) (*model.CoinbaseAccountTransfer, error)
 	CoinbaseWallets(ctx context.Context) ([]*model.CoinbaseWallet, error)
+	CoinbaseWithdrawalFeeEstimate(ctx context.Context, opts *model.CoinbaseWithdrawalFeeEstimateOptions) (*model.CoinbaseWithdrawalFeeEstimate, error)
 	IexRules(ctx context.Context, value string) ([]*model.IexRule, error)
 	IexRulesSchema(ctx context.Context) (*model.IexRulesSchema, error)
 	KrakenServerTime(ctx context.Context) (*model.KrakenServerTime, error)
@@ -1831,6 +1841,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.CoinbaseWithdrawal.Subtotal(childComplexity), true
 
+	case "CoinbaseWithdrawalFeeEstimate.fee":
+		if e.complexity.CoinbaseWithdrawalFeeEstimate.Fee == nil {
+			break
+		}
+
+		return e.complexity.CoinbaseWithdrawalFeeEstimate.Fee(childComplexity), true
+
 	case "IexRule.formula":
 		if e.complexity.IexRule.Formula == nil {
 			break
@@ -2014,6 +2031,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.CoinbaseConvertCurrency(childComplexity, args["opts"].(model.CoinbaseConversionsOptions)), true
 
+	case "Mutation.coinbaseCryptoWithdrawal":
+		if e.complexity.Mutation.CoinbaseCryptoWithdrawal == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_coinbaseCryptoWithdrawal_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.CoinbaseCryptoWithdrawal(childComplexity, args["opts"].(*model.CoinbaseCryptoWithdrawalOptions)), true
+
 	case "Mutation.coinbaseGenerateCryptoAddress":
 		if e.complexity.Mutation.CoinbaseGenerateCryptoAddress == nil {
 			break
@@ -2037,6 +2066,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.CoinbasePaymentMethodDeposit(childComplexity, args["opts"].(*model.CoinbasePaymentMethodDepositOptions)), true
+
+	case "Mutation.coinbasePaymentMethodWithdrawal":
+		if e.complexity.Mutation.CoinbasePaymentMethodWithdrawal == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_coinbasePaymentMethodWithdrawal_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.CoinbasePaymentMethodWithdrawal(childComplexity, args["opts"].(*model.CoinbasePaymentMethodWithdrawalOptions)), true
 
 	case "Query.coinbaseAccount":
 		if e.complexity.Query.CoinbaseAccount == nil {
@@ -2156,6 +2197,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.CoinbaseWallets(childComplexity), true
+
+	case "Query.coinbaseWithdrawalFeeEstimate":
+		if e.complexity.Query.CoinbaseWithdrawalFeeEstimate == nil {
+			break
+		}
+
+		args, err := ec.field_Query_coinbaseWithdrawalFeeEstimate_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.CoinbaseWithdrawalFeeEstimate(childComplexity, args["opts"].(*model.CoinbaseWithdrawalFeeEstimateOptions)), true
 
 	case "Query.iexRules":
 		if e.complexity.Query.IexRules == nil {
@@ -2509,6 +2562,20 @@ type CoinbaseCryptoAddressWarning {
   imageUrl: String
 }
 `, BuiltIn: false},
+	{Name: "graph/schema/coinbase_crypto_withdrawal_options.graphqls", Input: `# * This is a generated file, do not edit
+
+input CoinbaseCryptoWithdrawalOptions {
+  profileId: String
+  amount: Float!
+  cryptoAddress: String!
+  currency: String!
+  destinationTag: String
+  noDestinationTag: Boolean
+  twoFactorCode: String
+  nonce: Int
+  fee: Float
+}
+`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_currency.graphqls", Input: `# * This is a generated file, do not edit
 
 """
@@ -2636,6 +2703,15 @@ type CoinbasePaymentMethod {
 	{Name: "graph/schema/coinbase_payment_method_deposit_options.graphqls", Input: `# * This is a generated file, do not edit
 
 input CoinbasePaymentMethodDepositOptions {
+  profileId: String
+  amount: Float!
+  paymentMethodId: String!
+  currency: String!
+}
+`, BuiltIn: false},
+	{Name: "graph/schema/coinbase_payment_method_withdrawal_options.graphqls", Input: `# * This is a generated file, do not edit
+
+input CoinbasePaymentMethodWithdrawalOptions {
   profileId: String
   amount: Float!
   paymentMethodId: String!
@@ -2789,6 +2865,23 @@ type CoinbaseWithdrawal {
   subtotal: Float
 }
 `, BuiltIn: false},
+	{Name: "graph/schema/coinbase_withdrawal_fee_estimate.graphqls", Input: `# * This is a generated file, do not edit
+
+"""
+CoinbaseWithdrawalFeeEstimate is a fee estimate for the crypto withdrawal to
+crypto address
+"""
+type CoinbaseWithdrawalFeeEstimate {
+  fee: Float
+}
+`, BuiltIn: false},
+	{Name: "graph/schema/coinbase_withdrawal_fee_estimate_options.graphqls", Input: `# * This is a generated file, do not edit
+
+input CoinbaseWithdrawalFeeEstimateOptions {
+  currency: String
+  cryptoAddress: String
+}
+`, BuiltIn: false},
 	{Name: "graph/schema/iex_rule.graphqls", Input: `# * This is a generated file, do not edit
 
 """
@@ -2913,6 +3006,9 @@ type Query {
   coinbaseTransfers: [CoinbaseAccountTransfer]
   coinbaseTransfer(transferId: String!): CoinbaseAccountTransfer
   coinbaseWallets: [CoinbaseWallet]
+  coinbaseWithdrawalFeeEstimate(
+    opts: CoinbaseWithdrawalFeeEstimateOptions
+  ): CoinbaseWithdrawalFeeEstimate
   iexRules(value: String!): [IexRule]
   iexRulesSchema: IexRulesSchema
   krakenServerTime: KrakenServerTime
@@ -2927,8 +3023,14 @@ type Mutation {
   coinbasePaymentMethodDeposit(
     opts: CoinbasePaymentMethodDepositOptions
   ): CoinbaseDeposit
+  coinbasePaymentMethodWithdrawal(
+    opts: CoinbasePaymentMethodWithdrawalOptions
+  ): CoinbaseWithdrawal
   coinbaseAccountWithdrawal(
     opts: CoinbaseAccountWithdrawalOptions
+  ): CoinbaseWithdrawal
+  coinbaseCryptoWithdrawal(
+    opts: CoinbaseCryptoWithdrawalOptions
   ): CoinbaseWithdrawal
 }
 `, BuiltIn: false},
@@ -2984,6 +3086,21 @@ func (ec *executionContext) field_Mutation_coinbaseConvertCurrency_args(ctx cont
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_coinbaseCryptoWithdrawal_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *model.CoinbaseCryptoWithdrawalOptions
+	if tmp, ok := rawArgs["opts"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("opts"))
+		arg0, err = ec.unmarshalOCoinbaseCryptoWithdrawalOptions2ᚖcqlᚋmodelᚐCoinbaseCryptoWithdrawalOptions(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["opts"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_coinbaseGenerateCryptoAddress_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -3006,6 +3123,21 @@ func (ec *executionContext) field_Mutation_coinbasePaymentMethodDeposit_args(ctx
 	if tmp, ok := rawArgs["opts"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("opts"))
 		arg0, err = ec.unmarshalOCoinbasePaymentMethodDepositOptions2ᚖcqlᚋmodelᚐCoinbasePaymentMethodDepositOptions(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["opts"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_coinbasePaymentMethodWithdrawal_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *model.CoinbasePaymentMethodWithdrawalOptions
+	if tmp, ok := rawArgs["opts"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("opts"))
+		arg0, err = ec.unmarshalOCoinbasePaymentMethodWithdrawalOptions2ᚖcqlᚋmodelᚐCoinbasePaymentMethodWithdrawalOptions(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3167,6 +3299,21 @@ func (ec *executionContext) field_Query_coinbaseTransfer_args(ctx context.Contex
 		}
 	}
 	args["transferId"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_coinbaseWithdrawalFeeEstimate_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *model.CoinbaseWithdrawalFeeEstimateOptions
+	if tmp, ok := rawArgs["opts"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("opts"))
+		arg0, err = ec.unmarshalOCoinbaseWithdrawalFeeEstimateOptions2ᚖcqlᚋmodelᚐCoinbaseWithdrawalFeeEstimateOptions(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["opts"] = arg0
 	return args, nil
 }
 
@@ -9591,6 +9738,38 @@ func (ec *executionContext) _CoinbaseWithdrawal_subtotal(ctx context.Context, fi
 	return ec.marshalOFloat2float64(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _CoinbaseWithdrawalFeeEstimate_fee(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseWithdrawalFeeEstimate) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CoinbaseWithdrawalFeeEstimate",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Fee, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(float64)
+	fc.Result = res
+	return ec.marshalOFloat2float64(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _IexRule_value(ctx context.Context, field graphql.CollectedField, obj *model.IexRule) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -10419,6 +10598,45 @@ func (ec *executionContext) _Mutation_coinbasePaymentMethodDeposit(ctx context.C
 	return ec.marshalOCoinbaseDeposit2ᚖcqlᚋmodelᚐCoinbaseDeposit(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Mutation_coinbasePaymentMethodWithdrawal(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_coinbasePaymentMethodWithdrawal_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().CoinbasePaymentMethodWithdrawal(rctx, args["opts"].(*model.CoinbasePaymentMethodWithdrawalOptions))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.CoinbaseWithdrawal)
+	fc.Result = res
+	return ec.marshalOCoinbaseWithdrawal2ᚖcqlᚋmodelᚐCoinbaseWithdrawal(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Mutation_coinbaseAccountWithdrawal(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -10445,6 +10663,45 @@ func (ec *executionContext) _Mutation_coinbaseAccountWithdrawal(ctx context.Cont
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
 		return ec.resolvers.Mutation().CoinbaseAccountWithdrawal(rctx, args["opts"].(*model.CoinbaseAccountWithdrawalOptions))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.CoinbaseWithdrawal)
+	fc.Result = res
+	return ec.marshalOCoinbaseWithdrawal2ᚖcqlᚋmodelᚐCoinbaseWithdrawal(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Mutation_coinbaseCryptoWithdrawal(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_coinbaseCryptoWithdrawal_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().CoinbaseCryptoWithdrawal(rctx, args["opts"].(*model.CoinbaseCryptoWithdrawalOptions))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -10889,6 +11146,45 @@ func (ec *executionContext) _Query_coinbaseWallets(ctx context.Context, field gr
 	res := resTmp.([]*model.CoinbaseWallet)
 	fc.Result = res
 	return ec.marshalOCoinbaseWallet2ᚕᚖcqlᚋmodelᚐCoinbaseWallet(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Query_coinbaseWithdrawalFeeEstimate(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Query_coinbaseWithdrawalFeeEstimate_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().CoinbaseWithdrawalFeeEstimate(rctx, args["opts"].(*model.CoinbaseWithdrawalFeeEstimateOptions))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.CoinbaseWithdrawalFeeEstimate)
+	fc.Result = res
+	return ec.marshalOCoinbaseWithdrawalFeeEstimate2ᚖcqlᚋmodelᚐCoinbaseWithdrawalFeeEstimate(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_iexRules(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -12572,6 +12868,90 @@ func (ec *executionContext) unmarshalInputCoinbaseConversionsOptions(ctx context
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputCoinbaseCryptoWithdrawalOptions(ctx context.Context, obj interface{}) (model.CoinbaseCryptoWithdrawalOptions, error) {
+	var it model.CoinbaseCryptoWithdrawalOptions
+	var asMap = obj.(map[string]interface{})
+
+	for k, v := range asMap {
+		switch k {
+		case "profileId":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("profileId"))
+			it.ProfileID, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "amount":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("amount"))
+			it.Amount, err = ec.unmarshalNFloat2float64(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "cryptoAddress":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("cryptoAddress"))
+			it.CryptoAddress, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "currency":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("currency"))
+			it.Currency, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "destinationTag":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("destinationTag"))
+			it.DestinationTag, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "noDestinationTag":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("noDestinationTag"))
+			it.NoDestinationTag, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "twoFactorCode":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("twoFactorCode"))
+			it.TwoFactorCode, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "nonce":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("nonce"))
+			it.Nonce, err = ec.unmarshalOInt2ᚖint(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "fee":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fee"))
+			it.Fee, err = ec.unmarshalOFloat2ᚖfloat64(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		}
+	}
+
+	return it, nil
+}
+
 func (ec *executionContext) unmarshalInputCoinbasePaymentMethodDepositOptions(ctx context.Context, obj interface{}) (model.CoinbasePaymentMethodDepositOptions, error) {
 	var it model.CoinbasePaymentMethodDepositOptions
 	var asMap = obj.(map[string]interface{})
@@ -12607,6 +12987,78 @@ func (ec *executionContext) unmarshalInputCoinbasePaymentMethodDepositOptions(ct
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("currency"))
 			it.Currency, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputCoinbasePaymentMethodWithdrawalOptions(ctx context.Context, obj interface{}) (model.CoinbasePaymentMethodWithdrawalOptions, error) {
+	var it model.CoinbasePaymentMethodWithdrawalOptions
+	var asMap = obj.(map[string]interface{})
+
+	for k, v := range asMap {
+		switch k {
+		case "profileId":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("profileId"))
+			it.ProfileID, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "amount":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("amount"))
+			it.Amount, err = ec.unmarshalNFloat2float64(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "paymentMethodId":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("paymentMethodId"))
+			it.PaymentMethodID, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "currency":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("currency"))
+			it.Currency, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputCoinbaseWithdrawalFeeEstimateOptions(ctx context.Context, obj interface{}) (model.CoinbaseWithdrawalFeeEstimateOptions, error) {
+	var it model.CoinbaseWithdrawalFeeEstimateOptions
+	var asMap = obj.(map[string]interface{})
+
+	for k, v := range asMap {
+		switch k {
+		case "currency":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("currency"))
+			it.Currency, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "cryptoAddress":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("cryptoAddress"))
+			it.CryptoAddress, err = ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -13638,6 +14090,30 @@ func (ec *executionContext) _CoinbaseWithdrawal(ctx context.Context, sel ast.Sel
 	return out
 }
 
+var coinbaseWithdrawalFeeEstimateImplementors = []string{"CoinbaseWithdrawalFeeEstimate"}
+
+func (ec *executionContext) _CoinbaseWithdrawalFeeEstimate(ctx context.Context, sel ast.SelectionSet, obj *model.CoinbaseWithdrawalFeeEstimate) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, coinbaseWithdrawalFeeEstimateImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("CoinbaseWithdrawalFeeEstimate")
+		case "fee":
+			out.Values[i] = ec._CoinbaseWithdrawalFeeEstimate_fee(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
 var iexRuleImplementors = []string{"IexRule"}
 
 func (ec *executionContext) _IexRule(ctx context.Context, sel ast.SelectionSet, obj *model.IexRule) graphql.Marshaler {
@@ -13857,8 +14333,12 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			out.Values[i] = ec._Mutation_coinbaseGenerateCryptoAddress(ctx, field)
 		case "coinbasePaymentMethodDeposit":
 			out.Values[i] = ec._Mutation_coinbasePaymentMethodDeposit(ctx, field)
+		case "coinbasePaymentMethodWithdrawal":
+			out.Values[i] = ec._Mutation_coinbasePaymentMethodWithdrawal(ctx, field)
 		case "coinbaseAccountWithdrawal":
 			out.Values[i] = ec._Mutation_coinbaseAccountWithdrawal(ctx, field)
+		case "coinbaseCryptoWithdrawal":
+			out.Values[i] = ec._Mutation_coinbaseCryptoWithdrawal(ctx, field)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -14015,6 +14495,17 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_coinbaseWallets(ctx, field)
+				return res
+			})
+		case "coinbaseWithdrawalFeeEstimate":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_coinbaseWithdrawalFeeEstimate(ctx, field)
 				return res
 			})
 		case "iexRules":
@@ -14963,6 +15454,14 @@ func (ec *executionContext) marshalOCoinbaseCryptoAddressWarning2ᚖcqlᚋmodel�
 	return ec._CoinbaseCryptoAddressWarning(ctx, sel, v)
 }
 
+func (ec *executionContext) unmarshalOCoinbaseCryptoWithdrawalOptions2ᚖcqlᚋmodelᚐCoinbaseCryptoWithdrawalOptions(ctx context.Context, v interface{}) (*model.CoinbaseCryptoWithdrawalOptions, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputCoinbaseCryptoWithdrawalOptions(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
 func (ec *executionContext) marshalOCoinbaseCurrency2ᚕᚖcqlᚋmodelᚐCoinbaseCurrency(ctx context.Context, sel ast.SelectionSet, v []*model.CoinbaseCurrency) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
@@ -15100,6 +15599,14 @@ func (ec *executionContext) unmarshalOCoinbasePaymentMethodDepositOptions2ᚖcql
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
+func (ec *executionContext) unmarshalOCoinbasePaymentMethodWithdrawalOptions2ᚖcqlᚋmodelᚐCoinbasePaymentMethodWithdrawalOptions(ctx context.Context, v interface{}) (*model.CoinbasePaymentMethodWithdrawalOptions, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputCoinbasePaymentMethodWithdrawalOptions(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
 func (ec *executionContext) marshalOCoinbasePickerData2ᚖcqlᚋmodelᚐCoinbasePickerData(ctx context.Context, sel ast.SelectionSet, v *model.CoinbasePickerData) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
@@ -15234,6 +15741,21 @@ func (ec *executionContext) marshalOCoinbaseWithdrawal2ᚖcqlᚋmodelᚐCoinbase
 		return graphql.Null
 	}
 	return ec._CoinbaseWithdrawal(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOCoinbaseWithdrawalFeeEstimate2ᚖcqlᚋmodelᚐCoinbaseWithdrawalFeeEstimate(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseWithdrawalFeeEstimate) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._CoinbaseWithdrawalFeeEstimate(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalOCoinbaseWithdrawalFeeEstimateOptions2ᚖcqlᚋmodelᚐCoinbaseWithdrawalFeeEstimateOptions(ctx context.Context, v interface{}) (*model.CoinbaseWithdrawalFeeEstimateOptions, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputCoinbaseWithdrawalFeeEstimateOptions(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) unmarshalOEntryType2cqlᚋscalarᚐEntryType(ctx context.Context, v interface{}) (scalar.EntryType, error) {

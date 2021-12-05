@@ -75,6 +75,8 @@ models:
     model: cql/model.CoinbaseWireDepositInformation
   CoinbaseWithdrawal:
     model: cql/model.CoinbaseWithdrawal
+  CoinbaseWithdrawalFeeEstimate:
+    model: cql/model.CoinbaseWithdrawalFeeEstimate
   EntryType:
     model: cql/scalar.EntryType
   ID:

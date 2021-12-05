@@ -64,9 +64,33 @@ type CoinbaseConversionsOptions struct {
 	Nonce     *string `json:"nonce"`
 }
 
+type CoinbaseCryptoWithdrawalOptions struct {
+	ProfileID        *string  `json:"profileId"`
+	Amount           float64  `json:"amount"`
+	CryptoAddress    string   `json:"cryptoAddress"`
+	Currency         string   `json:"currency"`
+	DestinationTag   *string  `json:"destinationTag"`
+	NoDestinationTag *bool    `json:"noDestinationTag"`
+	TwoFactorCode    *string  `json:"twoFactorCode"`
+	Nonce            *int     `json:"nonce"`
+	Fee              *float64 `json:"fee"`
+}
+
 type CoinbasePaymentMethodDepositOptions struct {
 	ProfileID       *string `json:"profileId"`
 	Amount          float64 `json:"amount"`
 	PaymentMethodID string  `json:"paymentMethodId"`
 	Currency        string  `json:"currency"`
+}
+
+type CoinbasePaymentMethodWithdrawalOptions struct {
+	ProfileID       *string `json:"profileId"`
+	Amount          float64 `json:"amount"`
+	PaymentMethodID string  `json:"paymentMethodId"`
+	Currency        string  `json:"currency"`
+}
+
+type CoinbaseWithdrawalFeeEstimateOptions struct {
+	Currency      *string `json:"currency"`
+	CryptoAddress *string `json:"cryptoAddress"`
 }

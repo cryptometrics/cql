@@ -27,9 +27,7 @@ func NewTransfer(conn client.Connector) *Transfer {
 // accounts.
 //
 // * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postwithdrawcoinbaseaccount
-func (transfer *Transfer) AccountWithdrawal(
-	opts *model.CoinbaseAccountWithdrawalOptions,
-) (m *model.CoinbaseWithdrawal, err error) {
+func (transfer *Transfer) AccountWithdrawal(opts *model.CoinbaseAccountWithdrawalOptions) (m *model.CoinbaseWithdrawal, err error) {
 	return m, transfer.Post(AccountWithdrawalEndpoint).
 		Body(client.NewBody(client.BODY_TYPE_JSON).
 			SetString("profile_id", opts.ProfileID).
@@ -47,6 +45,28 @@ func (transfer *Transfer) AccountWithdrawal(
 // * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_gettransfers
 func (transfer *Transfer) All() (m []*model.CoinbaseAccountTransfer, err error) {
 	return m, transfer.Get(TransfersEndpoint).Fetch().Assign(&m).JoinMessages()
+}
+
+// CryptoWithdrawal withdraws funds from the specified profile_id to an external
+//crypto address
+//
+// This endpoint requires the "transfer" permission. API key must belong to
+// default profile.
+//
+// * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postwithdrawcrypto
+func (transfer *Transfer) CryptoWithdrawal(opts *model.CoinbaseCryptoWithdrawalOptions) (m *model.CoinbaseWithdrawal, err error) {
+	return m, transfer.Post(CryptoWithdrawalEndpoint).
+		Body(client.NewBody(client.BODY_TYPE_JSON).
+			SetString("profile_id", opts.ProfileID).
+			SetFloat("amount", &opts.Amount).
+			SetString("crypto_address", &opts.CryptoAddress).
+			SetString("currency", &opts.Currency).
+			SetString("destination_tag", opts.DestinationTag).
+			SetBool("no_destination_tag", opts.NoDestinationTag).
+			SetString("two_factor_code", opts.TwoFactorCode).
+			SetInt("nonce", opts.Nonce).
+			SetFloat("fee", opts.Fee)).
+		Fetch().Assign(&m).JoinMessages()
 }
 
 // Find get information on a single transfer.
@@ -71,9 +91,7 @@ func (transfer *Transfer) Find(id string) (m *model.CoinbaseAccountTransfer, err
 // This endpoint requires the "transfer" permission.
 //
 // * source https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postdepositcoinbaseaccount
-func (transfer *Transfer) MakeCoinbaseAccountDeposit(
-	opts *model.CoinbaseAccountDepositOptions,
-) (m *model.CoinbaseDeposit, err error) {
+func (transfer *Transfer) CoinbaseAccountDeposit(opts *model.CoinbaseAccountDepositOptions) (m *model.CoinbaseDeposit, err error) {
 	return m, transfer.Post(AccountDepositEndpoint).
 		Body(client.NewBody(client.BODY_TYPE_JSON).
 			SetString("profile_id", opts.ProfileID).
@@ -93,9 +111,7 @@ func (transfer *Transfer) MakeCoinbaseAccountDeposit(
 // default profile.
 //
 // * source https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postdepositpaymentmethod
-func (transfer *Transfer) MakePaymentMethodDeposit(
-	opts *model.CoinbasePaymentMethodDepositOptions,
-) (m *model.CoinbaseDeposit, err error) {
+func (transfer *Transfer) PaymentMethodDeposit(opts *model.CoinbasePaymentMethodDepositOptions) (m *model.CoinbaseDeposit, err error) {
 	return m, transfer.Post(PaymentMethodDepositEndpoint).
 		Body(client.NewBody(client.BODY_TYPE_JSON).
 			SetString("profile_id", opts.ProfileID).
@@ -111,4 +127,45 @@ func (transfer *Transfer) MakePaymentMethodDeposit(
 func (transfer *Transfer) PaymentMethods() (m []*model.CoinbasePaymentMethod, err error) {
 	req := transfer.Get(PaymentMethodEndpoint)
 	return m, req.Fetch().Assign(&m).JoinMessages()
+}
+
+// PaymentMethodWithdrawal ithdraws funds from the specified profile_id to a
+// linked external payment method
+//
+// This endpoint requires the "transfer" permission. API key is restricted to
+// the default profile.
+//
+// * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postwithdrawcoinbaseaccount
+func (transfer *Transfer) PaymentMethodWithdrawal(opts *model.CoinbasePaymentMethodWithdrawalOptions) (m *model.CoinbaseWithdrawal, err error) {
+	return m, transfer.Post(PaymentMethodWithdrawalEndpoint).
+		Body(client.NewBody(client.BODY_TYPE_JSON).
+			SetString("profile_id", opts.ProfileID).
+			SetFloat("amount", &opts.Amount).
+			SetString("payment_method_id", &opts.PaymentMethodID).
+			SetString("currency", &opts.Currency)).
+		Fetch().Assign(&m).JoinMessages()
+}
+
+// WithdrawalFeeEstimate gets the fee estimate for the crypto withdrawal to
+// crypto address
+//
+// This endpoint requires the "transfer" permission. API key must belong to
+// default profile.
+//
+// * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_getwithdrawfeeestimate
+func (transfer *Transfer) WithdrawalFeeEstimate(opts *model.CoinbaseWithdrawalFeeEstimateOptions) (m *model.CoinbaseWithdrawalFeeEstimate, err error) {
+	return m, transfer.Get(WithdrawalFeeEstimateEndpoint).
+		QueryParam("currency", func() (i *string) {
+			if opts != nil {
+				i = opts.Currency
+			}
+			return
+		}()).
+		QueryParam("crypto_address", func() (i *string) {
+			if opts != nil {
+				i = opts.CryptoAddress
+			}
+			return
+		}()).
+		Fetch().Assign(&m).JoinMessages()
 }

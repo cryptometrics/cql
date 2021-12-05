@@ -112,6 +112,8 @@ func newClient() (client.C, error) {
 	return &proC{}, nil
 }
 
+// DefaultClient will pull the coinbase authentication data from the env
+// variables.  See README for more information on how to set these up.
 func DefaultClient() (client.C, error) {
 	return &proC{}, nil
 }

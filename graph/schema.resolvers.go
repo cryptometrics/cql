@@ -13,7 +13,7 @@ import (
 )
 
 func (r *mutationResolver) CoinbaseAccountDeposit(ctx context.Context, opts *model.CoinbaseAccountDepositOptions) (*model.CoinbaseDeposit, error) {
-	return coinbase.NewTransfer(coinbase.DefaultClient).MakeCoinbaseAccountDeposit(opts)
+	return coinbase.NewTransfer(coinbase.DefaultClient).CoinbaseAccountDeposit(opts)
 }
 
 func (r *mutationResolver) CoinbaseConvertCurrency(ctx context.Context, opts model.CoinbaseConversionsOptions) (*model.CoinbaseCurrencyConversion, error) {
@@ -25,11 +25,19 @@ func (r *mutationResolver) CoinbaseGenerateCryptoAddress(ctx context.Context, wa
 }
 
 func (r *mutationResolver) CoinbasePaymentMethodDeposit(ctx context.Context, opts *model.CoinbasePaymentMethodDepositOptions) (*model.CoinbaseDeposit, error) {
-	return coinbase.NewTransfer(coinbase.DefaultClient).MakePaymentMethodDeposit(opts)
+	return coinbase.NewTransfer(coinbase.DefaultClient).PaymentMethodDeposit(opts)
+}
+
+func (r *mutationResolver) CoinbasePaymentMethodWithdrawal(ctx context.Context, opts *model.CoinbasePaymentMethodWithdrawalOptions) (*model.CoinbaseWithdrawal, error) {
+	return coinbase.NewTransfer(coinbase.DefaultClient).PaymentMethodWithdrawal(opts)
 }
 
 func (r *mutationResolver) CoinbaseAccountWithdrawal(ctx context.Context, opts *model.CoinbaseAccountWithdrawalOptions) (*model.CoinbaseWithdrawal, error) {
 	return coinbase.NewTransfer(coinbase.DefaultClient).AccountWithdrawal(opts)
+}
+
+func (r *mutationResolver) CoinbaseCryptoWithdrawal(ctx context.Context, opts *model.CoinbaseCryptoWithdrawalOptions) (*model.CoinbaseWithdrawal, error) {
+	return coinbase.NewTransfer(coinbase.DefaultClient).CryptoWithdrawal(opts)
 }
 
 func (r *queryResolver) CoinbaseAccount(ctx context.Context, accountID string) (*model.CoinbaseAccount, error) {
@@ -78,6 +86,10 @@ func (r *queryResolver) CoinbaseTransfer(ctx context.Context, transferID string)
 
 func (r *queryResolver) CoinbaseWallets(ctx context.Context) ([]*model.CoinbaseWallet, error) {
 	return coinbase.NewCoinbaseAccounts(coinbase.DefaultClient).Wallets()
+}
+
+func (r *queryResolver) CoinbaseWithdrawalFeeEstimate(ctx context.Context, opts *model.CoinbaseWithdrawalFeeEstimateOptions) (*model.CoinbaseWithdrawalFeeEstimate, error) {
+	return coinbase.NewTransfer(coinbase.DefaultClient).WithdrawalFeeEstimate(opts)
 }
 
 func (r *queryResolver) IexRules(ctx context.Context, value string) ([]*model.IexRule, error) {

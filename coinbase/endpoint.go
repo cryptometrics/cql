@@ -22,13 +22,16 @@ const (
 	AddressesEndpoint
 	ConversionEndpoint
 	ConversionsEndpoint
+	CryptoWithdrawalEndpoint
 	CurrenciesEndpoint
 	CurrencyEndpoint
 	PaymentMethodEndpoint
 	PaymentMethodDepositEndpoint
+	PaymentMethodWithdrawalEndpoint
 	TransferEndpoint
 	TransfersEndpoint
 	WalletsEndpoint
+	WithdrawalFeeEstimateEndpoint
 )
 
 // Information for a single account. Use this endpoint when you know the
@@ -127,6 +130,17 @@ func ConversionsPath(args client.EndpointArgs) (p string) {
 	return sb.String()
 }
 
+// Withdraws funds from the specified profile_id to an external crypto address.
+// This endpoint requires the "transfer" permission. API key must belong to
+// default profile.
+func CryptoWithdrawalPath(args client.EndpointArgs) (p string) {
+	p = path.Join("/withdrawals", "crypto")
+	var sb strings.Builder
+	sb.WriteString(p)
+	sb.WriteString(args.QueryPath().String())
+	return sb.String()
+}
+
 // Gets a list of all known currencies.  Note: Not all currencies may be
 // currently in use for trading.
 func CurrenciesPath(_ client.EndpointArgs) string {
@@ -153,6 +167,17 @@ func PaymentMethodDepositPath(args client.EndpointArgs) (p string) {
 	return sb.String()
 }
 
+// Withdraws funds from the specified profile_id to a linked external payment
+// method.  This endpoint requires the "transfer" permission. API key is
+// restricted to the default profile.
+func PaymentMethodWithdrawalPath(args client.EndpointArgs) (p string) {
+	p = path.Join("/withdrawals", "payment-method")
+	var sb strings.Builder
+	sb.WriteString(p)
+	sb.WriteString(args.QueryPath().String())
+	return sb.String()
+}
+
 // Get information on a single transfer.
 func TransferPath(args client.EndpointArgs) string {
 	return path.Join("/transfers", *args["transfer_id"].PathParam)
@@ -170,26 +195,38 @@ func WalletsPath(_ client.EndpointArgs) string {
 	return path.Join("/coinbase-accounts")
 }
 
+// Gets the fee estimate for the crypto withdrawal to crypto address
+func WithdrawalFeeEstimatePath(args client.EndpointArgs) (p string) {
+	p = path.Join("/withdrawals", "fee-estimate")
+	var sb strings.Builder
+	sb.WriteString(p)
+	sb.WriteString(args.QueryPath().String())
+	return sb.String()
+}
+
 // Get takes an endpoint const and endpoint arguments to parse the URL endpoint
 // path.
 func (endpoint Endpoint) Path(args client.EndpointArgs) string {
 	return map[Endpoint]func(args client.EndpointArgs) string{
-		AccountEndpoint:              AccountPath,
-		AccountDepositEndpoint:       AccountDepositPath,
-		AccountHoldsEndpoint:         AccountHoldsPath,
-		AccountLedgerEndpoint:        AccountLedgerPath,
-		AccountTransfersEndpoint:     AccountTransfersPath,
-		AccountWithdrawalEndpoint:    AccountWithdrawalPath,
-		AccountsEndpoint:             AccountsPath,
-		AddressesEndpoint:            AddressesPath,
-		ConversionEndpoint:           ConversionPath,
-		ConversionsEndpoint:          ConversionsPath,
-		CurrenciesEndpoint:           CurrenciesPath,
-		CurrencyEndpoint:             CurrencyPath,
-		PaymentMethodEndpoint:        PaymentMethodPath,
-		PaymentMethodDepositEndpoint: PaymentMethodDepositPath,
-		TransferEndpoint:             TransferPath,
-		TransfersEndpoint:            TransfersPath,
-		WalletsEndpoint:              WalletsPath,
+		AccountEndpoint:                 AccountPath,
+		AccountDepositEndpoint:          AccountDepositPath,
+		AccountHoldsEndpoint:            AccountHoldsPath,
+		AccountLedgerEndpoint:           AccountLedgerPath,
+		AccountTransfersEndpoint:        AccountTransfersPath,
+		AccountWithdrawalEndpoint:       AccountWithdrawalPath,
+		AccountsEndpoint:                AccountsPath,
+		AddressesEndpoint:               AddressesPath,
+		ConversionEndpoint:              ConversionPath,
+		ConversionsEndpoint:             ConversionsPath,
+		CryptoWithdrawalEndpoint:        CryptoWithdrawalPath,
+		CurrenciesEndpoint:              CurrenciesPath,
+		CurrencyEndpoint:                CurrencyPath,
+		PaymentMethodEndpoint:           PaymentMethodPath,
+		PaymentMethodDepositEndpoint:    PaymentMethodDepositPath,
+		PaymentMethodWithdrawalEndpoint: PaymentMethodWithdrawalPath,
+		TransferEndpoint:                TransferPath,
+		TransfersEndpoint:               TransfersPath,
+		WalletsEndpoint:                 WalletsPath,
+		WithdrawalFeeEstimateEndpoint:   WithdrawalFeeEstimatePath,
 	}[endpoint](args)
 }
