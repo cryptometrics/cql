@@ -1,66 +1,68 @@
 package coinbase
 
-// import (
-// 	"cql/client"
-// 	"cql/model"
-// )
+import (
+	"cql/client"
+	"cql/model"
+)
 
-// // Conversions is an object used to converts funds from `from` currency to `to`
-// // currency.
-// type Conversions struct {
-// 	parent
-// }
+// CoinbaseAccounts is an object used to query coinbase account data.
+type Conversion struct {
+	client.Parent
+}
 
-// // NewConversion will return a new conversion obejct to convert funds
-// func NewConversion(conn client.Connector) *Conversions {
-// 	conversions := new(Conversions)
-// 	construct(&conversions.parent, conn)
-// 	return conversions
-// }
+// NewConversion will return an object to query currency conversions
+func NewConversion(conn client.Connector) *Conversion {
+	conversion := new(Conversion)
+	client.ConstructParent(&conversion.Parent, conn)
+	return conversion
+}
 
-// // Find gets currency conversion by id (i.e. USD -> USDC).
-// //
-// // * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_getconversion
-// func (conversions *Conversions) Find(id string, opts *model.CoinbaseCurrencyConversionOpts,
-// ) (m *model.CoinbaseCurrencyConversion, err error) {
-// 	return m, conversions.get(ENDPOINT_COINBASE_CONVERSION).
-// 		PathParam("id", id).
-// 		QueryParam("profile_id", func() (i *string) {
-// 			if opts != nil {
-// 				i = opts.ProfileID
-// 			}
-// 			return
-// 		}()).
-// 		Fetch().Assign(&m).JoinMessages()
-// }
+// Find gets currency conversion by id (i.e. USD -> USDC).
+//
+// * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_getconversion
+func (conversion *Conversion) Find(
+	conversionId string,
+	opts *model.CoinbaseConversionOptions,
+) (m *model.CoinbaseCurrencyConversion, err error) {
+	return m, conversion.Get(ConversionEndpoint).
+		PathParam("conversion_id", conversionId).
+		QueryParam("profile_id", func() (i *string) {
+			if opts != nil {
+				i = opts.ProfileID
+			}
+			return
+		}()).
+		Fetch().Assign(&m).JoinMessages()
+}
 
-// // Make converts funds from from currency to to currency. Funds are converted on
-// // the from account in the profile_id profile.
-// //
-// // This endpoint requires the "trade" permission.
-// //
-// // A successful conversion will be assigned a conversion id. The correspondin
-// // ledger entries for a conversion will reference this conversion id.
-// //
-// // * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postconversion
-// func (conversions *Conversions) Make(from, to string, amount float64, opts *model.CoinbaseCurrencyConversionOpts,
-// ) (m *model.CoinbaseCurrencyConversion, err error) {
-// 	return m, conversions.post(ENDPOINT_COINBASE_CONVERSIONS).
-// 		Body(client.NewBody(client.BODY_TYPE_JSON).
-// 			SetString("from", &from).
-// 			SetString("to", &to).
-// 			SetFloat("amount", &amount).
-// 			SetString("profile_id", func() (s *string) {
-// 				if opts != nil {
-// 					s = opts.ProfileID
-// 				}
-// 				return
-// 			}()).
-// 			SetString("nonce", func() (s *string) {
-// 				if opts != nil {
-// 					s = opts.Nonce
-// 				}
-// 				return
-// 			}())).
-// 		Fetch().Assign(&m).JoinMessages()
-// }
+// Make converts funds from from currency to to currency. Funds are converted on
+// the from account in the profile_id profile.
+//
+// This endpoint requires the "trade" permission.
+//
+// A successful conversion will be assigned a conversion id. The correspondin
+// ledger entries for a conversion will reference this conversion id.
+//
+// * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postconversion
+func (conversion *Conversion) Make(
+	opts model.CoinbaseConversionsOptions,
+) (m *model.CoinbaseCurrencyConversion, err error) {
+	return m, conversion.Post(ConversionsEndpoint).
+		Body(client.NewBody(client.BODY_TYPE_JSON).
+			SetString("from", &opts.From).
+			SetString("to", &opts.To).
+			SetFloat("amount", &opts.Amount).
+			SetString("profile_id", func() (s *string) {
+				if opts.ProfileID != nil {
+					s = opts.ProfileID
+				}
+				return
+			}()).
+			SetString("nonce", func() (s *string) {
+				if opts.Nonce != nil {
+					s = opts.Nonce
+				}
+				return
+			}())).
+		Fetch().Assign(&m).JoinMessages()
+}

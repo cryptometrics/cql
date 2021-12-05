@@ -12,7 +12,11 @@ import (
 	"cql/model"
 )
 
-func (r *mutationResolver) GenerateCryptoAddress(ctx context.Context, walletID string) (*model.CoinbaseCryptoAddress, error) {
+func (r *mutationResolver) CoinbaseConvertCurrency(ctx context.Context, opts model.CoinbaseConversionsOptions) (*model.CoinbaseCurrencyConversion, error) {
+	return coinbase.NewConversion(coinbase.DefaultClient).Make(opts)
+}
+
+func (r *mutationResolver) CoinbaseGenerateCryptoAddress(ctx context.Context, walletID string) (*model.CoinbaseCryptoAddress, error) {
 	return coinbase.NewCoinbaseAccounts(coinbase.DefaultClient).GenerateCryptoAddress(walletID)
 }
 
@@ -34,6 +38,18 @@ func (r *queryResolver) CoinbaseAccountLedger(ctx context.Context, accountID str
 
 func (r *queryResolver) CoinbaseAccountTransfers(ctx context.Context, accountID string, opts *model.CoinbaseAccountTransferOptions) ([]*model.CoinbaseAccountTransfer, error) {
 	return coinbase.NewAccounts(coinbase.DefaultClient).Transfers(accountID, opts)
+}
+
+func (r *queryResolver) CoinbaseCurrencies(ctx context.Context) ([]*model.CoinbaseCurrency, error) {
+	return coinbase.NewCurrency(coinbase.DefaultClient).All()
+}
+
+func (r *queryResolver) CoinbaseCurrencyConversion(ctx context.Context, conversionID string, opts *model.CoinbaseConversionOptions) (*model.CoinbaseCurrencyConversion, error) {
+	return coinbase.NewConversion(coinbase.DefaultClient).Find(conversionID, opts)
+}
+
+func (r *queryResolver) CoinbaseCurrency(ctx context.Context, currentID string) (*model.CoinbaseCurrency, error) {
+	return coinbase.NewCurrency(coinbase.DefaultClient).Find(currentID)
 }
 
 func (r *queryResolver) CoinbaseWallets(ctx context.Context) ([]*model.CoinbaseWallet, error) {

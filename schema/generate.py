@@ -96,6 +96,10 @@ class QueryParam:
         self.identifier = query_param_dic[MODEL_FIELD_IDENTIFIER]
         self.go_type = query_param_dic[MODEL_FIELD_GO_TYPE]
         self.go_proto_field_name = inflection.camelize(self.identifier)
+        self.required = False
+
+        if "required" in query_param_dic:
+            self.required = query_param_dic["required"]
 
 
 class Endpoint:
@@ -146,6 +150,7 @@ class Field:
         self.has_deserializer = False
         self.description = ""
         self.struct_type = False
+        self.required = False
 
         if MODEL_FIELD_DATETIME_LAYOUT in field_dic:
             self.has_datetime_layout = True
@@ -579,11 +584,14 @@ def graphqls_type(field: Field):
         "int": "Int",
         "[]string": "[String]"
     }
+    t = field.go_type.replace("scalar.", "")
     if field.go_type in switch:
-        return switch[field.go_type]
-    if "[]" in field.go_type:
-        return f'[{field.go_type.replace("[]", "").replace("*", "")}]'
-    return field.go_type.replace("scalar.", "")
+        t = switch[field.go_type]
+    elif "[]" in field.go_type:
+        t = f'[{field.go_type.replace("[]", "").replace("*", "")}]'
+    if field.required:
+        t += "!"
+    return t
 
 
 def tag_to_go_type(scheme: Scheme):
@@ -830,7 +838,7 @@ def endpoint_path_fns(endpoints: List[Endpoint]):
     fns = []
     for endpoint in endpoints:
         var = "_"
-        if endpoint.has_path_params():
+        if endpoint.has_path_params() or endpoint.has_query_params:
             var = "args"
 
         sig = f'func {endpoint_path_fn_name(endpoint)}({var} {GO_CLIENT}.{GO_ENDPOINT_ARGS}) '

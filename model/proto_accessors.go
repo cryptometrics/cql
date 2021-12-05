@@ -83,6 +83,13 @@ func (m *CoinbaseWireDepositInformation) BankCountry() *CoinbaseBankCountry {
 		CoinbaseBankCountry: m.ProtoBankCountry}
 }
 
+// Details converts the native protomodel ProtoDetails to a local
+// CoinbaseCurrencyDetails.
+func (m *CoinbaseCurrency) Details() *CoinbaseCurrencyDetails {
+	return &CoinbaseCurrencyDetails{
+		CoinbaseCurrencyDetails: m.ProtoDetails}
+}
+
 // WireDepositInformation converts the native protomodel
 // ProtoWireDepositInformation to a local CoinbaseWireDepositInformation.
 func (m *CoinbaseWallet) WireDepositInformation() *CoinbaseWireDepositInformation {

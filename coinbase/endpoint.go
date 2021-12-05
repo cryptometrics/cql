@@ -18,6 +18,10 @@ const (
 	AccountTransfersEndpoint
 	AccountsEndpoint
 	AddressesEndpoint
+	ConversionEndpoint
+	ConversionsEndpoint
+	CurrenciesEndpoint
+	CurrencyEndpoint
 	WalletsEndpoint
 )
 
@@ -72,6 +76,39 @@ func AddressesPath(args client.EndpointArgs) string {
 	return path.Join("/coinbase-accounts", *args["account_id"].PathParam, "addresses")
 }
 
+// Gets a currency conversion by id (i.e. USD -> USDC).
+func ConversionPath(args client.EndpointArgs) (p string) {
+	p = path.Join("/conversions", *args["conversion_id"].PathParam)
+	var sb strings.Builder
+	sb.WriteString(p)
+	sb.WriteString(args.QueryPath().String())
+	return sb.String()
+}
+
+// Converts funds from from currency to to currency. Funds are converted on the
+// from account in the profile_id profile.  This endpoint requires the "trade"
+// permission.  A successful conversion will be assigned a conversion id. The
+// corresponding ledger entries for a conversion will reference this conversion
+// id
+func ConversionsPath(args client.EndpointArgs) (p string) {
+	p = path.Join("/conversions")
+	var sb strings.Builder
+	sb.WriteString(p)
+	sb.WriteString(args.QueryPath().String())
+	return sb.String()
+}
+
+// Gets a list of all known currencies.  Note: Not all currencies may be
+// currently in use for trading.
+func CurrenciesPath(_ client.EndpointArgs) string {
+	return path.Join("/currencies")
+}
+
+// Gets a single currency by id.
+func CurrencyPath(args client.EndpointArgs) string {
+	return path.Join("/currencies", *args["currency_id"].PathParam)
+}
+
 // Gets all the user's available Coinbase wallets (These are the
 // wallets/accounts that are used for buying and selling on www.coinbase.com)
 func WalletsPath(_ client.EndpointArgs) string {
@@ -88,6 +125,10 @@ func (endpoint Endpoint) Path(args client.EndpointArgs) string {
 		AccountTransfersEndpoint: AccountTransfersPath,
 		AccountsEndpoint:         AccountsPath,
 		AddressesEndpoint:        AddressesPath,
+		ConversionEndpoint:       ConversionPath,
+		ConversionsEndpoint:      ConversionsPath,
+		CurrenciesEndpoint:       CurrenciesPath,
+		CurrencyEndpoint:         CurrencyPath,
 		WalletsEndpoint:          WalletsPath,
 	}[endpoint](args)
 }

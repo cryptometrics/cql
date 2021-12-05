@@ -17,6 +17,12 @@ type Query {
     accountId: String!
     opts: CoinbaseAccountTransferOptions
   ): [CoinbaseAccountTransfer]
+  coinbaseCurrencies: [CoinbaseCurrency]
+  coinbaseCurrencyConversion(
+    conversionId: String!
+    opts: CoinbaseConversionOptions
+  ): CoinbaseCurrencyConversion
+  coinbaseCurrency(currentId: String!): CoinbaseCurrency
   coinbaseWallets: [CoinbaseWallet]
   iexRules(value: String!): [IexRule]
   iexRulesSchema: IexRulesSchema
@@ -24,5 +30,8 @@ type Query {
   krakenSystemStatus: KrakenSystemStatus
 }
 type Mutation {
-  generateCryptoAddress(walletId: String!): CoinbaseCryptoAddress
+  coinbaseConvertCurrency(
+    opts: CoinbaseConversionsOptions!
+  ): CoinbaseCurrencyConversion
+  coinbaseGenerateCryptoAddress(walletId: String!): CoinbaseCryptoAddress
 }

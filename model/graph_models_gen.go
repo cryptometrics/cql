@@ -30,3 +30,15 @@ type CoinbaseAccountTransfersOptions struct {
 	Limit  *int    `json:"limit"`
 	Type   *string `json:"type"`
 }
+
+type CoinbaseConversionOptions struct {
+	ProfileID *string `json:"profileId"`
+}
+
+type CoinbaseConversionsOptions struct {
+	ProfileID *string `json:"profileId"`
+	From      string  `json:"from"`
+	To        string  `json:"to"`
+	Amount    float64 `json:"amount"`
+	Nonce     *string `json:"nonce"`
+}

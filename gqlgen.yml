@@ -27,6 +27,12 @@ models:
     model: cql/model.CoinbaseCryptoAddressInfo
   CoinbaseCryptoAddressWarning:
     model: cql/model.CoinbaseCryptoAddressWarning
+  CoinbaseCurrency:
+    model: cql/model.CoinbaseCurrency
+  CoinbaseCurrencyConversion:
+    model: cql/model.CoinbaseCurrencyConversion
+  CoinbaseCurrencyDetails:
+    model: cql/model.CoinbaseCurrencyDetails
   CoinbaseHold:
     model: cql/model.CoinbaseHold
   CoinbaseSEPADepositInformation:

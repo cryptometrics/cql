@@ -64,6 +64,10 @@
 								"goType": {
 									"type": "string",
 									"description": "go type"
+								},
+								"required": {
+									"type": "boolean",
+									"description": "if the field is required"
 								}
 							}
 						}
