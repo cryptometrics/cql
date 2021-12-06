@@ -38,9 +38,9 @@ $ bazel run //:gazell-update-repos
 ```
 
 
-## .env
+## .auth.env
 
-To use api endpoints that require authentication, create a cryptometrics/cql/.env file and add your keys. The following are the supported APIs
+To use api endpoints that require authentication, create a cryptometrics/cql/.auth.env file and add your keys. The following are the supported APIs
 
 ### Coinbase Pro
 
