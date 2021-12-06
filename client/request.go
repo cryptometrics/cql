@@ -2,10 +2,10 @@ package client
 
 import (
 	"crypto/rand"
-	""github.com/cryptometrics/cql/model""
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"github.com/cryptometrics/cql/model"
 	"net/http"
 
 	"github.com/sirupsen/logrus"

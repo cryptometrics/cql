@@ -5,8 +5,8 @@ package generated
 import (
 	"bytes"
 	"context"
-	""github.com/cryptometrics/cql/model""
 	"errors"
+	"github.com/cryptometrics/cql/model"
 	"github.com/cryptometrics/cql/scalar"
 	"strconv"
 	"sync"

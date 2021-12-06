@@ -2,7 +2,8 @@ package iex
 
 import (
 	"cryptometrics/cql/client"
-	""github.com/cryptometrics/cql/model""
+
+	"github.com/cryptometrics/cql/model"
 )
 
 // RulesEngine is a structure used to maintain state while querying on iex

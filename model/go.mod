@@ -1,4 +1,4 @@
-module github.com/"github.com/cryptometrics/cql/model"
+module github.com/cryptometrics/cql/model
 
 go 1.16
 
