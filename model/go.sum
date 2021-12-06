@@ -1,2 +1,8 @@
+github.com/cryptometrics/cql/protomodel v0.0.0-20211206013514-d0edea3fb84a h1:CED6Blh46DL2w8RWaT/Qfgyy9tSqMHypKptue+uBQ50=
+github.com/cryptometrics/cql/protomodel v0.0.0-20211206013514-d0edea3fb84a/go.mod h1:J4RYPaohWC8Li+pO8S6BqsCCBwHnj8ncrEqrLeYRCAU=
+github.com/cryptometrics/cql/scalar v0.0.0-20211206012556-b8d3b67ac33a h1:1rrqILP2vD8B+e0BLir0p5WBZ5Kk2/0bd17wLs/mYQQ=
+github.com/cryptometrics/cql/scalar v0.0.0-20211206012556-b8d3b67ac33a/go.mod h1:kyZRl1S+TkksitOr9+aP/iPzROuZ9ILfo+8ykva7TH0=
+github.com/cryptometrics/cql/serial v0.0.0-20211206012556-b8d3b67ac33a h1:SieNOkF6GZ32l9/bIXWBSAlACMHC3sgd+2KohwdZ8qM=
+github.com/cryptometrics/cql/serial v0.0.0-20211206012556-b8d3b67ac33a/go.mod h1:vsmCrbIRymHucR2r0cVd4mN5wp96/DJNua1CJaEcFWE=
 github.com/franela/goblin v0.0.0-20211003143422-0a4f594942bf h1:NrF81UtW8gG2LBGkXFQFqlfNnvMt9WdB46sfdJY4oqc=
 github.com/franela/goblin v0.0.0-20211003143422-0a4f594942bf/go.mod h1:VzmDKDJVZI3aJmnRI9VjAn9nJ8qPPsN1fqzr9dqInIo=

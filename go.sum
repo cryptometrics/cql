@@ -9,6 +9,12 @@ github.com/andreyvit/diff v0.0.0-20170406064948-c7f18ee00883/go.mod h1:rCTlJbsFo
 github.com/arbovm/levenshtein v0.0.0-20160628152529-48b4e1c0c4d0 h1:jfIu9sQUG6Ig+0+Ap1h4unLjW6YQJpKZVmUzxsD4E/Q=
 github.com/arbovm/levenshtein v0.0.0-20160628152529-48b4e1c0c4d0/go.mod h1:t2tdKJDJF9BV14lnkjHmOQgcvEKgtqs5a1N3LNdJhGE=
 github.com/cpuguy83/go-md2man/v2 v2.0.0-20190314233015-f79a8a8ca69d/go.mod h1:maD7wRr/U5Z6m/iR4s+kqSMx2CaBsrgA7czyZG/E6dU=
+github.com/cryptometrics/cql/protomodel v0.0.0-20211206013514-d0edea3fb84a h1:CED6Blh46DL2w8RWaT/Qfgyy9tSqMHypKptue+uBQ50=
+github.com/cryptometrics/cql/protomodel v0.0.0-20211206013514-d0edea3fb84a/go.mod h1:J4RYPaohWC8Li+pO8S6BqsCCBwHnj8ncrEqrLeYRCAU=
+github.com/cryptometrics/cql/scalar v0.0.0-20211206012556-b8d3b67ac33a h1:1rrqILP2vD8B+e0BLir0p5WBZ5Kk2/0bd17wLs/mYQQ=
+github.com/cryptometrics/cql/scalar v0.0.0-20211206012556-b8d3b67ac33a/go.mod h1:kyZRl1S+TkksitOr9+aP/iPzROuZ9ILfo+8ykva7TH0=
+github.com/cryptometrics/cql/serial v0.0.0-20211206012556-b8d3b67ac33a h1:SieNOkF6GZ32l9/bIXWBSAlACMHC3sgd+2KohwdZ8qM=
+github.com/cryptometrics/cql/serial v0.0.0-20211206012556-b8d3b67ac33a/go.mod h1:vsmCrbIRymHucR2r0cVd4mN5wp96/DJNua1CJaEcFWE=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
