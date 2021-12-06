@@ -2,7 +2,7 @@ package kraken
 
 import (
 	"cryptometrics/cql/client"
-	"cryptometrics/cql/model"
+	""github.com/cryptometrics/cql/model""
 )
 
 // MarketData is a structure used to maintain state while querying on kraken

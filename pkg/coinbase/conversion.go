@@ -2,7 +2,7 @@ package coinbase
 
 import (
 	"cryptometrics/cql/client"
-	"cryptometrics/cql/model"
+	""github.com/cryptometrics/cql/model""
 )
 
 // CoinbaseAccounts is an object used to query coinbase account data.

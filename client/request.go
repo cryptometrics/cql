@@ -2,7 +2,7 @@ package client
 
 import (
 	"crypto/rand"
-	"cryptometrics/cql/model"
+	""github.com/cryptometrics/cql/model""
 	"encoding/hex"
 	"encoding/json"
 	"fmt"

@@ -9,7 +9,7 @@ import (
 	"cryptometrics/cql/graph/generated"
 	"cryptometrics/cql/iex"
 	"cryptometrics/cql/kraken"
-	"cryptometrics/cql/model"
+	""github.com/cryptometrics/cql/model""
 )
 
 func (r *mutationResolver) CoinbaseAccountDeposit(ctx context.Context, opts *model.CoinbaseAccountDepositOptions) (*model.CoinbaseDeposit, error) {
