@@ -14,6 +14,7 @@ type AsyncTicker struct {
 	Errors *errgroup.Group
 
 	channel TickerChannel
+	closed  bool
 	conn    WebsocketConnector
 	message *WebsocketMessage
 }
@@ -35,7 +36,7 @@ func newAsyncTicker(ctx context.Context, conn WebsocketConnector, products ...st
 // startStream starts the websocket stream, streaming it into the channel
 func (ticker *AsyncTicker) startStream() *AsyncTicker {
 	ticker.Errors.Go(func() (err error) {
-		for true {
+		for !ticker.closed {
 			var row model.CoinbaseWebsocketTicker
 			if err = ticker.conn.ReadJSON(&row); err != nil {
 				break
@@ -57,6 +58,7 @@ func (ticker *AsyncTicker) Close() error {
 	if err := ticker.message.Unsubscribe(ticker.conn); err != nil {
 		return err
 	}
+	ticker.closed = true
 	close(ticker.channel)
 	return nil
 }
