@@ -11,6 +11,16 @@ github.com/arbovm/levenshtein v0.0.0-20160628152529-48b4e1c0c4d0/go.mod h1:t2tdK
 github.com/cpuguy83/go-md2man/v2 v2.0.0-20190314233015-f79a8a8ca69d/go.mod h1:maD7wRr/U5Z6m/iR4s+kqSMx2CaBsrgA7czyZG/E6dU=
 github.com/cryptometrics/cql/client v0.0.0-20211206020952-08321d9df083 h1:cYJqvGpO2164wYKIqLK2WD6het2P6SrEAScYWsXJsAw=
 github.com/cryptometrics/cql/client v0.0.0-20211206020952-08321d9df083/go.mod h1:kDTRrGEwA2bqv3p4oByqd4UZxQ8KAPjthNIMasCVjRE=
+github.com/cryptometrics/cql/coinbase v0.0.0-20211206020952-08321d9df083 h1:6onb2e0MgIDJ1acvZfFC9Ijjb7Kmw11ISye6Nx+2CNw=
+github.com/cryptometrics/cql/coinbase v0.0.0-20211206020952-08321d9df083/go.mod h1:nWq0YaUtOi3fhWL1NC/OIKlZNHzHpv/RJOU7VwAbDuU=
+github.com/cryptometrics/cql/env v0.0.0-20211206014521-10d776dd1d97 h1:1XiXHTvIy7lGivnArgGTrkoAL+tE6kRHMoRFCSBgwzs=
+github.com/cryptometrics/cql/env v0.0.0-20211206014521-10d776dd1d97/go.mod h1:fSL6oGtNrEV8b1gju4wWZLLyl60+KcannwjYrVQ72Qo=
+github.com/cryptometrics/cql/graph v0.0.0-20211206021958-0f8422fbee3c h1:RADfAOa0AZfYOkKG5Eg9qRuEjHLiU8nPGXxhOJpwisE=
+github.com/cryptometrics/cql/graph v0.0.0-20211206021958-0f8422fbee3c/go.mod h1:EyUrjBRmQrHp/CJQKICD9dT0kh7OgXaE5hPFvwLh7BY=
+github.com/cryptometrics/cql/iex v0.0.0-20211206021958-0f8422fbee3c h1:PGpkroUwUCx8P7ymaKJnZ1YfLAzzXTviizty7PWvdJc=
+github.com/cryptometrics/cql/iex v0.0.0-20211206021958-0f8422fbee3c/go.mod h1:XrWhwf6Dk3+VAgap8ORKgl9IwuhFZ2aU7cHMn791QvM=
+github.com/cryptometrics/cql/kraken v0.0.0-20211206021958-0f8422fbee3c h1:pudq8nslEJQv7oJkvDb+xFQPsasd+e6Puv7KXm0oWPc=
+github.com/cryptometrics/cql/kraken v0.0.0-20211206021958-0f8422fbee3c/go.mod h1:SZJxFdPXelwxh/cu62htW2ninesPX1na+if8Og6d4xA=
 github.com/cryptometrics/cql/model v0.0.0-20211206014431-55ebb41f1d9a h1:JY4aRmAKMVLH9+y8ncMaK/nd8gvSYl7wsJ4ordP+K1o=
 github.com/cryptometrics/cql/model v0.0.0-20211206014431-55ebb41f1d9a/go.mod h1:kX4Rt9We/qNiWRykJzrUuksBMhNfROZ5EFK0o5qk198=
 github.com/cryptometrics/cql/protomodel v0.0.0-20211206013514-d0edea3fb84a h1:CED6Blh46DL2w8RWaT/Qfgyy9tSqMHypKptue+uBQ50=
@@ -33,7 +43,10 @@ github.com/gorilla/context v0.0.0-20160226214623-1ea25387ff6f/go.mod h1:kBGZzfjB
 github.com/gorilla/mux v1.6.1/go.mod h1:1lud6UwP+6orDFRuTfBEV8e9/aOM/c4fVVCaMa2zaAs=
 github.com/gorilla/websocket v1.4.2 h1:+/TMaTYc4QFitKJxsQ7Yye35DkWvkdLcvGKqM+x0Ufc=
 github.com/gorilla/websocket v1.4.2/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
+github.com/hashicorp/golang-lru v0.5.0 h1:CL2msUPvZTLb5O648aiLNJw3hnBxN2+1Jq8rCOH9wdo=
 github.com/hashicorp/golang-lru v0.5.0/go.mod h1:/m3WP610KZHVQ1SGc6re/UDhFvYD7pJ4Ao+sR/qLZy8=
+github.com/joho/godotenv v1.4.0 h1:3l4+N6zfMWnkbPEXKng2o2/MR5mSwTrBih4ZEkkz1lg=
+github.com/joho/godotenv v1.4.0/go.mod h1:f4LDr5Voq0i2e/R5DDNOoa2zzDfwtkZa6DnEwAbqwq4=
 github.com/kisielk/errcheck v1.5.0/go.mod h1:pFxgyoBC7bSaBwPgfKdkLd5X25qrDl4LWUI2bnpBCr8=
 github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
@@ -44,6 +57,7 @@ github.com/matryer/moq v0.0.0-20200106131100-75d0ddfc0007/go.mod h1:9ELz6aaclSIG
 github.com/mattn/go-colorable v0.1.4/go.mod h1:U0ppj6V5qS13XJ6of8GYAs25YV2eR4EVcfRqFIhoBtE=
 github.com/mattn/go-isatty v0.0.8/go.mod h1:Iq45c/XA43vh69/j3iqttzPXn0bhXyGjM0Hdxcsrc5s=
 github.com/mattn/go-isatty v0.0.12/go.mod h1:cbi8OIDigv2wuxKPP5vlRcQ1OAZbq2CE4Kysco4FUpU=
+github.com/mitchellh/mapstructure v0.0.0-20180203102830-a4e142e9c047 h1:zCoDWFD5nrJJVjbXiDZcVhOBSzKn3o9LgRLLMRNuru8=
 github.com/mitchellh/mapstructure v0.0.0-20180203102830-a4e142e9c047/go.mod h1:FVVH3fgwuzCH5S8UJGiWEs2h04kUh9fWfEaFds41c1Y=
 github.com/opentracing/basictracer-go v1.0.0/go.mod h1:QfBfYuafItcjQuMwinw9GhYKwFXS9KnPs5lxoYwgW74=
 github.com/opentracing/opentracing-go v1.0.2/go.mod h1:UkNAQd3GIcIGf0SeVgPpRdFStlNbqXla1AfSYxPUl2o=

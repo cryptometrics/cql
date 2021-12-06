@@ -29,7 +29,7 @@ func init() {
 	logrus.SetLevel(logrus.DebugLevel)
 }
 
-func main() {
+func StartServer() {
 	loadEnv()
 
 	port := os.Getenv("PORT")
