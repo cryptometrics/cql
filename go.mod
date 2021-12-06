@@ -1,3 +1,3 @@
-module github.com/cryptometrics/cql
+module github.com/cryptometrics.cql
 
 go 1.16

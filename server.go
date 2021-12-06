@@ -1,5 +1,7 @@
 package main
 
+func main() {}
+
 // import (
 // 	"cryptometrics/cql/graph"
 // 	"cryptometrics/cql/graph/generated"

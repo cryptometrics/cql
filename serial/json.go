@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/cryptometrics/cql/pkg/scalar"
+	"github.com/cryptometrics/cql/scalar"
 )
 
 // _json is meant to be used as a data type to hold data for unmarshaling
