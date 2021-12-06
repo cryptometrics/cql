@@ -67,15 +67,19 @@ IEX_KEY=
 IEX_SECRET=
 ```
 
-## Usage
+## Graphql usage
 
-To start the graphql server run
+To start the graphql server cd into cmd/graphql and build the binary
 
 ```sh
-$ go run server.go
+$ go build
 ```
 
-Then go to http://localhost:8080/
+then from the command line start the server:
+
+```sh 
+$ ./graphql start --port=8080
+```
 
 ## Updating the Schema
 
