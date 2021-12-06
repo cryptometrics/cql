@@ -3,6 +3,8 @@ module github.com/cryptometrics/cql/coinbase
 go 1.16
 
 require (
+	github.com/cryptometrics/cql/client v0.0.0-20211206020952-08321d9df083 // indirect
+	github.com/cryptometrics/cql/env v0.0.0-20211206014521-10d776dd1d97 // indirect
 	github.com/cryptometrics/cql/model v0.0.0-20211206014431-55ebb41f1d9a
 	github.com/franela/goblin v0.0.0-20211003143422-0a4f594942bf
 	github.com/golang/mock v1.6.0

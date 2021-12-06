@@ -9,6 +9,8 @@ github.com/andreyvit/diff v0.0.0-20170406064948-c7f18ee00883/go.mod h1:rCTlJbsFo
 github.com/arbovm/levenshtein v0.0.0-20160628152529-48b4e1c0c4d0 h1:jfIu9sQUG6Ig+0+Ap1h4unLjW6YQJpKZVmUzxsD4E/Q=
 github.com/arbovm/levenshtein v0.0.0-20160628152529-48b4e1c0c4d0/go.mod h1:t2tdKJDJF9BV14lnkjHmOQgcvEKgtqs5a1N3LNdJhGE=
 github.com/cpuguy83/go-md2man/v2 v2.0.0-20190314233015-f79a8a8ca69d/go.mod h1:maD7wRr/U5Z6m/iR4s+kqSMx2CaBsrgA7czyZG/E6dU=
+github.com/cryptometrics/cql/client v0.0.0-20211206020952-08321d9df083 h1:cYJqvGpO2164wYKIqLK2WD6het2P6SrEAScYWsXJsAw=
+github.com/cryptometrics/cql/client v0.0.0-20211206020952-08321d9df083/go.mod h1:kDTRrGEwA2bqv3p4oByqd4UZxQ8KAPjthNIMasCVjRE=
 github.com/cryptometrics/cql/model v0.0.0-20211206014431-55ebb41f1d9a h1:JY4aRmAKMVLH9+y8ncMaK/nd8gvSYl7wsJ4ordP+K1o=
 github.com/cryptometrics/cql/model v0.0.0-20211206014431-55ebb41f1d9a/go.mod h1:kX4Rt9We/qNiWRykJzrUuksBMhNfROZ5EFK0o5qk198=
 github.com/cryptometrics/cql/protomodel v0.0.0-20211206013514-d0edea3fb84a h1:CED6Blh46DL2w8RWaT/Qfgyy9tSqMHypKptue+uBQ50=

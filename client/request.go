@@ -5,8 +5,9 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"github.com/cryptometrics/cql/model"
 	"net/http"
+
+	"github.com/cryptometrics/cql/model"
 
 	"github.com/sirupsen/logrus"
 )
