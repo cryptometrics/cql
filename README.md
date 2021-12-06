@@ -77,7 +77,7 @@ $ go build
 
 then from the command line start the server:
 
-```sh 
+```sh
 $ ./graphql start --port=8080
 ```
 
@@ -92,7 +92,7 @@ python3 generate.py
 To re-generate a change to the schema:
 
 ```sh
-$ go run github.com/99designs/gqlgen generate
+$ go get github.com/99designs/gqlgen; go run github.com/99designs/gqlgen generate
 ```
 
 ## Docs
