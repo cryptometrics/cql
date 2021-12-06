@@ -1,3 +1,3 @@
-module github.com/cryptometrics/cql/scalar
+module github.com/cryptometrics/cql/pkg/scalar
 
 go 1.16
