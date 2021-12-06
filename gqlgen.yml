@@ -63,6 +63,8 @@ models:
     model: cql/model.CoinbaseSepaDepositInformation
   CoinbaseSepaaDepositInformation:
     model: cql/model.CoinbaseSepaaDepositInformation
+  CoinbaseSingleProduct:
+    model: cql/model.CoinbaseSingleProduct
   CoinbaseSwiftDepositInformation:
     model: cql/model.CoinbaseSwiftDepositInformation
   CoinbaseUKDepositInformation:
@@ -71,6 +73,8 @@ models:
     model: cql/model.CoinbaseUkDepositInformation
   CoinbaseWallet:
     model: cql/model.CoinbaseWallet
+  CoinbaseWebsocketTicker:
+    model: cql/model.CoinbaseWebsocketTicker
   CoinbaseWireDepositInformation:
     model: cql/model.CoinbaseWireDepositInformation
   CoinbaseWithdrawal:

@@ -28,6 +28,7 @@ const (
 	PaymentMethodEndpoint
 	PaymentMethodDepositEndpoint
 	PaymentMethodWithdrawalEndpoint
+	ProductEndpoint
 	TransferEndpoint
 	TransfersEndpoint
 	WalletsEndpoint
@@ -178,6 +179,11 @@ func PaymentMethodWithdrawalPath(args client.EndpointArgs) (p string) {
 	return sb.String()
 }
 
+// Get information on a single product.
+func ProductPath(args client.EndpointArgs) string {
+	return path.Join("/products", *args["product_id"].PathParam)
+}
+
 // Get information on a single transfer.
 func TransferPath(args client.EndpointArgs) string {
 	return path.Join("/transfers", *args["transfer_id"].PathParam)
@@ -224,6 +230,7 @@ func (endpoint Endpoint) Path(args client.EndpointArgs) string {
 		PaymentMethodEndpoint:           PaymentMethodPath,
 		PaymentMethodDepositEndpoint:    PaymentMethodDepositPath,
 		PaymentMethodWithdrawalEndpoint: PaymentMethodWithdrawalPath,
+		ProductEndpoint:                 ProductPath,
 		TransferEndpoint:                TransferPath,
 		TransfersEndpoint:               TransfersPath,
 		WalletsEndpoint:                 WalletsPath,
