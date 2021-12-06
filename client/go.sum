@@ -1,5 +1,14 @@
+github.com/cryptometrics/cql/model v0.0.0-20211206014431-55ebb41f1d9a h1:JY4aRmAKMVLH9+y8ncMaK/nd8gvSYl7wsJ4ordP+K1o=
+github.com/cryptometrics/cql/model v0.0.0-20211206014431-55ebb41f1d9a/go.mod h1:kX4Rt9We/qNiWRykJzrUuksBMhNfROZ5EFK0o5qk198=
+github.com/cryptometrics/cql/protomodel v0.0.0-20211206013514-d0edea3fb84a h1:CED6Blh46DL2w8RWaT/Qfgyy9tSqMHypKptue+uBQ50=
+github.com/cryptometrics/cql/protomodel v0.0.0-20211206013514-d0edea3fb84a/go.mod h1:J4RYPaohWC8Li+pO8S6BqsCCBwHnj8ncrEqrLeYRCAU=
+github.com/cryptometrics/cql/scalar v0.0.0-20211206012556-b8d3b67ac33a h1:1rrqILP2vD8B+e0BLir0p5WBZ5Kk2/0bd17wLs/mYQQ=
+github.com/cryptometrics/cql/scalar v0.0.0-20211206012556-b8d3b67ac33a/go.mod h1:kyZRl1S+TkksitOr9+aP/iPzROuZ9ILfo+8ykva7TH0=
+github.com/cryptometrics/cql/serial v0.0.0-20211206012556-b8d3b67ac33a h1:SieNOkF6GZ32l9/bIXWBSAlACMHC3sgd+2KohwdZ8qM=
+github.com/cryptometrics/cql/serial v0.0.0-20211206012556-b8d3b67ac33a/go.mod h1:vsmCrbIRymHucR2r0cVd4mN5wp96/DJNua1CJaEcFWE=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/franela/goblin v0.0.0-20211003143422-0a4f594942bf/go.mod h1:VzmDKDJVZI3aJmnRI9VjAn9nJ8qPPsN1fqzr9dqInIo=
 github.com/golang/mock v1.6.0 h1:ErTB+efbowRARo13NNdxyJji2egdxLGQhRaY+DUumQc=
 github.com/golang/mock v1.6.0/go.mod h1:p6yTPP+5HYm5mzsMV8JkE6ZKdX+/wYM6Hr+LicevLPs=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=

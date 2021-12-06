@@ -4,6 +4,7 @@ go 1.16
 
 require (
 	github.com/99designs/gqlgen v0.14.0
+	github.com/cryptometrics/cql/model v0.0.0-20211206014431-55ebb41f1d9a // indirect
 	github.com/cryptometrics/cql/protomodel v0.0.0-20211206013514-d0edea3fb84a // indirect
 	github.com/cryptometrics/cql/scalar v0.0.0-20211206012556-b8d3b67ac33a
 	github.com/franela/goblin v0.0.0-20211003143422-0a4f594942bf
