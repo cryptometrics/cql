@@ -6,6 +6,7 @@ go_library(
         "json.go",
         "transform.go",
     ],
-    importpath = "github.com/example/project/pkg/serial",
+    importpath = "github.com/cryptometrics/cql/pkg/serial",
     visibility = ["//visibility:public"],
+    deps = ["//pkg/scalar"],
 )

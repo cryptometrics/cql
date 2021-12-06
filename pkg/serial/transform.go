@@ -1,8 +1,9 @@
 package serial
 
 import (
-	"cryptometrics/cql/scalar"
 	"time"
+
+	"github.com/cryptometrics/cql/pkg/scalar"
 )
 
 // Transform interfaces data that can be deserialized/unmarshalled by type.

@@ -45,7 +45,7 @@ go_library(
         "kraken_system_status_result.go",
         "proto_accessors.go",
     ],
-    importpath = "github.com/example/project/pkg/model",
+    importpath = "github.com/cryptometrics/cql/pkg/model",
     visibility = ["//visibility:public"],
 )
 

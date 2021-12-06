@@ -1,13 +1,13 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 load("@bazel_gazelle//:def.bzl", "gazelle")
 
-# gazelle:prefix github.com/example/project
+# gazelle:prefix github.com/cryptometrics/cql
 gazelle(name = "gazelle")
 
 go_library(
     name = "project_lib",
     srcs = ["server.go"],
-    importpath = "github.com/example/project",
+    importpath = "github.com/cryptometrics/cql",
     visibility = ["//visibility:private"],
 )
 

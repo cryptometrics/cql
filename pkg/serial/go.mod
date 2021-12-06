@@ -1,5 +1,5 @@
-module github.com/github.com/cryptometrics/cql/serial
+module github.com/cryptometrics/cql/pkg/serial
 
 go 1.16
 
-replace github.com/cryptometrics/cql => ../..
+replace github.com/cryptometrics/cql/pkg/serial => ../scalar

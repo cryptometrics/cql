@@ -6,6 +6,6 @@ go_library(
         "resolver.go",
         "schema.resolvers.go",
     ],
-    importpath = "github.com/example/project/pkg/graph",
+    importpath = "github.com/cryptometrics/cql/graph",
     visibility = ["//visibility:public"],
 )
