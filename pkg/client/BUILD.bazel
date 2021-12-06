@@ -1,0 +1,25 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "client",
+    srcs = [
+        "assigner.go",
+        "body.go",
+        "body_type.go",
+        "client.go",
+        "client_mock.go",
+        "connector.go",
+        "endpoint.go",
+        "errors.go",
+        "log.go",
+        "method.go",
+        "parent.go",
+        "request.go",
+    ],
+    importpath = "github.com/example/project/pkg/client",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_golang_mock//gomock:go_default_library",
+        "@com_github_sirupsen_logrus//:go_default_library",
+    ],
+)
