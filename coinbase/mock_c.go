@@ -2,7 +2,7 @@ package coinbase
 
 import (
 	"bytes"
-	"cql/client"
+	"cryptometrics/cql/client"
 	"io/ioutil"
 	"net/http"
 

@@ -5,11 +5,11 @@ package graph
 
 import (
 	"context"
-	"cql/coinbase"
-	"cql/graph/generated"
-	"cql/iex"
-	"cql/kraken"
-	"cql/model"
+	"cryptometrics/cql/coinbase"
+	"cryptometrics/cql/graph/generated"
+	"cryptometrics/cql/iex"
+	"cryptometrics/cql/kraken"
+	"cryptometrics/cql/model"
 )
 
 func (r *mutationResolver) CoinbaseAccountDeposit(ctx context.Context, opts *model.CoinbaseAccountDepositOptions) (*model.CoinbaseDeposit, error) {

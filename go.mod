@@ -1,4 +1,4 @@
-module cql
+module cryptometrics/cql
 
 go 1.16
 

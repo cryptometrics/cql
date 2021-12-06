@@ -1,8 +1,8 @@
 package client
 
 import (
-	"cql/model"
 	"crypto/rand"
+	"cryptometrics/cql/model"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"

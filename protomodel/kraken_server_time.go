@@ -1,6 +1,6 @@
 package protomodel
 
-import "cql/serial"
+import "cryptometrics/cql/serial"
 
 // * This is a generated file, do not edit
 

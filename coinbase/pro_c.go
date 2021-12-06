@@ -2,10 +2,10 @@ package coinbase
 
 import (
 	"bytes"
-	"cql/client"
-	"cql/env"
 	"crypto/hmac"
 	"crypto/sha256"
+	"cryptometrics/cql/client"
+	"cryptometrics/cql/env"
 	"encoding/base64"
 	"fmt"
 	"net/http"

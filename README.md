@@ -1,6 +1,6 @@
 # cql
 
-cql takes json models in schema/model and generates a corresponding go models, graphql types, endpoint references. The idea is to programtically generate the more mundane boilerplate work in building api pipelines.  cql package can be used as a general-purpose microserverice for algorithm work, data analysis, etc.
+cql takes json models in schema/model and generates a corresponding go models, graphql types, endpoint references. The idea is to programtically generate the more mundane boilerplate work in building api pipelines. cql package can be used as a general-purpose microserverice for algorithm work, data analysis, etc.
 
 ## Installation
 
@@ -8,7 +8,7 @@ Clone the repository and run `go build`
 
 ## .env
 
-To use api endpoints that require authentication, create a cql/.env file and add your keys.  The following are the supported APIs
+To use api endpoints that require authentication, create a cryptometrics/cql/.env file and add your keys. The following are the supported APIs
 
 ### Coinbase Pro
 
@@ -19,7 +19,7 @@ CB_PRO_ACCESS_KEY=
 CB_PRO_SECRET=
 ```
 
-### Kraken 
+### Kraken
 
 ```
 KRAKEN_URL=
@@ -45,9 +45,10 @@ $ go run server.go
 
 Then go to http://localhost:8080/
 
-## Updating the Schema 
+## Updating the Schema
 
 To add new endpoints, add a json file to schema/model and run the generate script:
+
 ```sh
 python3 generate.py
 ```

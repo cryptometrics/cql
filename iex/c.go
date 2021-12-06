@@ -2,11 +2,11 @@ package iex
 
 import (
 	"bytes"
-	"cql/client"
-	"cql/env"
 	"crypto/hmac"
 	"crypto/sha256"
 	"crypto/sha512"
+	"cryptometrics/cql/client"
+	"cryptometrics/cql/env"
 	"encoding/base64"
 	"net/http"
 	"net/url"

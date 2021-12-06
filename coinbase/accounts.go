@@ -1,8 +1,8 @@
 package coinbase
 
 import (
-	"cql/client"
-	"cql/model"
+	"cryptometrics/cql/client"
+	"cryptometrics/cql/model"
 )
 
 // Accounts is a structure used to maintain state while querying on trading

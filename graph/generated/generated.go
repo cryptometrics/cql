@@ -5,8 +5,8 @@ package generated
 import (
 	"bytes"
 	"context"
-	"cql/model"
-	"cql/scalar"
+	"cryptometrics/cql/model"
+	"cryptometrics/cql/scalar"
 	"errors"
 	"strconv"
 	"sync"
@@ -3051,7 +3051,7 @@ type CoinbaseSingleProduct {
 	{Name: "graph/schema/coinbase_swift_deposit_information.graphqls", Input: `# * This is a generated file, do not edit
 
 """
-CoinbaseSwiftDepositInformation information regarding a wallet's deposits. 
+CoinbaseSwiftDepositInformation information regarding a wallet's deposits.
 SWIFT stands for Society for Worldwide Interbank Financial Telecommunications.
 Basically, it's a computer network that connects over 900 banks around the world
 – and enables them to transfer money. ING is part of this network. There is no
@@ -3111,7 +3111,7 @@ type CoinbaseWallet {
 	{Name: "graph/schema/coinbase_websocket_ticker.graphqls", Input: `# * This is a generated file, do not edit
 
 """
-CoinbaseWebsocketTicker is real-time price updates every time a match happens. 
+CoinbaseWebsocketTicker is real-time price updates every time a match happens.
 It batches updates in case of cascading matches, greatly reducing bandwidth
 requirements.
 """

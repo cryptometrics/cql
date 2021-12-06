@@ -1,8 +1,8 @@
 package main
 
 import (
-	"cql/graph"
-	"cql/graph/generated"
+	"cryptometrics/cql/graph"
+	"cryptometrics/cql/graph/generated"
 	"fmt"
 	"log"
 	"net/http"

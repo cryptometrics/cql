@@ -1,8 +1,8 @@
 package kraken
 
 import (
-	"cql/client"
-	"cql/model"
+	"cryptometrics/cql/client"
+	"cryptometrics/cql/model"
 )
 
 // MarketData is a structure used to maintain state while querying on kraken

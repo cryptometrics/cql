@@ -1,8 +1,8 @@
 package protomodel
 
 import (
-	"cql/scalar"
-	"cql/serial"
+	"cryptometrics/cql/scalar"
+	"cryptometrics/cql/serial"
 	"time"
 )
 

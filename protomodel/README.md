@@ -10,7 +10,7 @@ package model
 // This file was initialized by schema/generate.py but is open to extension
 
 import (
-	"cql/protomodel"
+	"cryptometrics/cql/protomodel"
 )
 
 type MySpecialModel struct {

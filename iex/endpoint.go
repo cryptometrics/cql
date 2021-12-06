@@ -1,7 +1,7 @@
 package iex
 
 import (
-	"cql/client"
+	"cryptometrics/cql/client"
 	"path"
 )
 

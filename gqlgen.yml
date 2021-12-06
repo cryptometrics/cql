@@ -6,129 +6,129 @@ model:
   package: model
 models:
   CoinbaseAccount:
-    model: cql/model.CoinbaseAccount
+    model: cryptometrics/cql/model.CoinbaseAccount
   CoinbaseAccountHold:
-    model: cql/model.CoinbaseAccountHold
+    model: cryptometrics/cql/model.CoinbaseAccountHold
   CoinbaseAccountLedger:
-    model: cql/model.CoinbaseAccountLedger
+    model: cryptometrics/cql/model.CoinbaseAccountLedger
   CoinbaseAccountLedgerDetails:
-    model: cql/model.CoinbaseAccountLedgerDetails
+    model: cryptometrics/cql/model.CoinbaseAccountLedgerDetails
   CoinbaseAccountTransfer:
-    model: cql/model.CoinbaseAccountTransfer
+    model: cryptometrics/cql/model.CoinbaseAccountTransfer
   CoinbaseAccountTransferDetails:
-    model: cql/model.CoinbaseAccountTransferDetails
+    model: cryptometrics/cql/model.CoinbaseAccountTransferDetails
   CoinbaseAccountTransfers:
-    model: cql/model.CoinbaseAccountTransfers
+    model: cryptometrics/cql/model.CoinbaseAccountTransfers
   CoinbaseAccountWithdrawal:
-    model: cql/model.CoinbaseAccountWithdrawal
+    model: cryptometrics/cql/model.CoinbaseAccountWithdrawal
   CoinbaseAvailableBalance:
-    model: cql/model.CoinbaseAvailableBalance
+    model: cryptometrics/cql/model.CoinbaseAvailableBalance
   CoinbaseBalance:
-    model: cql/model.CoinbaseBalance
+    model: cryptometrics/cql/model.CoinbaseBalance
   CoinbaseBankCountry:
-    model: cql/model.CoinbaseBankCountry
+    model: cryptometrics/cql/model.CoinbaseBankCountry
   CoinbaseCryptoAccount:
-    model: cql/model.CoinbaseCryptoAccount
+    model: cryptometrics/cql/model.CoinbaseCryptoAccount
   CoinbaseCryptoAddress:
-    model: cql/model.CoinbaseCryptoAddress
+    model: cryptometrics/cql/model.CoinbaseCryptoAddress
   CoinbaseCryptoAddressInfo:
-    model: cql/model.CoinbaseCryptoAddressInfo
+    model: cryptometrics/cql/model.CoinbaseCryptoAddressInfo
   CoinbaseCryptoAddressWarning:
-    model: cql/model.CoinbaseCryptoAddressWarning
+    model: cryptometrics/cql/model.CoinbaseCryptoAddressWarning
   CoinbaseCurrency:
-    model: cql/model.CoinbaseCurrency
+    model: cryptometrics/cql/model.CoinbaseCurrency
   CoinbaseCurrencyConversion:
-    model: cql/model.CoinbaseCurrencyConversion
+    model: cryptometrics/cql/model.CoinbaseCurrencyConversion
   CoinbaseCurrencyDetails:
-    model: cql/model.CoinbaseCurrencyDetails
+    model: cryptometrics/cql/model.CoinbaseCurrencyDetails
   CoinbaseDeposit:
-    model: cql/model.CoinbaseDeposit
+    model: cryptometrics/cql/model.CoinbaseDeposit
   CoinbaseFiatAccount:
-    model: cql/model.CoinbaseFiatAccount
+    model: cryptometrics/cql/model.CoinbaseFiatAccount
   CoinbaseHold:
-    model: cql/model.CoinbaseHold
+    model: cryptometrics/cql/model.CoinbaseHold
   CoinbaseLimits:
-    model: cql/model.CoinbaseLimits
+    model: cryptometrics/cql/model.CoinbaseLimits
   CoinbasePaymentMethod:
-    model: cql/model.CoinbasePaymentMethod
+    model: cryptometrics/cql/model.CoinbasePaymentMethod
   CoinbasePickerData:
-    model: cql/model.CoinbasePickerData
+    model: cryptometrics/cql/model.CoinbasePickerData
   CoinbaseRecurringOptions:
-    model: cql/model.CoinbaseRecurringOptions
+    model: cryptometrics/cql/model.CoinbaseRecurringOptions
   CoinbaseSEPADepositInformation:
-    model: cql/model.CoinbaseSEPADepositInformation
+    model: cryptometrics/cql/model.CoinbaseSEPADepositInformation
   CoinbaseSWIFTDepositInformation:
-    model: cql/model.CoinbaseSWIFTDepositInformation
+    model: cryptometrics/cql/model.CoinbaseSWIFTDepositInformation
   CoinbaseSepaDepositInformation:
-    model: cql/model.CoinbaseSepaDepositInformation
+    model: cryptometrics/cql/model.CoinbaseSepaDepositInformation
   CoinbaseSepaaDepositInformation:
-    model: cql/model.CoinbaseSepaaDepositInformation
+    model: cryptometrics/cql/model.CoinbaseSepaaDepositInformation
   CoinbaseSingleProduct:
-    model: cql/model.CoinbaseSingleProduct
+    model: cryptometrics/cql/model.CoinbaseSingleProduct
   CoinbaseSwiftDepositInformation:
-    model: cql/model.CoinbaseSwiftDepositInformation
+    model: cryptometrics/cql/model.CoinbaseSwiftDepositInformation
   CoinbaseUKDepositInformation:
-    model: cql/model.CoinbaseUKDepositInformation
+    model: cryptometrics/cql/model.CoinbaseUKDepositInformation
   CoinbaseUkDepositInformation:
-    model: cql/model.CoinbaseUkDepositInformation
+    model: cryptometrics/cql/model.CoinbaseUkDepositInformation
   CoinbaseWallet:
-    model: cql/model.CoinbaseWallet
+    model: cryptometrics/cql/model.CoinbaseWallet
   CoinbaseWebsocketTicker:
-    model: cql/model.CoinbaseWebsocketTicker
+    model: cryptometrics/cql/model.CoinbaseWebsocketTicker
   CoinbaseWireDepositInformation:
-    model: cql/model.CoinbaseWireDepositInformation
+    model: cryptometrics/cql/model.CoinbaseWireDepositInformation
   CoinbaseWithdrawal:
-    model: cql/model.CoinbaseWithdrawal
+    model: cryptometrics/cql/model.CoinbaseWithdrawal
   CoinbaseWithdrawalFeeEstimate:
-    model: cql/model.CoinbaseWithdrawalFeeEstimate
+    model: cryptometrics/cql/model.CoinbaseWithdrawalFeeEstimate
   EntryType:
-    model: cql/scalar.EntryType
+    model: cryptometrics/cql/scalar.EntryType
   ID:
     model:
-    - github.com/99designs/gqlgen/graphql.ID
-    - github.com/99designs/gqlgen/graphql.Int
-    - github.com/99designs/gqlgen/graphql.Int64
-    - github.com/99designs/gqlgen/graphql.Int32
+      - github.com/99designs/gqlgen/graphql.ID
+      - github.com/99designs/gqlgen/graphql.Int
+      - github.com/99designs/gqlgen/graphql.Int64
+      - github.com/99designs/gqlgen/graphql.Int32
   IexRule:
-    model: cql/model.IexRule
+    model: cryptometrics/cql/model.IexRule
   IexRulesSchema:
-    model: cql/model.IexRulesSchema
+    model: cryptometrics/cql/model.IexRulesSchema
   IexRulesScheme:
-    model: cql/model.IexRulesScheme
+    model: cryptometrics/cql/model.IexRulesScheme
   Int:
     model:
-    - github.com/99designs/gqlgen/graphql.Int
-    - github.com/99designs/gqlgen/graphql.Int64
-    - github.com/99designs/gqlgen/graphql.Int32
+      - github.com/99designs/gqlgen/graphql.Int
+      - github.com/99designs/gqlgen/graphql.Int64
+      - github.com/99designs/gqlgen/graphql.Int32
   KrakenServerTime:
-    model: cql/model.KrakenServerTime
+    model: cryptometrics/cql/model.KrakenServerTime
   KrakenServerTimeResult:
-    model: cql/model.KrakenServerTimeResult
+    model: cryptometrics/cql/model.KrakenServerTimeResult
   KrakenSystemStatus:
-    model: cql/model.KrakenSystemStatus
+    model: cryptometrics/cql/model.KrakenSystemStatus
   KrakenSystemStatusResult:
-    model: cql/model.KrakenSystemStatusResult
+    model: cryptometrics/cql/model.KrakenSystemStatusResult
   OrderCancelTime:
-    model: cql/scalar.OrderCancelTime
+    model: cryptometrics/cql/scalar.OrderCancelTime
   OrderSTP:
-    model: cql/scalar.OrderSTP
+    model: cryptometrics/cql/scalar.OrderSTP
   OrderSide:
-    model: cql/scalar.OrderSide
+    model: cryptometrics/cql/scalar.OrderSide
   OrderStop:
-    model: cql/scalar.OrderSide
+    model: cryptometrics/cql/scalar.OrderSide
   OrderType:
-    model: cql/scalar.OrderType
+    model: cryptometrics/cql/scalar.OrderType
   PaymentMethod:
-    model: cql/scalar.PaymentMethod
+    model: cryptometrics/cql/scalar.PaymentMethod
   SystemStatus:
-    model: cql/scalar.SystemStatus
+    model: cryptometrics/cql/scalar.SystemStatus
   TimeInForce:
-    model: cql/scalar.TimeInForce
+    model: cryptometrics/cql/scalar.TimeInForce
   TransferMethod:
-    model: cql/scalar.TransferMethod
+    model: cryptometrics/cql/scalar.TransferMethod
 resolver:
   dir: graph
   layout: follow-schema
   package: graph
 schema:
-- graph/schema/*.graphqls
+  - graph/schema/*.graphqls

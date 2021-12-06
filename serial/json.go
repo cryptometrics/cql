@@ -1,7 +1,7 @@
 package serial
 
 import (
-	"cql/scalar"
+	"cryptometrics/cql/scalar"
 	"encoding/json"
 	"strconv"
 	"time"
