@@ -1,3 +1,7 @@
+github.com/cryptometrics/cql/client v0.0.0-20211206014125-e9b2de725045 h1:ZJK5tHrXYtpMRaIh4p0dqqdi6Fv1pedZTq6OW0D36sQ=
+github.com/cryptometrics/cql/client v0.0.0-20211206014125-e9b2de725045/go.mod h1:fZnh0ygZBHNq+YVTa/W/SMdyaAhhpeNXd1h6ZK/Pyjo=
+github.com/cryptometrics/cql/env v0.0.0-20211206014521-10d776dd1d97 h1:1XiXHTvIy7lGivnArgGTrkoAL+tE6kRHMoRFCSBgwzs=
+github.com/cryptometrics/cql/env v0.0.0-20211206014521-10d776dd1d97/go.mod h1:fSL6oGtNrEV8b1gju4wWZLLyl60+KcannwjYrVQ72Qo=
 github.com/cryptometrics/cql/model v0.0.0-20211206014431-55ebb41f1d9a h1:JY4aRmAKMVLH9+y8ncMaK/nd8gvSYl7wsJ4ordP+K1o=
 github.com/cryptometrics/cql/model v0.0.0-20211206014431-55ebb41f1d9a/go.mod h1:kX4Rt9We/qNiWRykJzrUuksBMhNfROZ5EFK0o5qk198=
 github.com/cryptometrics/cql/protomodel v0.0.0-20211206013514-d0edea3fb84a h1:CED6Blh46DL2w8RWaT/Qfgyy9tSqMHypKptue+uBQ50=

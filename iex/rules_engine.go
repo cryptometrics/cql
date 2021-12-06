@@ -1,7 +1,7 @@
 package iex
 
 import (
-	"cryptometrics/cql/client"
+	"github.com/cryptometrics/cql/client"
 
 	"github.com/cryptometrics/cql/model"
 )

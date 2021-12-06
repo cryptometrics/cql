@@ -21,9 +21,12 @@ go_library(
         "websocket_connector.go",
         "websocket_message.go",
     ],
-    importpath = "github.com/cryptometrics/cql/pkg/coinbase",
+    importpath = "github.com/cryptometrics/cql/coinbase",
     visibility = ["//visibility:public"],
     deps = [
+        "//client",
+        "//env",
+        "//model",
         "@com_github_franela_goblin//:go_default_library",
         "@com_github_golang_mock//gomock:go_default_library",
         "@com_github_gorilla_websocket//:go_default_library",

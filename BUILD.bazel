@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("@bazel_gazelle//:def.bzl", "gazelle")
 
 # gazelle:prefix github.com/cryptometrics/cql
@@ -9,10 +9,4 @@ go_library(
     srcs = ["server.go"],
     importpath = "github.com/cryptometrics/cql",
     visibility = ["//visibility:private"],
-)
-
-go_binary(
-    name = "project",
-    embed = [":project_lib"],
-    visibility = ["//visibility:public"],
 )

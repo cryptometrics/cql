@@ -3,7 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 go_library(
     name = "env",
     srcs = ["env.go"],
-    importpath = "github.com/cryptometrics/cql/pkg/env",
+    importpath = "github.com/cryptometrics/cql/env",
     visibility = ["//visibility:public"],
 )
 

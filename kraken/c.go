@@ -5,11 +5,13 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	"crypto/sha512"
-	"cryptometrics/cql/client"
-	"cryptometrics/cql/env"
 	"encoding/base64"
 	"net/http"
 	"net/url"
+
+	"github.com/cryptometrics/cql/env"
+
+	"github.com/cryptometrics/cql/client"
 
 	"github.com/sirupsen/logrus"
 )

@@ -1,9 +1,10 @@
 package coinbase
 
 import (
-	"cryptometrics/cql/client"
 	"path"
 	"strings"
+
+	"github.com/cryptometrics/cql/client"
 )
 
 // * This is a generated file, do not edit

@@ -6,6 +6,7 @@ go_library(
     importpath = "github.com/cryptometrics/cql/graph/generated",
     visibility = ["//visibility:public"],
     deps = [
+        "//model",
         "//scalar",
         "@com_github_99designs_gqlgen//graphql:go_default_library",
         "@com_github_99designs_gqlgen//graphql/introspection:go_default_library",

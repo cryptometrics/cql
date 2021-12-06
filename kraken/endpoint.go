@@ -1,8 +1,9 @@
 package kraken
 
 import (
-	"cryptometrics/cql/client"
 	"path"
+
+	"github.com/cryptometrics/cql/client"
 )
 
 // * This is a generated file, do not edit

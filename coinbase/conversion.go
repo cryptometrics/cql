@@ -1,7 +1,7 @@
 package coinbase
 
 import (
-	"cryptometrics/cql/client"
+	"github.com/cryptometrics/cql/client"
 
 	"github.com/cryptometrics/cql/model"
 )

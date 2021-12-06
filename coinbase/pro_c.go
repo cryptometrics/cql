@@ -4,13 +4,15 @@ import (
 	"bytes"
 	"crypto/hmac"
 	"crypto/sha256"
-	"cryptometrics/cql/client"
-	"cryptometrics/cql/env"
 	"encoding/base64"
 	"fmt"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/cryptometrics/cql/env"
+
+	"github.com/cryptometrics/cql/client"
 
 	"github.com/sirupsen/logrus"
 )

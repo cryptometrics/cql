@@ -2,9 +2,10 @@ package coinbase
 
 import (
 	"bytes"
-	"cryptometrics/cql/client"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/cryptometrics/cql/client"
 
 	. "github.com/franela/goblin"
 	"github.com/golang/mock/gomock"

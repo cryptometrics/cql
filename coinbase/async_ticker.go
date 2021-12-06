@@ -2,7 +2,8 @@ package coinbase
 
 import (
 	"context"
-	"pkg/model"
+
+	"github.com/cryptometrics/cql/model"
 
 	"golang.org/x/sync/errgroup"
 )
