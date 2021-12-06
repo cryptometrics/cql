@@ -1,0 +1,18 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "graphql",
+    srcs = [
+        "root.go",
+        "server.go",
+    ],
+    importpath = "github.com/cryptometrics/cql/cmd/graphql",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//graph",
+        "//graph/generated",
+        "@com_github_99designs_gqlgen//graphql/handler",
+        "@com_github_99designs_gqlgen//graphql/playground",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)

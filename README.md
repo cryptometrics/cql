@@ -2,9 +2,41 @@
 
 cql takes json models in schema/model and generates a corresponding go models, graphql types, endpoint references. The idea is to programtically generate the more mundane boilerplate work in building api pipelines. cql package can be used as a general-purpose microserverice for algorithm work, data analysis, etc.
 
-## Installation
+## Installing Bazel
 
-Clone the repository and run `go build`
+Bazel is an open-source build and test tool similar to Make, Maven, and Gradle. It uses a human-readable, high-level build language. Bazel supports projects in multiple languages and builds outputs for multiple platforms. Bazel supports large codebases across multiple repositories, and large numbers of users.
+
+To install, following the intructions [here](https://docs.bazel.build/versions/4.2.2/bazel-overview.html#how-do-i-use-bazel)
+
+If you're on macOS, [you can install Bazel via Homebrew](https://docs.bazel.build/versions/4.2.2/install-os-x.html#step-2-install-bazel-via-homebrew):
+
+```sh
+$ brew install bazel
+```
+
+## Building Bazel
+
+To build bazel run
+
+```sh
+$ bazel run //:gazelle
+```
+
+Then build
+```sh
+$ bazel build //...
+```
+
+This will generate a BUILD.bazel file with go_library, go_binary, and go_test targets for each package in your project. You can run the same command in the future to update existing build files with new source files, dependencies, and options.
+
+## Updating Repos Bazel
+
+Whenever we add new go dependencies we need to update the repos through bazel:
+
+```sh
+$ bazel run //:gazell-update-repos
+```
+
 
 ## .env
 

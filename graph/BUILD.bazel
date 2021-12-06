@@ -5,7 +5,6 @@ go_library(
     srcs = [
         "resolver.go",
         "schema.resolvers.go",
-        "server.go",
     ],
     importpath = "github.com/cryptometrics/cql/graph",
     visibility = ["//visibility:public"],
@@ -15,9 +14,5 @@ go_library(
         "//iex",
         "//kraken",
         "//model",
-        "@com_github_99designs_gqlgen//graphql/handler:go_default_library",
-        "@com_github_99designs_gqlgen//graphql/playground:go_default_library",
-        "@com_github_joho_godotenv//:go_default_library",
-        "@com_github_sirupsen_logrus//:go_default_library",
     ],
 )

@@ -63,6 +63,7 @@ func (cb *proC) setHeaders(hreq *http.Request, creq client.Request) (e error) {
 		timestamp  = strconv.FormatInt(time.Now().Unix(), 10)
 		msg        = cb.generageMsg(creq, timestamp)
 	)
+
 	var sig string
 	sig, e = cb.generateSig(secret, msg)
 	hreq.Header.Add("accept", "application/json")

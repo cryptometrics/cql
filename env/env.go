@@ -1,6 +1,11 @@
 package env
 
-import "os"
+import (
+	"fmt"
+	"os"
+
+	"github.com/joho/godotenv"
+)
 
 type Variable int
 
@@ -17,6 +22,13 @@ const (
 	KrakenKey
 	KrakenSecret
 )
+
+func init() {
+	if err := godotenv.Load("../../.auth.env"); err != nil {
+		panic(fmt.Errorf("Error loading .env file: %v", err))
+	}
+	return
+}
 
 // Name will return the variable name of the env variable.
 func (variable Variable) Name() string {

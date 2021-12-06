@@ -54,5 +54,5 @@ go_test(
     name = "model_test",
     srcs = ["ca_test.go"],
     embed = [":model"],
-    deps = ["@com_github_franela_goblin//:go_default_library"],
+    deps = ["@com_github_franela_goblin//:goblin"],
 )

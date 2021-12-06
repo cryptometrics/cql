@@ -56,5 +56,5 @@ go_test(
     name = "protomodel_test",
     srcs = ["coinbase_account_test.go"],
     embed = [":protomodel"],
-    deps = ["@com_github_franela_goblin//:go_default_library"],
+    deps = ["@com_github_franela_goblin//:goblin"],
 )
