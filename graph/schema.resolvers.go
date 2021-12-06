@@ -10,7 +10,6 @@ import (
 	"github.com/cryptometrics/cql/graph/generated"
 	"github.com/cryptometrics/cql/iex"
 	"github.com/cryptometrics/cql/kraken"
-
 	"github.com/cryptometrics/cql/model"
 )
 

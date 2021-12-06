@@ -741,7 +741,7 @@ def gqlgen_protomodel(scheme: Scheme):
     """
     gqlgen_protomodels will return the list of protomodels for gqlgen
     """
-    return {"model": f'cryptometrics/cql/{MODEL_PKG}.{scheme.go_model_name}'}
+    return {"model": f'github.com/cryptometrics/cql/{MODEL_PKG}.{scheme.go_model_name}'}
 
 
 def update_gqlgen(scheme: Scheme):

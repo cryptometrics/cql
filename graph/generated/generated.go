@@ -6,14 +6,14 @@ import (
 	"bytes"
 	"context"
 	"errors"
-	"github.com/cryptometrics/cql/model"
-	"github.com/cryptometrics/cql/scalar"
 	"strconv"
 	"sync"
 	"time"
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
+	"github.com/cryptometrics/cql/model"
+	"github.com/cryptometrics/cql/scalar"
 	gqlparser "github.com/vektah/gqlparser/v2"
 	"github.com/vektah/gqlparser/v2/ast"
 )
@@ -3051,7 +3051,7 @@ type CoinbaseSingleProduct {
 	{Name: "graph/schema/coinbase_swift_deposit_information.graphqls", Input: `# * This is a generated file, do not edit
 
 """
-CoinbaseSwiftDepositInformation information regarding a wallet's deposits.
+CoinbaseSwiftDepositInformation information regarding a wallet's deposits. 
 SWIFT stands for Society for Worldwide Interbank Financial Telecommunications.
 Basically, it's a computer network that connects over 900 banks around the world
 – and enables them to transfer money. ING is part of this network. There is no
@@ -3111,7 +3111,7 @@ type CoinbaseWallet {
 	{Name: "graph/schema/coinbase_websocket_ticker.graphqls", Input: `# * This is a generated file, do not edit
 
 """
-CoinbaseWebsocketTicker is real-time price updates every time a match happens.
+CoinbaseWebsocketTicker is real-time price updates every time a match happens. 
 It batches updates in case of cascading matches, greatly reducing bandwidth
 requirements.
 """
@@ -3341,7 +3341,7 @@ func (ec *executionContext) field_Mutation_coinbaseAccountDeposit_args(ctx conte
 	var arg0 *model.CoinbaseAccountDepositOptions
 	if tmp, ok := rawArgs["opts"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("opts"))
-		arg0, err = ec.unmarshalOCoinbaseAccountDepositOptions2ᚖcqlᚋmodelᚐCoinbaseAccountDepositOptions(ctx, tmp)
+		arg0, err = ec.unmarshalOCoinbaseAccountDepositOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountDepositOptions(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3356,7 +3356,7 @@ func (ec *executionContext) field_Mutation_coinbaseAccountWithdrawal_args(ctx co
 	var arg0 *model.CoinbaseAccountWithdrawalOptions
 	if tmp, ok := rawArgs["opts"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("opts"))
-		arg0, err = ec.unmarshalOCoinbaseAccountWithdrawalOptions2ᚖcqlᚋmodelᚐCoinbaseAccountWithdrawalOptions(ctx, tmp)
+		arg0, err = ec.unmarshalOCoinbaseAccountWithdrawalOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountWithdrawalOptions(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3371,7 +3371,7 @@ func (ec *executionContext) field_Mutation_coinbaseConvertCurrency_args(ctx cont
 	var arg0 model.CoinbaseConversionsOptions
 	if tmp, ok := rawArgs["opts"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("opts"))
-		arg0, err = ec.unmarshalNCoinbaseConversionsOptions2cqlᚋmodelᚐCoinbaseConversionsOptions(ctx, tmp)
+		arg0, err = ec.unmarshalNCoinbaseConversionsOptions2githubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseConversionsOptions(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3386,7 +3386,7 @@ func (ec *executionContext) field_Mutation_coinbaseCryptoWithdrawal_args(ctx con
 	var arg0 *model.CoinbaseCryptoWithdrawalOptions
 	if tmp, ok := rawArgs["opts"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("opts"))
-		arg0, err = ec.unmarshalOCoinbaseCryptoWithdrawalOptions2ᚖcqlᚋmodelᚐCoinbaseCryptoWithdrawalOptions(ctx, tmp)
+		arg0, err = ec.unmarshalOCoinbaseCryptoWithdrawalOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseCryptoWithdrawalOptions(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3416,7 +3416,7 @@ func (ec *executionContext) field_Mutation_coinbasePaymentMethodDeposit_args(ctx
 	var arg0 *model.CoinbasePaymentMethodDepositOptions
 	if tmp, ok := rawArgs["opts"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("opts"))
-		arg0, err = ec.unmarshalOCoinbasePaymentMethodDepositOptions2ᚖcqlᚋmodelᚐCoinbasePaymentMethodDepositOptions(ctx, tmp)
+		arg0, err = ec.unmarshalOCoinbasePaymentMethodDepositOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbasePaymentMethodDepositOptions(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3431,7 +3431,7 @@ func (ec *executionContext) field_Mutation_coinbasePaymentMethodWithdrawal_args(
 	var arg0 *model.CoinbasePaymentMethodWithdrawalOptions
 	if tmp, ok := rawArgs["opts"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("opts"))
-		arg0, err = ec.unmarshalOCoinbasePaymentMethodWithdrawalOptions2ᚖcqlᚋmodelᚐCoinbasePaymentMethodWithdrawalOptions(ctx, tmp)
+		arg0, err = ec.unmarshalOCoinbasePaymentMethodWithdrawalOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbasePaymentMethodWithdrawalOptions(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3470,7 +3470,7 @@ func (ec *executionContext) field_Query_coinbaseAccountHolds_args(ctx context.Co
 	var arg1 *model.CoinbaseAccountHoldsOptions
 	if tmp, ok := rawArgs["opts"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("opts"))
-		arg1, err = ec.unmarshalOCoinbaseAccountHoldsOptions2ᚖcqlᚋmodelᚐCoinbaseAccountHoldsOptions(ctx, tmp)
+		arg1, err = ec.unmarshalOCoinbaseAccountHoldsOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountHoldsOptions(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3494,7 +3494,7 @@ func (ec *executionContext) field_Query_coinbaseAccountLedger_args(ctx context.C
 	var arg1 *model.CoinbaseAccountLedgerOptions
 	if tmp, ok := rawArgs["opts"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("opts"))
-		arg1, err = ec.unmarshalOCoinbaseAccountLedgerOptions2ᚖcqlᚋmodelᚐCoinbaseAccountLedgerOptions(ctx, tmp)
+		arg1, err = ec.unmarshalOCoinbaseAccountLedgerOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountLedgerOptions(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3518,7 +3518,7 @@ func (ec *executionContext) field_Query_coinbaseAccountTransfers_args(ctx contex
 	var arg1 *model.CoinbaseAccountTransferOptions
 	if tmp, ok := rawArgs["opts"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("opts"))
-		arg1, err = ec.unmarshalOCoinbaseAccountTransferOptions2ᚖcqlᚋmodelᚐCoinbaseAccountTransferOptions(ctx, tmp)
+		arg1, err = ec.unmarshalOCoinbaseAccountTransferOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountTransferOptions(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3557,7 +3557,7 @@ func (ec *executionContext) field_Query_coinbaseCurrencyConversion_args(ctx cont
 	var arg1 *model.CoinbaseConversionOptions
 	if tmp, ok := rawArgs["opts"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("opts"))
-		arg1, err = ec.unmarshalOCoinbaseConversionOptions2ᚖcqlᚋmodelᚐCoinbaseConversionOptions(ctx, tmp)
+		arg1, err = ec.unmarshalOCoinbaseConversionOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseConversionOptions(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3602,7 +3602,7 @@ func (ec *executionContext) field_Query_coinbaseWithdrawalFeeEstimate_args(ctx c
 	var arg0 *model.CoinbaseWithdrawalFeeEstimateOptions
 	if tmp, ok := rawArgs["opts"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("opts"))
-		arg0, err = ec.unmarshalOCoinbaseWithdrawalFeeEstimateOptions2ᚖcqlᚋmodelᚐCoinbaseWithdrawalFeeEstimateOptions(ctx, tmp)
+		arg0, err = ec.unmarshalOCoinbaseWithdrawalFeeEstimateOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseWithdrawalFeeEstimateOptions(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -4205,7 +4205,7 @@ func (ec *executionContext) _CoinbaseAccountLedger_type(ctx context.Context, fie
 	}
 	res := resTmp.(scalar.EntryType)
 	fc.Result = res
-	return ec.marshalOEntryType2cqlᚋscalarᚐEntryType(ctx, field.Selections, res)
+	return ec.marshalOEntryType2githubᚗcomᚋcryptometricsᚋcqlᚋscalarᚐEntryType(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbaseAccountLedger_details(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseAccountLedger) (ret graphql.Marshaler) {
@@ -4237,7 +4237,7 @@ func (ec *executionContext) _CoinbaseAccountLedger_details(ctx context.Context, 
 	}
 	res := resTmp.(*model.CoinbaseAccountLedgerDetails)
 	fc.Result = res
-	return ec.marshalOCoinbaseAccountLedgerDetails2ᚖcqlᚋmodelᚐCoinbaseAccountLedgerDetails(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseAccountLedgerDetails2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountLedgerDetails(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbaseAccountLedgerDetails_orderId(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseAccountLedgerDetails) (ret graphql.Marshaler) {
@@ -4621,7 +4621,7 @@ func (ec *executionContext) _CoinbaseAccountTransfer_details(ctx context.Context
 	}
 	res := resTmp.(*model.CoinbaseAccountTransferDetails)
 	fc.Result = res
-	return ec.marshalOCoinbaseAccountTransferDetails2ᚖcqlᚋmodelᚐCoinbaseAccountTransferDetails(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseAccountTransferDetails2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountTransferDetails(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbaseAccountTransferDetails_coinbaseAccountId(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseAccountTransferDetails) (ret graphql.Marshaler) {
@@ -5133,7 +5133,7 @@ func (ec *executionContext) _CoinbaseCryptoAddress_addressInfo(ctx context.Conte
 	}
 	res := resTmp.(*model.CoinbaseCryptoAddressInfo)
 	fc.Result = res
-	return ec.marshalOCoinbaseCryptoAddressInfo2ᚖcqlᚋmodelᚐCoinbaseCryptoAddressInfo(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseCryptoAddressInfo2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseCryptoAddressInfo(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbaseCryptoAddress_name(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseCryptoAddress) (ret graphql.Marshaler) {
@@ -5389,7 +5389,7 @@ func (ec *executionContext) _CoinbaseCryptoAddress_warnings(ctx context.Context,
 	}
 	res := resTmp.([]*model.CoinbaseCryptoAddressWarning)
 	fc.Result = res
-	return ec.marshalOCoinbaseCryptoAddressWarning2ᚕᚖcqlᚋmodelᚐCoinbaseCryptoAddressWarning(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseCryptoAddressWarning2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseCryptoAddressWarning(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbaseCryptoAddress_legacyAddress(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseCryptoAddress) (ret graphql.Marshaler) {
@@ -5933,7 +5933,7 @@ func (ec *executionContext) _CoinbaseCurrency_details(ctx context.Context, field
 	}
 	res := resTmp.(*model.CoinbaseCurrencyDetails)
 	fc.Result = res
-	return ec.marshalOCoinbaseCurrencyDetails2ᚖcqlᚋmodelᚐCoinbaseCurrencyDetails(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseCurrencyDetails2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseCurrencyDetails(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbaseCurrencyConversion_id(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseCurrencyConversion) (ret graphql.Marshaler) {
@@ -7565,7 +7565,7 @@ func (ec *executionContext) _CoinbasePaymentMethod_limits(ctx context.Context, f
 	}
 	res := resTmp.(*model.CoinbaseLimits)
 	fc.Result = res
-	return ec.marshalOCoinbaseLimits2ᚖcqlᚋmodelᚐCoinbaseLimits(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseLimits2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseLimits(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbasePaymentMethod_fiatAccount(ctx context.Context, field graphql.CollectedField, obj *model.CoinbasePaymentMethod) (ret graphql.Marshaler) {
@@ -7597,7 +7597,7 @@ func (ec *executionContext) _CoinbasePaymentMethod_fiatAccount(ctx context.Conte
 	}
 	res := resTmp.(*model.CoinbaseFiatAccount)
 	fc.Result = res
-	return ec.marshalOCoinbaseFiatAccount2ᚖcqlᚋmodelᚐCoinbaseFiatAccount(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseFiatAccount2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseFiatAccount(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbasePaymentMethod_cryptoAccount(ctx context.Context, field graphql.CollectedField, obj *model.CoinbasePaymentMethod) (ret graphql.Marshaler) {
@@ -7629,7 +7629,7 @@ func (ec *executionContext) _CoinbasePaymentMethod_cryptoAccount(ctx context.Con
 	}
 	res := resTmp.(*model.CoinbaseCryptoAccount)
 	fc.Result = res
-	return ec.marshalOCoinbaseCryptoAccount2ᚖcqlᚋmodelᚐCoinbaseCryptoAccount(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseCryptoAccount2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseCryptoAccount(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbasePaymentMethod_recurringOptions(ctx context.Context, field graphql.CollectedField, obj *model.CoinbasePaymentMethod) (ret graphql.Marshaler) {
@@ -7661,7 +7661,7 @@ func (ec *executionContext) _CoinbasePaymentMethod_recurringOptions(ctx context.
 	}
 	res := resTmp.([]*model.CoinbaseRecurringOptions)
 	fc.Result = res
-	return ec.marshalOCoinbaseRecurringOptions2ᚕᚖcqlᚋmodelᚐCoinbaseRecurringOptions(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseRecurringOptions2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseRecurringOptions(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbasePaymentMethod_availableBalance(ctx context.Context, field graphql.CollectedField, obj *model.CoinbasePaymentMethod) (ret graphql.Marshaler) {
@@ -7693,7 +7693,7 @@ func (ec *executionContext) _CoinbasePaymentMethod_availableBalance(ctx context.
 	}
 	res := resTmp.(*model.CoinbaseAvailableBalance)
 	fc.Result = res
-	return ec.marshalOCoinbaseAvailableBalance2ᚖcqlᚋmodelᚐCoinbaseAvailableBalance(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseAvailableBalance2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAvailableBalance(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbasePaymentMethod_pickerData(ctx context.Context, field graphql.CollectedField, obj *model.CoinbasePaymentMethod) (ret graphql.Marshaler) {
@@ -7725,7 +7725,7 @@ func (ec *executionContext) _CoinbasePaymentMethod_pickerData(ctx context.Contex
 	}
 	res := resTmp.(*model.CoinbasePickerData)
 	fc.Result = res
-	return ec.marshalOCoinbasePickerData2ᚖcqlᚋmodelᚐCoinbasePickerData(ctx, field.Selections, res)
+	return ec.marshalOCoinbasePickerData2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbasePickerData(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbasePickerData_symbol(ctx context.Context, field graphql.CollectedField, obj *model.CoinbasePickerData) (ret graphql.Marshaler) {
@@ -8269,7 +8269,7 @@ func (ec *executionContext) _CoinbasePickerData_balance(ctx context.Context, fie
 	}
 	res := resTmp.(*model.CoinbaseBalance)
 	fc.Result = res
-	return ec.marshalOCoinbaseBalance2ᚖcqlᚋmodelᚐCoinbaseBalance(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseBalance2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseBalance(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbaseRecurringOptions_period(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseRecurringOptions) (ret graphql.Marshaler) {
@@ -8493,7 +8493,7 @@ func (ec *executionContext) _CoinbaseSepaDepositInformation_bankCountry(ctx cont
 	}
 	res := resTmp.(*model.CoinbaseBankCountry)
 	fc.Result = res
-	return ec.marshalOCoinbaseBankCountry2ᚖcqlᚋmodelᚐCoinbaseBankCountry(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseBankCountry2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseBankCountry(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbaseSepaDepositInformation_accountName(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseSepaDepositInformation) (ret graphql.Marshaler) {
@@ -9357,7 +9357,7 @@ func (ec *executionContext) _CoinbaseSwiftDepositInformation_bankCountry(ctx con
 	}
 	res := resTmp.(*model.CoinbaseBankCountry)
 	fc.Result = res
-	return ec.marshalOCoinbaseBankCountry2ᚖcqlᚋmodelᚐCoinbaseBankCountry(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseBankCountry2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseBankCountry(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbaseSwiftDepositInformation_accountName(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseSwiftDepositInformation) (ret graphql.Marshaler) {
@@ -9581,7 +9581,7 @@ func (ec *executionContext) _CoinbaseUkDepositInformation_bankCountry(ctx contex
 	}
 	res := resTmp.(*model.CoinbaseBankCountry)
 	fc.Result = res
-	return ec.marshalOCoinbaseBankCountry2ᚖcqlᚋmodelᚐCoinbaseBankCountry(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseBankCountry2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseBankCountry(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbaseUkDepositInformation_accountName(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseUkDepositInformation) (ret graphql.Marshaler) {
@@ -9997,7 +9997,7 @@ func (ec *executionContext) _CoinbaseWallet_wireDepositInformation(ctx context.C
 	}
 	res := resTmp.(*model.CoinbaseWireDepositInformation)
 	fc.Result = res
-	return ec.marshalOCoinbaseWireDepositInformation2ᚖcqlᚋmodelᚐCoinbaseWireDepositInformation(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseWireDepositInformation2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseWireDepositInformation(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbaseWallet_swiftDepositInformation(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseWallet) (ret graphql.Marshaler) {
@@ -10029,7 +10029,7 @@ func (ec *executionContext) _CoinbaseWallet_swiftDepositInformation(ctx context.
 	}
 	res := resTmp.(*model.CoinbaseSwiftDepositInformation)
 	fc.Result = res
-	return ec.marshalOCoinbaseSwiftDepositInformation2ᚖcqlᚋmodelᚐCoinbaseSwiftDepositInformation(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseSwiftDepositInformation2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseSwiftDepositInformation(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbaseWallet_sepaDepositInformation(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseWallet) (ret graphql.Marshaler) {
@@ -10061,7 +10061,7 @@ func (ec *executionContext) _CoinbaseWallet_sepaDepositInformation(ctx context.C
 	}
 	res := resTmp.(*model.CoinbaseSepaDepositInformation)
 	fc.Result = res
-	return ec.marshalOCoinbaseSepaDepositInformation2ᚖcqlᚋmodelᚐCoinbaseSepaDepositInformation(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseSepaDepositInformation2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseSepaDepositInformation(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbaseWallet_ukDepositInformation(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseWallet) (ret graphql.Marshaler) {
@@ -10093,7 +10093,7 @@ func (ec *executionContext) _CoinbaseWallet_ukDepositInformation(ctx context.Con
 	}
 	res := resTmp.(*model.CoinbaseUkDepositInformation)
 	fc.Result = res
-	return ec.marshalOCoinbaseUkDepositInformation2ᚖcqlᚋmodelᚐCoinbaseUkDepositInformation(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseUkDepositInformation2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseUkDepositInformation(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbaseWallet_destinationTagName(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseWallet) (ret graphql.Marshaler) {
@@ -10701,7 +10701,7 @@ func (ec *executionContext) _CoinbaseWireDepositInformation_bankCountry(ctx cont
 	}
 	res := resTmp.(*model.CoinbaseBankCountry)
 	fc.Result = res
-	return ec.marshalOCoinbaseBankCountry2ᚖcqlᚋmodelᚐCoinbaseBankCountry(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseBankCountry2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseBankCountry(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CoinbaseWireDepositInformation_accountName(ctx context.Context, field graphql.CollectedField, obj *model.CoinbaseWireDepositInformation) (ret graphql.Marshaler) {
@@ -11213,7 +11213,7 @@ func (ec *executionContext) _IexRulesSchema_schema(ctx context.Context, field gr
 	}
 	res := resTmp.([]*model.IexRulesScheme)
 	fc.Result = res
-	return ec.marshalOIexRulesScheme2ᚕᚖcqlᚋmodelᚐIexRulesScheme(ctx, field.Selections, res)
+	return ec.marshalOIexRulesScheme2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐIexRulesScheme(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _IexRulesScheme_label(ctx context.Context, field graphql.CollectedField, obj *model.IexRulesScheme) (ret graphql.Marshaler) {
@@ -11469,7 +11469,7 @@ func (ec *executionContext) _KrakenServerTime_result(ctx context.Context, field 
 	}
 	res := resTmp.(*model.KrakenServerTimeResult)
 	fc.Result = res
-	return ec.marshalOKrakenServerTimeResult2ᚖcqlᚋmodelᚐKrakenServerTimeResult(ctx, field.Selections, res)
+	return ec.marshalOKrakenServerTimeResult2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐKrakenServerTimeResult(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _KrakenServerTime_error(ctx context.Context, field graphql.CollectedField, obj *model.KrakenServerTime) (ret graphql.Marshaler) {
@@ -11597,7 +11597,7 @@ func (ec *executionContext) _KrakenSystemStatus_result(ctx context.Context, fiel
 	}
 	res := resTmp.(*model.KrakenSystemStatusResult)
 	fc.Result = res
-	return ec.marshalOKrakenSystemStatusResult2ᚖcqlᚋmodelᚐKrakenSystemStatusResult(ctx, field.Selections, res)
+	return ec.marshalOKrakenSystemStatusResult2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐKrakenSystemStatusResult(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _KrakenSystemStatus_error(ctx context.Context, field graphql.CollectedField, obj *model.KrakenSystemStatus) (ret graphql.Marshaler) {
@@ -11661,7 +11661,7 @@ func (ec *executionContext) _KrakenSystemStatusResult_status(ctx context.Context
 	}
 	res := resTmp.(scalar.SystemStatus)
 	fc.Result = res
-	return ec.marshalOSystemStatus2cqlᚋscalarᚐSystemStatus(ctx, field.Selections, res)
+	return ec.marshalOSystemStatus2githubᚗcomᚋcryptometricsᚋcqlᚋscalarᚐSystemStatus(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _KrakenSystemStatusResult_timestamp(ctx context.Context, field graphql.CollectedField, obj *model.KrakenSystemStatusResult) (ret graphql.Marshaler) {
@@ -11732,7 +11732,7 @@ func (ec *executionContext) _Mutation_coinbaseAccountDeposit(ctx context.Context
 	}
 	res := resTmp.(*model.CoinbaseDeposit)
 	fc.Result = res
-	return ec.marshalOCoinbaseDeposit2ᚖcqlᚋmodelᚐCoinbaseDeposit(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseDeposit2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseDeposit(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_coinbaseConvertCurrency(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -11771,7 +11771,7 @@ func (ec *executionContext) _Mutation_coinbaseConvertCurrency(ctx context.Contex
 	}
 	res := resTmp.(*model.CoinbaseCurrencyConversion)
 	fc.Result = res
-	return ec.marshalOCoinbaseCurrencyConversion2ᚖcqlᚋmodelᚐCoinbaseCurrencyConversion(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseCurrencyConversion2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseCurrencyConversion(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_coinbaseGenerateCryptoAddress(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -11810,7 +11810,7 @@ func (ec *executionContext) _Mutation_coinbaseGenerateCryptoAddress(ctx context.
 	}
 	res := resTmp.(*model.CoinbaseCryptoAddress)
 	fc.Result = res
-	return ec.marshalOCoinbaseCryptoAddress2ᚖcqlᚋmodelᚐCoinbaseCryptoAddress(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseCryptoAddress2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseCryptoAddress(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_coinbasePaymentMethodDeposit(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -11849,7 +11849,7 @@ func (ec *executionContext) _Mutation_coinbasePaymentMethodDeposit(ctx context.C
 	}
 	res := resTmp.(*model.CoinbaseDeposit)
 	fc.Result = res
-	return ec.marshalOCoinbaseDeposit2ᚖcqlᚋmodelᚐCoinbaseDeposit(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseDeposit2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseDeposit(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_coinbasePaymentMethodWithdrawal(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -11888,7 +11888,7 @@ func (ec *executionContext) _Mutation_coinbasePaymentMethodWithdrawal(ctx contex
 	}
 	res := resTmp.(*model.CoinbaseWithdrawal)
 	fc.Result = res
-	return ec.marshalOCoinbaseWithdrawal2ᚖcqlᚋmodelᚐCoinbaseWithdrawal(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseWithdrawal2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseWithdrawal(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_coinbaseAccountWithdrawal(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -11927,7 +11927,7 @@ func (ec *executionContext) _Mutation_coinbaseAccountWithdrawal(ctx context.Cont
 	}
 	res := resTmp.(*model.CoinbaseWithdrawal)
 	fc.Result = res
-	return ec.marshalOCoinbaseWithdrawal2ᚖcqlᚋmodelᚐCoinbaseWithdrawal(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseWithdrawal2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseWithdrawal(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_coinbaseCryptoWithdrawal(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -11966,7 +11966,7 @@ func (ec *executionContext) _Mutation_coinbaseCryptoWithdrawal(ctx context.Conte
 	}
 	res := resTmp.(*model.CoinbaseWithdrawal)
 	fc.Result = res
-	return ec.marshalOCoinbaseWithdrawal2ᚖcqlᚋmodelᚐCoinbaseWithdrawal(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseWithdrawal2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseWithdrawal(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_coinbaseAccount(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -12005,7 +12005,7 @@ func (ec *executionContext) _Query_coinbaseAccount(ctx context.Context, field gr
 	}
 	res := resTmp.(*model.CoinbaseAccount)
 	fc.Result = res
-	return ec.marshalOCoinbaseAccount2ᚖcqlᚋmodelᚐCoinbaseAccount(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseAccount2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccount(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_coinbaseAccounts(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -12037,7 +12037,7 @@ func (ec *executionContext) _Query_coinbaseAccounts(ctx context.Context, field g
 	}
 	res := resTmp.([]*model.CoinbaseAccount)
 	fc.Result = res
-	return ec.marshalOCoinbaseAccount2ᚕᚖcqlᚋmodelᚐCoinbaseAccount(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseAccount2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccount(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_coinbaseAccountHolds(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -12076,7 +12076,7 @@ func (ec *executionContext) _Query_coinbaseAccountHolds(ctx context.Context, fie
 	}
 	res := resTmp.([]*model.CoinbaseAccountHold)
 	fc.Result = res
-	return ec.marshalOCoinbaseAccountHold2ᚕᚖcqlᚋmodelᚐCoinbaseAccountHold(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseAccountHold2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountHold(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_coinbaseAccountLedger(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -12115,7 +12115,7 @@ func (ec *executionContext) _Query_coinbaseAccountLedger(ctx context.Context, fi
 	}
 	res := resTmp.([]*model.CoinbaseAccountLedger)
 	fc.Result = res
-	return ec.marshalOCoinbaseAccountLedger2ᚕᚖcqlᚋmodelᚐCoinbaseAccountLedger(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseAccountLedger2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountLedger(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_coinbaseAccountTransfers(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -12154,7 +12154,7 @@ func (ec *executionContext) _Query_coinbaseAccountTransfers(ctx context.Context,
 	}
 	res := resTmp.([]*model.CoinbaseAccountTransfer)
 	fc.Result = res
-	return ec.marshalOCoinbaseAccountTransfer2ᚕᚖcqlᚋmodelᚐCoinbaseAccountTransfer(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseAccountTransfer2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountTransfer(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_coinbaseCurrencies(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -12186,7 +12186,7 @@ func (ec *executionContext) _Query_coinbaseCurrencies(ctx context.Context, field
 	}
 	res := resTmp.([]*model.CoinbaseCurrency)
 	fc.Result = res
-	return ec.marshalOCoinbaseCurrency2ᚕᚖcqlᚋmodelᚐCoinbaseCurrency(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseCurrency2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseCurrency(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_coinbaseCurrencyConversion(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -12225,7 +12225,7 @@ func (ec *executionContext) _Query_coinbaseCurrencyConversion(ctx context.Contex
 	}
 	res := resTmp.(*model.CoinbaseCurrencyConversion)
 	fc.Result = res
-	return ec.marshalOCoinbaseCurrencyConversion2ᚖcqlᚋmodelᚐCoinbaseCurrencyConversion(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseCurrencyConversion2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseCurrencyConversion(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_coinbaseCurrency(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -12264,7 +12264,7 @@ func (ec *executionContext) _Query_coinbaseCurrency(ctx context.Context, field g
 	}
 	res := resTmp.(*model.CoinbaseCurrency)
 	fc.Result = res
-	return ec.marshalOCoinbaseCurrency2ᚖcqlᚋmodelᚐCoinbaseCurrency(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseCurrency2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseCurrency(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_coinbasePaymentMethods(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -12296,7 +12296,7 @@ func (ec *executionContext) _Query_coinbasePaymentMethods(ctx context.Context, f
 	}
 	res := resTmp.([]*model.CoinbasePaymentMethod)
 	fc.Result = res
-	return ec.marshalOCoinbasePaymentMethod2ᚕᚖcqlᚋmodelᚐCoinbasePaymentMethod(ctx, field.Selections, res)
+	return ec.marshalOCoinbasePaymentMethod2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbasePaymentMethod(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_coinbaseTransfers(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -12328,7 +12328,7 @@ func (ec *executionContext) _Query_coinbaseTransfers(ctx context.Context, field 
 	}
 	res := resTmp.([]*model.CoinbaseAccountTransfer)
 	fc.Result = res
-	return ec.marshalOCoinbaseAccountTransfer2ᚕᚖcqlᚋmodelᚐCoinbaseAccountTransfer(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseAccountTransfer2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountTransfer(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_coinbaseTransfer(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -12367,7 +12367,7 @@ func (ec *executionContext) _Query_coinbaseTransfer(ctx context.Context, field g
 	}
 	res := resTmp.(*model.CoinbaseAccountTransfer)
 	fc.Result = res
-	return ec.marshalOCoinbaseAccountTransfer2ᚖcqlᚋmodelᚐCoinbaseAccountTransfer(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseAccountTransfer2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountTransfer(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_coinbaseWallets(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -12399,7 +12399,7 @@ func (ec *executionContext) _Query_coinbaseWallets(ctx context.Context, field gr
 	}
 	res := resTmp.([]*model.CoinbaseWallet)
 	fc.Result = res
-	return ec.marshalOCoinbaseWallet2ᚕᚖcqlᚋmodelᚐCoinbaseWallet(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseWallet2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseWallet(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_coinbaseWithdrawalFeeEstimate(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -12438,7 +12438,7 @@ func (ec *executionContext) _Query_coinbaseWithdrawalFeeEstimate(ctx context.Con
 	}
 	res := resTmp.(*model.CoinbaseWithdrawalFeeEstimate)
 	fc.Result = res
-	return ec.marshalOCoinbaseWithdrawalFeeEstimate2ᚖcqlᚋmodelᚐCoinbaseWithdrawalFeeEstimate(ctx, field.Selections, res)
+	return ec.marshalOCoinbaseWithdrawalFeeEstimate2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseWithdrawalFeeEstimate(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_iexRules(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -12477,7 +12477,7 @@ func (ec *executionContext) _Query_iexRules(ctx context.Context, field graphql.C
 	}
 	res := resTmp.([]*model.IexRule)
 	fc.Result = res
-	return ec.marshalOIexRule2ᚕᚖcqlᚋmodelᚐIexRule(ctx, field.Selections, res)
+	return ec.marshalOIexRule2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐIexRule(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_iexRulesSchema(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -12509,7 +12509,7 @@ func (ec *executionContext) _Query_iexRulesSchema(ctx context.Context, field gra
 	}
 	res := resTmp.(*model.IexRulesSchema)
 	fc.Result = res
-	return ec.marshalOIexRulesSchema2ᚖcqlᚋmodelᚐIexRulesSchema(ctx, field.Selections, res)
+	return ec.marshalOIexRulesSchema2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐIexRulesSchema(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_krakenServerTime(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -12541,7 +12541,7 @@ func (ec *executionContext) _Query_krakenServerTime(ctx context.Context, field g
 	}
 	res := resTmp.(*model.KrakenServerTime)
 	fc.Result = res
-	return ec.marshalOKrakenServerTime2ᚖcqlᚋmodelᚐKrakenServerTime(ctx, field.Selections, res)
+	return ec.marshalOKrakenServerTime2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐKrakenServerTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_krakenSystemStatus(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -12573,7 +12573,7 @@ func (ec *executionContext) _Query_krakenSystemStatus(ctx context.Context, field
 	}
 	res := resTmp.(*model.KrakenSystemStatus)
 	fc.Result = res
-	return ec.marshalOKrakenSystemStatus2ᚖcqlᚋmodelᚐKrakenSystemStatus(ctx, field.Selections, res)
+	return ec.marshalOKrakenSystemStatus2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐKrakenSystemStatus(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -12782,6 +12782,41 @@ func (ec *executionContext) ___Directive_args(ctx context.Context, field graphql
 	res := resTmp.([]introspection.InputValue)
 	fc.Result = res
 	return ec.marshalN__InputValue2ᚕgithubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚋintrospectionᚐInputValueᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) ___Directive_isRepeatable(ctx context.Context, field graphql.CollectedField, obj *introspection.Directive) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "__Directive",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IsRepeatable, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) ___EnumValue_name(ctx context.Context, field graphql.CollectedField, obj *introspection.EnumValue) (ret graphql.Marshaler) {
@@ -13736,7 +13771,10 @@ func (ec *executionContext) ___Type_ofType(ctx context.Context, field graphql.Co
 
 func (ec *executionContext) unmarshalInputCoinbaseAccountDepositOptions(ctx context.Context, obj interface{}) (model.CoinbaseAccountDepositOptions, error) {
 	var it model.CoinbaseAccountDepositOptions
-	var asMap = obj.(map[string]interface{})
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
 
 	for k, v := range asMap {
 		switch k {
@@ -13780,7 +13818,10 @@ func (ec *executionContext) unmarshalInputCoinbaseAccountDepositOptions(ctx cont
 
 func (ec *executionContext) unmarshalInputCoinbaseAccountHoldsOptions(ctx context.Context, obj interface{}) (model.CoinbaseAccountHoldsOptions, error) {
 	var it model.CoinbaseAccountHoldsOptions
-	var asMap = obj.(map[string]interface{})
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
 
 	for k, v := range asMap {
 		switch k {
@@ -13816,7 +13857,10 @@ func (ec *executionContext) unmarshalInputCoinbaseAccountHoldsOptions(ctx contex
 
 func (ec *executionContext) unmarshalInputCoinbaseAccountLedgerOptions(ctx context.Context, obj interface{}) (model.CoinbaseAccountLedgerOptions, error) {
 	var it model.CoinbaseAccountLedgerOptions
-	var asMap = obj.(map[string]interface{})
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
 
 	for k, v := range asMap {
 		switch k {
@@ -13876,7 +13920,10 @@ func (ec *executionContext) unmarshalInputCoinbaseAccountLedgerOptions(ctx conte
 
 func (ec *executionContext) unmarshalInputCoinbaseAccountTransferOptions(ctx context.Context, obj interface{}) (model.CoinbaseAccountTransferOptions, error) {
 	var it model.CoinbaseAccountTransferOptions
-	var asMap = obj.(map[string]interface{})
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
 
 	for k, v := range asMap {
 		switch k {
@@ -13920,7 +13967,10 @@ func (ec *executionContext) unmarshalInputCoinbaseAccountTransferOptions(ctx con
 
 func (ec *executionContext) unmarshalInputCoinbaseAccountTransfersOptions(ctx context.Context, obj interface{}) (model.CoinbaseAccountTransfersOptions, error) {
 	var it model.CoinbaseAccountTransfersOptions
-	var asMap = obj.(map[string]interface{})
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
 
 	for k, v := range asMap {
 		switch k {
@@ -13964,7 +14014,10 @@ func (ec *executionContext) unmarshalInputCoinbaseAccountTransfersOptions(ctx co
 
 func (ec *executionContext) unmarshalInputCoinbaseAccountWithdrawalOptions(ctx context.Context, obj interface{}) (model.CoinbaseAccountWithdrawalOptions, error) {
 	var it model.CoinbaseAccountWithdrawalOptions
-	var asMap = obj.(map[string]interface{})
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
 
 	for k, v := range asMap {
 		switch k {
@@ -14008,7 +14061,10 @@ func (ec *executionContext) unmarshalInputCoinbaseAccountWithdrawalOptions(ctx c
 
 func (ec *executionContext) unmarshalInputCoinbaseCoinbaseAccountDepositOptions(ctx context.Context, obj interface{}) (model.CoinbaseCoinbaseAccountDepositOptions, error) {
 	var it model.CoinbaseCoinbaseAccountDepositOptions
-	var asMap = obj.(map[string]interface{})
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
 
 	for k, v := range asMap {
 		switch k {
@@ -14052,7 +14108,10 @@ func (ec *executionContext) unmarshalInputCoinbaseCoinbaseAccountDepositOptions(
 
 func (ec *executionContext) unmarshalInputCoinbaseConversionOptions(ctx context.Context, obj interface{}) (model.CoinbaseConversionOptions, error) {
 	var it model.CoinbaseConversionOptions
-	var asMap = obj.(map[string]interface{})
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
 
 	for k, v := range asMap {
 		switch k {
@@ -14072,7 +14131,10 @@ func (ec *executionContext) unmarshalInputCoinbaseConversionOptions(ctx context.
 
 func (ec *executionContext) unmarshalInputCoinbaseConversionsOptions(ctx context.Context, obj interface{}) (model.CoinbaseConversionsOptions, error) {
 	var it model.CoinbaseConversionsOptions
-	var asMap = obj.(map[string]interface{})
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
 
 	for k, v := range asMap {
 		switch k {
@@ -14124,7 +14186,10 @@ func (ec *executionContext) unmarshalInputCoinbaseConversionsOptions(ctx context
 
 func (ec *executionContext) unmarshalInputCoinbaseCryptoWithdrawalOptions(ctx context.Context, obj interface{}) (model.CoinbaseCryptoWithdrawalOptions, error) {
 	var it model.CoinbaseCryptoWithdrawalOptions
-	var asMap = obj.(map[string]interface{})
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
 
 	for k, v := range asMap {
 		switch k {
@@ -14208,7 +14273,10 @@ func (ec *executionContext) unmarshalInputCoinbaseCryptoWithdrawalOptions(ctx co
 
 func (ec *executionContext) unmarshalInputCoinbasePaymentMethodDepositOptions(ctx context.Context, obj interface{}) (model.CoinbasePaymentMethodDepositOptions, error) {
 	var it model.CoinbasePaymentMethodDepositOptions
-	var asMap = obj.(map[string]interface{})
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
 
 	for k, v := range asMap {
 		switch k {
@@ -14252,7 +14320,10 @@ func (ec *executionContext) unmarshalInputCoinbasePaymentMethodDepositOptions(ct
 
 func (ec *executionContext) unmarshalInputCoinbasePaymentMethodWithdrawalOptions(ctx context.Context, obj interface{}) (model.CoinbasePaymentMethodWithdrawalOptions, error) {
 	var it model.CoinbasePaymentMethodWithdrawalOptions
-	var asMap = obj.(map[string]interface{})
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
 
 	for k, v := range asMap {
 		switch k {
@@ -14296,7 +14367,10 @@ func (ec *executionContext) unmarshalInputCoinbasePaymentMethodWithdrawalOptions
 
 func (ec *executionContext) unmarshalInputCoinbaseWithdrawalFeeEstimateOptions(ctx context.Context, obj interface{}) (model.CoinbaseWithdrawalFeeEstimateOptions, error) {
 	var it model.CoinbaseWithdrawalFeeEstimateOptions
-	var asMap = obj.(map[string]interface{})
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
 
 	for k, v := range asMap {
 		switch k {
@@ -15953,6 +16027,11 @@ func (ec *executionContext) ___Directive(ctx context.Context, sel ast.SelectionS
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
+		case "isRepeatable":
+			out.Values[i] = ec.___Directive_isRepeatable(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -16185,7 +16264,7 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
-func (ec *executionContext) unmarshalNCoinbaseConversionsOptions2cqlᚋmodelᚐCoinbaseConversionsOptions(ctx context.Context, v interface{}) (model.CoinbaseConversionsOptions, error) {
+func (ec *executionContext) unmarshalNCoinbaseConversionsOptions2githubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseConversionsOptions(ctx context.Context, v interface{}) (model.CoinbaseConversionsOptions, error) {
 	res, err := ec.unmarshalInputCoinbaseConversionsOptions(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
@@ -16258,6 +16337,13 @@ func (ec *executionContext) marshalN__Directive2ᚕgithubᚗcomᚋ99designsᚋgq
 
 	}
 	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
 	return ret
 }
 
@@ -16331,6 +16417,13 @@ func (ec *executionContext) marshalN__DirectiveLocation2ᚕstringᚄ(ctx context
 
 	}
 	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
 	return ret
 }
 
@@ -16380,6 +16473,13 @@ func (ec *executionContext) marshalN__InputValue2ᚕgithubᚗcomᚋ99designsᚋg
 
 	}
 	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
 	return ret
 }
 
@@ -16421,6 +16521,13 @@ func (ec *executionContext) marshalN__Type2ᚕgithubᚗcomᚋ99designsᚋgqlgen�
 
 	}
 	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
 	return ret
 }
 
@@ -16473,7 +16580,7 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	return graphql.MarshalBoolean(*v)
 }
 
-func (ec *executionContext) marshalOCoinbaseAccount2ᚕᚖcqlᚋmodelᚐCoinbaseAccount(ctx context.Context, sel ast.SelectionSet, v []*model.CoinbaseAccount) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseAccount2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccount(ctx context.Context, sel ast.SelectionSet, v []*model.CoinbaseAccount) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -16500,7 +16607,7 @@ func (ec *executionContext) marshalOCoinbaseAccount2ᚕᚖcqlᚋmodelᚐCoinbase
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOCoinbaseAccount2ᚖcqlᚋmodelᚐCoinbaseAccount(ctx, sel, v[i])
+			ret[i] = ec.marshalOCoinbaseAccount2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccount(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -16510,17 +16617,18 @@ func (ec *executionContext) marshalOCoinbaseAccount2ᚕᚖcqlᚋmodelᚐCoinbase
 
 	}
 	wg.Wait()
+
 	return ret
 }
 
-func (ec *executionContext) marshalOCoinbaseAccount2ᚖcqlᚋmodelᚐCoinbaseAccount(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseAccount) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseAccount2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccount(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseAccount) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseAccount(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalOCoinbaseAccountDepositOptions2ᚖcqlᚋmodelᚐCoinbaseAccountDepositOptions(ctx context.Context, v interface{}) (*model.CoinbaseAccountDepositOptions, error) {
+func (ec *executionContext) unmarshalOCoinbaseAccountDepositOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountDepositOptions(ctx context.Context, v interface{}) (*model.CoinbaseAccountDepositOptions, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -16528,7 +16636,7 @@ func (ec *executionContext) unmarshalOCoinbaseAccountDepositOptions2ᚖcqlᚋmod
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOCoinbaseAccountHold2ᚕᚖcqlᚋmodelᚐCoinbaseAccountHold(ctx context.Context, sel ast.SelectionSet, v []*model.CoinbaseAccountHold) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseAccountHold2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountHold(ctx context.Context, sel ast.SelectionSet, v []*model.CoinbaseAccountHold) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -16555,7 +16663,7 @@ func (ec *executionContext) marshalOCoinbaseAccountHold2ᚕᚖcqlᚋmodelᚐCoin
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOCoinbaseAccountHold2ᚖcqlᚋmodelᚐCoinbaseAccountHold(ctx, sel, v[i])
+			ret[i] = ec.marshalOCoinbaseAccountHold2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountHold(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -16565,17 +16673,18 @@ func (ec *executionContext) marshalOCoinbaseAccountHold2ᚕᚖcqlᚋmodelᚐCoin
 
 	}
 	wg.Wait()
+
 	return ret
 }
 
-func (ec *executionContext) marshalOCoinbaseAccountHold2ᚖcqlᚋmodelᚐCoinbaseAccountHold(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseAccountHold) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseAccountHold2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountHold(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseAccountHold) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseAccountHold(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalOCoinbaseAccountHoldsOptions2ᚖcqlᚋmodelᚐCoinbaseAccountHoldsOptions(ctx context.Context, v interface{}) (*model.CoinbaseAccountHoldsOptions, error) {
+func (ec *executionContext) unmarshalOCoinbaseAccountHoldsOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountHoldsOptions(ctx context.Context, v interface{}) (*model.CoinbaseAccountHoldsOptions, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -16583,7 +16692,7 @@ func (ec *executionContext) unmarshalOCoinbaseAccountHoldsOptions2ᚖcqlᚋmodel
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOCoinbaseAccountLedger2ᚕᚖcqlᚋmodelᚐCoinbaseAccountLedger(ctx context.Context, sel ast.SelectionSet, v []*model.CoinbaseAccountLedger) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseAccountLedger2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountLedger(ctx context.Context, sel ast.SelectionSet, v []*model.CoinbaseAccountLedger) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -16610,7 +16719,7 @@ func (ec *executionContext) marshalOCoinbaseAccountLedger2ᚕᚖcqlᚋmodelᚐCo
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOCoinbaseAccountLedger2ᚖcqlᚋmodelᚐCoinbaseAccountLedger(ctx, sel, v[i])
+			ret[i] = ec.marshalOCoinbaseAccountLedger2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountLedger(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -16620,24 +16729,25 @@ func (ec *executionContext) marshalOCoinbaseAccountLedger2ᚕᚖcqlᚋmodelᚐCo
 
 	}
 	wg.Wait()
+
 	return ret
 }
 
-func (ec *executionContext) marshalOCoinbaseAccountLedger2ᚖcqlᚋmodelᚐCoinbaseAccountLedger(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseAccountLedger) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseAccountLedger2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountLedger(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseAccountLedger) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseAccountLedger(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCoinbaseAccountLedgerDetails2ᚖcqlᚋmodelᚐCoinbaseAccountLedgerDetails(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseAccountLedgerDetails) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseAccountLedgerDetails2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountLedgerDetails(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseAccountLedgerDetails) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseAccountLedgerDetails(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalOCoinbaseAccountLedgerOptions2ᚖcqlᚋmodelᚐCoinbaseAccountLedgerOptions(ctx context.Context, v interface{}) (*model.CoinbaseAccountLedgerOptions, error) {
+func (ec *executionContext) unmarshalOCoinbaseAccountLedgerOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountLedgerOptions(ctx context.Context, v interface{}) (*model.CoinbaseAccountLedgerOptions, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -16645,7 +16755,7 @@ func (ec *executionContext) unmarshalOCoinbaseAccountLedgerOptions2ᚖcqlᚋmode
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOCoinbaseAccountTransfer2ᚕᚖcqlᚋmodelᚐCoinbaseAccountTransfer(ctx context.Context, sel ast.SelectionSet, v []*model.CoinbaseAccountTransfer) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseAccountTransfer2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountTransfer(ctx context.Context, sel ast.SelectionSet, v []*model.CoinbaseAccountTransfer) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -16672,7 +16782,7 @@ func (ec *executionContext) marshalOCoinbaseAccountTransfer2ᚕᚖcqlᚋmodelᚐ
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOCoinbaseAccountTransfer2ᚖcqlᚋmodelᚐCoinbaseAccountTransfer(ctx, sel, v[i])
+			ret[i] = ec.marshalOCoinbaseAccountTransfer2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountTransfer(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -16682,24 +16792,25 @@ func (ec *executionContext) marshalOCoinbaseAccountTransfer2ᚕᚖcqlᚋmodelᚐ
 
 	}
 	wg.Wait()
+
 	return ret
 }
 
-func (ec *executionContext) marshalOCoinbaseAccountTransfer2ᚖcqlᚋmodelᚐCoinbaseAccountTransfer(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseAccountTransfer) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseAccountTransfer2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountTransfer(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseAccountTransfer) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseAccountTransfer(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCoinbaseAccountTransferDetails2ᚖcqlᚋmodelᚐCoinbaseAccountTransferDetails(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseAccountTransferDetails) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseAccountTransferDetails2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountTransferDetails(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseAccountTransferDetails) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseAccountTransferDetails(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalOCoinbaseAccountTransferOptions2ᚖcqlᚋmodelᚐCoinbaseAccountTransferOptions(ctx context.Context, v interface{}) (*model.CoinbaseAccountTransferOptions, error) {
+func (ec *executionContext) unmarshalOCoinbaseAccountTransferOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountTransferOptions(ctx context.Context, v interface{}) (*model.CoinbaseAccountTransferOptions, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -16707,7 +16818,7 @@ func (ec *executionContext) unmarshalOCoinbaseAccountTransferOptions2ᚖcqlᚋmo
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalOCoinbaseAccountWithdrawalOptions2ᚖcqlᚋmodelᚐCoinbaseAccountWithdrawalOptions(ctx context.Context, v interface{}) (*model.CoinbaseAccountWithdrawalOptions, error) {
+func (ec *executionContext) unmarshalOCoinbaseAccountWithdrawalOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountWithdrawalOptions(ctx context.Context, v interface{}) (*model.CoinbaseAccountWithdrawalOptions, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -16715,28 +16826,28 @@ func (ec *executionContext) unmarshalOCoinbaseAccountWithdrawalOptions2ᚖcqlᚋ
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOCoinbaseAvailableBalance2ᚖcqlᚋmodelᚐCoinbaseAvailableBalance(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseAvailableBalance) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseAvailableBalance2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAvailableBalance(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseAvailableBalance) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseAvailableBalance(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCoinbaseBalance2ᚖcqlᚋmodelᚐCoinbaseBalance(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseBalance) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseBalance2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseBalance(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseBalance) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseBalance(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCoinbaseBankCountry2ᚖcqlᚋmodelᚐCoinbaseBankCountry(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseBankCountry) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseBankCountry2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseBankCountry(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseBankCountry) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseBankCountry(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalOCoinbaseConversionOptions2ᚖcqlᚋmodelᚐCoinbaseConversionOptions(ctx context.Context, v interface{}) (*model.CoinbaseConversionOptions, error) {
+func (ec *executionContext) unmarshalOCoinbaseConversionOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseConversionOptions(ctx context.Context, v interface{}) (*model.CoinbaseConversionOptions, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -16744,28 +16855,28 @@ func (ec *executionContext) unmarshalOCoinbaseConversionOptions2ᚖcqlᚋmodel�
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOCoinbaseCryptoAccount2ᚖcqlᚋmodelᚐCoinbaseCryptoAccount(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseCryptoAccount) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseCryptoAccount2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseCryptoAccount(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseCryptoAccount) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseCryptoAccount(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCoinbaseCryptoAddress2ᚖcqlᚋmodelᚐCoinbaseCryptoAddress(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseCryptoAddress) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseCryptoAddress2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseCryptoAddress(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseCryptoAddress) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseCryptoAddress(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCoinbaseCryptoAddressInfo2ᚖcqlᚋmodelᚐCoinbaseCryptoAddressInfo(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseCryptoAddressInfo) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseCryptoAddressInfo2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseCryptoAddressInfo(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseCryptoAddressInfo) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseCryptoAddressInfo(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCoinbaseCryptoAddressWarning2ᚕᚖcqlᚋmodelᚐCoinbaseCryptoAddressWarning(ctx context.Context, sel ast.SelectionSet, v []*model.CoinbaseCryptoAddressWarning) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseCryptoAddressWarning2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseCryptoAddressWarning(ctx context.Context, sel ast.SelectionSet, v []*model.CoinbaseCryptoAddressWarning) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -16792,7 +16903,7 @@ func (ec *executionContext) marshalOCoinbaseCryptoAddressWarning2ᚕᚖcqlᚋmod
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOCoinbaseCryptoAddressWarning2ᚖcqlᚋmodelᚐCoinbaseCryptoAddressWarning(ctx, sel, v[i])
+			ret[i] = ec.marshalOCoinbaseCryptoAddressWarning2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseCryptoAddressWarning(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -16802,17 +16913,18 @@ func (ec *executionContext) marshalOCoinbaseCryptoAddressWarning2ᚕᚖcqlᚋmod
 
 	}
 	wg.Wait()
+
 	return ret
 }
 
-func (ec *executionContext) marshalOCoinbaseCryptoAddressWarning2ᚖcqlᚋmodelᚐCoinbaseCryptoAddressWarning(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseCryptoAddressWarning) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseCryptoAddressWarning2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseCryptoAddressWarning(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseCryptoAddressWarning) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseCryptoAddressWarning(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalOCoinbaseCryptoWithdrawalOptions2ᚖcqlᚋmodelᚐCoinbaseCryptoWithdrawalOptions(ctx context.Context, v interface{}) (*model.CoinbaseCryptoWithdrawalOptions, error) {
+func (ec *executionContext) unmarshalOCoinbaseCryptoWithdrawalOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseCryptoWithdrawalOptions(ctx context.Context, v interface{}) (*model.CoinbaseCryptoWithdrawalOptions, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -16820,7 +16932,7 @@ func (ec *executionContext) unmarshalOCoinbaseCryptoWithdrawalOptions2ᚖcqlᚋm
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOCoinbaseCurrency2ᚕᚖcqlᚋmodelᚐCoinbaseCurrency(ctx context.Context, sel ast.SelectionSet, v []*model.CoinbaseCurrency) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseCurrency2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseCurrency(ctx context.Context, sel ast.SelectionSet, v []*model.CoinbaseCurrency) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -16847,7 +16959,7 @@ func (ec *executionContext) marshalOCoinbaseCurrency2ᚕᚖcqlᚋmodelᚐCoinbas
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOCoinbaseCurrency2ᚖcqlᚋmodelᚐCoinbaseCurrency(ctx, sel, v[i])
+			ret[i] = ec.marshalOCoinbaseCurrency2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseCurrency(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -16857,52 +16969,53 @@ func (ec *executionContext) marshalOCoinbaseCurrency2ᚕᚖcqlᚋmodelᚐCoinbas
 
 	}
 	wg.Wait()
+
 	return ret
 }
 
-func (ec *executionContext) marshalOCoinbaseCurrency2ᚖcqlᚋmodelᚐCoinbaseCurrency(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseCurrency) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseCurrency2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseCurrency(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseCurrency) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseCurrency(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCoinbaseCurrencyConversion2ᚖcqlᚋmodelᚐCoinbaseCurrencyConversion(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseCurrencyConversion) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseCurrencyConversion2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseCurrencyConversion(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseCurrencyConversion) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseCurrencyConversion(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCoinbaseCurrencyDetails2ᚖcqlᚋmodelᚐCoinbaseCurrencyDetails(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseCurrencyDetails) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseCurrencyDetails2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseCurrencyDetails(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseCurrencyDetails) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseCurrencyDetails(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCoinbaseDeposit2ᚖcqlᚋmodelᚐCoinbaseDeposit(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseDeposit) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseDeposit2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseDeposit(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseDeposit) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseDeposit(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCoinbaseFiatAccount2ᚖcqlᚋmodelᚐCoinbaseFiatAccount(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseFiatAccount) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseFiatAccount2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseFiatAccount(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseFiatAccount) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseFiatAccount(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCoinbaseLimits2ᚖcqlᚋmodelᚐCoinbaseLimits(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseLimits) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseLimits2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseLimits(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseLimits) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseLimits(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCoinbasePaymentMethod2ᚕᚖcqlᚋmodelᚐCoinbasePaymentMethod(ctx context.Context, sel ast.SelectionSet, v []*model.CoinbasePaymentMethod) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbasePaymentMethod2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbasePaymentMethod(ctx context.Context, sel ast.SelectionSet, v []*model.CoinbasePaymentMethod) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -16929,7 +17042,7 @@ func (ec *executionContext) marshalOCoinbasePaymentMethod2ᚕᚖcqlᚋmodelᚐCo
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOCoinbasePaymentMethod2ᚖcqlᚋmodelᚐCoinbasePaymentMethod(ctx, sel, v[i])
+			ret[i] = ec.marshalOCoinbasePaymentMethod2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbasePaymentMethod(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -16939,17 +17052,18 @@ func (ec *executionContext) marshalOCoinbasePaymentMethod2ᚕᚖcqlᚋmodelᚐCo
 
 	}
 	wg.Wait()
+
 	return ret
 }
 
-func (ec *executionContext) marshalOCoinbasePaymentMethod2ᚖcqlᚋmodelᚐCoinbasePaymentMethod(ctx context.Context, sel ast.SelectionSet, v *model.CoinbasePaymentMethod) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbasePaymentMethod2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbasePaymentMethod(ctx context.Context, sel ast.SelectionSet, v *model.CoinbasePaymentMethod) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbasePaymentMethod(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalOCoinbasePaymentMethodDepositOptions2ᚖcqlᚋmodelᚐCoinbasePaymentMethodDepositOptions(ctx context.Context, v interface{}) (*model.CoinbasePaymentMethodDepositOptions, error) {
+func (ec *executionContext) unmarshalOCoinbasePaymentMethodDepositOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbasePaymentMethodDepositOptions(ctx context.Context, v interface{}) (*model.CoinbasePaymentMethodDepositOptions, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -16957,7 +17071,7 @@ func (ec *executionContext) unmarshalOCoinbasePaymentMethodDepositOptions2ᚖcql
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalOCoinbasePaymentMethodWithdrawalOptions2ᚖcqlᚋmodelᚐCoinbasePaymentMethodWithdrawalOptions(ctx context.Context, v interface{}) (*model.CoinbasePaymentMethodWithdrawalOptions, error) {
+func (ec *executionContext) unmarshalOCoinbasePaymentMethodWithdrawalOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbasePaymentMethodWithdrawalOptions(ctx context.Context, v interface{}) (*model.CoinbasePaymentMethodWithdrawalOptions, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -16965,14 +17079,14 @@ func (ec *executionContext) unmarshalOCoinbasePaymentMethodWithdrawalOptions2ᚖ
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOCoinbasePickerData2ᚖcqlᚋmodelᚐCoinbasePickerData(ctx context.Context, sel ast.SelectionSet, v *model.CoinbasePickerData) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbasePickerData2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbasePickerData(ctx context.Context, sel ast.SelectionSet, v *model.CoinbasePickerData) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbasePickerData(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCoinbaseRecurringOptions2ᚕᚖcqlᚋmodelᚐCoinbaseRecurringOptions(ctx context.Context, sel ast.SelectionSet, v []*model.CoinbaseRecurringOptions) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseRecurringOptions2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseRecurringOptions(ctx context.Context, sel ast.SelectionSet, v []*model.CoinbaseRecurringOptions) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -16999,7 +17113,7 @@ func (ec *executionContext) marshalOCoinbaseRecurringOptions2ᚕᚖcqlᚋmodel�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOCoinbaseRecurringOptions2ᚖcqlᚋmodelᚐCoinbaseRecurringOptions(ctx, sel, v[i])
+			ret[i] = ec.marshalOCoinbaseRecurringOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseRecurringOptions(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -17009,38 +17123,39 @@ func (ec *executionContext) marshalOCoinbaseRecurringOptions2ᚕᚖcqlᚋmodel�
 
 	}
 	wg.Wait()
+
 	return ret
 }
 
-func (ec *executionContext) marshalOCoinbaseRecurringOptions2ᚖcqlᚋmodelᚐCoinbaseRecurringOptions(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseRecurringOptions) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseRecurringOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseRecurringOptions(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseRecurringOptions) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseRecurringOptions(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCoinbaseSepaDepositInformation2ᚖcqlᚋmodelᚐCoinbaseSepaDepositInformation(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseSepaDepositInformation) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseSepaDepositInformation2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseSepaDepositInformation(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseSepaDepositInformation) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseSepaDepositInformation(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCoinbaseSwiftDepositInformation2ᚖcqlᚋmodelᚐCoinbaseSwiftDepositInformation(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseSwiftDepositInformation) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseSwiftDepositInformation2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseSwiftDepositInformation(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseSwiftDepositInformation) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseSwiftDepositInformation(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCoinbaseUkDepositInformation2ᚖcqlᚋmodelᚐCoinbaseUkDepositInformation(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseUkDepositInformation) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseUkDepositInformation2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseUkDepositInformation(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseUkDepositInformation) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseUkDepositInformation(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCoinbaseWallet2ᚕᚖcqlᚋmodelᚐCoinbaseWallet(ctx context.Context, sel ast.SelectionSet, v []*model.CoinbaseWallet) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseWallet2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseWallet(ctx context.Context, sel ast.SelectionSet, v []*model.CoinbaseWallet) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -17067,7 +17182,7 @@ func (ec *executionContext) marshalOCoinbaseWallet2ᚕᚖcqlᚋmodelᚐCoinbaseW
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOCoinbaseWallet2ᚖcqlᚋmodelᚐCoinbaseWallet(ctx, sel, v[i])
+			ret[i] = ec.marshalOCoinbaseWallet2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseWallet(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -17077,38 +17192,39 @@ func (ec *executionContext) marshalOCoinbaseWallet2ᚕᚖcqlᚋmodelᚐCoinbaseW
 
 	}
 	wg.Wait()
+
 	return ret
 }
 
-func (ec *executionContext) marshalOCoinbaseWallet2ᚖcqlᚋmodelᚐCoinbaseWallet(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseWallet) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseWallet2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseWallet(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseWallet) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseWallet(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCoinbaseWireDepositInformation2ᚖcqlᚋmodelᚐCoinbaseWireDepositInformation(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseWireDepositInformation) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseWireDepositInformation2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseWireDepositInformation(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseWireDepositInformation) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseWireDepositInformation(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCoinbaseWithdrawal2ᚖcqlᚋmodelᚐCoinbaseWithdrawal(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseWithdrawal) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseWithdrawal2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseWithdrawal(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseWithdrawal) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseWithdrawal(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCoinbaseWithdrawalFeeEstimate2ᚖcqlᚋmodelᚐCoinbaseWithdrawalFeeEstimate(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseWithdrawalFeeEstimate) graphql.Marshaler {
+func (ec *executionContext) marshalOCoinbaseWithdrawalFeeEstimate2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseWithdrawalFeeEstimate(ctx context.Context, sel ast.SelectionSet, v *model.CoinbaseWithdrawalFeeEstimate) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CoinbaseWithdrawalFeeEstimate(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalOCoinbaseWithdrawalFeeEstimateOptions2ᚖcqlᚋmodelᚐCoinbaseWithdrawalFeeEstimateOptions(ctx context.Context, v interface{}) (*model.CoinbaseWithdrawalFeeEstimateOptions, error) {
+func (ec *executionContext) unmarshalOCoinbaseWithdrawalFeeEstimateOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseWithdrawalFeeEstimateOptions(ctx context.Context, v interface{}) (*model.CoinbaseWithdrawalFeeEstimateOptions, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -17116,13 +17232,13 @@ func (ec *executionContext) unmarshalOCoinbaseWithdrawalFeeEstimateOptions2ᚖcq
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalOEntryType2cqlᚋscalarᚐEntryType(ctx context.Context, v interface{}) (scalar.EntryType, error) {
+func (ec *executionContext) unmarshalOEntryType2githubᚗcomᚋcryptometricsᚋcqlᚋscalarᚐEntryType(ctx context.Context, v interface{}) (scalar.EntryType, error) {
 	tmp, err := graphql.UnmarshalString(v)
 	res := scalar.EntryType(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOEntryType2cqlᚋscalarᚐEntryType(ctx context.Context, sel ast.SelectionSet, v scalar.EntryType) graphql.Marshaler {
+func (ec *executionContext) marshalOEntryType2githubᚗcomᚋcryptometricsᚋcqlᚋscalarᚐEntryType(ctx context.Context, sel ast.SelectionSet, v scalar.EntryType) graphql.Marshaler {
 	return graphql.MarshalString(string(v))
 }
 
@@ -17150,7 +17266,7 @@ func (ec *executionContext) marshalOFloat2ᚖfloat64(ctx context.Context, sel as
 	return graphql.MarshalFloat(*v)
 }
 
-func (ec *executionContext) marshalOIexRule2ᚕᚖcqlᚋmodelᚐIexRule(ctx context.Context, sel ast.SelectionSet, v []*model.IexRule) graphql.Marshaler {
+func (ec *executionContext) marshalOIexRule2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐIexRule(ctx context.Context, sel ast.SelectionSet, v []*model.IexRule) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -17177,7 +17293,7 @@ func (ec *executionContext) marshalOIexRule2ᚕᚖcqlᚋmodelᚐIexRule(ctx cont
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOIexRule2ᚖcqlᚋmodelᚐIexRule(ctx, sel, v[i])
+			ret[i] = ec.marshalOIexRule2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐIexRule(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -17187,24 +17303,25 @@ func (ec *executionContext) marshalOIexRule2ᚕᚖcqlᚋmodelᚐIexRule(ctx cont
 
 	}
 	wg.Wait()
+
 	return ret
 }
 
-func (ec *executionContext) marshalOIexRule2ᚖcqlᚋmodelᚐIexRule(ctx context.Context, sel ast.SelectionSet, v *model.IexRule) graphql.Marshaler {
+func (ec *executionContext) marshalOIexRule2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐIexRule(ctx context.Context, sel ast.SelectionSet, v *model.IexRule) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._IexRule(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOIexRulesSchema2ᚖcqlᚋmodelᚐIexRulesSchema(ctx context.Context, sel ast.SelectionSet, v *model.IexRulesSchema) graphql.Marshaler {
+func (ec *executionContext) marshalOIexRulesSchema2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐIexRulesSchema(ctx context.Context, sel ast.SelectionSet, v *model.IexRulesSchema) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._IexRulesSchema(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOIexRulesScheme2ᚕᚖcqlᚋmodelᚐIexRulesScheme(ctx context.Context, sel ast.SelectionSet, v []*model.IexRulesScheme) graphql.Marshaler {
+func (ec *executionContext) marshalOIexRulesScheme2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐIexRulesScheme(ctx context.Context, sel ast.SelectionSet, v []*model.IexRulesScheme) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -17231,7 +17348,7 @@ func (ec *executionContext) marshalOIexRulesScheme2ᚕᚖcqlᚋmodelᚐIexRulesS
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOIexRulesScheme2ᚖcqlᚋmodelᚐIexRulesScheme(ctx, sel, v[i])
+			ret[i] = ec.marshalOIexRulesScheme2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐIexRulesScheme(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -17241,10 +17358,11 @@ func (ec *executionContext) marshalOIexRulesScheme2ᚕᚖcqlᚋmodelᚐIexRulesS
 
 	}
 	wg.Wait()
+
 	return ret
 }
 
-func (ec *executionContext) marshalOIexRulesScheme2ᚖcqlᚋmodelᚐIexRulesScheme(ctx context.Context, sel ast.SelectionSet, v *model.IexRulesScheme) graphql.Marshaler {
+func (ec *executionContext) marshalOIexRulesScheme2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐIexRulesScheme(ctx context.Context, sel ast.SelectionSet, v *model.IexRulesScheme) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -17275,28 +17393,28 @@ func (ec *executionContext) marshalOInt2ᚖint(ctx context.Context, sel ast.Sele
 	return graphql.MarshalInt(*v)
 }
 
-func (ec *executionContext) marshalOKrakenServerTime2ᚖcqlᚋmodelᚐKrakenServerTime(ctx context.Context, sel ast.SelectionSet, v *model.KrakenServerTime) graphql.Marshaler {
+func (ec *executionContext) marshalOKrakenServerTime2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐKrakenServerTime(ctx context.Context, sel ast.SelectionSet, v *model.KrakenServerTime) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._KrakenServerTime(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOKrakenServerTimeResult2ᚖcqlᚋmodelᚐKrakenServerTimeResult(ctx context.Context, sel ast.SelectionSet, v *model.KrakenServerTimeResult) graphql.Marshaler {
+func (ec *executionContext) marshalOKrakenServerTimeResult2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐKrakenServerTimeResult(ctx context.Context, sel ast.SelectionSet, v *model.KrakenServerTimeResult) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._KrakenServerTimeResult(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOKrakenSystemStatus2ᚖcqlᚋmodelᚐKrakenSystemStatus(ctx context.Context, sel ast.SelectionSet, v *model.KrakenSystemStatus) graphql.Marshaler {
+func (ec *executionContext) marshalOKrakenSystemStatus2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐKrakenSystemStatus(ctx context.Context, sel ast.SelectionSet, v *model.KrakenSystemStatus) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._KrakenSystemStatus(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOKrakenSystemStatusResult2ᚖcqlᚋmodelᚐKrakenSystemStatusResult(ctx context.Context, sel ast.SelectionSet, v *model.KrakenSystemStatusResult) graphql.Marshaler {
+func (ec *executionContext) marshalOKrakenSystemStatusResult2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐKrakenSystemStatusResult(ctx context.Context, sel ast.SelectionSet, v *model.KrakenSystemStatusResult) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -17363,13 +17481,13 @@ func (ec *executionContext) marshalOString2ᚖstring(ctx context.Context, sel as
 	return graphql.MarshalString(*v)
 }
 
-func (ec *executionContext) unmarshalOSystemStatus2cqlᚋscalarᚐSystemStatus(ctx context.Context, v interface{}) (scalar.SystemStatus, error) {
+func (ec *executionContext) unmarshalOSystemStatus2githubᚗcomᚋcryptometricsᚋcqlᚋscalarᚐSystemStatus(ctx context.Context, v interface{}) (scalar.SystemStatus, error) {
 	tmp, err := graphql.UnmarshalString(v)
 	res := scalar.SystemStatus(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOSystemStatus2cqlᚋscalarᚐSystemStatus(ctx context.Context, sel ast.SelectionSet, v scalar.SystemStatus) graphql.Marshaler {
+func (ec *executionContext) marshalOSystemStatus2githubᚗcomᚋcryptometricsᚋcqlᚋscalarᚐSystemStatus(ctx context.Context, sel ast.SelectionSet, v scalar.SystemStatus) graphql.Marshaler {
 	return graphql.MarshalString(string(v))
 }
 
@@ -17419,6 +17537,13 @@ func (ec *executionContext) marshalO__EnumValue2ᚕgithubᚗcomᚋ99designsᚋgq
 
 	}
 	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
 	return ret
 }
 
@@ -17459,6 +17584,13 @@ func (ec *executionContext) marshalO__Field2ᚕgithubᚗcomᚋ99designsᚋgqlgen
 
 	}
 	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
 	return ret
 }
 
@@ -17499,6 +17631,13 @@ func (ec *executionContext) marshalO__InputValue2ᚕgithubᚗcomᚋ99designsᚋg
 
 	}
 	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
 	return ret
 }
 
@@ -17546,6 +17685,13 @@ func (ec *executionContext) marshalO__Type2ᚕgithubᚗcomᚋ99designsᚋgqlgen�
 
 	}
 	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
 	return ret
 }
 

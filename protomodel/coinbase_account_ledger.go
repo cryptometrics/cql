@@ -1,9 +1,9 @@
 package protomodel
 
 import (
-	"github.com/cryptometrics/cql/scalar"
 	"time"
 
+	"github.com/cryptometrics/cql/scalar"
 	"github.com/cryptometrics/cql/serial"
 )
 
