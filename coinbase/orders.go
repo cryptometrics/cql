@@ -21,13 +21,27 @@ func NewOrders(conn client.Connector) *Orders {
 	return orders
 }
 
-// WithdrawalFeeEstimate gets the fee estimate for the crypto withdrawal to
-// crypto address
+// ## API Key Permissions
+// This endpoint requires either the "view" or "trade" permission.
 //
-// This endpoint requires the "transfer" permission. API key must belong to
-// default profile.
+// ## Settlement and Fees
+// Fees are recorded in two stages. Immediately after the matching engine
+// completes a match, the fill is inserted into our datastore. Once the fill is
+// recorded, a settlement process will settle the fill and credit both trading
+// counterparties.
 //
-// * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_getwithdrawfeeestimate
+// The fee field indicates the fees charged for this individual fill.
+//
+// ### Liquidity
+// The liquidity field indicates if the fill was the result of a liquidity
+// provider or liquidity taker. M indicates Maker and T indicates Taker.
+//
+// ### Pagination
+// Fills are returned sorted by descending trade_id from the largest trade_id to
+// the smallest trade_id. The CB-BEFORE header will have this first trade id so
+// that future requests using the cb-before parameter will fetch fills with a
+// greater trade id (newer fills).
+// * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_getfills
 func (orders *Orders) Fills(opts *model.CoinbaseFillsOptions) (m []*model.CoinbaseFill, err error) {
 	return m, orders.Get(FillsEndpoint).
 		QueryParam("order_id", func() (i *string) {
