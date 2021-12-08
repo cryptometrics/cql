@@ -73,6 +73,10 @@ func (r *queryResolver) CoinbaseCurrency(ctx context.Context, currentID string) 
 	return coinbase.NewCurrency(coinbase.DefaultClient).Find(currentID)
 }
 
+func (r *queryResolver) CoinbaseFills(ctx context.Context, opts *model.CoinbaseFillsOptions) ([]*model.CoinbaseFill, error) {
+	return coinbase.NewOrders(coinbase.DefaultClient).Fills(opts)
+}
+
 func (r *queryResolver) CoinbasePaymentMethods(ctx context.Context) ([]*model.CoinbasePaymentMethod, error) {
 	return coinbase.NewTransfer(coinbase.DefaultClient).PaymentMethods()
 }

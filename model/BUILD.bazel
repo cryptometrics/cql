@@ -21,6 +21,7 @@ go_library(
         "coinbase_currency_details.go",
         "coinbase_deposit.go",
         "coinbase_fiat_account.go",
+        "coinbase_fill.go",
         "coinbase_limits.go",
         "coinbase_payment_method.go",
         "coinbase_picker_data.go",

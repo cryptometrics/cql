@@ -45,6 +45,8 @@ models:
     model: github.com/cryptometrics/cql/model.CoinbaseDeposit
   CoinbaseFiatAccount:
     model: github.com/cryptometrics/cql/model.CoinbaseFiatAccount
+  CoinbaseFill:
+    model: github.com/cryptometrics/cql/model.CoinbaseFill
   CoinbaseHold:
     model: model.CoinbaseHold
   CoinbaseLimits:

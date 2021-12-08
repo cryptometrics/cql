@@ -76,6 +76,15 @@ type CoinbaseCryptoWithdrawalOptions struct {
 	Fee              *float64 `json:"fee"`
 }
 
+type CoinbaseFillsOptions struct {
+	OrderID   *string `json:"orderId"`
+	ProductID *string `json:"productId"`
+	ProfileID *string `json:"profileId"`
+	Limit     *int    `json:"limit"`
+	Before    *int    `json:"before"`
+	After     *int    `json:"after"`
+}
+
 type CoinbasePaymentMethodDepositOptions struct {
 	ProfileID       *string `json:"profileId"`
 	Amount          float64 `json:"amount"`

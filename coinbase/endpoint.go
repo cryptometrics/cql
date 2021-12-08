@@ -26,6 +26,7 @@ const (
 	CryptoWithdrawalEndpoint
 	CurrenciesEndpoint
 	CurrencyEndpoint
+	FillsEndpoint
 	PaymentMethodEndpoint
 	PaymentMethodDepositEndpoint
 	PaymentMethodWithdrawalEndpoint
@@ -154,6 +155,16 @@ func CurrencyPath(args client.EndpointArgs) string {
 	return path.Join("/currencies", *args["currency_id"].PathParam)
 }
 
+// Get a list of fills. A fill is a partial or complete match on a specific
+// order.
+func FillsPath(args client.EndpointArgs) (p string) {
+	p = path.Join("/fills")
+	var sb strings.Builder
+	sb.WriteString(p)
+	sb.WriteString(args.QueryPath().String())
+	return sb.String()
+}
+
 // Gets a list of the user's linked payment methods.
 func PaymentMethodPath(_ client.EndpointArgs) string {
 	return path.Join("/payment-methods")
@@ -228,6 +239,7 @@ func (endpoint Endpoint) Path(args client.EndpointArgs) string {
 		CryptoWithdrawalEndpoint:        CryptoWithdrawalPath,
 		CurrenciesEndpoint:              CurrenciesPath,
 		CurrencyEndpoint:                CurrencyPath,
+		FillsEndpoint:                   FillsPath,
 		PaymentMethodEndpoint:           PaymentMethodPath,
 		PaymentMethodDepositEndpoint:    PaymentMethodDepositPath,
 		PaymentMethodWithdrawalEndpoint: PaymentMethodWithdrawalPath,

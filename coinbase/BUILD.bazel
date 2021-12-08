@@ -11,6 +11,7 @@ go_library(
         "endpoint.go",
         "market_data.go",
         "mock_c.go",
+        "orders.go",
         "pointer.go",
         "private.go",
         "pro_c.go",
