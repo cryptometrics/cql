@@ -392,6 +392,7 @@ def format_go(filename: str):
 
 def generate_graphqls():
     chdir(GQLGEN_DIR)
+    subprocess.run(["go", "get", "github.com/99designs/gqlgen"])
     subprocess.run(["go", "run", "github.com/99designs/gqlgen", "generate"])
 
 
