@@ -14,7 +14,7 @@ type AsyncTicker struct {
 	Errors *errgroup.Group
 
 	channel TickerChannel
-	closed  bool
+	closing chan struct{}
 	conn    WebsocketConnector
 	message *WebsocketMessage
 }
@@ -23,6 +23,7 @@ func newAsyncTicker(ctx context.Context, conn WebsocketConnector, products ...st
 	ticker := new(AsyncTicker)
 	ticker.Errors, _ = errgroup.WithContext(ctx)
 	ticker.channel = make(TickerChannel)
+	ticker.closing = make(chan struct{})
 	ticker.conn = conn
 
 	channels := []WebsocketChannel{{Name: "ticker"}}
@@ -33,17 +34,24 @@ func newAsyncTicker(ctx context.Context, conn WebsocketConnector, products ...st
 	return ticker
 }
 
-// startStream starts the websocket stream, streaming it into the channel
+// startStream starts the websocket stream, streaming it into the
+// AsyncTicker.channel
 func (ticker *AsyncTicker) startStream() *AsyncTicker {
 	ticker.Errors.Go(func() (err error) {
-		for !ticker.closed {
+		defer func() {
+			close(ticker.channel)
+		}()
+		for {
 			var row model.CoinbaseWebsocketTicker
 			if err = ticker.conn.ReadJSON(&row); err != nil {
-				break
+				return err
 			}
-			ticker.channel <- row
+			select {
+			case <-ticker.closing:
+				return
+			case ticker.channel <- row:
+			}
 		}
-		return err
 	})
 	return ticker
 }
@@ -53,12 +61,14 @@ func (ticker *AsyncTicker) Channel() TickerChannel {
 	return ticker.channel
 }
 
-// Close unsubscribes the message from the websocket and closes the channel
+// Close unsubscribes the message from the websocket and closes the channel.
+// The Close routine can be called multiple times safely.
 func (ticker *AsyncTicker) Close() error {
 	if err := ticker.message.Unsubscribe(ticker.conn); err != nil {
 		return err
 	}
-	ticker.closed = true
-	close(ticker.channel)
+	select {
+	case ticker.closing <- struct{}{}:
+	}
 	return nil
 }

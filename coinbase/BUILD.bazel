@@ -11,6 +11,7 @@ go_library(
         "endpoint.go",
         "market_data.go",
         "mock_c.go",
+        "mock_websocket_connector.go",
         "orders.go",
         "pointer.go",
         "private.go",
@@ -38,6 +39,10 @@ go_library(
 
 go_test(
     name = "coinbase_test",
-    srcs = ["websocket_test.go"],
+    srcs = ["async_ticket_test.go"],
     embed = [":coinbase"],
+    deps = [
+        "//model",
+        "@com_github_franela_goblin//:goblin",
+    ],
 )

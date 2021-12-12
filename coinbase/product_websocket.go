@@ -21,6 +21,6 @@ func NewProductWebsocket(ws WebsocketCreator) *ProductWebsocket {
 // ticket data, then it puts that data onto a channel for
 // model.CoinbaseWebsocketTicker
 func (productWebsocket *ProductWebsocket) Ticker(products ...string) *AsyncTicker {
-	ticker := newAsyncTicker(context.Background(), productWebsocket.conn, products...)
-	return ticker.startStream()
+	asyncTicker := newAsyncTicker(context.Background(), productWebsocket.conn, products...)
+	return asyncTicker.startStream()
 }
