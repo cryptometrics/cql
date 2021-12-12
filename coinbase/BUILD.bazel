@@ -39,7 +39,7 @@ go_library(
 
 go_test(
     name = "coinbase_test",
-    srcs = ["async_ticket_test.go"],
+    srcs = ["async_ticker_test.go"],
     embed = [":coinbase"],
     deps = [
         "//model",

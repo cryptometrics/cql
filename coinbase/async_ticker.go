@@ -2,6 +2,7 @@ package coinbase
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/cryptometrics/cql/model"
 
@@ -17,15 +18,14 @@ type AsyncTicker struct {
 	closed, closing chan struct{}
 	conn            WebsocketConnector
 	message         *WebsocketMessage
+	streaming       bool
 }
 
 func newAsyncTicker(ctx context.Context, conn WebsocketConnector, products ...string) *AsyncTicker {
 	ticker := new(AsyncTicker)
 	ticker.Errors, _ = errgroup.WithContext(ctx)
-	ticker.channel = make(TickerChannel)
-	ticker.closed = make(chan struct{})
-	ticker.closing = make(chan struct{})
 	ticker.conn = conn
+	ticker.streaming = false
 
 	channels := []WebsocketChannel{{Name: "ticker"}}
 	msg, _ := NewWebsocketMessage(products, channels)
@@ -35,13 +35,25 @@ func newAsyncTicker(ctx context.Context, conn WebsocketConnector, products ...st
 	return ticker
 }
 
-// startStream starts the websocket stream, streaming it into the
+func (ticker *AsyncTicker) makeChannels() {
+	ticker.channel = make(TickerChannel)
+	ticker.closed = make(chan struct{})
+	ticker.closing = make(chan struct{})
+}
+
+// StartStream starts the websocket stream, streaming it into the
 // AsyncTicker.channel
-func (ticker *AsyncTicker) startStream() *AsyncTicker {
+func (ticker *AsyncTicker) StartStream() (*AsyncTicker, error) {
+	if ticker.streaming {
+		return nil, fmt.Errorf("data already streaming for AsyncTicker object")
+	}
+	ticker.streaming = true
+	ticker.makeChannels()
 	ticker.Errors.Go(func() (err error) {
 		defer func() {
 			close(ticker.closed)
 			close(ticker.channel)
+			ticker.streaming = false
 		}()
 		for {
 			var row model.CoinbaseWebsocketTicker
@@ -55,7 +67,7 @@ func (ticker *AsyncTicker) startStream() *AsyncTicker {
 			}
 		}
 	})
-	return ticker
+	return ticker, nil
 }
 
 // Channel returns the ticker channel for streaming
@@ -66,6 +78,9 @@ func (ticker *AsyncTicker) Channel() TickerChannel {
 // Close unsubscribes the message from the websocket and closes the channel.
 // The Close routine can be called multiple times safely.
 func (ticker *AsyncTicker) Close() error {
+	if !ticker.streaming {
+		return nil
+	}
 	if err := ticker.message.Unsubscribe(ticker.conn); err != nil {
 		return err
 	}

@@ -22,5 +22,5 @@ func NewProductWebsocket(ws WebsocketCreator) *ProductWebsocket {
 // model.CoinbaseWebsocketTicker
 func (productWebsocket *ProductWebsocket) Ticker(products ...string) *AsyncTicker {
 	asyncTicker := newAsyncTicker(context.Background(), productWebsocket.conn, products...)
-	return asyncTicker.startStream()
+	return asyncTicker
 }
