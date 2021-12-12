@@ -33,13 +33,6 @@ func newAsyncTicker(ctx context.Context, conn WebsocketConnector, products ...st
 	return ticker
 }
 
-func (ticker *AsyncTicker) makeChannels() {
-	ticker.channel = make(TickerChannel)
-	ticker.closed = make(chan struct{})
-	ticker.closing = make(chan struct{})
-	ticker.streaming = make(chan bool, 1)
-}
-
 // StartStream starts the websocket stream, streaming it into the
 // AsyncTicker.channel.  This method is idempotent, so if you call it multiple
 // times successively without closing the websocket it will close the ws for you
@@ -53,7 +46,11 @@ func (ticker *AsyncTicker) StartStream() *AsyncTicker {
 	default:
 	}
 
-	ticker.makeChannels()
+	ticker.channel = make(TickerChannel)
+	ticker.closed = make(chan struct{})
+	ticker.closing = make(chan struct{})
+	ticker.streaming = make(chan bool, 1)
+
 	ticker.Errors.Go(func() (err error) {
 		defer func() {
 			close(ticker.closed)
