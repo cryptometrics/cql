@@ -23,8 +23,8 @@ const (
 	KrakenSecret
 )
 
-func init() {
-	if err := godotenv.Load("../../.auth.env"); err != nil {
+func Load(filepath string) {
+	if err := godotenv.Load(filepath); err != nil {
 		panic(fmt.Errorf("Error loading .env file: %v", err))
 	}
 	return

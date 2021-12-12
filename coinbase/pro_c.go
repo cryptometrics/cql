@@ -19,7 +19,33 @@ import (
 
 // proC is the coinbase pro client
 type proC struct {
-	client http.Client
+	client     http.Client
+	key        string
+	passphrase string
+	secret     string
+	url        string
+}
+
+// newCoinbaseProClient will populate the client auth credietions directly
+func newCoinbaseProClient(key, passphrase, secret, url string) *proC {
+	c := new(proC)
+	c.key = key
+	c.passphrase = passphrase
+	c.secret = secret
+	c.url = url
+	return c
+}
+
+// newCoinbaseProClientEnv will populate the client auth credentials using a
+// .env file
+func newCoinbaseProClientEnv(filepath string) *proC {
+	c := new(proC)
+	env.Load(filepath)
+	c.key = env.CoinbaseProAccessKey.Get()
+	c.passphrase = env.CoinbaseProAccessPassphrase.Get()
+	c.secret = env.CoinbaseProSecret.Get()
+	c.url = env.CoinbaseProURL.Get()
+	return c
 }
 
 // generateSig generates the coinbase base64-encoded signature required to make
@@ -57,25 +83,21 @@ func (cb *proC) generageMsg(creq client.Request, timestamp string) string {
 func (cb *proC) setHeaders(hreq *http.Request, creq client.Request) (e error) {
 	// TODO depricate getting key/passphrase/secret with secret keeper
 	var (
-		key        = env.CoinbaseProAccessKey.Get()
-		passphrase = env.CoinbaseProAccessPassphrase.Get()
-		secret     = env.CoinbaseProSecret.Get()
-		timestamp  = strconv.FormatInt(time.Now().Unix(), 10)
-		msg        = cb.generageMsg(creq, timestamp)
+		timestamp = strconv.FormatInt(time.Now().Unix(), 10)
+		msg       = cb.generageMsg(creq, timestamp)
 	)
 
 	var sig string
-	sig, e = cb.generateSig(secret, msg)
+	sig, e = cb.generateSig(cb.secret, msg)
 	hreq.Header.Add("accept", "application/json")
 	hreq.Header.Add("content-type", "application/json")
-	// hreq.Header.Add("User-Agent", "Go coinbase Pro Client 1.0")
-	hreq.Header.Add("cb-access-key", key)
-	hreq.Header.Add("cb-access-passphrase", passphrase)
+	hreq.Header.Add("cb-access-key", cb.key)
+	hreq.Header.Add("cb-access-passphrase", cb.passphrase)
 	hreq.Header.Add("cb-access-sign", sig)
 	hreq.Header.Add("cb-access-timestamp", timestamp)
 
 	logMsg := `{Client:{Access:{Key:%s,Passphrase:%s,Timestamp:%s,Sign:%s}}}`
-	logrus.Debug(client.Logf(&creq, logMsg, key, passphrase, timestamp, sig))
+	logrus.Debug(client.Logf(&creq, logMsg, cb.key, cb.passphrase, timestamp, sig))
 	return
 }
 
@@ -84,7 +106,7 @@ func (cb *proC) setHeaders(hreq *http.Request, creq client.Request) (e error) {
 //
 // TODO make data-compatible for non-get requests
 func (cb *proC) Do(creq client.Request) (*http.Response, error) {
-	uri := env.CoinbaseProURL.Get() + creq.EndpointPath()
+	uri := cb.url + creq.EndpointPath()
 
 	logrus.Debug(client.Logf(&creq, `{Client:{URI:%s}}`, uri))
 
@@ -118,5 +140,16 @@ func newClient() (client.C, error) {
 // DefaultClient will pull the coinbase authentication data from the env
 // variables.  See README for more information on how to set these up.
 func DefaultClient() (client.C, error) {
-	return &proC{}, nil
+	c := newCoinbaseProClientEnv("../../.auth.env")
+	return c, nil
+}
+
+// NewClient will populate the coinbase auth data from args
+func NewClient(key, passphrase, secret, url string) (client.C, error) {
+	return newCoinbaseProClient(key, passphrase, secret, url), nil
+}
+
+// NewClient will populate the coinbase auth data from a .env file
+func NewClientEnv(filepath string) (client.C, error) {
+	return newCoinbaseProClientEnv(filepath), nil
 }
