@@ -13,16 +13,17 @@ type TickerChannel chan model.CoinbaseWebsocketTicker
 type AsyncTicker struct {
 	Errors *errgroup.Group
 
-	channel TickerChannel
-	closing chan struct{}
-	conn    WebsocketConnector
-	message *WebsocketMessage
+	channel         TickerChannel
+	closed, closing chan struct{}
+	conn            WebsocketConnector
+	message         *WebsocketMessage
 }
 
 func newAsyncTicker(ctx context.Context, conn WebsocketConnector, products ...string) *AsyncTicker {
 	ticker := new(AsyncTicker)
 	ticker.Errors, _ = errgroup.WithContext(ctx)
 	ticker.channel = make(TickerChannel)
+	ticker.closed = make(chan struct{})
 	ticker.closing = make(chan struct{})
 	ticker.conn = conn
 
@@ -39,6 +40,7 @@ func newAsyncTicker(ctx context.Context, conn WebsocketConnector, products ...st
 func (ticker *AsyncTicker) startStream() *AsyncTicker {
 	ticker.Errors.Go(func() (err error) {
 		defer func() {
+			close(ticker.closed)
 			close(ticker.channel)
 		}()
 		for {
@@ -69,6 +71,8 @@ func (ticker *AsyncTicker) Close() error {
 	}
 	select {
 	case ticker.closing <- struct{}{}:
+		<-ticker.closed
+	case <-ticker.closed:
 	}
 	return nil
 }
