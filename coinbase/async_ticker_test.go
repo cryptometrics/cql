@@ -51,7 +51,7 @@ func TestAsyncTickerStream(t *testing.T) {
 
 	g.Describe("ticker#StartStream", func() {
 		g.It("should re-initialize channel data after each close", func() {
-			treshold := 100
+			treshold := 10000
 			mockC, _ := newmockWebsocketConnector()
 			ticker := newAsyncTicker(context.Background(), mockC)
 			for i := 0; i < treshold; i++ {
@@ -66,7 +66,7 @@ func TestAsyncTickerStream(t *testing.T) {
 			}
 		})
 
-		g.It("should error if data is alreading streaming", func() {
+		g.It("should be able to start stream over again", func() {
 			mockC, _ := newmockWebsocketConnector()
 			ticker := newAsyncTicker(context.Background(), mockC)
 			ticker.StartStream()
@@ -76,9 +76,15 @@ func TestAsyncTickerStream(t *testing.T) {
 					tickers = append(tickers, ticker)
 				}
 			}()
+			time.Sleep(2 * time.Microsecond)
+			ticker.StartStream()
+			go func() {
+				tickers := []model.CoinbaseWebsocketTicker{}
+				for ticker := range ticker.channel {
+					tickers = append(tickers, ticker)
+				}
+			}()
 			time.Sleep(1 * time.Microsecond)
-			_, err := ticker.StartStream()
-			g.Assert(err).IsNotNil()
 			ticker.Close()
 		})
 	})
