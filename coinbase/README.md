@@ -1,5 +1,26 @@
 # Coinbase
 
+`coinbase` is a package meant to be used as an SDK for creating a third-party connection in your code base to read and write information to coinbase pro using auth credentials.  For example:
+
+```go
+package alert
+
+import (
+	"github.com/cryptometrics/cql/coinbase"
+)
+
+func StartStream
+	ws := coinbase.NewProductWebsocket(coinbase.DefaultWebsocketConnector)
+	ticker := ws.Ticker("ETH-USD")
+	ticker.StartStream()
+	go func() {
+		for row := range bigTicker.Channel() {
+			fmt.Println(row.ProductId, row.Time, row.Price)
+		}
+	}()
+}
+```
+
 ## Connecting
 
 To use nealy any of the coinbase accessors, you first need to establish a valid connection to coinbase pro using your auth credentials.  There are curretly two ways of doing this:
