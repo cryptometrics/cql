@@ -26,6 +26,7 @@ const (
 	CryptoWithdrawalEndpoint
 	CurrenciesEndpoint
 	CurrencyEndpoint
+	FeesEndpoint
 	FillsEndpoint
 	PaymentMethodEndpoint
 	PaymentMethodDepositEndpoint
@@ -155,6 +156,11 @@ func CurrencyPath(args client.EndpointArgs) string {
 	return path.Join("/currencies", *args["currency_id"].PathParam)
 }
 
+// Get fees rates and 30 days trailing volume.
+func FeesPath(_ client.EndpointArgs) string {
+	return path.Join("/fees")
+}
+
 // Get a list of fills. A fill is a partial or complete match on a specific
 // order.
 func FillsPath(args client.EndpointArgs) (p string) {
@@ -239,6 +245,7 @@ func (endpoint Endpoint) Path(args client.EndpointArgs) string {
 		CryptoWithdrawalEndpoint:        CryptoWithdrawalPath,
 		CurrenciesEndpoint:              CurrenciesPath,
 		CurrencyEndpoint:                CurrencyPath,
+		FeesEndpoint:                    FeesPath,
 		FillsEndpoint:                   FillsPath,
 		PaymentMethodEndpoint:           PaymentMethodPath,
 		PaymentMethodDepositEndpoint:    PaymentMethodDepositPath,

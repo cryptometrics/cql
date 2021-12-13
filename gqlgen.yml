@@ -43,6 +43,8 @@ models:
     model: github.com/cryptometrics/cql/model.CoinbaseCurrencyDetails
   CoinbaseDeposit:
     model: github.com/cryptometrics/cql/model.CoinbaseDeposit
+  CoinbaseFees:
+    model: github.com/cryptometrics/cql/model.CoinbaseFees
   CoinbaseFiatAccount:
     model: github.com/cryptometrics/cql/model.CoinbaseFiatAccount
   CoinbaseFill:

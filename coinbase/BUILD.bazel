@@ -10,6 +10,7 @@ go_library(
         "conversion.go",
         "currency.go",
         "endpoint.go",
+        "fees.go",
         "market_data.go",
         "mock_c.go",
         "orders.go",

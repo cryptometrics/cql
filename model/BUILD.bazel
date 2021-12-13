@@ -20,6 +20,7 @@ go_library(
         "coinbase_currency_conversion.go",
         "coinbase_currency_details.go",
         "coinbase_deposit.go",
+        "coinbase_fees.go",
         "coinbase_fiat_account.go",
         "coinbase_fill.go",
         "coinbase_limits.go",
