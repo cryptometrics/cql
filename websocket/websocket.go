@@ -1,4 +1,4 @@
-package coinbase
+package websocket
 
 import (
 	"net/http"
@@ -12,12 +12,11 @@ type Websocket struct {
 	Response *http.Response
 }
 
-type WebsocketCreator func() (WebsocketConnector, error)
+type Creator func(string) (Connector, error)
 
 // NewWebsocket will return a new coinbase websocket connection
-func NewWebsocket() (WebsocketConnector, error) {
+func New(url string) (Connector, error) {
 	conn := new(Websocket)
-	url := "wss://ws-feed.pro.coinbase.com"
 	var dialer websocket.Dialer
 	var err error
 	conn.Conn, conn.Response, err = dialer.Dial(url, nil)

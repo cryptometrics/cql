@@ -1,15 +1,17 @@
 package coinbase
 
+import "github.com/cryptometrics/cql/websocket"
+
 type ProductWebsocket struct {
-	conn WebsocketConnector
+	conn websocket.Connector
 }
 
 // NewProductWebsocket will create a connection to the coinbase websocket and
 // return a singleton that can be used to open channels that stream product
 // data via a websocket.
-func NewProductWebsocket(ws WebsocketCreator) *ProductWebsocket {
+func NewProductWebsocket(ws websocket.Creator) *ProductWebsocket {
 	productWebsocket := new(ProductWebsocket)
-	productWebsocket.conn, _ = ws()
+	productWebsocket.conn, _ = ws(WebsocketURL)
 	return productWebsocket
 }
 

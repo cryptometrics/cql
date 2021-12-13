@@ -1,11 +1,11 @@
-package coinbase
+package websocket
 
-type WebsocketConnector interface {
+type Connector interface {
 	ReadJSON(interface{}) error
 	WriteJSON(interface{}) error
 }
 
 // DefaultWebsocketConnector returns a new websocket as the default connection.
-func DefaultWebsocketConnector() (WebsocketConnector, error) {
-	return NewWebsocket()
+func DefaultConnector(url string) (Connector, error) {
+	return New(url)
 }

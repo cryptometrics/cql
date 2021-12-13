@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/cryptometrics/cql/model"
+	"github.com/cryptometrics/cql/websocket"
 	. "github.com/franela/goblin"
 )
 
@@ -15,7 +16,7 @@ func TestAsyncTickerStream(t *testing.T) {
 	g.Describe("mock third-party usage", func() {
 		g.It("should start and close without error", func() {
 			// some third-party goroutines
-			mockC, _ := newmockWebsocketConnector()
+			mockC, _ := websocket.NewMock()
 			ticker := newAsyncTicker(mockC)
 			numThirdParties := 2
 			wg := sync.WaitGroup{}
@@ -37,7 +38,7 @@ func TestAsyncTickerStream(t *testing.T) {
 		g.It("should close without error", func() {
 			treshold := 100
 			for i := 0; i < treshold; i++ {
-				mockC, _ := newmockWebsocketConnector()
+				mockC, _ := websocket.NewMock()
 				ticker := newAsyncTicker(mockC)
 				ticker.StartStream()
 				go func() {
@@ -51,7 +52,7 @@ func TestAsyncTickerStream(t *testing.T) {
 		})
 
 		g.It("should closew without error on long runtime", func() {
-			mockC, _ := newmockWebsocketConnector()
+			mockC, _ := websocket.NewMock()
 			ticker := newAsyncTicker(mockC)
 			ticker.StartStream()
 			go func() {
@@ -66,7 +67,7 @@ func TestAsyncTickerStream(t *testing.T) {
 		})
 
 		g.It("should do nothing when there is no stream", func() {
-			mockC, _ := newmockWebsocketConnector()
+			mockC, _ := websocket.NewMock()
 			ticker := newAsyncTicker(mockC)
 			ticker.Close()
 		})
@@ -75,7 +76,7 @@ func TestAsyncTickerStream(t *testing.T) {
 	g.Describe("ticker#StartStream", func() {
 		g.It("should re-initialize channel data after each close", func() {
 			treshold := 100
-			mockC, _ := newmockWebsocketConnector()
+			mockC, _ := websocket.NewMock()
 			ticker := newAsyncTicker(mockC)
 			for i := 0; i < treshold; i++ {
 				ticker.StartStream()
@@ -90,7 +91,7 @@ func TestAsyncTickerStream(t *testing.T) {
 		})
 
 		g.It("should be able to start stream over again", func() {
-			mockC, _ := newmockWebsocketConnector()
+			mockC, _ := websocket.NewMock()
 			ticker := newAsyncTicker(mockC)
 			ticker.StartStream()
 			go func() {
@@ -112,7 +113,7 @@ func TestAsyncTickerStream(t *testing.T) {
 		})
 
 		g.It("should not fatal if you start streams concurrently", func() {
-			mockC, _ := newmockWebsocketConnector()
+			mockC, _ := websocket.NewMock()
 			ticker := newAsyncTicker(mockC)
 			treshold := 1000
 			for j := 0; j < treshold; j++ {

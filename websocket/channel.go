@@ -1,6 +1,6 @@
-package coinbase
+package websocket
 
-type WebsocketChannel struct {
+type Channel struct {
 	Name       string   `json:"name"`
 	ProductIds []string `json:"product_ids"`
 }

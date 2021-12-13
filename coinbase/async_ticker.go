@@ -2,6 +2,7 @@ package coinbase
 
 import (
 	"github.com/cryptometrics/cql/model"
+	"github.com/cryptometrics/cql/websocket"
 
 	"golang.org/x/sync/errgroup"
 )
@@ -16,11 +17,11 @@ type AsyncTicker struct {
 
 	channel         TickerChannel
 	closed, closing chan struct{}
-	conn            WebsocketConnector
+	conn            websocket.Connector
 
 	// message is  thecoinbase pro websocket subscription that can be used to get
 	// a feed of real-time market data.
-	message *WebsocketMessage
+	message *websocket.Message
 
 	// jobs are a channel of AsyncTicker objects that the user can enqueue by
 	// calling StartStream.  The only possible AT object that can be enqueued is
@@ -36,13 +37,13 @@ type AsyncTicker struct {
 
 func (ticker *AsyncTicker) enqueue() { go func() { ticker.jobs <- ticker }() }
 
-func newAsyncTicker(conn WebsocketConnector, products ...string) *AsyncTicker {
+func newAsyncTicker(conn websocket.Connector, products ...string) *AsyncTicker {
 	ticker := new(AsyncTicker)
 	ticker.Errors = new(errgroup.Group)
 	ticker.conn = conn
 
-	channels := []WebsocketChannel{{Name: "ticker"}}
-	msg, _ := NewWebsocketMessage(products, channels)
+	channels := []websocket.Channel{{Name: "ticker"}}
+	msg, _ := websocket.NewProductsMessage(products, channels)
 	msg.Subscribe(conn)
 	ticker.message = msg
 
