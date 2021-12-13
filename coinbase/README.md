@@ -14,7 +14,7 @@ func StartStream
 	ticker := ws.Ticker("ETH-USD")
 	ticker.StartStream()
 	go func() {
-		for row := range bigTicker.Channel() {
+		for row := range ticker.Channel() {
 			fmt.Println(row.ProductId, row.Time, row.Price)
 		}
 	}()
