@@ -3,7 +3,7 @@
 `coinbase` is a package meant to be used as an SDK for creating a third-party connection in your code base to read and write information to coinbase pro using auth credentials.  For example:
 
 ```go
-package alert
+package streamer
 
 import (
 	"github.com/cryptometrics/cql/coinbase"
