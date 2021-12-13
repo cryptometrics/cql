@@ -1,6 +1,6 @@
 # cql
 
-cql takes json models in schema/model and generates corresponding go models, graphql types, and endpoint references. The idea is to programtically generate boilerplate work in building api pipelines, then fill in the blanks in individual exportable packages, such as cql/coinbase, to be used as SDKs for market analysis.
+cql provides a graphql server and SKDs for connecting to and interacting with various APIs.
 
 ## Getting Started
   * [Install Bazel](https://github.com/cryptometrics/cql#installing-bazel)
