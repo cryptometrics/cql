@@ -5,12 +5,15 @@ cql takes json models in schema/model and generates corresponding go models, gra
 ## Getting Started
   * [Install Bazel](https://github.com/cryptometrics/cql#installing-bazel)
 	* [Build Bazel](https://github.com/cryptometrics/cql#build-bazel)
+	* [servers](https://github.com/cryptometrics/cql/blob/main/cmd/README.md)
+		* [Graph](https://github.com/cryptometrics/cql/blob/main/graph/README.md)
+			* [Updating the Schema](https://github.com/cryptometrics/cql/tree/main/graph#updating-the-schema)
 	* Software Development Kits
-		* [coinbase](https://github.com/cryptometrics/cql/blob/main/cmd/README.md)
-		* [coinbase](https://github.com/cryptometrics/cql/blob/main/coinbase/README.md)
-		* [coinbase](https://github.com/cryptometrics/cql/blob/main/graph/README.md)
-		* [coinbase](https://github.com/cryptometrics/cql/blob/main/iex/README.md)
-		* [coinbase](https://github.com/cryptometrics/cql/blob/main/kraken/README.md)
+		* [Coinbase](https://github.com/cryptometrics/cql/blob/main/coinbase/README.md)
+			* [Connecting](https://github.com/cryptometrics/cql/blob/main/coinbase/README.md#connecting)
+			* [WebSocket](https://github.com/cryptometrics/cql/blob/main/coinbase/README.md#websocket)
+		* [Iex](https://github.com/cryptometrics/cql/blob/main/iex/README.md)
+		* [Kraken](https://github.com/cryptometrics/cql/blob/main/kraken/README.md)
 	* [Resources](https://github.com/cryptometrics/cql#resources)
 
 ## Install Bazel
