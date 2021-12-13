@@ -9,7 +9,7 @@ import (
 	"github.com/cryptometrics/cql/coinbase"
 )
 
-func StartStream
+func StartStream() {
 	ws := coinbase.NewProductWebsocket(coinbase.DefaultWebsocketConnector)
 	ticker := ws.Ticker("ETH-USD")
 	ticker.StartStream()
