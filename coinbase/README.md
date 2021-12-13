@@ -5,10 +5,8 @@
 The async ticker runs the coinbase product websocket asyncronously, connecting outside processes by sending the websocket message over a `AsyncTicket.channel`.
 
 ```go
-	var (
-		conn 		= coinbase.DefaultWebsocketConnector
-		ws 			= coinbase.NewProductWebsocket(conn)
-	)
+	conn := coinbase.DefaultWebsocketConnector
+	ws := coinbase.NewProductWebsocket(conn)
 
 	// initialize the ticker object to channel product messages
 	ticker := ws.Ticker("ETH-USD")
