@@ -101,6 +101,27 @@ func (orders *Orders) All(opts *model.CoinbaseOrdersOptions) (m []*model.Coinbas
 		Fetch().Assign(&m).JoinMessages()
 }
 
+// CancelAll will with best effort, cancel all open orders. This may require you
+// to make the request multiple times until all of the open orders are deleted.
+//
+// * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_deleteorders
+func (orders *Orders) CancelAll(opts *model.CoinbaseOrdersOptions) (m []*string, err error) {
+	return m, orders.Delete(OrdersEndpoint).
+		QueryParam("profile_id", func() (i *string) {
+			if opts != nil {
+				i = opts.ProfileID
+			}
+			return
+		}()).
+		QueryParam("product_id", func() (i *string) {
+			if opts != nil && opts.ProductID != nil {
+				i = opts.ProductID
+			}
+			return
+		}()).
+		Fetch().Assign(&m).JoinMessages()
+}
+
 // ## API Key Permissions
 // This endpoint requires either the "view" or "trade" permission.
 //

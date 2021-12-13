@@ -8,12 +8,14 @@ type Method int
 const (
 	GET Method = iota
 	POST
+	DELETE
 )
 
 // String will return the string expectation of the method
 func (m Method) String() string {
 	return map[Method]string{
-		GET:  "GET",
-		POST: "POST",
+		GET:    "GET",
+		POST:   "POST",
+		DELETE: "DELETE",
 	}[m]
 }

@@ -459,6 +459,7 @@ type ComplexityRoot struct {
 	Mutation struct {
 		CoinbaseAccountDeposit          func(childComplexity int, opts *model.CoinbaseAccountDepositOptions) int
 		CoinbaseAccountWithdrawal       func(childComplexity int, opts *model.CoinbaseAccountWithdrawalOptions) int
+		CoinbaseCancelAllOrders         func(childComplexity int, opts *model.CoinbaseOrdersOptions) int
 		CoinbaseConvertCurrency         func(childComplexity int, opts model.CoinbaseConversionsOptions) int
 		CoinbaseCryptoWithdrawal        func(childComplexity int, opts *model.CoinbaseCryptoWithdrawalOptions) int
 		CoinbaseGenerateCryptoAddress   func(childComplexity int, walletID string) int
@@ -492,6 +493,7 @@ type ComplexityRoot struct {
 
 type MutationResolver interface {
 	CoinbaseAccountDeposit(ctx context.Context, opts *model.CoinbaseAccountDepositOptions) (*model.CoinbaseDeposit, error)
+	CoinbaseCancelAllOrders(ctx context.Context, opts *model.CoinbaseOrdersOptions) ([]*string, error)
 	CoinbaseConvertCurrency(ctx context.Context, opts model.CoinbaseConversionsOptions) (*model.CoinbaseCurrencyConversion, error)
 	CoinbaseGenerateCryptoAddress(ctx context.Context, walletID string) (*model.CoinbaseCryptoAddress, error)
 	CoinbasePaymentMethodDeposit(ctx context.Context, opts *model.CoinbasePaymentMethodDepositOptions) (*model.CoinbaseDeposit, error)
@@ -2584,6 +2586,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.CoinbaseAccountWithdrawal(childComplexity, args["opts"].(*model.CoinbaseAccountWithdrawalOptions)), true
 
+	case "Mutation.coinbaseCancelAllOrders":
+		if e.complexity.Mutation.CoinbaseCancelAllOrders == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_coinbaseCancelAllOrders_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.CoinbaseCancelAllOrders(childComplexity, args["opts"].(*model.CoinbaseOrdersOptions)), true
+
 	case "Mutation.coinbaseConvertCurrency":
 		if e.complexity.Mutation.CoinbaseConvertCurrency == nil {
 			break
@@ -3751,6 +3765,7 @@ type Query {
 }
 type Mutation {
   coinbaseAccountDeposit(opts: CoinbaseAccountDepositOptions): CoinbaseDeposit
+	coinbaseCancelAllOrders(opts: CoinbaseOrdersOptions): [String]
   coinbaseConvertCurrency(
     opts: CoinbaseConversionsOptions!
   ): CoinbaseCurrencyConversion
@@ -3798,6 +3813,21 @@ func (ec *executionContext) field_Mutation_coinbaseAccountWithdrawal_args(ctx co
 	if tmp, ok := rawArgs["opts"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("opts"))
 		arg0, err = ec.unmarshalOCoinbaseAccountWithdrawalOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseAccountWithdrawalOptions(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["opts"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_coinbaseCancelAllOrders_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *model.CoinbaseOrdersOptions
+	if tmp, ok := rawArgs["opts"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("opts"))
+		arg0, err = ec.unmarshalOCoinbaseOrdersOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseOrdersOptions(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -13422,6 +13452,45 @@ func (ec *executionContext) _Mutation_coinbaseAccountDeposit(ctx context.Context
 	return ec.marshalOCoinbaseDeposit2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseDeposit(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Mutation_coinbaseCancelAllOrders(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_coinbaseCancelAllOrders_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().CoinbaseCancelAllOrders(rctx, args["opts"].(*model.CoinbaseOrdersOptions))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*string)
+	fc.Result = res
+	return ec.marshalOString2ᚕᚖstring(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Mutation_coinbaseConvertCurrency(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -17856,6 +17925,8 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			out.Values[i] = graphql.MarshalString("Mutation")
 		case "coinbaseAccountDeposit":
 			out.Values[i] = ec._Mutation_coinbaseAccountDeposit(ctx, field)
+		case "coinbaseCancelAllOrders":
+			out.Values[i] = ec._Mutation_coinbaseCancelAllOrders(ctx, field)
 		case "coinbaseConvertCurrency":
 			out.Values[i] = ec._Mutation_coinbaseConvertCurrency(ctx, field)
 		case "coinbaseGenerateCryptoAddress":
@@ -19775,6 +19846,42 @@ func (ec *executionContext) marshalOString2ᚕstring(ctx context.Context, sel as
 	ret := make(graphql.Array, len(v))
 	for i := range v {
 		ret[i] = ec.marshalOString2string(ctx, sel, v[i])
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalOString2ᚕᚖstring(ctx context.Context, v interface{}) ([]*string, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		if tmp1, ok := v.([]interface{}); ok {
+			vSlice = tmp1
+		} else {
+			vSlice = []interface{}{v}
+		}
+	}
+	var err error
+	res := make([]*string, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalOString2ᚖstring(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOString2ᚕᚖstring(ctx context.Context, sel ast.SelectionSet, v []*string) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	for i := range v {
+		ret[i] = ec.marshalOString2ᚖstring(ctx, sel, v[i])
 	}
 
 	return ret
