@@ -145,7 +145,7 @@ func DefaultClient() (client.C, error) {
 }
 
 // NewClient will populate the coinbase auth data from args
-func NewClient(key, passphrase, secret, url string) (client.C, error) {
+func NewClient(url, key, passphrase, secret string) (client.C, error) {
 	return newCoinbaseProClient(key, passphrase, secret, url), nil
 }
 
