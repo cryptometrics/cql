@@ -1,6 +1,6 @@
 # cql
 
-cql is a monorepo that provides a graphql server and SKDs for connecting to and interacting with various APIs.
+cql is a monorepo that provides a graphql server and SKDs for connecting to and interacting with various APIs and websockets.
 
 ## Getting Started
   * [Install Bazel](https://github.com/cryptometrics/cql#installing-bazel)
