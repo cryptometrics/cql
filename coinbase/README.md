@@ -29,6 +29,6 @@ The async ticker runs the coinbase product websocket asyncronously, connecting o
 	time.Sleep(5 * time.Seconds)
 
 	// then close the ticker channel, this will unsubscribe from the websocket
-	// and close the underlying channel that the messages read to..
+	// and close the underlying channel that the messages read to.
 	ticker.Close()
 ```

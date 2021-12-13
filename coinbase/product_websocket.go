@@ -1,9 +1,5 @@
 package coinbase
 
-import (
-	"context"
-)
-
 type ProductWebsocket struct {
 	conn WebsocketConnector
 }
@@ -21,6 +17,6 @@ func NewProductWebsocket(ws WebsocketCreator) *ProductWebsocket {
 // ticket data, then it puts that data onto a channel for
 // model.CoinbaseWebsocketTicker
 func (productWebsocket *ProductWebsocket) Ticker(products ...string) *AsyncTicker {
-	asyncTicker := newAsyncTicker(context.Background(), productWebsocket.conn, products...)
+	asyncTicker := newAsyncTicker(productWebsocket.conn, products...)
 	return asyncTicker
 }
