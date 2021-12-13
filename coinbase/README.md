@@ -11,8 +11,8 @@ The async ticker runs the coinbase product websocket asyncronously, connecting o
 	// initialize the ticker object to channel product messages
 	ticker := ws.Ticker("ETH-USD")
 
-	// StartStream this will start go routine that passes product messages
-	// concerning ETH-USD currency pair to a channel on the ticker struct.
+	// start a go routine that passes product messages concerning ETH-USD currency
+	// pair to a channel on the ticker struct
 	ticker.StartStream()
 	go func() {
 
