@@ -2,6 +2,10 @@
 
 package model
 
+import (
+	"time"
+)
+
 type CoinbaseAccountDepositOptions struct {
 	ProfileID         *string `json:"profileId"`
 	Amount            float64 `json:"amount"`
@@ -83,6 +87,19 @@ type CoinbaseFillsOptions struct {
 	Limit     *int    `json:"limit"`
 	Before    *int    `json:"before"`
 	After     *int    `json:"after"`
+}
+
+type CoinbaseOrdersOptions struct {
+	ProfileID *string    `json:"profileId"`
+	ProductID *string    `json:"productId"`
+	SortedBy  *string    `json:"sortedBy"`
+	Sorting   *string    `json:"sorting"`
+	StartDate *time.Time `json:"startDate"`
+	EndDate   *time.Time `json:"endDate"`
+	Before    *string    `json:"before"`
+	After     *string    `json:"after"`
+	Limit     int        `json:"limit"`
+	Status    []*string  `json:"status"`
 }
 
 type CoinbasePaymentMethodDepositOptions struct {

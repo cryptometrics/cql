@@ -25,6 +25,7 @@ go_library(
         "coinbase_fill.go",
         "coinbase_hold.go",
         "coinbase_limits.go",
+        "coinbase_order.go",
         "coinbase_payment_method.go",
         "coinbase_picker_data.go",
         "coinbase_recurring_options.go",

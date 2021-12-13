@@ -28,6 +28,7 @@ const (
 	CurrencyEndpoint
 	FeesEndpoint
 	FillsEndpoint
+	OrdersEndpoint
 	PaymentMethodEndpoint
 	PaymentMethodDepositEndpoint
 	PaymentMethodWithdrawalEndpoint
@@ -171,6 +172,18 @@ func FillsPath(args client.EndpointArgs) (p string) {
 	return sb.String()
 }
 
+// List your current open orders. Only open or un-settled orders are returned by
+// default. As soon as an order is no longer open and settled, it will no longer
+// appear in the default request. Open orders may change state between the
+// request and the response depending on market conditions.
+func OrdersPath(args client.EndpointArgs) (p string) {
+	p = path.Join("/orders")
+	var sb strings.Builder
+	sb.WriteString(p)
+	sb.WriteString(args.QueryPath().String())
+	return sb.String()
+}
+
 // Gets a list of the user's linked payment methods.
 func PaymentMethodPath(_ client.EndpointArgs) string {
 	return path.Join("/payment-methods")
@@ -247,6 +260,7 @@ func (endpoint Endpoint) Path(args client.EndpointArgs) string {
 		CurrencyEndpoint:                CurrencyPath,
 		FeesEndpoint:                    FeesPath,
 		FillsEndpoint:                   FillsPath,
+		OrdersEndpoint:                  OrdersPath,
 		PaymentMethodEndpoint:           PaymentMethodPath,
 		PaymentMethodDepositEndpoint:    PaymentMethodDepositPath,
 		PaymentMethodWithdrawalEndpoint: PaymentMethodWithdrawalPath,

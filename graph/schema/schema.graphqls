@@ -25,6 +25,7 @@ type Query {
   coinbaseCurrency(currentId: String!): CoinbaseCurrency
 	coinbaseFees: CoinbaseFees
 	coinbaseFills(opts: CoinbaseFillsOptions): [CoinbaseFill]
+	coinbaseOrders(opts: CoinbaseOrdersOptions): [CoinbaseOrder]
   coinbasePaymentMethods: [CoinbasePaymentMethod]
   coinbaseTransfers: [CoinbaseAccountTransfer]
   coinbaseTransfer(transferId: String!): CoinbaseAccountTransfer

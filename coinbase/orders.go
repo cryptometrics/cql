@@ -2,6 +2,7 @@ package coinbase
 
 import (
 	"strconv"
+	"strings"
 
 	"github.com/cryptometrics/cql/client"
 	"github.com/cryptometrics/cql/model"
@@ -19,6 +20,85 @@ func NewOrders(conn client.Connector) *Orders {
 	orders := new(Orders)
 	client.ConstructParent(&orders.Parent, conn)
 	return orders
+}
+
+// All will list your current open orders. Only open or un-settled orders are
+// returned by default. As soon as an order is no longer open and settled, it
+// will no longer appear in the default request. Open orders may change state
+// between the request and the response depending on market conditions.
+//
+// * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_getorders
+func (orders *Orders) All(opts *model.CoinbaseOrdersOptions) (m []*model.CoinbaseOrder, err error) {
+	return m, orders.Get(FillsEndpoint).
+		QueryParam("profile_id", func() (i *string) {
+			if opts != nil {
+				i = opts.ProfileID
+			}
+			return
+		}()).
+		QueryParam("product_id", func() (i *string) {
+			if opts != nil && opts.ProductID != nil {
+				i = opts.ProductID
+			}
+			return
+		}()).
+		QueryParam("sortedBy", func() (i *string) {
+			if opts != nil && opts.SortedBy != nil {
+				i = opts.SortedBy
+			}
+			return
+		}()).
+		QueryParam("sorting", func() (i *string) {
+			if opts != nil && opts.Sorting != nil {
+				i = opts.Sorting
+			}
+			return
+		}()).
+		QueryParam("start_date", func() (i *string) {
+			if opts != nil && opts.StartDate != nil {
+				tmp := opts.StartDate.String()
+				i = &tmp
+			}
+			return
+		}()).
+		QueryParam("end_date", func() (i *string) {
+			if opts != nil && opts.EndDate != nil {
+				tmp := opts.EndDate.String()
+				i = &tmp
+			}
+			return
+		}()).
+		QueryParam("before", func() (i *string) {
+			if opts != nil && opts.Before != nil {
+				i = opts.Before
+			}
+			return
+		}()).
+		QueryParam("after", func() (i *string) {
+			if opts != nil && opts.After != nil {
+				i = opts.After
+			}
+			return
+		}()).
+		QueryParam("limit", func() (i *string) {
+			if opts != nil {
+				tmp := strconv.Itoa(opts.Limit)
+				i = &tmp
+			}
+			return
+		}()).
+		QueryParam("status", func() (i *string) {
+			if opts != nil && opts.Status != nil {
+				slice := []string{}
+				for _, v := range opts.Status {
+					slice = append(slice, *v)
+				}
+				tmp := strings.Join(slice, ", ")
+				i = &tmp
+			}
+			return
+		}()).
+		Fetch().Assign(&m).JoinMessages()
 }
 
 // ## API Key Permissions
@@ -70,15 +150,15 @@ func (orders *Orders) Fills(opts *model.CoinbaseFillsOptions) (m []*model.Coinba
 			return
 		}()).
 		QueryParam("before", func() (i *string) {
-			if opts != nil && opts.Limit != nil {
-				tmp := strconv.Itoa(*opts.Limit)
+			if opts != nil && opts.Before != nil {
+				tmp := strconv.Itoa(*opts.Before)
 				i = &tmp
 			}
 			return
 		}()).
 		QueryParam("after", func() (i *string) {
-			if opts != nil && opts.Limit != nil {
-				tmp := strconv.Itoa(*opts.Limit)
+			if opts != nil && opts.After != nil {
+				tmp := strconv.Itoa(*opts.After)
 				i = &tmp
 			}
 			return

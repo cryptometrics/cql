@@ -53,6 +53,8 @@ models:
     model: model.CoinbaseHold
   CoinbaseLimits:
     model: github.com/cryptometrics/cql/model.CoinbaseLimits
+  CoinbaseOrder:
+    model: github.com/cryptometrics/cql/model.CoinbaseOrder
   CoinbasePaymentMethod:
     model: github.com/cryptometrics/cql/model.CoinbasePaymentMethod
   CoinbasePickerData:
