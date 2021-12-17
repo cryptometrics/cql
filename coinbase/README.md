@@ -2,13 +2,27 @@
 
 `coinbase` is a package meant to be used as an SDK for creating a third-party connection in your code base to read and write information to coinbase pro using auth credentials.  For example:
 
+```go 
+func CreateOrder() {
+	requestOptions := &model.CoinbaseCreateNewOrderOptions{
+		Type:        scalar.OrderTypeLimit,
+		Side:        scalar.OrderSideBuy,
+		Stp:         scalar.OrderSTP_DC,
+		Stop:        scalar.OrderStopLoss,
+		TimeInForce: scalar.TimeInForceGTC,
+		CancelAfter: scalar.CancelAfterMin,
+		Price:       1.0,
+		Size:        10.0,
+		ProductId:   "BTC-USD",
+		StopPrice:   500.0,
+	}
+	coinbase.NewOrders(coinbase.DefaultClient).Create(requestOptions)
+}
+```
+
+A slightly more complex example, using websockets:
+
 ```go
-package streamer
-
-import (
-	"github.com/cryptometrics/cql/coinbase"
-)
-
 func StartStream() {
 	ws := coinbase.NewProductWebsocket(coinbase.DefaultWebsocketConnector)
 	ticker := ws.Ticker("ETH-USD")
