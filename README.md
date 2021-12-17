@@ -7,7 +7,7 @@ This repo is a work in progress
 ## Getting Started
   * [Install Bazel](https://github.com/cryptometrics/cql#installing-bazel)
   * [Build Bazel](https://github.com/cryptometrics/cql#build-bazel)
-  * [servers](https://github.com/cryptometrics/cql/blob/main/cmd/README.md)
+  * Servers (`cmd` package)
     * [Graph](https://github.com/cryptometrics/cql/blob/main/graph/README.md)
       * [Updating the Schema](https://github.com/cryptometrics/cql/tree/main/graph#updating-the-schema)
   * Software Development Kits
