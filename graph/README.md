@@ -8,7 +8,7 @@ To start the graphql server go to the `cmd/graphql` directory and generate the `
 
 and visit http://localhost:8080/ 
 
-Here is an example query using the coinbase SDK
+Here is an example query using the coinbase SDK:
 
 ```graphql
 query {
