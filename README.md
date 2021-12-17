@@ -17,6 +17,7 @@ This repo is a work in progress
     * [Iex](https://github.com/cryptometrics/cql/blob/main/iex/README.md)
     * [Kraken](https://github.com/cryptometrics/cql/blob/main/kraken/README.md)
   * Auxiliary Packages 
+    * [protomodel](https://github.com/cryptometrics/cql/tree/main/protomodel/README.md)
     * [scalar](https://github.com/cryptometrics/cql/tree/main/scalar/README.md)
   * [Resources](https://github.com/cryptometrics/cql#resources)
 
