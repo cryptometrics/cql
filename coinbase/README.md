@@ -4,7 +4,7 @@
 
 ```go 
 func CreateOrder() {
-	requestOptions := &model.CoinbaseCreateNewOrderOptions{
+	requestOptions := &model.CoinbaseNewOrderOptions{
 		Type:        scalar.OrderTypeLimit,
 		Side:        scalar.OrderSideBuy,
 		Stp:         scalar.OrderSTP_DC,
