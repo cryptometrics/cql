@@ -9,11 +9,8 @@ This repo is a work in progress
   * [Build Bazel](https://github.com/cryptometrics/cql#build-bazel)
   * Servers (`cmd` package)
     * [Graph](https://github.com/cryptometrics/cql/blob/main/graph/README.md)
-      * [Updating the Schema](https://github.com/cryptometrics/cql/tree/main/graph#updating-the-schema)
   * Software Development Kits
     * [Coinbase](https://github.com/cryptometrics/cql/blob/main/coinbase/README.md)
-      * [Connecting](https://github.com/cryptometrics/cql/blob/main/coinbase/README.md#connecting)
-      * [WebSocket](https://github.com/cryptometrics/cql/blob/main/coinbase/README.md#websocket)
     * [Iex](https://github.com/cryptometrics/cql/blob/main/iex/README.md)
     * [Kraken](https://github.com/cryptometrics/cql/blob/main/kraken/README.md)
   * Auxiliary Packages 
