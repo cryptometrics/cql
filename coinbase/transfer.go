@@ -30,7 +30,7 @@ func NewTransfer(conn client.Connector) *Transfer {
 // * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postwithdrawcoinbaseaccount
 func (transfer *Transfer) AccountWithdrawal(opts *model.CoinbaseAccountWithdrawalOptions) (m *model.CoinbaseWithdrawal, err error) {
 	return m, transfer.Post(AccountWithdrawalEndpoint).
-		Body(client.NewBody(client.BODY_TYPE_JSON).
+		Body(client.NewBody(client.BodyTypeJSON).
 			SetString("profile_id", opts.ProfileID).
 			SetFloat("amount", &opts.Amount).
 			SetString("coinbase_account_id", &opts.CoinbaseAccountID).
@@ -57,7 +57,7 @@ func (transfer *Transfer) All() (m []*model.CoinbaseAccountTransfer, err error) 
 // * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postwithdrawcrypto
 func (transfer *Transfer) CryptoWithdrawal(opts *model.CoinbaseCryptoWithdrawalOptions) (m *model.CoinbaseWithdrawal, err error) {
 	return m, transfer.Post(CryptoWithdrawalEndpoint).
-		Body(client.NewBody(client.BODY_TYPE_JSON).
+		Body(client.NewBody(client.BodyTypeJSON).
 			SetString("profile_id", opts.ProfileID).
 			SetFloat("amount", &opts.Amount).
 			SetString("crypto_address", &opts.CryptoAddress).
@@ -94,7 +94,7 @@ func (transfer *Transfer) Find(id string) (m *model.CoinbaseAccountTransfer, err
 // * source https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postdepositcoinbaseaccount
 func (transfer *Transfer) CoinbaseAccountDeposit(opts *model.CoinbaseAccountDepositOptions) (m *model.CoinbaseDeposit, err error) {
 	return m, transfer.Post(AccountDepositEndpoint).
-		Body(client.NewBody(client.BODY_TYPE_JSON).
+		Body(client.NewBody(client.BodyTypeJSON).
 			SetString("profile_id", opts.ProfileID).
 			SetString("coinbase_account_id", &opts.CoinbaseAccountID).
 			SetString("currency", &opts.Currency).
@@ -114,7 +114,7 @@ func (transfer *Transfer) CoinbaseAccountDeposit(opts *model.CoinbaseAccountDepo
 // * source https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postdepositpaymentmethod
 func (transfer *Transfer) PaymentMethodDeposit(opts *model.CoinbasePaymentMethodDepositOptions) (m *model.CoinbaseDeposit, err error) {
 	return m, transfer.Post(PaymentMethodDepositEndpoint).
-		Body(client.NewBody(client.BODY_TYPE_JSON).
+		Body(client.NewBody(client.BodyTypeJSON).
 			SetString("profile_id", opts.ProfileID).
 			SetString("payment_method_id", &opts.PaymentMethodID).
 			SetString("currency", &opts.Currency).
@@ -139,7 +139,7 @@ func (transfer *Transfer) PaymentMethods() (m []*model.CoinbasePaymentMethod, er
 // * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postwithdrawcoinbaseaccount
 func (transfer *Transfer) PaymentMethodWithdrawal(opts *model.CoinbasePaymentMethodWithdrawalOptions) (m *model.CoinbaseWithdrawal, err error) {
 	return m, transfer.Post(PaymentMethodWithdrawalEndpoint).
-		Body(client.NewBody(client.BODY_TYPE_JSON).
+		Body(client.NewBody(client.BodyTypeJSON).
 			SetString("profile_id", opts.ProfileID).
 			SetFloat("amount", &opts.Amount).
 			SetString("payment_method_id", &opts.PaymentMethodID).

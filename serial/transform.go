@@ -20,6 +20,7 @@ type Transform interface {
 	UnmarshalLocation(name string, v *time.Location) error
 	UnmarshalOrderSide(name string, v *scalar.OrderSide) error
 	UnmarshalOrderSTP(name string, v *scalar.OrderSTP) error
+	UnmarshalOrderStop(name string, v *scalar.OrderStop) error
 	UnmarshalOrderTimeInForce(name string, v *scalar.TimeInForce) error
 	UnmarshalOrderType(name string, v *scalar.OrderType) error
 	UnmarshalPaymentMethod(name string, v *scalar.PaymentMethod) error

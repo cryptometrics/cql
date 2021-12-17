@@ -21,6 +21,10 @@ func (r *mutationResolver) CoinbaseCancelAllOrders(ctx context.Context, opts *mo
 	return coinbase.NewOrders(coinbase.DefaultClient).CancelAll(opts)
 }
 
+func (r *mutationResolver) CoinbaseCreateNewOrder(ctx context.Context, opts *model.CoinbaseNewOrderOptions) (*model.CoinbaseNewOrder, error) {
+	return coinbase.NewOrders(coinbase.DefaultClient).Create(opts)
+}
+
 func (r *mutationResolver) CoinbaseConvertCurrency(ctx context.Context, opts model.CoinbaseConversionsOptions) (*model.CoinbaseCurrencyConversion, error) {
 	return coinbase.NewConversion(coinbase.DefaultClient).Make(opts)
 }

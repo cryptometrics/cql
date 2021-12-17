@@ -16,3 +16,10 @@ const (
 	// OrderSTP_CB = cancel boath
 	OrderSTP_CB OrderSTP = "cb"
 )
+
+func (orderSTP *OrderSTP) String() (str string) {
+	if orderSTP != nil {
+		str = string(*orderSTP)
+	}
+	return
+}

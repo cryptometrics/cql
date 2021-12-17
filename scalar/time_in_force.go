@@ -23,3 +23,10 @@ const (
 	// hours.
 	TimeInForceGTT = "GTT"
 )
+
+func (timeInForce *TimeInForce) String() (str string) {
+	if timeInForce != nil {
+		str = string(*timeInForce)
+	}
+	return
+}

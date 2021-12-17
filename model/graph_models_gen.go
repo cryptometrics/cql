@@ -4,6 +4,8 @@ package model
 
 import (
 	"time"
+
+	"github.com/cryptometrics/cql/scalar"
 )
 
 type CoinbaseAccountDepositOptions struct {
@@ -87,6 +89,23 @@ type CoinbaseFillsOptions struct {
 	Limit     *int    `json:"limit"`
 	Before    *int    `json:"before"`
 	After     *int    `json:"after"`
+}
+
+type CoinbaseNewOrderOptions struct {
+	ProfileID   *string             `json:"profileId"`
+	Type        *scalar.OrderType   `json:"type"`
+	Side        scalar.OrderSide    `json:"side"`
+	Stp         *scalar.OrderSTP    `json:"stp"`
+	Stop        *scalar.OrderStop   `json:"stop"`
+	StopPrice   *float64            `json:"stopPrice"`
+	Price       *float64            `json:"price"`
+	Size        *float64            `json:"size"`
+	Funds       *float64            `json:"funds"`
+	ProductID   string              `json:"productId"`
+	TimeInForce *scalar.TimeInForce `json:"timeInForce"`
+	CancelAfter *scalar.CancelAfter `json:"cancelAfter"`
+	PostOnly    *bool               `json:"postOnly"`
+	ClientOid   *string             `json:"clientOid"`
 }
 
 type CoinbaseOrdersOptions struct {

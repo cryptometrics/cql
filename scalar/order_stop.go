@@ -7,3 +7,10 @@ const (
 	OrderStopLoss  = "loss"
 	OrderStopEntry = "entry"
 )
+
+func (orderStop *OrderStop) String() (str string) {
+	if orderStop != nil {
+		str = string(*orderStop)
+	}
+	return
+}

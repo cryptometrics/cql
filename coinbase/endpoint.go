@@ -28,6 +28,7 @@ const (
 	CurrencyEndpoint
 	FeesEndpoint
 	FillsEndpoint
+	NewOrderEndpoint
 	OrdersEndpoint
 	PaymentMethodEndpoint
 	PaymentMethodDepositEndpoint
@@ -172,6 +173,19 @@ func FillsPath(args client.EndpointArgs) (p string) {
 	return sb.String()
 }
 
+// Create an order. You can place two types of orders: limit and market. Orders
+// can only be placed if your account has sufficient funds. Once an order is
+// placed, your account funds will be put on hold for the duration of the order.
+// How much and which funds are put on hold depends on the order type and
+// parameters specified.
+func NewOrderPath(args client.EndpointArgs) (p string) {
+	p = path.Join("/orders")
+	var sb strings.Builder
+	sb.WriteString(p)
+	sb.WriteString(args.QueryPath().String())
+	return sb.String()
+}
+
 // List your current open orders. Only open or un-settled orders are returned by
 // default. As soon as an order is no longer open and settled, it will no longer
 // appear in the default request. Open orders may change state between the
@@ -260,6 +274,7 @@ func (endpoint Endpoint) Path(args client.EndpointArgs) string {
 		CurrencyEndpoint:                CurrencyPath,
 		FeesEndpoint:                    FeesPath,
 		FillsEndpoint:                   FillsPath,
+		NewOrderEndpoint:                NewOrderPath,
 		OrdersEndpoint:                  OrdersPath,
 		PaymentMethodEndpoint:           PaymentMethodPath,
 		PaymentMethodDepositEndpoint:    PaymentMethodDepositPath,

@@ -49,7 +49,7 @@ func (conversion *Conversion) Make(
 	opts model.CoinbaseConversionsOptions,
 ) (m *model.CoinbaseCurrencyConversion, err error) {
 	return m, conversion.Post(ConversionsEndpoint).
-		Body(client.NewBody(client.BODY_TYPE_JSON).
+		Body(client.NewBody(client.BodyTypeJSON).
 			SetString("from", &opts.From).
 			SetString("to", &opts.To).
 			SetFloat("amount", &opts.Amount).

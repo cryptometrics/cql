@@ -76,6 +76,13 @@ func (m _json) UnmarshalOrderSTP(name string, v *scalar.OrderSTP) error {
 	return nil
 }
 
+func (m _json) UnmarshalOrderStop(name string, v *scalar.OrderStop) error {
+	if val := m[name]; val != nil {
+		*v = scalar.OrderStop((val.(string)))
+	}
+	return nil
+}
+
 func (m _json) UnmarshalOrderTimeInForce(name string, v *scalar.TimeInForce) error {
 	if val := m[name]; val != nil {
 		*v = scalar.TimeInForce(val.(string))

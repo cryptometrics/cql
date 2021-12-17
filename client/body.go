@@ -77,7 +77,7 @@ func (body *Body) SetString(key string, val *string) *Body {
 func (body *Body) Bytes() (bytes []byte) {
 	if body.t != BODY_TYPE_NULL {
 		bytes = map[BodyType]func() []byte{
-			BODY_TYPE_JSON: body.jsonBytes,
+			BodyTypeJSON: body.jsonBytes,
 		}[body.t]()
 	}
 	return

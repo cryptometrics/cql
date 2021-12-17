@@ -24,6 +24,7 @@ go_library(
         "coinbase_fiat_account.go",
         "coinbase_fill.go",
         "coinbase_limits.go",
+        "coinbase_new_order.go",
         "coinbase_order.go",
         "coinbase_payment_method.go",
         "coinbase_picker_data.go",
@@ -50,7 +51,10 @@ go_library(
     ],
     importpath = "github.com/cryptometrics/cql/model",
     visibility = ["//visibility:public"],
-    deps = ["//protomodel"],
+    deps = [
+        "//protomodel",
+        "//scalar",
+    ],
 )
 
 go_test(

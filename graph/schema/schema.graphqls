@@ -41,6 +41,7 @@ type Query {
 type Mutation {
   coinbaseAccountDeposit(opts: CoinbaseAccountDepositOptions): CoinbaseDeposit
 	coinbaseCancelAllOrders(opts: CoinbaseOrdersOptions): [String]
+	coinbaseCreateNewOrder(opts: CoinbaseNewOrderOptions): CoinbaseNewOrder
   coinbaseConvertCurrency(
     opts: CoinbaseConversionsOptions!
   ): CoinbaseCurrencyConversion

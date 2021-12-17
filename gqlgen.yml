@@ -5,6 +5,8 @@ model:
   filename: model/graph_models_gen.go
   package: model
 models:
+  CancelAfter:
+    model: github.com/cryptometrics/cql/scalar.CancelAfter
   CoinbaseAccount:
     model: github.com/cryptometrics/cql/model.CoinbaseAccount
   CoinbaseAccountHold:
@@ -53,6 +55,8 @@ models:
     model: model.CoinbaseHold
   CoinbaseLimits:
     model: github.com/cryptometrics/cql/model.CoinbaseLimits
+  CoinbaseNewOrder:
+    model: github.com/cryptometrics/cql/model.CoinbaseNewOrder
   CoinbaseOrder:
     model: github.com/cryptometrics/cql/model.CoinbaseOrder
   CoinbasePaymentMethod:
@@ -121,7 +125,7 @@ models:
   OrderSide:
     model: github.com/cryptometrics/cql/scalar.OrderSide
   OrderStop:
-    model: github.com/cryptometrics/cql/scalar.OrderSide
+    model: github.com/cryptometrics/cql/scalar.OrderStop
   OrderType:
     model: github.com/cryptometrics/cql/scalar.OrderType
   PaymentMethod:

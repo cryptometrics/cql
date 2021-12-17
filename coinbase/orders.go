@@ -122,6 +122,33 @@ func (orders *Orders) CancelAll(opts *model.CoinbaseOrdersOptions) (m []*string,
 		Fetch().Assign(&m).JoinMessages()
 }
 
+// Create will create an order. You can place two types of orders: limit and market.
+// Orders can only be placed if your account has sufficient funds. Once an order
+// is placed, your account funds will be put on hold for the duration of the
+// order. How much and which funds are put on hold depends on the order type and
+// parameters specified.
+//
+// * source: https://docs.cloud.coinbase.com/exchange/reference/exchangerestapi_postorders
+func (order *Orders) Create(opts *model.CoinbaseNewOrderOptions) (m *model.CoinbaseNewOrder, err error) {
+	return m, order.Post(NewOrderEndpoint).
+		Body(client.NewBody(client.BodyTypeJSON).
+			SetString("profile_id", opts.ProfileID).
+			SetString("product_id", &opts.ProductID).
+			SetFloat("stop_price", opts.StopPrice).
+			SetFloat("size", opts.Size).
+			SetFloat("price", opts.Price).
+			SetFloat("funds", opts.Funds).
+			SetBool("post_only", opts.PostOnly).
+			SetString("client_oid", opts.ClientOid).
+			SetString("type", func() *string { str := opts.Type.String(); return &str }()).
+			SetString("side", func() *string { str := string(opts.Side); return &str }()).
+			SetString("stp", func() *string { str := opts.Stp.String(); return &str }()).
+			SetString("stop", func() *string { str := opts.Stop.String(); return &str }()).
+			SetString("time_in_force", func() *string { str := opts.TimeInForce.String(); return &str }()).
+			SetString("cancel_after", func() *string { str := opts.CancelAfter.String(); return &str }())).
+		Fetch().Assign(&m).JoinMessages()
+}
+
 // ## API Key Permissions
 // This endpoint requires either the "view" or "trade" permission.
 //
