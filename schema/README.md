@@ -4,7 +4,9 @@ The `schema` directory holds code to generate repetative files accross the codeb
 
 - protomodel
 - model
+- model accessors
 - graph/schema
+- endpoint accessors
 
 # Building and Running
 
