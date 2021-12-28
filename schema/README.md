@@ -16,7 +16,7 @@ Build the dockerfile:
 docker-compose up -d --build
 ```
 
-Run teh generate method:
+Run the generate method:
 
 ```
 docker-compose run generate
