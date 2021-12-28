@@ -1,7 +1,13 @@
 version: '3'
 services:
+  goimports:
+    build:
+      context: ./schema
+      dockerfile: goimports.Dockerfile
   generate:
-    build: ./schema
+    build:
+      context: ./schema
+      dockerfile: generate.Dockerfile
     command: [ruby, /usr/src/schema/generate.rb]
     volumes:
       - ./protomodel:/usr/src/protomodel
@@ -15,8 +21,12 @@ services:
       - ./schema/protomodel.rb:/usr/src/schema/protomodel.rb
       - ./schema/query_param.rb:/usr/src/schema/query_param.rb
       - ./schema/scheme.rb:/usr/src/schema/scheme.rb
-  test-generate:
-    build: ./schema
+    depends_on:
+      - goimports
+  test_generate:
+    build:
+      context: ./schema
+      dockerfile: generate.Dockerfile
     command: [ruby, /usr/src/schema/test/test.rb]
     volumes:
       - ./protomodel:/usr/src/protomodel
@@ -31,3 +41,5 @@ services:
       - ./schema/query_param.rb:/usr/src/schema/query_param.rb
       - ./schema/scheme.rb:/usr/src/schema/scheme.rb
       - ./schema/test:/usr/src/schema/test
+    depends_on:
+      - goimports

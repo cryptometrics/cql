@@ -27,5 +27,5 @@ docker-compose run generate
 To test run
 
 ```
-docker-compose run test-generate
+docker-compose run test_generate
 ```
