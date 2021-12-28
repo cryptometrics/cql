@@ -13,13 +13,13 @@ The `schema` directory holds code to generate repetative files accross the codeb
 Build the dockerfile:
 
 ```
-docker-compose up -d --build
+docker-compose -f "generate.docker-compose.yaml" up -d --build
 ```
 
 Run the generate method:
 
 ```
-docker-compose run generate
+docker-compose -f "generate.docker-compose.yaml" run generate
 ```
 
 # Testing

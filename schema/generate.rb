@@ -5,16 +5,14 @@ require_relative 'endpoint_state'
 require_relative 'scheme'
 require_relative 'protomodel'
 
-PARENT_DIR = File.expand_path("..", Dir.pwd)
+PARENT_DIR = File.expand_path('..', Dir.pwd)
 
 def generate_models
-  # endpoint_state = EndpointState.new
-	# p  Dir.glob("#{File.dirname(__FILE__)}/model/*.json")
   Dir.glob("#{File.dirname(__FILE__)}/model/*.json").map do |filename|
     next if filename.include?('schema.json')
 
     scheme = Scheme.new(filename)
-		scheme.write_protomodel
+    scheme.write_protomodel
   end
 end
 
