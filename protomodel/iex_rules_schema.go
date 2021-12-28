@@ -1,0 +1,8 @@
+package protomodel
+
+// * This is a generated file, do not edit
+
+// IexRulesSchema is the latest schema for data points, notification types, and// operators used to construct rules.
+type IexRulesSchema struct {
+	ProtoSchema []*IexRulesScheme `json:"schema"`
+}

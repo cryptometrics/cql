@@ -9,7 +9,7 @@ PARENT_DIR = File.expand_path('..', Dir.pwd)
 
 def generate_models
   Dir.glob("#{File.dirname(__FILE__)}/model/*.json").map do |filename|
-    next if filename.include?('schema.json')
+    next if filename.include?('/schema.json')
 
     scheme = Scheme.new(filename)
     scheme.write_protomodel

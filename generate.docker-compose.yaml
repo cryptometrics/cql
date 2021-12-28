@@ -4,6 +4,8 @@ services:
     build:
       context: ./schema
       dockerfile: goimports.Dockerfile
+    volumes:
+      - ./scalar:/go/pkg/mod/github.com/cryptometrics/cql/scalar
   generate:
     build:
       context: ./schema

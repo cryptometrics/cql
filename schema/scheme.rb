@@ -45,7 +45,7 @@ class Scheme
     @graphql_comment = format_graphql_comment(@description)
     @graphql_filename = "#{@model}.graphqls"
 
-    @field = hash[:modelFields].map { |field| Field.new(field) }
+    @fields = hash[:modelFields].map { |field| Field.new(field) }
     @endpoints = (hash[:endpoints] || []).map { |ep| Endpoint.new(api, ep) }
   end
 
