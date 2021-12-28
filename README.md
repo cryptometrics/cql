@@ -7,13 +7,14 @@ This repo is a work in progress
 ## Getting Started
   * [Install Bazel](https://github.com/cryptometrics/cql#installing-bazel)
   * [Build Bazel](https://github.com/cryptometrics/cql#build-bazel)
+	* [Install docker](https://github.com/cryptometrics/cql#install-docker)
   * Servers (`cmd` package)
     * [Graph](https://github.com/cryptometrics/cql/blob/main/graph/README.md)
   * Software Development Kits
     * [Coinbase](https://github.com/cryptometrics/cql/blob/main/coinbase/README.md)
     * [Iex](https://github.com/cryptometrics/cql/blob/main/iex/README.md)
     * [Kraken](https://github.com/cryptometrics/cql/blob/main/kraken/README.md)
-  * Auxiliary Packages 
+  * Auxiliary Packages
     * [protomodel](https://github.com/cryptometrics/cql/tree/main/protomodel/README.md)
     * [scalar](https://github.com/cryptometrics/cql/tree/main/scalar/README.md)
   * [Resources](https://github.com/cryptometrics/cql#resources)
@@ -35,6 +36,12 @@ $ brew install bazel
 ```
 $ ./build.sh
 ```
+
+## Install Docker
+
+https://docs.docker.com/get-docker/
+
+We will primarily use docker for generating go and graphqls files from schema/model files.
 
 ## Resouces
 
