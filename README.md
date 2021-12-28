@@ -5,9 +5,11 @@ cql is a monorepo that provides a graphql server and SKDs for connecting to and 
 This repo is a work in progress
 
 ## Getting Started
-  * [Install Bazel](https://github.com/cryptometrics/cql#installing-bazel)
+  * Dependencies
+    * [Install Bazel](https://github.com/cryptometrics/cql#installing-bazel)
+    * [Install docker](https://github.com/cryptometrics/cql#install-docker)
+    * [Install go](https://go.dev/doc/install)
   * [Build Bazel](https://github.com/cryptometrics/cql#build-bazel)
-  * [Install docker](https://github.com/cryptometrics/cql#install-docker)
   * Servers (`cmd` package)
     * [Graph](https://github.com/cryptometrics/cql/blob/main/graph/README.md)
   * Software Development Kits
