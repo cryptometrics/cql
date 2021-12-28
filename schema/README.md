@@ -27,5 +27,5 @@ docker-compose -f "generate.docker-compose.yaml" run generate
 To test run
 
 ```
-docker-compose run test_generate
+docker-compose -f "generate.docker-compose.yaml" run test_generate
 ```
