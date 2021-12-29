@@ -23,7 +23,8 @@ class Scheme
     :graphql_comment,
     :graphql_filename,
     :fields,
-    :endpoints
+    :endpoints,
+		:go_model_variable_name
 
   include Comment
 	include Protomodel
@@ -41,6 +42,7 @@ class Scheme
     @go_comment = format_go_comment(@description)
     @go_model_filename = "#{@model}.go"
     @go_model_name = @model.to_pascal
+		@go_model_variable_name  = @go_model_name.to_camel
 
     @graphql_comment = format_graphql_comment(@description)
     @graphql_filename = "#{@model}.graphqls"

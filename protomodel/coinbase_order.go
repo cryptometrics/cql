@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/cryptometrics/cql/scalar"
+	"github.com/cryptometrics/cql/serial"
 )
 
 // * This is a generated file, do not edit
@@ -33,4 +34,70 @@ type CoinbaseOrder struct {
 	StopPrice      float64            `json:"stop_price"`
 	TimeInForce    scalar.TimeInForce `json:"time_in_force"`
 	Type           scalar.OrderType   `json:"type"`
+}
+
+// UnmarshalJSON will deserialize bytes into a CoinbaseOrder model
+func (coinbaseOrder *CoinbaseOrder) UnmarshalJSON(d []byte) error {
+	const (
+		idJsonTag             = "id"
+		priceJsonTag          = "price"
+		sizeJsonTag           = "size"
+		productIdJsonTag      = "product_id"
+		sideJsonTag           = "side"
+		fundsJsonTag          = "funds"
+		specifiedFundsJsonTag = "specified_funds"
+		typeJsonTag           = "type"
+		timeInForceJsonTag    = "time_in_force"
+		expireTimeJsonTag     = "expire_time"
+		postOnlyJsonTag       = "post_only"
+		createdAtJsonTag      = "created_at"
+		doneAtJsonTag         = "done_at"
+		doneReasonJsonTag     = "done_reason"
+		rejectReasonJsonTag   = "reject_reason"
+		fillFeesJsonTag       = "fill_fees"
+		filledSizeJsonTag     = "filled_size"
+		executedValueJsonTag  = "executed_value"
+		statusJsonTag         = "status"
+		settledJsonTag        = "settled"
+		stopJsonTag           = "stop"
+		stopPriceJsonTag      = "stop_price"
+		fundingAmountJsonTag  = "funding_amount"
+	)
+	data, err := serial.NewJSONTransform(d)
+	if err != nil {
+		return err
+	}
+	data.UnmarshalBool(postOnlyJsonTag, &coinbaseOrder.PostOnly)
+	data.UnmarshalBool(settledJsonTag, &coinbaseOrder.Settled)
+	data.UnmarshalFloat(executedValueJsonTag, &coinbaseOrder.ExecutedValue)
+	data.UnmarshalFloat(fillFeesJsonTag, &coinbaseOrder.FillFees)
+	data.UnmarshalFloat(filledSizeJsonTag, &coinbaseOrder.FilledSize)
+	data.UnmarshalFloat(fundingAmountJsonTag, &coinbaseOrder.FundingAmount)
+	data.UnmarshalFloat(fundsJsonTag, &coinbaseOrder.Funds)
+	data.UnmarshalFloat(priceJsonTag, &coinbaseOrder.Price)
+	data.UnmarshalFloat(sizeJsonTag, &coinbaseOrder.Size)
+	data.UnmarshalFloat(specifiedFundsJsonTag, &coinbaseOrder.SpecifiedFunds)
+	data.UnmarshalFloat(stopPriceJsonTag, &coinbaseOrder.StopPrice)
+	data.UnmarshalOrderSide(sideJsonTag, &coinbaseOrder.Side)
+	data.UnmarshalOrderType(typeJsonTag, &coinbaseOrder.Type)
+	data.UnmarshalString(doneReasonJsonTag, &coinbaseOrder.DoneReason)
+	data.UnmarshalString(idJsonTag, &coinbaseOrder.Id)
+	data.UnmarshalString(productIdJsonTag, &coinbaseOrder.ProductId)
+	data.UnmarshalString(rejectReasonJsonTag, &coinbaseOrder.RejectReason)
+	data.UnmarshalString(statusJsonTag, &coinbaseOrder.Status)
+	data.UnmarshalString(stopJsonTag, &coinbaseOrder.Stop)
+	data.UnmarshalTimeInForce(timeInForceJsonTag, &coinbaseOrder.TimeInForce)
+	err = data.UnmarshalTime(time.RFC3339Nano, createdAtJsonTag, &coinbaseOrder.CreatedAt)
+	if err != nil {
+		return err
+	}
+	err = data.UnmarshalTime(time.RFC3339Nano, doneAtJsonTag, &coinbaseOrder.DoneAt)
+	if err != nil {
+		return err
+	}
+	err = data.UnmarshalTime(time.RFC3339Nano, expireTimeJsonTag, &coinbaseOrder.ExpireTime)
+	if err != nil {
+		return err
+	}
+	return nil
 }

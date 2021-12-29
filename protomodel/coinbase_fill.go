@@ -1,5 +1,7 @@
 package protomodel
 
+import "github.com/cryptometrics/cql/serial"
+
 // * This is a generated file, do not edit
 
 // CoinbasePaymentMethod is a partial or complete match on a specific order.
@@ -16,4 +18,39 @@ type CoinbaseFill struct {
 	TradeId   int     `json:"trade_id"`
 	UsdVolume float64 `json:"usd_volume"`
 	UserId    string  `json:"user_id"`
+}
+
+// UnmarshalJSON will deserialize bytes into a CoinbaseFill model
+func (coinbaseFill *CoinbaseFill) UnmarshalJSON(d []byte) error {
+	const (
+		tradeIdJsonTag   = "trade_id"
+		productIdJsonTag = "product_id"
+		orderIdJsonTag   = "order_id"
+		userIdJsonTag    = "user_id"
+		profileIdJsonTag = "profile_id"
+		liquidityJsonTag = "liquidity"
+		priceJsonTag     = "price"
+		sizeJsonTag      = "size"
+		feeJsonTag       = "fee"
+		sideJsonTag      = "side"
+		settledJsonTag   = "settled"
+		usdVolumeJsonTag = "usd_volume"
+	)
+	data, err := serial.NewJSONTransform(d)
+	if err != nil {
+		return err
+	}
+	data.UnmarshalBool(settledJsonTag, &coinbaseFill.Settled)
+	data.UnmarshalFloat(feeJsonTag, &coinbaseFill.Fee)
+	data.UnmarshalFloat(priceJsonTag, &coinbaseFill.Price)
+	data.UnmarshalFloat(sizeJsonTag, &coinbaseFill.Size)
+	data.UnmarshalFloat(usdVolumeJsonTag, &coinbaseFill.UsdVolume)
+	data.UnmarshalInt(tradeIdJsonTag, &coinbaseFill.TradeId)
+	data.UnmarshalString(liquidityJsonTag, &coinbaseFill.Liquidity)
+	data.UnmarshalString(orderIdJsonTag, &coinbaseFill.OrderId)
+	data.UnmarshalString(productIdJsonTag, &coinbaseFill.ProductId)
+	data.UnmarshalString(profileIdJsonTag, &coinbaseFill.ProfileId)
+	data.UnmarshalString(sideJsonTag, &coinbaseFill.Side)
+	data.UnmarshalString(userIdJsonTag, &coinbaseFill.UserId)
+	return nil
 }

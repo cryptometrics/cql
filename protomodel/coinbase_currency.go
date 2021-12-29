@@ -1,5 +1,7 @@
 package protomodel
 
+import "github.com/cryptometrics/cql/serial"
+
 // * This is a generated file, do not edit
 
 // CoinbaseCurrency is a currency that coinbase knows about. Not al currencies// may be currently in use for trading.
@@ -12,4 +14,34 @@ type CoinbaseCurrency struct {
 	Name          string                  `json:"name"`
 	ProtoDetails  CoinbaseCurrencyDetails `json:"details"`
 	Status        string                  `json:"status"`
+}
+
+// UnmarshalJSON will deserialize bytes into a CoinbaseCurrency model
+func (coinbaseCurrency *CoinbaseCurrency) UnmarshalJSON(d []byte) error {
+	const (
+		idJsonTag            = "id"
+		nameJsonTag          = "name"
+		minSizeJsonTag       = "min_size"
+		statusJsonTag        = "status"
+		messageJsonTag       = "message"
+		maxPrecisionJsonTag  = "max_precision"
+		convertibleToJsonTag = "convertible_to"
+		detailsJsonTag       = "details"
+	)
+	data, err := serial.NewJSONTransform(d)
+	if err != nil {
+		return err
+	}
+	coinbaseCurrency.ProtoDetails = CoinbaseCurrencyDetails{}
+	if err := data.UnmarshalStruct(detailsJsonTag, &coinbaseCurrency.ProtoDetails); err != nil {
+		return err
+	}
+	data.UnmarshalFloat(maxPrecisionJsonTag, &coinbaseCurrency.MaxPrecision)
+	data.UnmarshalFloat(minSizeJsonTag, &coinbaseCurrency.MinSize)
+	data.UnmarshalString(idJsonTag, &coinbaseCurrency.Id)
+	data.UnmarshalString(messageJsonTag, &coinbaseCurrency.Message)
+	data.UnmarshalString(nameJsonTag, &coinbaseCurrency.Name)
+	data.UnmarshalString(statusJsonTag, &coinbaseCurrency.Status)
+	data.UnmarshalStringSlice(convertibleToJsonTag, &coinbaseCurrency.ConvertibleTo)
+	return nil
 }

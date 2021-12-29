@@ -1,5 +1,7 @@
 package protomodel
 
+import "github.com/cryptometrics/cql/serial"
+
 // * This is a generated file, do not edit
 
 // CoinbaseSingleProduct is information on a single product
@@ -24,4 +26,55 @@ type CoinbaseSingleProduct struct {
 	Status                string  `json:"status"`
 	StatusMessage         string  `json:"status_message"`
 	TradingDisabled       bool    `json:"trading_disabled"`
+}
+
+// UnmarshalJSON will deserialize bytes into a CoinbaseSingleProduct model
+func (coinbaseSingleProduct *CoinbaseSingleProduct) UnmarshalJSON(d []byte) error {
+	const (
+		idJsonTag                    = "id"
+		baseCurrencyJsonTag          = "base_currency"
+		quoteCurrencyJsonTag         = "quote_currency"
+		baseMinSizeJsonTag           = "base_min_size"
+		baseMaxSizeJsonTag           = "base_max_size"
+		quoteIncrementJsonTag        = "quote_increment"
+		baseIncrementJsonTag         = "base_increment"
+		displayNameJsonTag           = "display_name"
+		minMarketFundsJsonTag        = "min_market_funds"
+		maxMarketFundsJsonTag        = "max_market_funds"
+		marginEnabledJsonTag         = "margin_enabled"
+		postOnlyJsonTag              = "post_only"
+		limitOnlyJsonTag             = "limit_only"
+		cancelOnlyJsonTag            = "cancel_only"
+		statusJsonTag                = "status"
+		statusMessageJsonTag         = "status_message"
+		tradingDisabledJsonTag       = "trading_disabled"
+		fxStablecoinJsonTag          = "fx_stablecoin"
+		maxSlippagePercentageJsonTag = "max_slippage_percentage"
+		auctionModeJsonTag           = "auction_mode"
+	)
+	data, err := serial.NewJSONTransform(d)
+	if err != nil {
+		return err
+	}
+	data.UnmarshalBool(auctionModeJsonTag, &coinbaseSingleProduct.AuctionMode)
+	data.UnmarshalBool(cancelOnlyJsonTag, &coinbaseSingleProduct.CancelOnly)
+	data.UnmarshalBool(fxStablecoinJsonTag, &coinbaseSingleProduct.FxStablecoin)
+	data.UnmarshalBool(limitOnlyJsonTag, &coinbaseSingleProduct.LimitOnly)
+	data.UnmarshalBool(marginEnabledJsonTag, &coinbaseSingleProduct.MarginEnabled)
+	data.UnmarshalBool(postOnlyJsonTag, &coinbaseSingleProduct.PostOnly)
+	data.UnmarshalBool(tradingDisabledJsonTag, &coinbaseSingleProduct.TradingDisabled)
+	data.UnmarshalFloat(baseIncrementJsonTag, &coinbaseSingleProduct.BaseIncrement)
+	data.UnmarshalFloat(baseMaxSizeJsonTag, &coinbaseSingleProduct.BaseMaxSize)
+	data.UnmarshalFloat(baseMinSizeJsonTag, &coinbaseSingleProduct.BaseMinSize)
+	data.UnmarshalFloat(maxMarketFundsJsonTag, &coinbaseSingleProduct.MaxMarketFunds)
+	data.UnmarshalFloat(maxSlippagePercentageJsonTag, &coinbaseSingleProduct.MaxSlippagePercentage)
+	data.UnmarshalFloat(minMarketFundsJsonTag, &coinbaseSingleProduct.MinMarketFunds)
+	data.UnmarshalFloat(quoteIncrementJsonTag, &coinbaseSingleProduct.QuoteIncrement)
+	data.UnmarshalString(baseCurrencyJsonTag, &coinbaseSingleProduct.BaseCurrency)
+	data.UnmarshalString(displayNameJsonTag, &coinbaseSingleProduct.DisplayName)
+	data.UnmarshalString(idJsonTag, &coinbaseSingleProduct.Id)
+	data.UnmarshalString(quoteCurrencyJsonTag, &coinbaseSingleProduct.QuoteCurrency)
+	data.UnmarshalString(statusJsonTag, &coinbaseSingleProduct.Status)
+	data.UnmarshalString(statusMessageJsonTag, &coinbaseSingleProduct.StatusMessage)
+	return nil
 }

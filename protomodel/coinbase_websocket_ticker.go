@@ -1,6 +1,10 @@
 package protomodel
 
-import "time"
+import (
+	"time"
+
+	"github.com/cryptometrics/cql/serial"
+)
 
 // * This is a generated file, do not edit
 
@@ -16,4 +20,38 @@ type CoinbaseWebsocketTicker struct {
 	Time      time.Time `json:"time"`
 	TradeId   int       `json:"trade_id"`
 	Type      string    `json:"type"`
+}
+
+// UnmarshalJSON will deserialize bytes into a CoinbaseWebsocketTicker model
+func (coinbaseWebsocketTicker *CoinbaseWebsocketTicker) UnmarshalJSON(d []byte) error {
+	const (
+		typeJsonTag      = "type"
+		productIdJsonTag = "product_id"
+		tradeIdJsonTag   = "trade_id"
+		sequenceJsonTag  = "sequence"
+		timeJsonTag      = "time"
+		sideJsonTag      = "side"
+		priceJsonTag     = "price"
+		lastSizeJsonTag  = "last_size"
+		bestBidJsonTag   = "best_bid"
+		bestAskJsonTag   = "best_ask"
+	)
+	data, err := serial.NewJSONTransform(d)
+	if err != nil {
+		return err
+	}
+	data.UnmarshalFloat(bestAskJsonTag, &coinbaseWebsocketTicker.BestAsk)
+	data.UnmarshalFloat(bestBidJsonTag, &coinbaseWebsocketTicker.BestBid)
+	data.UnmarshalFloat(lastSizeJsonTag, &coinbaseWebsocketTicker.LastSize)
+	data.UnmarshalFloat(priceJsonTag, &coinbaseWebsocketTicker.Price)
+	data.UnmarshalInt(sequenceJsonTag, &coinbaseWebsocketTicker.Sequence)
+	data.UnmarshalInt(tradeIdJsonTag, &coinbaseWebsocketTicker.TradeId)
+	data.UnmarshalString(productIdJsonTag, &coinbaseWebsocketTicker.ProductId)
+	data.UnmarshalString(sideJsonTag, &coinbaseWebsocketTicker.Side)
+	data.UnmarshalString(typeJsonTag, &coinbaseWebsocketTicker.Type)
+	err = data.UnmarshalTime(time.RFC3339Nano, timeJsonTag, &coinbaseWebsocketTicker.Time)
+	if err != nil {
+		return err
+	}
+	return nil
 }

@@ -1,5 +1,7 @@
 package protomodel
 
+import "github.com/cryptometrics/cql/serial"
+
 // * This is a generated file, do not edit
 
 // CoinbasePickerData ??
@@ -21,4 +23,52 @@ type CoinbasePickerData struct {
 	RoutingNumber         string          `json:"routing_number"`
 	Swift                 string          `json:"swift"`
 	Symbol                string          `json:"symbol"`
+}
+
+// UnmarshalJSON will deserialize bytes into a CoinbasePickerData model
+func (coinbasePickerData *CoinbasePickerData) UnmarshalJSON(d []byte) error {
+	const (
+		symbolJsonTag                = "symbol"
+		customerNameJsonTag          = "customer_name"
+		accountNameJsonTag           = "account_name"
+		accountNumberJsonTag         = "account_number"
+		accountTypeJsonTag           = "account_type"
+		institutionCodeJsonTag       = "institution_code"
+		institutionNameJsonTag       = "institution_name"
+		ibanJsonTag                  = "iban"
+		swiftJsonTag                 = "swift"
+		paypalEmailJsonTag           = "paypal_email"
+		paypalOwnerJsonTag           = "paypal_owner"
+		routingNumberJsonTag         = "routing_number"
+		institutionIdentifierJsonTag = "institution_identifier"
+		bankNameJsonTag              = "bank_name"
+		branchNameJsonTag            = "branch_name"
+		iconUrlJsonTag               = "icon_url"
+		balanceJsonTag               = "balance"
+	)
+	data, err := serial.NewJSONTransform(d)
+	if err != nil {
+		return err
+	}
+	coinbasePickerData.ProtoBalance = CoinbaseBalance{}
+	if err := data.UnmarshalStruct(balanceJsonTag, &coinbasePickerData.ProtoBalance); err != nil {
+		return err
+	}
+	data.UnmarshalString(accountNameJsonTag, &coinbasePickerData.AccountName)
+	data.UnmarshalString(accountNumberJsonTag, &coinbasePickerData.AccountNumber)
+	data.UnmarshalString(accountTypeJsonTag, &coinbasePickerData.AccountType)
+	data.UnmarshalString(bankNameJsonTag, &coinbasePickerData.BankName)
+	data.UnmarshalString(branchNameJsonTag, &coinbasePickerData.BranchName)
+	data.UnmarshalString(customerNameJsonTag, &coinbasePickerData.CustomerName)
+	data.UnmarshalString(ibanJsonTag, &coinbasePickerData.Iban)
+	data.UnmarshalString(iconUrlJsonTag, &coinbasePickerData.IconUrl)
+	data.UnmarshalString(institutionCodeJsonTag, &coinbasePickerData.InstitutionCode)
+	data.UnmarshalString(institutionIdentifierJsonTag, &coinbasePickerData.InstitutionIdentifier)
+	data.UnmarshalString(institutionNameJsonTag, &coinbasePickerData.InstitutionName)
+	data.UnmarshalString(paypalEmailJsonTag, &coinbasePickerData.PaypalEmail)
+	data.UnmarshalString(paypalOwnerJsonTag, &coinbasePickerData.PaypalOwner)
+	data.UnmarshalString(routingNumberJsonTag, &coinbasePickerData.RoutingNumber)
+	data.UnmarshalString(swiftJsonTag, &coinbasePickerData.Swift)
+	data.UnmarshalString(symbolJsonTag, &coinbasePickerData.Symbol)
+	return nil
 }

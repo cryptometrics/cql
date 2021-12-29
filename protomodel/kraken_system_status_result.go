@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/cryptometrics/cql/scalar"
+	"github.com/cryptometrics/cql/serial"
 )
 
 // * This is a generated file, do not edit
@@ -15,4 +16,22 @@ type KrakenSystemStatusResult struct {
 
 	// Enum: "online" "maintenance" "cancel_only" "post_only" Current system status
 	Status scalar.SystemStatus `json:"status"`
+}
+
+// UnmarshalJSON will deserialize bytes into a KrakenSystemStatusResult model
+func (krakenSystemStatusResult *KrakenSystemStatusResult) UnmarshalJSON(d []byte) error {
+	const (
+		statusJsonTag    = "status"
+		timestampJsonTag = "timestamp"
+	)
+	data, err := serial.NewJSONTransform(d)
+	if err != nil {
+		return err
+	}
+	data.UnmarshalFloatFromString(statusJsonTag, &krakenSystemStatusResult.Status)
+	err = data.UnmarshalTime(time.RFC3339Nano, timestampJsonTag, &krakenSystemStatusResult.Timestamp)
+	if err != nil {
+		return err
+	}
+	return nil
 }

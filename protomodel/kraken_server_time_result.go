@@ -1,6 +1,10 @@
 package protomodel
 
-import "time"
+import (
+	"time"
+
+	"github.com/cryptometrics/cql/serial"
+)
 
 // * This is a generated file, do not edit
 
@@ -11,4 +15,22 @@ type KrakenServerTimeResult struct {
 
 	// Unix timestamp
 	Unixtime int `json:"unixtime"`
+}
+
+// UnmarshalJSON will deserialize bytes into a KrakenServerTimeResult model
+func (krakenServerTimeResult *KrakenServerTimeResult) UnmarshalJSON(d []byte) error {
+	const (
+		unixtimeJsonTag = "unixtime"
+		rfc1123JsonTag  = "rfc1123"
+	)
+	data, err := serial.NewJSONTransform(d)
+	if err != nil {
+		return err
+	}
+	data.UnmarshalInt(unixtimeJsonTag, &krakenServerTimeResult.Unixtime)
+	err = data.UnmarshalTime(KrakenRFC1123Layout, rfc1123JsonTag, &krakenServerTimeResult.Rfc1123)
+	if err != nil {
+		return err
+	}
+	return nil
 }

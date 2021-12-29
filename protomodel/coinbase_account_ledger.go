@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/cryptometrics/cql/scalar"
+	"github.com/cryptometrics/cql/serial"
 )
 
 // * This is a generated file, do not edit
@@ -16,4 +17,33 @@ type CoinbaseAccountLedger struct {
 	Id           string                       `json:"id"`
 	ProtoDetails CoinbaseAccountLedgerDetails `json:"details"`
 	Type         scalar.EntryType             `json:"type"`
+}
+
+// UnmarshalJSON will deserialize bytes into a CoinbaseAccountLedger model
+func (coinbaseAccountLedger *CoinbaseAccountLedger) UnmarshalJSON(d []byte) error {
+	const (
+		idJsonTag        = "id"
+		amountJsonTag    = "amount"
+		createdAtJsonTag = "created_at"
+		balanceJsonTag   = "balance"
+		typeJsonTag      = "type"
+		detailsJsonTag   = "details"
+	)
+	data, err := serial.NewJSONTransform(d)
+	if err != nil {
+		return err
+	}
+	coinbaseAccountLedger.ProtoDetails = CoinbaseAccountLedgerDetails{}
+	if err := data.UnmarshalStruct(detailsJsonTag, &coinbaseAccountLedger.ProtoDetails); err != nil {
+		return err
+	}
+	data.UnmarshalEntryType(typeJsonTag, &coinbaseAccountLedger.Type)
+	data.UnmarshalFloat(amountJsonTag, &coinbaseAccountLedger.Amount)
+	data.UnmarshalFloat(balanceJsonTag, &coinbaseAccountLedger.Balance)
+	data.UnmarshalString(idJsonTag, &coinbaseAccountLedger.Id)
+	err = data.UnmarshalTime(time.RFC3339Nano, createdAtJsonTag, &coinbaseAccountLedger.CreatedAt)
+	if err != nil {
+		return err
+	}
+	return nil
 }
