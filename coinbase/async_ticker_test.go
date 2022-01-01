@@ -23,7 +23,7 @@ func TestAsyncTickerStream(t *testing.T) {
 			wg.Add(numThirdParties)
 			for i := 0; i < numThirdParties; i++ {
 				go func() {
-					ticker.StartStream()
+					ticker.Open()
 					r := 1 + rand.Intn(1)
 					time.Sleep(time.Duration(r) * time.Second)
 					ticker.Close()
@@ -40,7 +40,7 @@ func TestAsyncTickerStream(t *testing.T) {
 			for i := 0; i < treshold; i++ {
 				mockC, _ := websocket.NewMock()
 				ticker := newAsyncTicker(mockC)
-				ticker.StartStream()
+				ticker.Open()
 				go func() {
 					tickers := []model.CoinbaseWebsocketTicker{}
 					for ticker := range ticker.channel {
@@ -54,7 +54,7 @@ func TestAsyncTickerStream(t *testing.T) {
 		g.It("should closew without error on long runtime", func() {
 			mockC, _ := websocket.NewMock()
 			ticker := newAsyncTicker(mockC)
-			ticker.StartStream()
+			ticker.Open()
 			go func() {
 				tickers := []model.CoinbaseWebsocketTicker{}
 				for ticker := range ticker.channel {
@@ -73,13 +73,13 @@ func TestAsyncTickerStream(t *testing.T) {
 		})
 	})
 
-	g.Describe("ticker#StartStream", func() {
+	g.Describe("ticker#Open", func() {
 		g.It("should re-initialize channel data after each close", func() {
 			treshold := 100
 			mockC, _ := websocket.NewMock()
 			ticker := newAsyncTicker(mockC)
 			for i := 0; i < treshold; i++ {
-				ticker.StartStream()
+				ticker.Open()
 				go func() {
 					tickers := []model.CoinbaseWebsocketTicker{}
 					for ticker := range ticker.channel {
@@ -93,7 +93,7 @@ func TestAsyncTickerStream(t *testing.T) {
 		g.It("should be able to start stream over again", func() {
 			mockC, _ := websocket.NewMock()
 			ticker := newAsyncTicker(mockC)
-			ticker.StartStream()
+			ticker.Open()
 			go func() {
 				tickers := []model.CoinbaseWebsocketTicker{}
 				for ticker := range ticker.channel {
@@ -101,7 +101,7 @@ func TestAsyncTickerStream(t *testing.T) {
 				}
 			}()
 			time.Sleep(2 * time.Microsecond)
-			ticker.StartStream()
+			ticker.Open()
 			go func() {
 				tickers := []model.CoinbaseWebsocketTicker{}
 				for ticker := range ticker.channel {
@@ -119,7 +119,7 @@ func TestAsyncTickerStream(t *testing.T) {
 			for j := 0; j < treshold; j++ {
 				concurrentStreams := 100
 				for i := 0; i < concurrentStreams; i++ {
-					go ticker.StartStream()
+					go ticker.Open()
 				}
 				go func() {
 					tickers := []model.CoinbaseWebsocketTicker{}

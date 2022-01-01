@@ -24,13 +24,13 @@ type AsyncTicker struct {
 	message *websocket.Message
 
 	// jobs are a channel of AsyncTicker objects that the user can enqueue by
-	// calling StartStream.  The only possible AT object that can be enqueued is
+	// calling Open.  The only possible AT object that can be enqueued is
 	// the value that the jobs channel is contained in.  We keep track of which
 	// state we're in by using `AsyncTicker.iteration`
 	jobs chan *AsyncTicker
 
 	// iteration represents which job we're currently processing.  For instance,
-	// if a user called StartStream 100 times, the first iteration would be 1 and
+	// if a user called Open 100 times, the first iteration would be 1 and
 	// the final iteration would be 100.
 	iteration int
 }
@@ -102,12 +102,12 @@ func (ticker *AsyncTicker) worker() error {
 	return nil
 }
 
-// StartStream starts the websocket stream, streaming it into the
+// Open starts the websocket stream, streaming it into the
 // AsyncTicker.channel.  This method is idempotent, so if you call it multiple
 // times successively without closing the websocket it will close the ws for you
 // in each successive run and re-make the channels to stream over.f the calls
 // need to return without starting the go-routing.
-func (ticker *AsyncTicker) StartStream() *AsyncTicker {
+func (ticker *AsyncTicker) Open() *AsyncTicker {
 	ticker.enqueue()
 	return ticker
 }

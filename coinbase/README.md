@@ -23,10 +23,10 @@ func CreateOrder() {
 A slightly more complex example, using websockets:
 
 ```go
-func StartStream() {
+func Open() {
 	ws := coinbase.NewProductWebsocket(coinbase.DefaultWebsocketConnector)
 	ticker := ws.Ticker("ETH-USD")
-	ticker.StartStream()
+	ticker.Open()
 	go func() {
 		for row := range ticker.Channel() {
 			fmt.Println(row.ProductId, row.Time, row.Price)
@@ -92,7 +92,7 @@ The async ticker runs the coinbase product websocket asyncronously, connecting o
 
 	// start a go routine that passes product messages concerning ETH-USD currency
 	// pair to a channel on the ticker struct
-	ticker.StartStream()
+	ticker.Open()
 	go func() {
 
 		// Next we range over the product message channel and print the product
