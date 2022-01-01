@@ -2,7 +2,7 @@
 
 `coinbase` is a package meant to be used as an SDK for creating a third-party connection in your code base to read and write information to coinbase pro using auth credentials.  For example:
 
-```go 
+```go
 func CreateOrder() {
 	requestOptions := &model.CoinbaseNewOrderOptions{
 		Type:        scalar.OrderTypeLimit,
@@ -32,6 +32,9 @@ func StartStream() {
 			fmt.Println(row.ProductId, row.Time, row.Price)
 		}
 	}()
+
+	time.Sleep(5 * time.Second)
+	ticker.Close()
 }
 ```
 
@@ -69,7 +72,7 @@ You can also pass the auth credentials directly
 
 ```go
 // initialize the connection
-_conn_, err := NewClient("url", "key", "passphrase", "secret",)
+_conn_, err := NewClient("url", "key", "passphrase", "secret")
 if err != nil {
 	panic(err)
 }
