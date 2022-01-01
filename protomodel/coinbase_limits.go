@@ -13,8 +13,8 @@ type CoinbaseLimits struct {
 // UnmarshalJSON will deserialize bytes into a CoinbaseLimits model
 func (coinbaseLimits *CoinbaseLimits) UnmarshalJSON(d []byte) error {
 	const (
-		nameJsonTag = "name"
 		typeJsonTag = "type"
+		nameJsonTag = "name"
 	)
 	data, err := serial.NewJSONTransform(d)
 	if err != nil {

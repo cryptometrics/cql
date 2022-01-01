@@ -7,7 +7,6 @@ import (
 )
 
 // * This is a generated file, do not edit
-
 type Endpoint int
 
 const (
@@ -17,12 +16,12 @@ const (
 )
 
 // Get the server's time.
-func ServerTimePath(_ client.EndpointArgs) string {
+func ServerTimePath(args client.EndpointArgs) string {
 	return path.Join("/0", "public", "Time")
 }
 
 // Get the current system status or trading mode.
-func SystemStatusPath(_ client.EndpointArgs) string {
+func SystemStatusPath(args client.EndpointArgs) string {
 	return path.Join("/0", "public", "SystemStatus")
 }
 

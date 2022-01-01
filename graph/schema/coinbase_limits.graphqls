@@ -1,7 +1,7 @@
 # * This is a generated file, do not edit
 
 """
-CoinbaseLimits defines limits for a payment method
+ CoinbaseLimits defines limits for a payment method
 """
 type CoinbaseLimits {
   type: String

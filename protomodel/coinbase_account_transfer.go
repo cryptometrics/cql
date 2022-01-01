@@ -25,15 +25,15 @@ type CoinbaseAccountTransfer struct {
 // UnmarshalJSON will deserialize bytes into a CoinbaseAccountTransfer model
 func (coinbaseAccountTransfer *CoinbaseAccountTransfer) UnmarshalJSON(d []byte) error {
 	const (
-		amountJsonTag      = "amount"
-		canceledAtJsonTag  = "canceled_at"
-		completedAtJsonTag = "completed_at"
-		createdAtJsonTag   = "created_at"
-		detailsJsonTag     = "details"
 		idJsonTag          = "id"
-		processedAtJsonTag = "processed_at"
 		typeJsonTag        = "type"
+		createdAtJsonTag   = "created_at"
+		completedAtJsonTag = "completed_at"
+		canceledAtJsonTag  = "canceled_at"
+		processedAtJsonTag = "processed_at"
+		amountJsonTag      = "amount"
 		userNonceJsonTag   = "user_nonce"
+		detailsJsonTag     = "details"
 	)
 	data, err := serial.NewJSONTransform(d)
 	if err != nil {

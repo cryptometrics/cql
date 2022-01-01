@@ -1,26 +1,26 @@
 # Graph
 
-To start the graphql server go to the `cmd/graphql` directory and generate the `graphql` binary with `go build`.  Then run 
+To start the graphql server go to the `cmd/graphql` directory and generate the `graphql` binary with `go build`.  Then run
 
 ```
 ./graphql start --port=8080
 ```
 
-and visit http://localhost:8080/ 
+and visit http://localhost:8080/
 
 Here is an example query using the coinbase SDK:
 
 ```graphql
 query {
   coinbaseWallets {
-    id, 
-    destinationTagName, 
+    id,
+    destinationTagName,
     swiftDepositInformation {
       bankName
-    }, 
+    },
     sepaDepositInformation {
       bankName
-    }, 
+    },
     destinationTagRegex
   }
 }
@@ -38,5 +38,5 @@ python3 generate.py
 To re-generate a change to the schema:
 
 ```sh
-$ go get github.com/99designs/gqlgen; go run github.com/99designs/gqlgen generate
+$ gqlgen generate
 ```

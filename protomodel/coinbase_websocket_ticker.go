@@ -9,7 +9,7 @@ import (
 // * This is a generated file, do not edit
 
 // CoinbaseWebsocketTicker is real-time price updates every time a match
-// happens.  It batches updates in case of cascading matches, greatly reducing
+// happens. It batches updates in case of cascading matches, greatly reducing
 // bandwidth requirements.
 type CoinbaseWebsocketTicker struct {
 	BestAsk   float64   `json:"best_ask"`
@@ -27,16 +27,16 @@ type CoinbaseWebsocketTicker struct {
 // UnmarshalJSON will deserialize bytes into a CoinbaseWebsocketTicker model
 func (coinbaseWebsocketTicker *CoinbaseWebsocketTicker) UnmarshalJSON(d []byte) error {
 	const (
-		bestAskJsonTag   = "best_ask"
-		bestBidJsonTag   = "best_bid"
-		lastSizeJsonTag  = "last_size"
-		priceJsonTag     = "price"
-		productIdJsonTag = "product_id"
-		sequenceJsonTag  = "sequence"
-		sideJsonTag      = "side"
-		timeJsonTag      = "time"
-		tradeIdJsonTag   = "trade_id"
 		typeJsonTag      = "type"
+		productIdJsonTag = "product_id"
+		tradeIdJsonTag   = "trade_id"
+		sequenceJsonTag  = "sequence"
+		timeJsonTag      = "time"
+		sideJsonTag      = "side"
+		priceJsonTag     = "price"
+		lastSizeJsonTag  = "last_size"
+		bestBidJsonTag   = "best_bid"
+		bestAskJsonTag   = "best_ask"
 	)
 	data, err := serial.NewJSONTransform(d)
 	if err != nil {

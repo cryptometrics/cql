@@ -2,7 +2,7 @@ package model
 
 import "github.com/cryptometrics/cql/protomodel"
 
-// * This file was initialized by schema/generate.py, but is open to extension
+// * This file was initialized by the meta-program, but is open to modification
 
 // CoinbaseBankCountry are the name and code for the bank's country associated
 // with a wallet

@@ -43,33 +43,33 @@ type CoinbasePaymentMethod struct {
 // UnmarshalJSON will deserialize bytes into a CoinbasePaymentMethod model
 func (coinbasePaymentMethod *CoinbasePaymentMethod) UnmarshalJSON(d []byte) error {
 	const (
-		allowBuyJsonTag           = "allow_buy"
-		allowDepositJsonTag       = "allow_deposit"
-		allowSellJsonTag          = "allow_sell"
-		allowWithdrawJsonTag      = "allow_withdraw"
-		availableBalanceJsonTag   = "available_balance"
-		cdvStatusJsonTag          = "cdv_status"
-		createAtJsonTag           = "create_at"
-		cryptoAccountJsonTag      = "crypto_account"
-		currencyJsonTag           = "currency"
-		fiatAccountJsonTag        = "fiat_account"
-		holdBusinessDaysJsonTag   = "hold_business_days"
-		holdDaysJsonTag           = "hold_days"
 		idJsonTag                 = "id"
-		instantBuyJsonTag         = "instant_buy"
-		instantSaleJsonTag        = "instant_sale"
-		limitsJsonTag             = "limits"
+		typeJsonTag               = "type"
 		nameJsonTag               = "name"
-		pickerDataJsonTag         = "picker_data"
+		currencyJsonTag           = "currency"
 		primaryBuyJsonTag         = "primary_buy"
 		primarySellJsonTag        = "primary_sell"
-		recurringOptionsJsonTag   = "recurring_options"
+		instantBuyJsonTag         = "instant_buy"
+		instantSaleJsonTag        = "instant_sale"
+		createAtJsonTag           = "create_at"
+		updatedAtJsonTag          = "updated_at"
 		resourceJsonTag           = "resource"
 		resourcePathJsonTag       = "resource_path"
-		typeJsonTag               = "type"
-		updatedAtJsonTag          = "updated_at"
-		verificationMethodJsonTag = "verification_method"
 		verifiedJsonTag           = "verified"
+		allowBuyJsonTag           = "allow_buy"
+		allowSellJsonTag          = "allow_sell"
+		allowDepositJsonTag       = "allow_deposit"
+		allowWithdrawJsonTag      = "allow_withdraw"
+		holdBusinessDaysJsonTag   = "hold_business_days"
+		holdDaysJsonTag           = "hold_days"
+		verificationMethodJsonTag = "verification_method"
+		cdvStatusJsonTag          = "cdv_status"
+		limitsJsonTag             = "limits"
+		fiatAccountJsonTag        = "fiat_account"
+		cryptoAccountJsonTag      = "crypto_account"
+		recurringOptionsJsonTag   = "recurring_options"
+		availableBalanceJsonTag   = "available_balance"
+		pickerDataJsonTag         = "picker_data"
 	)
 	data, err := serial.NewJSONTransform(d)
 	if err != nil {
@@ -124,9 +124,9 @@ func (coinbasePaymentMethod *CoinbasePaymentMethod) UnmarshalJSON(d []byte) erro
 	}
 	if v := data.Value(recurringOptionsJsonTag); v != nil {
 		for _, item := range data.Value(recurringOptionsJsonTag).([]interface{}) {
-			byt, _ := json.Marshal(item)
+			bytes, _ := json.Marshal(item)
 			obj := CoinbaseRecurringOptions{}
-			if err := json.Unmarshal(byt, &obj); err != nil {
+			if err := json.Unmarshal(bytes, &obj); err != nil {
 				return err
 			}
 			coinbasePaymentMethod.ProtoRecurringOptions = append(coinbasePaymentMethod.ProtoRecurringOptions, &obj)

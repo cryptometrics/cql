@@ -1,7 +1,6 @@
 # * This is a generated file, do not edit
 
-input CoinbaseOrdersOptions {
-  profileId: String
+input CoinbaseOrdersOptions {  profileId: String
   productId: String
   sortedBy: String
   sorting: String
@@ -10,5 +9,4 @@ input CoinbaseOrdersOptions {
   before: String
   after: String
   limit: Int!
-  status: [String]!
-}
+  status: [String]!}

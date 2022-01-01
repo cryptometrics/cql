@@ -24,12 +24,12 @@ type CoinbaseAccountLedger struct {
 // UnmarshalJSON will deserialize bytes into a CoinbaseAccountLedger model
 func (coinbaseAccountLedger *CoinbaseAccountLedger) UnmarshalJSON(d []byte) error {
 	const (
-		amountJsonTag    = "amount"
-		balanceJsonTag   = "balance"
-		createdAtJsonTag = "created_at"
-		detailsJsonTag   = "details"
 		idJsonTag        = "id"
+		amountJsonTag    = "amount"
+		createdAtJsonTag = "created_at"
+		balanceJsonTag   = "balance"
 		typeJsonTag      = "type"
+		detailsJsonTag   = "details"
 	)
 	data, err := serial.NewJSONTransform(d)
 	if err != nil {

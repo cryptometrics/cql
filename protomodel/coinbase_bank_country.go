@@ -14,8 +14,8 @@ type CoinbaseBankCountry struct {
 // UnmarshalJSON will deserialize bytes into a CoinbaseBankCountry model
 func (coinbaseBankCountry *CoinbaseBankCountry) UnmarshalJSON(d []byte) error {
 	const (
-		codeJsonTag = "code"
 		nameJsonTag = "name"
+		codeJsonTag = "code"
 	)
 	data, err := serial.NewJSONTransform(d)
 	if err != nil {

@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "model",
@@ -47,7 +47,7 @@ go_library(
         "kraken_server_time_result.go",
         "kraken_system_status.go",
         "kraken_system_status_result.go",
-        "proto_accessors.go",
+        "protomodel_accessors.go",
     ],
     importpath = "github.com/cryptometrics/cql/model",
     visibility = ["//visibility:public"],
@@ -55,11 +55,4 @@ go_library(
         "//protomodel",
         "//scalar",
     ],
-)
-
-go_test(
-    name = "model_test",
-    srcs = ["ca_test.go"],
-    embed = [":model"],
-    deps = ["@com_github_franela_goblin//:goblin"],
 )

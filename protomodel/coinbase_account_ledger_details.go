@@ -16,8 +16,8 @@ type CoinbaseAccountLedgerDetails struct {
 func (coinbaseAccountLedgerDetails *CoinbaseAccountLedgerDetails) UnmarshalJSON(d []byte) error {
 	const (
 		orderIdJsonTag   = "order_id"
-		productIdJsonTag = "product_id"
 		tradeIdJsonTag   = "trade_id"
+		productIdJsonTag = "product_id"
 	)
 	data, err := serial.NewJSONTransform(d)
 	if err != nil {

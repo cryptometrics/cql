@@ -20,14 +20,14 @@ type CoinbaseWireDepositInformation struct {
 // model
 func (coinbaseWireDepositInformation *CoinbaseWireDepositInformation) UnmarshalJSON(d []byte) error {
 	const (
-		accountAddressJsonTag = "account_address"
-		accountNameJsonTag    = "account_name"
 		accountNumberJsonTag  = "account_number"
+		routingNumberJsonTag  = "routing_number"
+		bankNameJsonTag       = "bank_name"
 		bankAddressJsonTag    = "bank_address"
 		bankCountryJsonTag    = "bank_country"
-		bankNameJsonTag       = "bank_name"
+		accountNameJsonTag    = "account_name"
+		accountAddressJsonTag = "account_address"
 		referenceJsonTag      = "reference"
-		routingNumberJsonTag  = "routing_number"
 	)
 	data, err := serial.NewJSONTransform(d)
 	if err != nil {

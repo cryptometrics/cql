@@ -13,8 +13,8 @@ type CoinbaseRecurringOptions struct {
 // UnmarshalJSON will deserialize bytes into a CoinbaseRecurringOptions model
 func (coinbaseRecurringOptions *CoinbaseRecurringOptions) UnmarshalJSON(d []byte) error {
 	const (
-		labelJsonTag  = "label"
 		periodJsonTag = "period"
+		labelJsonTag  = "label"
 	)
 	data, err := serial.NewJSONTransform(d)
 	if err != nil {

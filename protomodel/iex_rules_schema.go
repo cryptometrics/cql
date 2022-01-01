@@ -25,9 +25,9 @@ func (iexRulesSchema *IexRulesSchema) UnmarshalJSON(d []byte) error {
 	}
 	if v := data.Value(schemaJsonTag); v != nil {
 		for _, item := range data.Value(schemaJsonTag).([]interface{}) {
-			byt, _ := json.Marshal(item)
+			bytes, _ := json.Marshal(item)
 			obj := IexRulesScheme{}
-			if err := json.Unmarshal(byt, &obj); err != nil {
+			if err := json.Unmarshal(bytes, &obj); err != nil {
 				return err
 			}
 			iexRulesSchema.ProtoSchema = append(iexRulesSchema.ProtoSchema, &obj)

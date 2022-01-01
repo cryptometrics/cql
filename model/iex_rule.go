@@ -2,7 +2,7 @@ package model
 
 import "github.com/cryptometrics/cql/protomodel"
 
-// * This file was initialized by schema/generate.py, but is open to extension
+// * This file was initialized by the meta-program, but is open to modification
 
 // Rule to evaluate thousands of data points per second and build event-driven,
 // automated alerts using Rules Engine. You can access Rules Engine through the

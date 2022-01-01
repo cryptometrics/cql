@@ -2,7 +2,7 @@ package model
 
 import "github.com/cryptometrics/cql/protomodel"
 
-// * This file was initialized by schema/generate.py, but is open to extension
+// * This file was initialized by the meta-program, but is open to modification
 
 // CoinbaseHold represents the hold on an account that belong to the same
 // profile as the API key. Holds are placed on an account for any active orders

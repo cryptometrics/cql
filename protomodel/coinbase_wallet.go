@@ -29,23 +29,23 @@ type CoinbaseWallet struct {
 // UnmarshalJSON will deserialize bytes into a CoinbaseWallet model
 func (coinbaseWallet *CoinbaseWallet) UnmarshalJSON(d []byte) error {
 	const (
-		activeJsonTag                  = "active"
-		availableOnConsumerJsonTag     = "available_on_consumer"
+		idJsonTag                      = "id"
+		nameJsonTag                    = "name"
 		balanceJsonTag                 = "balance"
 		currencyJsonTag                = "currency"
+		typeJsonTag                    = "type"
+		primaryJsonTag                 = "primary"
+		activeJsonTag                  = "active"
+		availableOnConsumerJsonTag     = "available_on_consumer"
+		readyJsonTag                   = "ready"
+		wireDepositInformationJsonTag  = "wire_deposit_information"
+		swiftDepositInformationJsonTag = "swift_deposit_information"
+		sepaDepositInformationJsonTag  = "sepa_deposit_information"
+		ukDepositInformationJsonTag    = "uk_deposit_information"
 		destinationTagNameJsonTag      = "destination_tag_name"
 		destinationTagRegexJsonTag     = "destination_tag_regex"
 		holdBalanceJsonTag             = "hold_balance"
 		holdCurrencyJsonTag            = "hold_currency"
-		idJsonTag                      = "id"
-		nameJsonTag                    = "name"
-		primaryJsonTag                 = "primary"
-		readyJsonTag                   = "ready"
-		sepaDepositInformationJsonTag  = "sepa_deposit_information"
-		swiftDepositInformationJsonTag = "swift_deposit_information"
-		typeJsonTag                    = "type"
-		ukDepositInformationJsonTag    = "uk_deposit_information"
-		wireDepositInformationJsonTag  = "wire_deposit_information"
 	)
 	data, err := serial.NewJSONTransform(d)
 	if err != nil {

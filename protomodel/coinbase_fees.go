@@ -14,8 +14,8 @@ type CoinbaseFees struct {
 // UnmarshalJSON will deserialize bytes into a CoinbaseFees model
 func (coinbaseFees *CoinbaseFees) UnmarshalJSON(d []byte) error {
 	const (
-		makerFeeRateJsonTag = "maker_fee_rate"
 		takerFeeRateJsonTag = "taker_fee_rate"
+		makerFeeRateJsonTag = "maker_fee_rate"
 		usdVolumeJsonTag    = "usd_volume"
 	)
 	data, err := serial.NewJSONTransform(d)

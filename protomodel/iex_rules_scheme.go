@@ -19,11 +19,11 @@ type IexRulesScheme struct {
 // UnmarshalJSON will deserialize bytes into a IexRulesScheme model
 func (iexRulesScheme *IexRulesScheme) UnmarshalJSON(d []byte) error {
 	const (
-		isLookupJsonTag  = "isLookup"
 		labelJsonTag     = "label"
-		scopeJsonTag     = "scope"
-		typeJsonTag      = "type"
 		valueJsonTag     = "value"
+		typeJsonTag      = "type"
+		scopeJsonTag     = "scope"
+		isLookupJsonTag  = "isLookup"
 		weightJsonTag    = "weight"
 		weightKeyJsonTag = "weightKey"
 	)

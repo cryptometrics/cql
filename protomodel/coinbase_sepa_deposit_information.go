@@ -4,7 +4,7 @@ import "github.com/cryptometrics/cql/serial"
 
 // * This is a generated file, do not edit
 
-// CoinbaseSepaDepositInformation information regarding a wallet's deposits.  A
+// CoinbaseSepaDepositInformation information regarding a wallet's deposits. A
 // SEPA credit transfer is a single transfer of Euros from one person or
 // organisation to another. For example, this could be to pay the deposit for a
 // holiday rental or to settle an invoice. A SEPA direct debit is a recurring
@@ -25,14 +25,14 @@ type CoinbaseSepaDepositInformation struct {
 // model
 func (coinbaseSepaDepositInformation *CoinbaseSepaDepositInformation) UnmarshalJSON(d []byte) error {
 	const (
-		accountAddressJsonTag = "account_address"
-		accountNameJsonTag    = "account_name"
+		ibanJsonTag           = "iban"
+		swiftJsonTag          = "swift"
+		bankNameJsonTag       = "bank_name"
 		bankAddressJsonTag    = "bank_address"
 		bankCountryJsonTag    = "bank_country"
-		bankNameJsonTag       = "bank_name"
-		ibanJsonTag           = "iban"
+		accountNameJsonTag    = "account_name"
+		accountAddressJsonTag = "account_address"
 		referenceJsonTag      = "reference"
-		swiftJsonTag          = "swift"
 	)
 	data, err := serial.NewJSONTransform(d)
 	if err != nil {

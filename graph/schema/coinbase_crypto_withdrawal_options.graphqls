@@ -1,7 +1,6 @@
 # * This is a generated file, do not edit
 
-input CoinbaseCryptoWithdrawalOptions {
-  profileId: String
+input CoinbaseCryptoWithdrawalOptions {  profileId: String
   amount: Float!
   cryptoAddress: String!
   currency: String!
@@ -9,5 +8,4 @@ input CoinbaseCryptoWithdrawalOptions {
   noDestinationTag: Boolean
   twoFactorCode: String
   nonce: Int
-  fee: Float
-}
+  fee: Float}

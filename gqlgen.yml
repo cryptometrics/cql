@@ -1,3 +1,4 @@
+---
 exec:
   filename: graph/generated/generated.go
   package: generated

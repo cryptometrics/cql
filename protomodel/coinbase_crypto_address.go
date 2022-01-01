@@ -32,21 +32,21 @@ type CoinbaseCryptoAddress struct {
 // UnmarshalJSON will deserialize bytes into a CoinbaseCryptoAddress model
 func (coinbaseCryptoAddress *CoinbaseCryptoAddress) UnmarshalJSON(d []byte) error {
 	const (
-		addressInfoJsonTag    = "address_info"
-		addressJsonTag        = "address"
-		callbackUrlJsonTag    = "callback_url"
-		createAtJsonTag       = "create_at"
-		depositUriJsonTag     = "deposit_uri"
-		destinationTagJsonTag = "destination_tag"
 		idJsonTag             = "id"
-		legacyAddressJsonTag  = "legacy_address"
+		addressJsonTag        = "address"
+		addressInfoJsonTag    = "address_info"
 		nameJsonTag           = "name"
+		createAtJsonTag       = "create_at"
+		updatedAtJsonTag      = "updated_at"
 		networkJsonTag        = "network"
+		uriSchemeJsonTag      = "uri_scheme"
 		resourceJsonTag       = "resource"
 		resourcePathJsonTag   = "resource_path"
-		updatedAtJsonTag      = "updated_at"
-		uriSchemeJsonTag      = "uri_scheme"
 		warningsJsonTag       = "warnings"
+		legacyAddressJsonTag  = "legacy_address"
+		destinationTagJsonTag = "destination_tag"
+		depositUriJsonTag     = "deposit_uri"
+		callbackUrlJsonTag    = "callback_url"
 	)
 	data, err := serial.NewJSONTransform(d)
 	if err != nil {
@@ -77,9 +77,9 @@ func (coinbaseCryptoAddress *CoinbaseCryptoAddress) UnmarshalJSON(d []byte) erro
 	}
 	if v := data.Value(warningsJsonTag); v != nil {
 		for _, item := range data.Value(warningsJsonTag).([]interface{}) {
-			byt, _ := json.Marshal(item)
+			bytes, _ := json.Marshal(item)
 			obj := CoinbaseCryptoAddressWarning{}
-			if err := json.Unmarshal(byt, &obj); err != nil {
+			if err := json.Unmarshal(bytes, &obj); err != nil {
 				return err
 			}
 			coinbaseCryptoAddress.ProtoWarnings = append(coinbaseCryptoAddress.ProtoWarnings, &obj)

@@ -23,18 +23,18 @@ type CoinbaseFill struct {
 // UnmarshalJSON will deserialize bytes into a CoinbaseFill model
 func (coinbaseFill *CoinbaseFill) UnmarshalJSON(d []byte) error {
 	const (
-		feeJsonTag       = "fee"
-		liquidityJsonTag = "liquidity"
-		orderIdJsonTag   = "order_id"
-		priceJsonTag     = "price"
-		productIdJsonTag = "product_id"
-		profileIdJsonTag = "profile_id"
-		settledJsonTag   = "settled"
-		sideJsonTag      = "side"
-		sizeJsonTag      = "size"
 		tradeIdJsonTag   = "trade_id"
-		usdVolumeJsonTag = "usd_volume"
+		productIdJsonTag = "product_id"
+		orderIdJsonTag   = "order_id"
 		userIdJsonTag    = "user_id"
+		profileIdJsonTag = "profile_id"
+		liquidityJsonTag = "liquidity"
+		priceJsonTag     = "price"
+		sizeJsonTag      = "size"
+		feeJsonTag       = "fee"
+		sideJsonTag      = "side"
+		settledJsonTag   = "settled"
+		usdVolumeJsonTag = "usd_volume"
 	)
 	data, err := serial.NewJSONTransform(d)
 	if err != nil {

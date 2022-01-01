@@ -14,8 +14,8 @@ type KrakenSystemStatus struct {
 // UnmarshalJSON will deserialize bytes into a KrakenSystemStatus model
 func (krakenSystemStatus *KrakenSystemStatus) UnmarshalJSON(d []byte) error {
 	const (
-		errorJsonTag  = "error"
 		resultJsonTag = "result"
+		errorJsonTag  = "error"
 	)
 	data, err := serial.NewJSONTransform(d)
 	if err != nil {

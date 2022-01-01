@@ -24,11 +24,11 @@ type CoinbaseAccountHold struct {
 // UnmarshalJSON will deserialize bytes into a CoinbaseAccountHold model
 func (coinbaseAccountHold *CoinbaseAccountHold) UnmarshalJSON(d []byte) error {
 	const (
-		createdAtJsonTag = "created_at"
 		idJsonTag        = "id"
-		refJsonTag       = "ref"
-		typeJsonTag      = "type"
+		createdAtJsonTag = "created_at"
 		updatedAtJsonTag = "updated_at"
+		typeJsonTag      = "type"
+		refJsonTag       = "ref"
 	)
 	data, err := serial.NewJSONTransform(d)
 	if err != nil {

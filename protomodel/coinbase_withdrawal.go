@@ -18,11 +18,11 @@ type CoinbaseWithdrawal struct {
 // UnmarshalJSON will deserialize bytes into a CoinbaseWithdrawal model
 func (coinbaseWithdrawal *CoinbaseWithdrawal) UnmarshalJSON(d []byte) error {
 	const (
+		idJsonTag       = "id"
 		amountJsonTag   = "amount"
 		currencyJsonTag = "currency"
-		feeJsonTag      = "fee"
-		idJsonTag       = "id"
 		payoutAtJsonTag = "payout_at"
+		feeJsonTag      = "fee"
 		subtotalJsonTag = "subtotal"
 	)
 	data, err := serial.NewJSONTransform(d)

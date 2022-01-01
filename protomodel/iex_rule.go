@@ -21,11 +21,11 @@ type IexRule struct {
 // UnmarshalJSON will deserialize bytes into a IexRule model
 func (iexRule *IexRule) UnmarshalJSON(d []byte) error {
 	const (
-		formulaJsonTag = "formula"
-		labelJsonTag   = "label"
-		scopeJsonTag   = "scope"
-		typeJsonTag    = "type"
 		valueJsonTag   = "value"
+		labelJsonTag   = "label"
+		typeJsonTag    = "type"
+		formulaJsonTag = "formula"
+		scopeJsonTag   = "scope"
 	)
 	data, err := serial.NewJSONTransform(d)
 	if err != nil {

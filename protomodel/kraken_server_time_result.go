@@ -20,8 +20,8 @@ type KrakenServerTimeResult struct {
 // UnmarshalJSON will deserialize bytes into a KrakenServerTimeResult model
 func (krakenServerTimeResult *KrakenServerTimeResult) UnmarshalJSON(d []byte) error {
 	const (
-		rfc1123JsonTag  = "rfc1123"
 		unixtimeJsonTag = "unixtime"
+		rfc1123JsonTag  = "rfc1123"
 	)
 	data, err := serial.NewJSONTransform(d)
 	if err != nil {

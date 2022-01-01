@@ -24,18 +24,18 @@ type CoinbaseCurrencyDetails struct {
 // UnmarshalJSON will deserialize bytes into a CoinbaseCurrencyDetails model
 func (coinbaseCurrencyDetails *CoinbaseCurrencyDetails) UnmarshalJSON(d []byte) error {
 	const (
+		typeJsonTag                  = "type"
+		symbolJsonTag                = "symbol"
+		networkConfirmationsJsonTag  = "network_confirmations"
+		sortOrderJsonTag             = "sort_order"
 		cryptoAddressLinkJsonTag     = "crypto_address_link"
 		cryptoTransactionLinkJsonTag = "crypto_transaction_link"
-		displayNameJsonTag           = "display_name"
-		groupTypesJsonTag            = "group_types"
-		maxWithdrawalAmountJsonTag   = "max_withdrawal_amount"
-		minWithdrawalAmountJsonTag   = "min_withdrawal_amount"
-		networkConfirmationsJsonTag  = "network_confirmations"
-		processingTimeSecondsJsonTag = "processing_time_seconds"
 		pushPaymentMethodsJsonTag    = "push_payment_methods"
-		sortOrderJsonTag             = "sort_order"
-		symbolJsonTag                = "symbol"
-		typeJsonTag                  = "type"
+		groupTypesJsonTag            = "group_types"
+		displayNameJsonTag           = "display_name"
+		processingTimeSecondsJsonTag = "processing_time_seconds"
+		minWithdrawalAmountJsonTag   = "min_withdrawal_amount"
+		maxWithdrawalAmountJsonTag   = "max_withdrawal_amount"
 	)
 	data, err := serial.NewJSONTransform(d)
 	if err != nil {

@@ -16,8 +16,8 @@ type CoinbaseAccountTransferDetails struct {
 func (coinbaseAccountTransferDetails *CoinbaseAccountTransferDetails) UnmarshalJSON(d []byte) error {
 	const (
 		coinbaseAccountIdJsonTag       = "coinbase_account_id"
-		coinbasePaymentMethodIdJsonTag = "coinbase_payment_method_id"
 		coinbaseTransactionIdJsonTag   = "coinbase_transaction_id"
+		coinbasePaymentMethodIdJsonTag = "coinbase_payment_method_id"
 	)
 	data, err := serial.NewJSONTransform(d)
 	if err != nil {

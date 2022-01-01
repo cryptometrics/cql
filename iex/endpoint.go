@@ -7,7 +7,6 @@ import (
 )
 
 // * This is a generated file, do not edit
-
 type Endpoint int
 
 const (
@@ -25,7 +24,7 @@ func RulesPath(args client.EndpointArgs) string {
 // used to construct rules. If a schema object has "isLookup": true, pass the
 // value key to /stable/rules/lookup/{value}. This returns all valid values for
 // the rightValue of a condition.
-func RulesSchemaPath(_ client.EndpointArgs) string {
+func RulesSchemaPath(args client.EndpointArgs) string {
 	return path.Join("/stable", "rules", "schema")
 }
 

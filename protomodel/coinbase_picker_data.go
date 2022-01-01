@@ -28,23 +28,23 @@ type CoinbasePickerData struct {
 // UnmarshalJSON will deserialize bytes into a CoinbasePickerData model
 func (coinbasePickerData *CoinbasePickerData) UnmarshalJSON(d []byte) error {
 	const (
+		symbolJsonTag                = "symbol"
+		customerNameJsonTag          = "customer_name"
 		accountNameJsonTag           = "account_name"
 		accountNumberJsonTag         = "account_number"
 		accountTypeJsonTag           = "account_type"
-		balanceJsonTag               = "balance"
-		bankNameJsonTag              = "bank_name"
-		branchNameJsonTag            = "branch_name"
-		customerNameJsonTag          = "customer_name"
-		ibanJsonTag                  = "iban"
-		iconUrlJsonTag               = "icon_url"
 		institutionCodeJsonTag       = "institution_code"
-		institutionIdentifierJsonTag = "institution_identifier"
 		institutionNameJsonTag       = "institution_name"
+		ibanJsonTag                  = "iban"
+		swiftJsonTag                 = "swift"
 		paypalEmailJsonTag           = "paypal_email"
 		paypalOwnerJsonTag           = "paypal_owner"
 		routingNumberJsonTag         = "routing_number"
-		swiftJsonTag                 = "swift"
-		symbolJsonTag                = "symbol"
+		institutionIdentifierJsonTag = "institution_identifier"
+		bankNameJsonTag              = "bank_name"
+		branchNameJsonTag            = "branch_name"
+		iconUrlJsonTag               = "icon_url"
+		balanceJsonTag               = "balance"
 	)
 	data, err := serial.NewJSONTransform(d)
 	if err != nil {

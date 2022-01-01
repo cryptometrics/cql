@@ -1,7 +1,7 @@
 # * This is a generated file, do not edit
 
 """
-CoinbasePaymentMethod is a payment method used on coinbase
+ CoinbasePaymentMethod is a payment method used on coinbase
 """
 type CoinbasePaymentMethod {
   id: String

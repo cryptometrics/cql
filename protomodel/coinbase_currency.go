@@ -4,7 +4,7 @@ import "github.com/cryptometrics/cql/serial"
 
 // * This is a generated file, do not edit
 
-// CoinbaseCurrency is a currency that coinbase knows about.  Not al currencies
+// CoinbaseCurrency is a currency that coinbase knows about. Not al currencies
 // may be currently in use for trading.
 type CoinbaseCurrency struct {
 	ConvertibleTo []string                `json:"convertible_to"`
@@ -20,14 +20,14 @@ type CoinbaseCurrency struct {
 // UnmarshalJSON will deserialize bytes into a CoinbaseCurrency model
 func (coinbaseCurrency *CoinbaseCurrency) UnmarshalJSON(d []byte) error {
 	const (
+		idJsonTag            = "id"
+		nameJsonTag          = "name"
+		minSizeJsonTag       = "min_size"
+		statusJsonTag        = "status"
+		messageJsonTag       = "message"
+		maxPrecisionJsonTag  = "max_precision"
 		convertibleToJsonTag = "convertible_to"
 		detailsJsonTag       = "details"
-		idJsonTag            = "id"
-		maxPrecisionJsonTag  = "max_precision"
-		messageJsonTag       = "message"
-		minSizeJsonTag       = "min_size"
-		nameJsonTag          = "name"
-		statusJsonTag        = "status"
 	)
 	data, err := serial.NewJSONTransform(d)
 	if err != nil {

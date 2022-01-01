@@ -19,11 +19,11 @@ type CoinbaseCurrencyConversion struct {
 // UnmarshalJSON will deserialize bytes into a CoinbaseCurrencyConversion model
 func (coinbaseCurrencyConversion *CoinbaseCurrencyConversion) UnmarshalJSON(d []byte) error {
 	const (
+		idJsonTag            = "id"
 		amountJsonTag        = "amount"
 		fromAccountIdJsonTag = "from_account_id"
-		fromJsonTag          = "from"
-		idJsonTag            = "id"
 		toAccountIdJsonTag   = "to_account_id"
+		fromJsonTag          = "from"
 		toJsonTag            = "to"
 	)
 	data, err := serial.NewJSONTransform(d)

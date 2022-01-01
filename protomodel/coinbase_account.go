@@ -19,11 +19,11 @@ type CoinbaseAccount struct {
 // UnmarshalJSON will deserialize bytes into a CoinbaseAccount model
 func (coinbaseAccount *CoinbaseAccount) UnmarshalJSON(d []byte) error {
 	const (
-		availableJsonTag      = "available"
-		balanceJsonTag        = "balance"
-		currencyJsonTag       = "currency"
-		holdJsonTag           = "hold"
 		idJsonTag             = "id"
+		currencyJsonTag       = "currency"
+		balanceJsonTag        = "balance"
+		availableJsonTag      = "available"
+		holdJsonTag           = "hold"
 		profileIdJsonTag      = "profile_id"
 		tradingEnabledJsonTag = "trading_enabled"
 	)

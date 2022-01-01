@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "protomodel",
@@ -23,7 +23,6 @@ go_library(
         "coinbase_fees.go",
         "coinbase_fiat_account.go",
         "coinbase_fill.go",
-        "coinbase_hold.go",
         "coinbase_limits.go",
         "coinbase_new_order.go",
         "coinbase_order.go",
@@ -54,11 +53,4 @@ go_library(
         "//scalar",
         "//serial",
     ],
-)
-
-go_test(
-    name = "protomodel_test",
-    srcs = ["coinbase_account_test.go"],
-    embed = [":protomodel"],
-    deps = ["@com_github_franela_goblin//:goblin"],
 )

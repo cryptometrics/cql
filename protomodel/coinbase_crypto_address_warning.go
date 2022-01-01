@@ -15,9 +15,9 @@ type CoinbaseCryptoAddressWarning struct {
 // model
 func (coinbaseCryptoAddressWarning *CoinbaseCryptoAddressWarning) UnmarshalJSON(d []byte) error {
 	const (
+		titleJsonTag    = "title"
 		detailsJsonTag  = "details"
 		imageUrlJsonTag = "image_url"
-		titleJsonTag    = "title"
 	)
 	data, err := serial.NewJSONTransform(d)
 	if err != nil {
