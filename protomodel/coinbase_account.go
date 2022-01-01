@@ -4,7 +4,8 @@ import "github.com/cryptometrics/cql/serial"
 
 // * This is a generated file, do not edit
 
-// CoinbaseAccount holds data for trading account from the profile of the API// key
+// CoinbaseAccount holds data for trading account from the profile of the API
+// key
 type CoinbaseAccount struct {
 	Available      float64 `json:"available"`
 	Balance        float64 `json:"balance"`
@@ -31,9 +32,9 @@ func (coinbaseAccount *CoinbaseAccount) UnmarshalJSON(d []byte) error {
 		return err
 	}
 	data.UnmarshalBool(tradingEnabledJsonTag, &coinbaseAccount.TradingEnabled)
-	data.UnmarshalFloat(availableJsonTag, &coinbaseAccount.Available)
-	data.UnmarshalFloat(balanceJsonTag, &coinbaseAccount.Balance)
-	data.UnmarshalFloat(holdJsonTag, &coinbaseAccount.Hold)
+	data.UnmarshalFloatFromString(availableJsonTag, &coinbaseAccount.Available)
+	data.UnmarshalFloatFromString(balanceJsonTag, &coinbaseAccount.Balance)
+	data.UnmarshalFloatFromString(holdJsonTag, &coinbaseAccount.Hold)
 	data.UnmarshalString(currencyJsonTag, &coinbaseAccount.Currency)
 	data.UnmarshalString(idJsonTag, &coinbaseAccount.Id)
 	data.UnmarshalString(profileIdJsonTag, &coinbaseAccount.ProfileId)

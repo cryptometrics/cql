@@ -22,7 +22,7 @@ func (coinbaseAvailableBalance *CoinbaseAvailableBalance) UnmarshalJSON(d []byte
 	if err != nil {
 		return err
 	}
-	data.UnmarshalFloat(amountJsonTag, &coinbaseAvailableBalance.Amount)
+	data.UnmarshalFloatFromString(amountJsonTag, &coinbaseAvailableBalance.Amount)
 	data.UnmarshalString(currencyJsonTag, &coinbaseAvailableBalance.Currency)
 	data.UnmarshalString(scaleJsonTag, &coinbaseAvailableBalance.Scale)
 	return nil

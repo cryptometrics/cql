@@ -6,7 +6,8 @@ require 'fileutils'
 # the go protomodels
 module Protomodel
   MSG = "\n// * This is a generated file, do not edit\n"
-  PKG = 'package protomodel'
+  PKG = 'protomodel'
+  PKG_DEC = "package #{PKG}"
   RETURN_ERR	= 'if err != nil { return err }'
   SERIAL_DECLARATION	= "\ndata, err := serial.NewJSONTransform(d); #{RETURN_ERR}"
 
@@ -40,7 +41,7 @@ module Protomodel
   end
 
   def custom_deserializer(field)
-    return nil if field.deserializer.nil? || field.deserializer == 'UnmarshalFloatFromString'
+    return nil unless !field.deserializer.nil? && field.deserializer == "UnmarshalFloatFromString"
 
     "\ndata.UnmarshalFloatFromString(#{unmarshal_fn_signature(field)})"
   end
@@ -52,13 +53,13 @@ module Protomodel
   end
 
   def scalar_deserializer(field, sig)
-    "\ndata.Unmarshal#{field.go_type.gsub!('scalar.', '')}(#{sig})"
+    "\ndata.Unmarshal#{field.go_type.dup.gsub('scalar.', '')}(#{sig})"
   end
 
   def slice_deserializer(field)
     accessor = struct_access_variable(field)
     data_accessor = "data.Value(#{field.go_field_tag})"
-    type = field.go_type.gsub!('[]', '').gsub!('*', '')
+    type = field.go_type.dup.gsub!('[]', '').gsub!('*', '')
     marshal_logic = "bytes, _ := json.Marshal(item); obj := #{type}{};"
     unmarshal_logic = 'if err := json.Unmarshal(bytes, &obj); err != nil {return err};'
     logic = "#{marshal_logic} #{unmarshal_logic} #{accessor} = append(#{accessor}, &obj)"
@@ -117,7 +118,7 @@ module Protomodel
   def write_protomodel
     Dir.chdir(PARENT_DIR + '/protomodel') do
       File.open(go_model_filename, 'w') do |f|
-        f.write(PKG)
+        f.write(PKG_DEC)
         f.write(MSG)
         f.write(protomodel_comment)
         f.write(protomodel_struct)

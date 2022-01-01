@@ -6,3 +6,5 @@ FROM golang:latest
 # install goimports so that we can format go files and insert the imported
 # dependencies programatically
 RUN go install golang.org/x/tools/cmd/goimports@latest
+RUN go get github.com/cryptometrics/cql
+RUN go get github.com/99designs/gqlgen

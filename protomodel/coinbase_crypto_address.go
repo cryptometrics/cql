@@ -9,7 +9,8 @@ import (
 
 // * This is a generated file, do not edit
 
-// CoinbaseCryptoAddress is used for a one-time crypto address for depositing// crypto.
+// CoinbaseCryptoAddress is used for a one-time crypto address for depositing
+// crypto.
 type CoinbaseCryptoAddress struct {
 	Address          string                          `json:"address"`
 	CallbackUrl      string                          `json:"callback_url"`

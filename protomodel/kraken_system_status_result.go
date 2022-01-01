@@ -9,7 +9,8 @@ import (
 
 // * This is a generated file, do not edit
 
-// KrakenSystemStatusResult holds data concerning the current system status or// trading mode.
+// KrakenSystemStatusResult holds data concerning the current system status or
+// trading mode.
 type KrakenSystemStatusResult struct {
 	// Current timestamp (RFC3339)
 	Timestamp time.Time `json:"timestamp"`
@@ -28,7 +29,7 @@ func (krakenSystemStatusResult *KrakenSystemStatusResult) UnmarshalJSON(d []byte
 	if err != nil {
 		return err
 	}
-	data.UnmarshalFloatFromString(statusJsonTag, &krakenSystemStatusResult.Status)
+	data.UnmarshalSystemStatus(statusJsonTag, &krakenSystemStatusResult.Status)
 	err = data.UnmarshalTime(time.RFC3339Nano, timestampJsonTag, &krakenSystemStatusResult.Timestamp)
 	if err != nil {
 		return err

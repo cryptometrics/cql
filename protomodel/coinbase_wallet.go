@@ -4,7 +4,8 @@ import "github.com/cryptometrics/cql/serial"
 
 // * This is a generated file, do not edit
 
-// CoinbaseWallet represents a user's available Coinbase wallet (These are the// wallets/accounts that are used for buying and selling on www.coinbase.com)
+// CoinbaseWallet represents a user's available Coinbase wallet (These are the
+// wallets/accounts that are used for buying and selling on www.coinbase.com)
 type CoinbaseWallet struct {
 	Active                       bool                            `json:"active"`
 	AvailableOnConsumer          bool                            `json:"available_on_consumer"`
@@ -70,8 +71,8 @@ func (coinbaseWallet *CoinbaseWallet) UnmarshalJSON(d []byte) error {
 	data.UnmarshalBool(availableOnConsumerJsonTag, &coinbaseWallet.AvailableOnConsumer)
 	data.UnmarshalBool(primaryJsonTag, &coinbaseWallet.Primary)
 	data.UnmarshalBool(readyJsonTag, &coinbaseWallet.Ready)
-	data.UnmarshalFloat(balanceJsonTag, &coinbaseWallet.Balance)
-	data.UnmarshalFloat(holdBalanceJsonTag, &coinbaseWallet.HoldBalance)
+	data.UnmarshalFloatFromString(balanceJsonTag, &coinbaseWallet.Balance)
+	data.UnmarshalFloatFromString(holdBalanceJsonTag, &coinbaseWallet.HoldBalance)
 	data.UnmarshalString(currencyJsonTag, &coinbaseWallet.Currency)
 	data.UnmarshalString(destinationTagNameJsonTag, &coinbaseWallet.DestinationTagName)
 	data.UnmarshalString(destinationTagRegexJsonTag, &coinbaseWallet.DestinationTagRegex)

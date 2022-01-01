@@ -4,7 +4,8 @@ import "github.com/cryptometrics/cql/serial"
 
 // * This is a generated file, do not edit
 
-// CoinbaseWithdrawal is data concerning withdrawing funds from the specified// profile_id to a www.coinbase.com wallet.
+// CoinbaseWithdrawal is data concerning withdrawing funds from the specified
+// profile_id to a www.coinbase.com wallet.
 type CoinbaseWithdrawal struct {
 	Amount   float64 `json:"amount"`
 	Currency string  `json:"currency"`
@@ -28,9 +29,9 @@ func (coinbaseWithdrawal *CoinbaseWithdrawal) UnmarshalJSON(d []byte) error {
 	if err != nil {
 		return err
 	}
-	data.UnmarshalFloat(amountJsonTag, &coinbaseWithdrawal.Amount)
-	data.UnmarshalFloat(feeJsonTag, &coinbaseWithdrawal.Fee)
-	data.UnmarshalFloat(subtotalJsonTag, &coinbaseWithdrawal.Subtotal)
+	data.UnmarshalFloatFromString(amountJsonTag, &coinbaseWithdrawal.Amount)
+	data.UnmarshalFloatFromString(feeJsonTag, &coinbaseWithdrawal.Fee)
+	data.UnmarshalFloatFromString(subtotalJsonTag, &coinbaseWithdrawal.Subtotal)
 	data.UnmarshalString(currencyJsonTag, &coinbaseWithdrawal.Currency)
 	data.UnmarshalString(idJsonTag, &coinbaseWithdrawal.Id)
 	data.UnmarshalString(payoutAtJsonTag, &coinbaseWithdrawal.PayoutAt)

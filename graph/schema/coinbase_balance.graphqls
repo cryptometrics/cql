@@ -1,7 +1,7 @@
 # * This is a generated file, do not edit
 
 """
-CoinbaseBalance is the balance for picker data
+ CoinbaseBalance is the balance for picker data
 """
 type CoinbaseBalance {
   amount: Float

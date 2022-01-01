@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 require 'string_inflection'
 using StringInflection
 
+# Field holds state concerning endpoints given by the mete/schema json files
 class Field
   attr_reader \
     :datetime_layout,
@@ -10,7 +13,8 @@ class Field
     :go_field_name,
     :go_field_tag,
     :description,
-    :hash
+    :hash,
+    :required
 
   GO_TYPES = %w(
     string
@@ -32,12 +36,12 @@ class Field
     @go_field_name = hash[:identifier].to_pascal
     @go_field_tag = "#{hash[:identifier]}_json_tag".to_camel
     @description = hash[:description] || ''
+    @required = hash[:required]
   end
 
-  # go_struct will verify if the hash is typed as a go struct.
   def go_struct?
     return false if GO_TYPES.include?(hash[:goType])
-    return false if hash[:goType].include?('scalar')
+    return false if go_type.include?('scalar')
 
     true
   end

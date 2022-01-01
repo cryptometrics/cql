@@ -1,7 +1,7 @@
 # * This is a generated file, do not edit
 
 """
-CoinbaseRecurringOptions ??
+ CoinbaseRecurringOptions ??
 """
 type CoinbaseRecurringOptions {
   period: String

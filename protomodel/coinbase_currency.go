@@ -4,7 +4,8 @@ import "github.com/cryptometrics/cql/serial"
 
 // * This is a generated file, do not edit
 
-// CoinbaseCurrency is a currency that coinbase knows about. Not al currencies// may be currently in use for trading.
+// CoinbaseCurrency is a currency that coinbase knows about. Not al currencies
+// may be currently in use for trading.
 type CoinbaseCurrency struct {
 	ConvertibleTo []string                `json:"convertible_to"`
 	Id            string                  `json:"id"`
@@ -36,8 +37,8 @@ func (coinbaseCurrency *CoinbaseCurrency) UnmarshalJSON(d []byte) error {
 	if err := data.UnmarshalStruct(detailsJsonTag, &coinbaseCurrency.ProtoDetails); err != nil {
 		return err
 	}
-	data.UnmarshalFloat(maxPrecisionJsonTag, &coinbaseCurrency.MaxPrecision)
-	data.UnmarshalFloat(minSizeJsonTag, &coinbaseCurrency.MinSize)
+	data.UnmarshalFloatFromString(maxPrecisionJsonTag, &coinbaseCurrency.MaxPrecision)
+	data.UnmarshalFloatFromString(minSizeJsonTag, &coinbaseCurrency.MinSize)
 	data.UnmarshalString(idJsonTag, &coinbaseCurrency.Id)
 	data.UnmarshalString(messageJsonTag, &coinbaseCurrency.Message)
 	data.UnmarshalString(nameJsonTag, &coinbaseCurrency.Name)

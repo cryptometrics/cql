@@ -1,7 +1,8 @@
 # * This is a generated file, do not edit
 
 """
-CoinbaseCurrencyDetails are the details for a currency that coinbase knows about
+ CoinbaseCurrencyDetails are the details for a currency that coinbase knows
+ about
 """
 type CoinbaseCurrencyDetails {
   type: String

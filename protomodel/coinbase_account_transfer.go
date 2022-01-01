@@ -8,7 +8,8 @@ import (
 
 // * This is a generated file, do not edit
 
-// CoinbaseAccountTransfer will lists past withdrawals and deposits for an// account.
+// CoinbaseAccountTransfer will lists past withdrawals and deposits for an
+// account.
 type CoinbaseAccountTransfer struct {
 	Amount       float64                        `json:"amount"`
 	CanceledAt   time.Time                      `json:"canceled_at"`
@@ -42,7 +43,7 @@ func (coinbaseAccountTransfer *CoinbaseAccountTransfer) UnmarshalJSON(d []byte) 
 	if err := data.UnmarshalStruct(detailsJsonTag, &coinbaseAccountTransfer.ProtoDetails); err != nil {
 		return err
 	}
-	data.UnmarshalFloat(amountJsonTag, &coinbaseAccountTransfer.Amount)
+	data.UnmarshalFloatFromString(amountJsonTag, &coinbaseAccountTransfer.Amount)
 	data.UnmarshalString(idJsonTag, &coinbaseAccountTransfer.Id)
 	data.UnmarshalString(typeJsonTag, &coinbaseAccountTransfer.Type)
 	data.UnmarshalString(userNonceJsonTag, &coinbaseAccountTransfer.UserNonce)

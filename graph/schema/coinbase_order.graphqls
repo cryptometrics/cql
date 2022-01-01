@@ -1,7 +1,7 @@
 # * This is a generated file, do not edit
 
 """
-CoinbaseOrder is an open order.
+ CoinbaseOrder is an open order.
 """
 type CoinbaseOrder {
   id: String

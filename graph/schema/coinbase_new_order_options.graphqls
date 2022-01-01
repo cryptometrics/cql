@@ -1,7 +1,6 @@
 # * This is a generated file, do not edit
 
-input CoinbaseNewOrderOptions {
-  profileId: String
+input CoinbaseNewOrderOptions {  profileId: String
   type: OrderType
   side: OrderSide!
   stp: OrderSTP
@@ -14,5 +13,4 @@ input CoinbaseNewOrderOptions {
   timeInForce: TimeInForce
   cancelAfter: CancelAfter
   postOnly: Boolean
-  clientOid: String
-}
+  clientOid: String}

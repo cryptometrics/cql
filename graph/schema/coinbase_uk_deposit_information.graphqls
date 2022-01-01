@@ -1,7 +1,7 @@
 # * This is a generated file, do not edit
 
 """
-CoinbaseUkDepositInformation information regarding a wallet's deposits.
+ CoinbaseUkDepositInformation information regarding a wallet's deposits.
 """
 type CoinbaseUkDepositInformation {
   accountNumber: String

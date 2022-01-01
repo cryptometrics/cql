@@ -11,7 +11,8 @@ type CoinbaseAccountTransferDetails struct {
 	CoinbaseTransactionId   string `json:"coinbase_transaction_id"`
 }
 
-// UnmarshalJSON will deserialize bytes into a CoinbaseAccountTransferDetails// model
+// UnmarshalJSON will deserialize bytes into a CoinbaseAccountTransferDetails
+// model
 func (coinbaseAccountTransferDetails *CoinbaseAccountTransferDetails) UnmarshalJSON(d []byte) error {
 	const (
 		coinbaseAccountIdJsonTag       = "coinbase_account_id"

@@ -2,7 +2,7 @@ package model
 
 import "github.com/cryptometrics/cql/protomodel"
 
-// * This file was initialized by schema/generate.py, but is open to extension
+// * This file was initialized by the meta-program, but is open to modification
 
 // CoinbaseAccount holds data for trading account from the profile of the API
 // key

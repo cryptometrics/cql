@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 require 'string_inflection'
 using StringInflection
 
 require_relative 'path_part'
 require_relative 'query_param'
 
+# Endpoint holds state concerning endpoints given by the mete/schema json files
 class Endpoint
   attr_reader \
     :hash,
@@ -31,6 +34,14 @@ class Endpoint
 
     set_path_parts
     set_query_params
+  end
+
+  def part_paths?
+    !@path_parts.empty?
+  end
+
+  def query_params?
+    !@query_params.empty?
   end
 
   private

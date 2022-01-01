@@ -4,7 +4,9 @@ import "github.com/cryptometrics/cql/serial"
 
 // * This is a generated file, do not edit
 
-// CoinbaseCurrencyConversion is the response that converts funds from from// currency to to currency. Funds are converted on the from account in the// profile_id profile.
+// CoinbaseCurrencyConversion is the response that converts funds from from
+// currency to to currency. Funds are converted on the from account in the
+// profile_id profile.
 type CoinbaseCurrencyConversion struct {
 	Amount        float64 `json:"amount"`
 	From          string  `json:"from"`
@@ -28,7 +30,7 @@ func (coinbaseCurrencyConversion *CoinbaseCurrencyConversion) UnmarshalJSON(d []
 	if err != nil {
 		return err
 	}
-	data.UnmarshalFloat(amountJsonTag, &coinbaseCurrencyConversion.Amount)
+	data.UnmarshalFloatFromString(amountJsonTag, &coinbaseCurrencyConversion.Amount)
 	data.UnmarshalString(fromAccountIdJsonTag, &coinbaseCurrencyConversion.FromAccountId)
 	data.UnmarshalString(fromJsonTag, &coinbaseCurrencyConversion.From)
 	data.UnmarshalString(idJsonTag, &coinbaseCurrencyConversion.Id)

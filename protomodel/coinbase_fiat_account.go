@@ -4,7 +4,8 @@ import "github.com/cryptometrics/cql/serial"
 
 // * This is a generated file, do not edit
 
-// CoinbaseLimits references a FIAT account thata CoinbasePaymentMethod belongs// to
+// CoinbaseLimits references a FIAT account thata CoinbasePaymentMethod belongs
+// to
 type CoinbaseFiatAccount struct {
 	Id           string `json:"id"`
 	Resource     string `json:"resource"`

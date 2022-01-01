@@ -1,7 +1,7 @@
 # * This is a generated file, do not edit
 
 """
-CoinbaseWireDepositInformation information regarding a wallet's deposits
+ CoinbaseWireDepositInformation information regarding a wallet's deposits
 """
 type CoinbaseWireDepositInformation {
   accountNumber: String

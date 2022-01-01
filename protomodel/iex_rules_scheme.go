@@ -4,7 +4,8 @@ import "github.com/cryptometrics/cql/serial"
 
 // * This is a generated file, do not edit
 
-// IEXRulesScheme is one of the latest schemes for data points, notification// types, and operators used to construct rules.
+// IEXRulesScheme is one of the latest schemes for data points, notification
+// types, and operators used to construct rules.
 type IexRulesScheme struct {
 	IsLookup  bool    `json:"isLookup"`
 	Label     string  `json:"label"`

@@ -4,7 +4,8 @@ import "github.com/cryptometrics/cql/serial"
 
 // * This is a generated file, do not edit
 
-// CoinbaseDeposit is the response for deposited funds from a www.coinbase.com// wallet to the specified profile_id.
+// CoinbaseDeposit is the response for deposited funds from a www.coinbase.com
+// wallet to the specified profile_id.
 type CoinbaseDeposit struct {
 	Amount   float64 `json:"amount"`
 	Currency string  `json:"currency"`
@@ -28,9 +29,9 @@ func (coinbaseDeposit *CoinbaseDeposit) UnmarshalJSON(d []byte) error {
 	if err != nil {
 		return err
 	}
-	data.UnmarshalFloat(amountJsonTag, &coinbaseDeposit.Amount)
-	data.UnmarshalFloat(feeJsonTag, &coinbaseDeposit.Fee)
-	data.UnmarshalFloat(subtotalJsonTag, &coinbaseDeposit.Subtotal)
+	data.UnmarshalFloatFromString(amountJsonTag, &coinbaseDeposit.Amount)
+	data.UnmarshalFloatFromString(feeJsonTag, &coinbaseDeposit.Fee)
+	data.UnmarshalFloatFromString(subtotalJsonTag, &coinbaseDeposit.Subtotal)
 	data.UnmarshalString(currencyJsonTag, &coinbaseDeposit.Currency)
 	data.UnmarshalString(idJsonTag, &coinbaseDeposit.Id)
 	data.UnmarshalString(payoutAtJsonTag, &coinbaseDeposit.PayoutAt)

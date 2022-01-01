@@ -8,7 +8,9 @@ import (
 
 // * This is a generated file, do not edit
 
-// CoinbaseWebsocketTicker is real-time price updates every time a match// happens. It batches updates in case of cascading matches, greatly reducing// bandwidth requirements.
+// CoinbaseWebsocketTicker is real-time price updates every time a match
+// happens. It batches updates in case of cascading matches, greatly reducing
+// bandwidth requirements.
 type CoinbaseWebsocketTicker struct {
 	BestAsk   float64   `json:"best_ask"`
 	BestBid   float64   `json:"best_bid"`
@@ -40,10 +42,10 @@ func (coinbaseWebsocketTicker *CoinbaseWebsocketTicker) UnmarshalJSON(d []byte) 
 	if err != nil {
 		return err
 	}
-	data.UnmarshalFloat(bestAskJsonTag, &coinbaseWebsocketTicker.BestAsk)
-	data.UnmarshalFloat(bestBidJsonTag, &coinbaseWebsocketTicker.BestBid)
-	data.UnmarshalFloat(lastSizeJsonTag, &coinbaseWebsocketTicker.LastSize)
-	data.UnmarshalFloat(priceJsonTag, &coinbaseWebsocketTicker.Price)
+	data.UnmarshalFloatFromString(bestAskJsonTag, &coinbaseWebsocketTicker.BestAsk)
+	data.UnmarshalFloatFromString(bestBidJsonTag, &coinbaseWebsocketTicker.BestBid)
+	data.UnmarshalFloatFromString(lastSizeJsonTag, &coinbaseWebsocketTicker.LastSize)
+	data.UnmarshalFloatFromString(priceJsonTag, &coinbaseWebsocketTicker.Price)
 	data.UnmarshalInt(sequenceJsonTag, &coinbaseWebsocketTicker.Sequence)
 	data.UnmarshalInt(tradeIdJsonTag, &coinbaseWebsocketTicker.TradeId)
 	data.UnmarshalString(productIdJsonTag, &coinbaseWebsocketTicker.ProductId)

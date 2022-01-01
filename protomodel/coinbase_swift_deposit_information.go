@@ -4,7 +4,12 @@ import "github.com/cryptometrics/cql/serial"
 
 // * This is a generated file, do not edit
 
-// CoinbaseSwiftDepositInformation information regarding a wallet's deposits.// SWIFT stands for Society for Worldwide Interbank Financial// Telecommunications. Basically, it's a computer network that connects over 900// banks around the world – and enables them to transfer money. ING is part of// this network. There is no fee for accepting deposits into your account with// ING.
+// CoinbaseSwiftDepositInformation information regarding a wallet's deposits.
+// SWIFT stands for Society for Worldwide Interbank Financial
+// Telecommunications. Basically, it's a computer network that connects over 900
+// banks around the world – and enables them to transfer money. ING is part of
+// this network. There is no fee for accepting deposits into your account with
+// ING.
 type CoinbaseSwiftDepositInformation struct {
 	AccountAddress   string              `json:"account_address"`
 	AccountName      string              `json:"account_name"`
@@ -15,7 +20,8 @@ type CoinbaseSwiftDepositInformation struct {
 	Reference        string              `json:"reference"`
 }
 
-// UnmarshalJSON will deserialize bytes into a CoinbaseSwiftDepositInformation// model
+// UnmarshalJSON will deserialize bytes into a CoinbaseSwiftDepositInformation
+// model
 func (coinbaseSwiftDepositInformation *CoinbaseSwiftDepositInformation) UnmarshalJSON(d []byte) error {
 	const (
 		accountNumberJsonTag  = "account_number"

@@ -3120,9 +3120,7 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 var sources = []*ast.Source{
 	{Name: "graph/schema/coinbase_account.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseAccount holds data for trading account from the profile of the API key
-"""
+# CoinbaseAccount holds data for trading account from the profile of the API key
 type CoinbaseAccount {
   id: String
   currency: String
@@ -3131,8 +3129,7 @@ type CoinbaseAccount {
   hold: Float
   profileId: String
   tradingEnabled: Boolean
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_account_deposit_options.graphqls", Input: `# * This is a generated file, do not edit
 
 input CoinbaseAccountDepositOptions {
@@ -3144,21 +3141,18 @@ input CoinbaseAccountDepositOptions {
 `, BuiltIn: false},
 	{Name: "graph/schema/coinbase_account_hold.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseHold represents the hold on an account that belong to the same profile
-as the API key. Holds are placed on an account for any active orders or pending
-withdraw requests. As an order is filled, the hold amount is updated. If an
-order is canceled, any remaining hold is removed. For withdrawals, the hold is
-removed after it is completed.
-"""
+# CoinbaseHold represents the hold on an account that belong to the same profile
+# as the API key. Holds are placed on an account for any active orders or
+# pending withdraw requests. As an order is filled, the hold amount is updated.
+# If an order is canceled, any remaining hold is removed. For withdrawals, the
+# hold is removed after it is completed.
 type CoinbaseAccountHold {
   id: String
   createdAt: Time
   updatedAt: Time
   type: String
   ref: String
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_account_holds_options.graphqls", Input: `# * This is a generated file, do not edit
 
 input CoinbaseAccountHoldsOptions {
@@ -3169,10 +3163,9 @@ input CoinbaseAccountHoldsOptions {
 `, BuiltIn: false},
 	{Name: "graph/schema/coinbase_account_ledger.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseAccountLedger lists ledger activity for an account. This includes
-anything that would affect the accounts balance - transfers, trades, fees, etc.
-"""
+# CoinbaseAccountLedger lists ledger activity for an account. This includes
+# anything that would affect the accounts balance - transfers, trades, fees,
+# etc.
 type CoinbaseAccountLedger {
   id: String
   amount: Float
@@ -3180,19 +3173,15 @@ type CoinbaseAccountLedger {
   balance: Float
   type: EntryType
   details: CoinbaseAccountLedgerDetails
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_account_ledger_details.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseAccountLedgerDetails are the details for account history.
-"""
+# CoinbaseAccountLedgerDetails are the details for account history.
 type CoinbaseAccountLedgerDetails {
   orderId: String
   tradeId: String
   productId: String
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_account_ledger_options.graphqls", Input: `# * This is a generated file, do not edit
 
 input CoinbaseAccountLedgerOptions {
@@ -3206,9 +3195,8 @@ input CoinbaseAccountLedgerOptions {
 `, BuiltIn: false},
 	{Name: "graph/schema/coinbase_account_transfer.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseAccountTransfer will lists past withdrawals and deposits for an account.
-"""
+# CoinbaseAccountTransfer will lists past withdrawals and deposits for an
+# account.
 type CoinbaseAccountTransfer {
   id: String
   type: String
@@ -3219,19 +3207,15 @@ type CoinbaseAccountTransfer {
   amount: Float
   userNonce: String
   details: CoinbaseAccountTransferDetails
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_account_transfer_details.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseAccountTransferDetails are the details for an account transfer.
-"""
+# CoinbaseAccountTransferDetails are the details for an account transfer.
 type CoinbaseAccountTransferDetails {
   coinbaseAccountId: String
   coinbaseTransactionId: String
   coinbasePaymentMethodId: String
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_account_transfer_options.graphqls", Input: `# * This is a generated file, do not edit
 
 input CoinbaseAccountTransferOptions {
@@ -3261,36 +3245,27 @@ input CoinbaseAccountWithdrawalOptions {
 `, BuiltIn: false},
 	{Name: "graph/schema/coinbase_available_balance.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseAvailableBalance is the available balance on the coinbase account
-"""
+# CoinbaseAvailableBalance is the available balance on the coinbase account
 type CoinbaseAvailableBalance {
   amount: Float
   currency: String
   scale: String
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_balance.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseBalance is the balance for picker data
-"""
+# CoinbaseBalance is the balance for picker data
 type CoinbaseBalance {
   amount: Float
   currency: String
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_bank_country.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseBankCountry are the name and code for the bank's country associated with
-a wallet
-"""
+# CoinbaseBankCountry are the name and code for the bank's country associated
+# with a wallet
 type CoinbaseBankCountry {
   name: String
   code: String
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_coinbase_account_deposit_options.graphqls", Input: `# * This is a generated file, do not edit
 
 input CoinbaseCoinbaseAccountDepositOptions {
@@ -3318,22 +3293,17 @@ input CoinbaseConversionsOptions {
 `, BuiltIn: false},
 	{Name: "graph/schema/coinbase_crypto_account.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseCryptoAccount references a crypto account that a CoinbasePaymentMethod
-belongs to
-"""
+# CoinbaseCryptoAccount references a crypto account that a CoinbasePaymentMethod
+# belongs to
 type CoinbaseCryptoAccount {
   id: String
   resource: String
   resourcePath: String
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_crypto_address.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseCryptoAddress is used for a one-time crypto address for depositing
-crypto.
-"""
+# CoinbaseCryptoAddress is used for a one-time crypto address for depositing
+# crypto.
 type CoinbaseCryptoAddress {
   id: String
   address: String
@@ -3350,29 +3320,22 @@ type CoinbaseCryptoAddress {
   destinationTag: String
   depositUri: String
   callbackUrl: String
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_crypto_address_info.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseCryptoAddressInfo holds info for a crypto address
-"""
+# CoinbaseCryptoAddressInfo holds info for a crypto address
 type CoinbaseCryptoAddressInfo {
   address: String
   destinationTag: String
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_crypto_address_warning.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseCryptoAddressWarning is a warning for generating a crypting address
-"""
+# CoinbaseCryptoAddressWarning is a warning for generating a crypting address
 type CoinbaseCryptoAddressWarning {
   title: String
   details: String
   imageUrl: String
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_crypto_withdrawal_options.graphqls", Input: `# * This is a generated file, do not edit
 
 input CoinbaseCryptoWithdrawalOptions {
@@ -3389,10 +3352,8 @@ input CoinbaseCryptoWithdrawalOptions {
 `, BuiltIn: false},
 	{Name: "graph/schema/coinbase_currency.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseCurrency is a currency that coinbase knows about.  Not al currencies may
-be currently in use for trading.
-"""
+# CoinbaseCurrency is a currency that coinbase knows about. Not al currencies
+# may be currently in use for trading.
 type CoinbaseCurrency {
   id: String
   name: String
@@ -3402,15 +3363,12 @@ type CoinbaseCurrency {
   maxPrecision: Float
   convertibleTo: [String]
   details: CoinbaseCurrencyDetails
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_currency_conversion.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseCurrencyConversion is the response that converts funds from from
-currency to to currency. Funds are converted on the from account in the
-profile_id profile.
-"""
+# CoinbaseCurrencyConversion is the response that converts funds from from
+# currency to to currency. Funds are converted on the from account in the
+# profile_id profile.
 type CoinbaseCurrencyConversion {
   id: String
   amount: Float
@@ -3418,13 +3376,11 @@ type CoinbaseCurrencyConversion {
   toAccountId: String
   from: String
   to: String
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_currency_details.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseCurrencyDetails are the details for a currency that coinbase knows about
-"""
+# CoinbaseCurrencyDetails are the details for a currency that coinbase knows
+# about
 type CoinbaseCurrencyDetails {
   type: String
   symbol: String
@@ -3438,14 +3394,11 @@ type CoinbaseCurrencyDetails {
   processingTimeSeconds: Float
   minWithdrawalAmount: Float
   maxWithdrawalAmount: Float
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_deposit.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseDeposit is the response for deposited funds from a www.coinbase.com
-wallet to the specified profile_id.
-"""
+# CoinbaseDeposit is the response for deposited funds from a www.coinbase.com
+# wallet to the specified profile_id.
 type CoinbaseDeposit {
   id: String
   amount: Float
@@ -3453,35 +3406,27 @@ type CoinbaseDeposit {
   payoutAt: String
   fee: Float
   subtotal: Float
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_fees.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseFees are fees rates and 30 days trailing volume.
-"""
+# CoinbaseFees are fees rates and 30 days trailing volume.
 type CoinbaseFees {
   takerFeeRate: Float
   makerFeeRate: Float
   usdVolume: Float
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_fiat_account.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseLimits references a FIAT account thata CoinbasePaymentMethod belongs to
-"""
+# CoinbaseLimits references a FIAT account thata CoinbasePaymentMethod belongs
+# to
 type CoinbaseFiatAccount {
   id: String
   resource: String
   resourcePath: String
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_fill.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbasePaymentMethod is a partial or complete match on a specific order.
-"""
+# CoinbasePaymentMethod is a partial or complete match on a specific order.
 type CoinbaseFill {
   tradeId: Int
   productId: String
@@ -3495,8 +3440,7 @@ type CoinbaseFill {
   side: String
   settled: Boolean
   usdVolume: Float
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_fills_options.graphqls", Input: `# * This is a generated file, do not edit
 
 input CoinbaseFillsOptions {
@@ -3510,19 +3454,14 @@ input CoinbaseFillsOptions {
 `, BuiltIn: false},
 	{Name: "graph/schema/coinbase_limits.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseLimits defines limits for a payment method
-"""
+# CoinbaseLimits defines limits for a payment method
 type CoinbaseLimits {
   type: String
   name: String
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_new_order.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseNewOrder is the server's response for placing a new order.
-"""
+# CoinbaseNewOrder is the server's response for placing a new order.
 type CoinbaseNewOrder {
   id: String
   price: Float
@@ -3547,8 +3486,7 @@ type CoinbaseNewOrder {
   stop: OrderStop
   stopPrice: Float
   fundingAmount: Float
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_new_order_options.graphqls", Input: `# * This is a generated file, do not edit
 
 input CoinbaseNewOrderOptions {
@@ -3570,9 +3508,7 @@ input CoinbaseNewOrderOptions {
 `, BuiltIn: false},
 	{Name: "graph/schema/coinbase_order.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseOrder is an open order.
-"""
+# CoinbaseOrder is an open order.
 type CoinbaseOrder {
   id: String
   price: Float
@@ -3597,8 +3533,7 @@ type CoinbaseOrder {
   stop: String
   stopPrice: Float
   fundingAmount: Float
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_orders_options.graphqls", Input: `# * This is a generated file, do not edit
 
 input CoinbaseOrdersOptions {
@@ -3616,9 +3551,7 @@ input CoinbaseOrdersOptions {
 `, BuiltIn: false},
 	{Name: "graph/schema/coinbase_payment_method.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbasePaymentMethod is a payment method used on coinbase
-"""
+# CoinbasePaymentMethod is a payment method used on coinbase
 type CoinbasePaymentMethod {
   id: String
   type: String
@@ -3647,8 +3580,7 @@ type CoinbasePaymentMethod {
   recurringOptions: [CoinbaseRecurringOptions]
   availableBalance: CoinbaseAvailableBalance
   pickerData: CoinbasePickerData
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_payment_method_deposit_options.graphqls", Input: `# * This is a generated file, do not edit
 
 input CoinbasePaymentMethodDepositOptions {
@@ -3669,9 +3601,7 @@ input CoinbasePaymentMethodWithdrawalOptions {
 `, BuiltIn: false},
 	{Name: "graph/schema/coinbase_picker_data.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbasePickerData ??
-"""
+# CoinbasePickerData ??
 type CoinbasePickerData {
   symbol: String
   customerName: String
@@ -3690,28 +3620,22 @@ type CoinbasePickerData {
   branchName: String
   iconUrl: String
   balance: CoinbaseBalance
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_recurring_options.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseRecurringOptions ??
-"""
+# CoinbaseRecurringOptions ??
 type CoinbaseRecurringOptions {
   period: String
   label: String
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_sepa_deposit_information.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseSepaDepositInformation information regarding a wallet's deposits.  A
-SEPA credit transfer is a single transfer of Euros from one person or
-organisation to another. For example, this could be to pay the deposit for a
-holiday rental or to settle an invoice. A SEPA direct debit is a recurring
-payment, for example to pay monthly rent or for a service like a mobile phone
-contract.
-"""
+# CoinbaseSepaDepositInformation information regarding a wallet's deposits. A
+# SEPA credit transfer is a single transfer of Euros from one person or
+# organisation to another. For example, this could be to pay the deposit for a
+# holiday rental or to settle an invoice. A SEPA direct debit is a recurring
+# payment, for example to pay monthly rent or for a service like a mobile phone
+# contract.
 type CoinbaseSepaDepositInformation {
   iban: String
   swift: String
@@ -3721,13 +3645,10 @@ type CoinbaseSepaDepositInformation {
   accountName: String
   accountAddress: String
   reference: String
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_single_product.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseSingleProduct is information on a single product
-"""
+# CoinbaseSingleProduct is information on a single product
 type CoinbaseSingleProduct {
   id: String
   baseCurrency: String
@@ -3749,17 +3670,14 @@ type CoinbaseSingleProduct {
   fxStablecoin: Boolean
   maxSlippagePercentage: Float
   auctionMode: Boolean
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_swift_deposit_information.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseSwiftDepositInformation information regarding a wallet's deposits. 
-SWIFT stands for Society for Worldwide Interbank Financial Telecommunications.
-Basically, it's a computer network that connects over 900 banks around the world
-– and enables them to transfer money. ING is part of this network. There is no
-fee for accepting deposits into your account with ING.
-"""
+# CoinbaseSwiftDepositInformation information regarding a wallet's deposits.
+# SWIFT stands for Society for Worldwide Interbank Financial Telecommunications.
+# Basically, it's a computer network that connects over 900 banks around the
+# world – and enables them to transfer money. ING is part of this network. There
+# is no fee for accepting deposits into your account with ING.
 type CoinbaseSwiftDepositInformation {
   accountNumber: String
   bankName: String
@@ -3768,13 +3686,10 @@ type CoinbaseSwiftDepositInformation {
   accountName: String
   accountAddress: String
   reference: String
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_uk_deposit_information.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseUkDepositInformation information regarding a wallet's deposits.
-"""
+# CoinbaseUkDepositInformation information regarding a wallet's deposits.
 type CoinbaseUkDepositInformation {
   accountNumber: String
   bankName: String
@@ -3783,14 +3698,11 @@ type CoinbaseUkDepositInformation {
   accountName: String
   accountAddress: String
   reference: String
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_wallet.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseWallet represents a user's available Coinbase wallet (These are the
-wallets/accounts that are used for buying and selling on www.coinbase.com)
-"""
+# CoinbaseWallet represents a user's available Coinbase wallet (These are the
+# wallets/accounts that are used for buying and selling on www.coinbase.com)
 type CoinbaseWallet {
   id: String
   name: String
@@ -3809,15 +3721,12 @@ type CoinbaseWallet {
   destinationTagRegex: String
   holdBalance: Float
   holdCurrency: String
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_websocket_ticker.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseWebsocketTicker is real-time price updates every time a match happens. 
-It batches updates in case of cascading matches, greatly reducing bandwidth
-requirements.
-"""
+# CoinbaseWebsocketTicker is real-time price updates every time a match happens.
+# It batches updates in case of cascading matches, greatly reducing bandwidth
+# requirements.
 type CoinbaseWebsocketTicker {
   type: String
   productId: String
@@ -3829,13 +3738,10 @@ type CoinbaseWebsocketTicker {
   lastSize: Float
   bestBid: Float
   bestAsk: Float
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_wire_deposit_information.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseWireDepositInformation information regarding a wallet's deposits
-"""
+# CoinbaseWireDepositInformation information regarding a wallet's deposits
 type CoinbaseWireDepositInformation {
   accountNumber: String
   routingNumber: String
@@ -3845,14 +3751,11 @@ type CoinbaseWireDepositInformation {
   accountName: String
   accountAddress: String
   reference: String
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_withdrawal.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseWithdrawal is data concerning withdrawing funds from the specified
-profile_id to a www.coinbase.com wallet.
-"""
+# CoinbaseWithdrawal is data concerning withdrawing funds from the specified
+# profile_id to a www.coinbase.com wallet.
 type CoinbaseWithdrawal {
   id: String
   amount: Float
@@ -3860,18 +3763,14 @@ type CoinbaseWithdrawal {
   payoutAt: String
   fee: Float
   subtotal: Float
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_withdrawal_fee_estimate.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-CoinbaseWithdrawalFeeEstimate is a fee estimate for the crypto withdrawal to
-crypto address
-"""
+# CoinbaseWithdrawalFeeEstimate is a fee estimate for the crypto withdrawal to
+# crypto address
 type CoinbaseWithdrawalFeeEstimate {
   fee: Float
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_withdrawal_fee_estimate_options.graphqls", Input: `# * This is a generated file, do not edit
 
 input CoinbaseWithdrawalFeeEstimateOptions {
@@ -3881,35 +3780,27 @@ input CoinbaseWithdrawalFeeEstimateOptions {
 `, BuiltIn: false},
 	{Name: "graph/schema/iex_rule.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-Rule to evaluate thousands of data points per second and build event-driven,
-automated alerts using Rules Engine. You can access Rules Engine through the IEX
-Console or through our API using the guidelines below.
-"""
+# Rule to evaluate thousands of data points per second and build event-driven,
+# automated alerts using Rules Engine. You can access Rules Engine through the
+# IEX Console or through our API using the guidelines below.
 type IexRule {
   value: String
   label: String
   type: String
   formula: String
   scope: String
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/iex_rules_schema.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-IexRulesSchema is the latest schema for data points, notification types, and
-operators used to construct rules.
-"""
+# IexRulesSchema is the latest schema for data points, notification types, and
+# operators used to construct rules.
 type IexRulesSchema {
   schema: [IexRulesScheme]
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/iex_rules_scheme.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-IEXRulesScheme is one of the latest schemes for data points, notification types,
-and operators used to construct rules.
-"""
+# IEXRulesScheme is one of the latest schemes for data points, notification
+# types, and operators used to construct rules.
 type IexRulesScheme {
   label: String
   value: String
@@ -3918,50 +3809,37 @@ type IexRulesScheme {
   isLookup: Boolean
   weight: Float
   weightKey: String
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/kraken_server_time.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-KrakenServerTime holds data concerning the server time
-"""
+# KrakenServerTime holds data concerning the server time
 type KrakenServerTime {
   result: KrakenServerTimeResult
   error: [String]
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/kraken_server_time_result.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-KrakenServerTimeResult holds data concerning the server time
-"""
+# KrakenServerTimeResult holds data concerning the server time
 type KrakenServerTimeResult {
   unixtime: Int
   rfc1123: Time
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/kraken_system_status.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-KrakenSystemStatus holds data concerning the current system status or trading
-mode.
-"""
+# KrakenSystemStatus holds data concerning the current system status or trading
+# mode.
 type KrakenSystemStatus {
   result: KrakenSystemStatusResult
   error: [String]
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/kraken_system_status_result.graphqls", Input: `# * This is a generated file, do not edit
 
-"""
-KrakenSystemStatusResult holds data concerning the current system status or
-trading mode.
-"""
+# KrakenSystemStatusResult holds data concerning the current system status or
+# trading mode.
 type KrakenSystemStatusResult {
   status: SystemStatus
   timestamp: Time
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "graph/schema/scalars.graphqls", Input: `scalar CancelAfter
 scalar EntryType
 scalar OrderCancelTime

@@ -11,7 +11,8 @@ type CoinbaseCryptoAddressWarning struct {
 	Title    string `json:"title"`
 }
 
-// UnmarshalJSON will deserialize bytes into a CoinbaseCryptoAddressWarning// model
+// UnmarshalJSON will deserialize bytes into a CoinbaseCryptoAddressWarning
+// model
 func (coinbaseCryptoAddressWarning *CoinbaseCryptoAddressWarning) UnmarshalJSON(d []byte) error {
 	const (
 		titleJsonTag    = "title"

@@ -4,7 +4,8 @@ import "github.com/cryptometrics/cql/serial"
 
 // * This is a generated file, do not edit
 
-// CoinbaseCurrencyDetails are the details for a currency that coinbase knows// about
+// CoinbaseCurrencyDetails are the details for a currency that coinbase knows
+// about
 type CoinbaseCurrencyDetails struct {
 	CryptoAddressLink     string   `json:"crypto_address_link"`
 	CryptoTransactionLink string   `json:"crypto_transaction_link"`

@@ -1,7 +1,7 @@
 #Deriving the latest base image
 FROM ruby:latest
 
-WORKDIR /usr/src/schema
+WORKDIR /usr/src/meta
 
 # copy the /go partition from the cql_go_generate container, this gives us
 # access to goimports

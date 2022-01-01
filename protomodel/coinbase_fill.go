@@ -41,10 +41,10 @@ func (coinbaseFill *CoinbaseFill) UnmarshalJSON(d []byte) error {
 		return err
 	}
 	data.UnmarshalBool(settledJsonTag, &coinbaseFill.Settled)
-	data.UnmarshalFloat(feeJsonTag, &coinbaseFill.Fee)
-	data.UnmarshalFloat(priceJsonTag, &coinbaseFill.Price)
-	data.UnmarshalFloat(sizeJsonTag, &coinbaseFill.Size)
-	data.UnmarshalFloat(usdVolumeJsonTag, &coinbaseFill.UsdVolume)
+	data.UnmarshalFloatFromString(feeJsonTag, &coinbaseFill.Fee)
+	data.UnmarshalFloatFromString(priceJsonTag, &coinbaseFill.Price)
+	data.UnmarshalFloatFromString(sizeJsonTag, &coinbaseFill.Size)
+	data.UnmarshalFloatFromString(usdVolumeJsonTag, &coinbaseFill.UsdVolume)
 	data.UnmarshalInt(tradeIdJsonTag, &coinbaseFill.TradeId)
 	data.UnmarshalString(liquidityJsonTag, &coinbaseFill.Liquidity)
 	data.UnmarshalString(orderIdJsonTag, &coinbaseFill.OrderId)

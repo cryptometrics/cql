@@ -16,7 +16,8 @@ type CoinbaseWireDepositInformation struct {
 	RoutingNumber    string              `json:"routing_number"`
 }
 
-// UnmarshalJSON will deserialize bytes into a CoinbaseWireDepositInformation// model
+// UnmarshalJSON will deserialize bytes into a CoinbaseWireDepositInformation
+// model
 func (coinbaseWireDepositInformation *CoinbaseWireDepositInformation) UnmarshalJSON(d []byte) error {
 	const (
 		accountNumberJsonTag  = "account_number"

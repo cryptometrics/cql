@@ -22,8 +22,8 @@ func (coinbaseFees *CoinbaseFees) UnmarshalJSON(d []byte) error {
 	if err != nil {
 		return err
 	}
-	data.UnmarshalFloat(makerFeeRateJsonTag, &coinbaseFees.MakerFeeRate)
-	data.UnmarshalFloat(takerFeeRateJsonTag, &coinbaseFees.TakerFeeRate)
-	data.UnmarshalFloat(usdVolumeJsonTag, &coinbaseFees.UsdVolume)
+	data.UnmarshalFloatFromString(makerFeeRateJsonTag, &coinbaseFees.MakerFeeRate)
+	data.UnmarshalFloatFromString(takerFeeRateJsonTag, &coinbaseFees.TakerFeeRate)
+	data.UnmarshalFloatFromString(usdVolumeJsonTag, &coinbaseFees.UsdVolume)
 	return nil
 }
