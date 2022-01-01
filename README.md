@@ -1,6 +1,6 @@
 # cql
 
-cql is a monorepo that provides a graphql server and SDKs for connecting to and interacting with various APIs and websockets.
+cql is a monorepo that provides a graphql server and varios SDKs for connecting to and interacting with various APIs and websockets.
 
 This repo is a work in progress
 
