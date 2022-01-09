@@ -25,12 +25,10 @@ type OpenseaAsset {
   decimals: String
   tokenMetadata: String
   owner: OpenseaOwner
-  sellOrders: String
   creator: OpenseaCreator
   lastSale: Float
   topBid: Float
   listingDate: Time
   isPresale: Boolean
-  transferFeePaymentToken: String
   transferFee: Float
 }

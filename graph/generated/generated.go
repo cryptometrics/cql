@@ -495,33 +495,31 @@ type ComplexityRoot struct {
 	}
 
 	OpenseaAsset struct {
-		AnimationOriginalUrl    func(childComplexity int) int
-		AnimationUrl            func(childComplexity int) int
-		AssetContract           func(childComplexity int) int
-		BackgroundColor         func(childComplexity int) int
-		Collection              func(childComplexity int) int
-		Creator                 func(childComplexity int) int
-		Decimals                func(childComplexity int) int
-		Description             func(childComplexity int) int
-		ExternalLink            func(childComplexity int) int
-		Id                      func(childComplexity int) int
-		ImageOriginalUrl        func(childComplexity int) int
-		ImagePreviewUrl         func(childComplexity int) int
-		ImageThumbnailUrl       func(childComplexity int) int
-		ImageUrl                func(childComplexity int) int
-		IsPresale               func(childComplexity int) int
-		LastSale                func(childComplexity int) int
-		ListingDate             func(childComplexity int) int
-		Name                    func(childComplexity int) int
-		NumSales                func(childComplexity int) int
-		Owner                   func(childComplexity int) int
-		Permalink               func(childComplexity int) int
-		SellOrders              func(childComplexity int) int
-		TokenId                 func(childComplexity int) int
-		TokenMetadata           func(childComplexity int) int
-		TopBid                  func(childComplexity int) int
-		TransferFee             func(childComplexity int) int
-		TransferFeePaymentToken func(childComplexity int) int
+		AnimationOriginalUrl func(childComplexity int) int
+		AnimationUrl         func(childComplexity int) int
+		AssetContract        func(childComplexity int) int
+		BackgroundColor      func(childComplexity int) int
+		Collection           func(childComplexity int) int
+		Creator              func(childComplexity int) int
+		Decimals             func(childComplexity int) int
+		Description          func(childComplexity int) int
+		ExternalLink         func(childComplexity int) int
+		Id                   func(childComplexity int) int
+		ImageOriginalUrl     func(childComplexity int) int
+		ImagePreviewUrl      func(childComplexity int) int
+		ImageThumbnailUrl    func(childComplexity int) int
+		ImageUrl             func(childComplexity int) int
+		IsPresale            func(childComplexity int) int
+		LastSale             func(childComplexity int) int
+		ListingDate          func(childComplexity int) int
+		Name                 func(childComplexity int) int
+		NumSales             func(childComplexity int) int
+		Owner                func(childComplexity int) int
+		Permalink            func(childComplexity int) int
+		TokenId              func(childComplexity int) int
+		TokenMetadata        func(childComplexity int) int
+		TopBid               func(childComplexity int) int
+		TransferFee          func(childComplexity int) int
 	}
 
 	OpenseaAssetContract struct {
@@ -3122,13 +3120,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.OpenseaAsset.Permalink(childComplexity), true
 
-	case "OpenseaAsset.sellOrders":
-		if e.complexity.OpenseaAsset.SellOrders == nil {
-			break
-		}
-
-		return e.complexity.OpenseaAsset.SellOrders(childComplexity), true
-
 	case "OpenseaAsset.tokenId":
 		if e.complexity.OpenseaAsset.TokenId == nil {
 			break
@@ -3156,13 +3147,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.OpenseaAsset.TransferFee(childComplexity), true
-
-	case "OpenseaAsset.transferFeePaymentToken":
-		if e.complexity.OpenseaAsset.TransferFeePaymentToken == nil {
-			break
-		}
-
-		return e.complexity.OpenseaAsset.TransferFeePaymentToken(childComplexity), true
 
 	case "OpenseaAssetContract.address":
 		if e.complexity.OpenseaAssetContract.Address == nil {
@@ -4665,13 +4649,11 @@ type OpenseaAsset {
   decimals: String
   tokenMetadata: String
   owner: OpenseaOwner
-  sellOrders: String
   creator: OpenseaCreator
   lastSale: Float
   topBid: Float
   listingDate: Time
   isPresale: Boolean
-  transferFeePaymentToken: String
   transferFee: Float
 }`, BuiltIn: false},
 	{Name: "graph/schema/opensea_asset_contract.graphqls", Input: `# * This is a generated file, do not edit
@@ -16229,38 +16211,6 @@ func (ec *executionContext) _OpenseaAsset_owner(ctx context.Context, field graph
 	return ec.marshalOOpenseaOwner2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐOpenseaOwner(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _OpenseaAsset_sellOrders(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "OpenseaAsset",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.SellOrders, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalOString2string(ctx, field.Selections, res)
-}
-
 func (ec *executionContext) _OpenseaAsset_creator(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -16419,38 +16369,6 @@ func (ec *executionContext) _OpenseaAsset_isPresale(ctx context.Context, field g
 	res := resTmp.(bool)
 	fc.Result = res
 	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _OpenseaAsset_transferFeePaymentToken(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "OpenseaAsset",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.TransferFeePaymentToken, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalOString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _OpenseaAsset_transferFee(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
@@ -23098,8 +23016,6 @@ func (ec *executionContext) _OpenseaAsset(ctx context.Context, sel ast.Selection
 			out.Values[i] = ec._OpenseaAsset_tokenMetadata(ctx, field, obj)
 		case "owner":
 			out.Values[i] = ec._OpenseaAsset_owner(ctx, field, obj)
-		case "sellOrders":
-			out.Values[i] = ec._OpenseaAsset_sellOrders(ctx, field, obj)
 		case "creator":
 			out.Values[i] = ec._OpenseaAsset_creator(ctx, field, obj)
 		case "lastSale":
@@ -23110,8 +23026,6 @@ func (ec *executionContext) _OpenseaAsset(ctx context.Context, sel ast.Selection
 			out.Values[i] = ec._OpenseaAsset_listingDate(ctx, field, obj)
 		case "isPresale":
 			out.Values[i] = ec._OpenseaAsset_isPresale(ctx, field, obj)
-		case "transferFeePaymentToken":
-			out.Values[i] = ec._OpenseaAsset_transferFeePaymentToken(ctx, field, obj)
 		case "transferFee":
 			out.Values[i] = ec._OpenseaAsset_transferFee(ctx, field, obj)
 		default:

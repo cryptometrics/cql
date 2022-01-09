@@ -81,10 +81,6 @@
 			"goType": "OpenseaOwner"
 		},
 		{
-			"identifier": "sell_orders",
-			"goType": "string"
-		},
-		{
 			"identifier": "creator",
 			"goType": "OpenseaCreator"
 		},
@@ -103,10 +99,6 @@
 		{
 			"identifier": "is_presale",
 			"goType": "bool"
-		},
-		{
-			"identifier": "transfer_fee_payment_token",
-			"goType": "string"
 		},
 		{
 			"identifier": "transfer_fee",
