@@ -494,6 +494,120 @@ type ComplexityRoot struct {
 		CoinbasePaymentMethodWithdrawal func(childComplexity int, opts *model.CoinbasePaymentMethodWithdrawalOptions) int
 	}
 
+	OpenseaAsset struct {
+		AnimationOriginalUrl    func(childComplexity int) int
+		AnimationUrl            func(childComplexity int) int
+		AssetContract           func(childComplexity int) int
+		BackgroundColor         func(childComplexity int) int
+		Collection              func(childComplexity int) int
+		Creator                 func(childComplexity int) int
+		Decimals                func(childComplexity int) int
+		Description             func(childComplexity int) int
+		ExternalLink            func(childComplexity int) int
+		Id                      func(childComplexity int) int
+		ImageOriginalUrl        func(childComplexity int) int
+		ImagePreviewUrl         func(childComplexity int) int
+		ImageThumbnailUrl       func(childComplexity int) int
+		ImageUrl                func(childComplexity int) int
+		IsPresale               func(childComplexity int) int
+		LastSale                func(childComplexity int) int
+		ListingDate             func(childComplexity int) int
+		Name                    func(childComplexity int) int
+		NumSales                func(childComplexity int) int
+		Owner                   func(childComplexity int) int
+		Permalink               func(childComplexity int) int
+		SellOrders              func(childComplexity int) int
+		TokenId                 func(childComplexity int) int
+		TokenMetadata           func(childComplexity int) int
+		TopBid                  func(childComplexity int) int
+		TransferFee             func(childComplexity int) int
+		TransferFeePaymentToken func(childComplexity int) int
+	}
+
+	OpenseaAssetContract struct {
+		Address                     func(childComplexity int) int
+		AssetContractType           func(childComplexity int) int
+		BuyerFeeBasisPoints         func(childComplexity int) int
+		CreatedDate                 func(childComplexity int) int
+		DefaultToFiat               func(childComplexity int) int
+		Description                 func(childComplexity int) int
+		DevBuyFeeBasisPoints        func(childComplexity int) int
+		DevSellerFeeBasisPoints     func(childComplexity int) int
+		ExternalLink                func(childComplexity int) int
+		ImageUrl                    func(childComplexity int) int
+		Name                        func(childComplexity int) int
+		NftVersion                  func(childComplexity int) int
+		OnlyProxiedTransfers        func(childComplexity int) int
+		OpenseaBuyerFeeBasisPoints  func(childComplexity int) int
+		OpenseaSellerFeeBasisPoints func(childComplexity int) int
+		OpenseaVersion              func(childComplexity int) int
+		Owner                       func(childComplexity int) int
+		PayoutAddress               func(childComplexity int) int
+		SchemaName                  func(childComplexity int) int
+		SellerFeeBasisPoints        func(childComplexity int) int
+		Symbol                      func(childComplexity int) int
+		TotalSupply                 func(childComplexity int) int
+	}
+
+	OpenseaAssets struct {
+		Assets func(childComplexity int) int
+	}
+
+	OpenseaCollection struct {
+		BannerImageUrl              func(childComplexity int) int
+		ChatUrl                     func(childComplexity int) int
+		CreatedAt                   func(childComplexity int) int
+		DefaultToFiat               func(childComplexity int) int
+		Description                 func(childComplexity int) int
+		DevBuyerFeeBasisPoints      func(childComplexity int) int
+		DevSellerFeeBasisPoints     func(childComplexity int) int
+		DiscordUrl                  func(childComplexity int) int
+		DisplayData                 func(childComplexity int) int
+		ExternalUrl                 func(childComplexity int) int
+		Featured                    func(childComplexity int) int
+		FeaturedImageUrl            func(childComplexity int) int
+		Hidden                      func(childComplexity int) int
+		ImageUrl                    func(childComplexity int) int
+		InstagramUsername           func(childComplexity int) int
+		IsSubjectToWhitelist        func(childComplexity int) int
+		LargeImageUrl               func(childComplexity int) int
+		MediumUsernam               func(childComplexity int) int
+		Name                        func(childComplexity int) int
+		OnlyProxiedTransfers        func(childComplexity int) int
+		OpenseaBuyerFeeBasisPoints  func(childComplexity int) int
+		OpenseaSellerFeeBasisPoints func(childComplexity int) int
+		PayoutAddress               func(childComplexity int) int
+		RequireEmail                func(childComplexity int) int
+		SafelistRequestStatus       func(childComplexity int) int
+		ShortDescription            func(childComplexity int) int
+		Slub                        func(childComplexity int) int
+		TelegramUrl                 func(childComplexity int) int
+		TwitterUsername             func(childComplexity int) int
+		WikiUrl                     func(childComplexity int) int
+	}
+
+	OpenseaCreator struct {
+		Address       func(childComplexity int) int
+		Config        func(childComplexity int) int
+		ProfileImgUrl func(childComplexity int) int
+		User          func(childComplexity int) int
+	}
+
+	OpenseaDisplayData struct {
+		CardDisplayStyle func(childComplexity int) int
+	}
+
+	OpenseaOwner struct {
+		Address       func(childComplexity int) int
+		Config        func(childComplexity int) int
+		ProfileImgUrl func(childComplexity int) int
+		User          func(childComplexity int) int
+	}
+
+	OpenseaUser struct {
+		Username func(childComplexity int) int
+	}
+
 	Query struct {
 		CoinbaseAccount               func(childComplexity int, accountID string) int
 		CoinbaseAccountHolds          func(childComplexity int, accountID string, opts *model.CoinbaseAccountHoldsOptions) int
@@ -515,6 +629,7 @@ type ComplexityRoot struct {
 		IexRulesSchema                func(childComplexity int) int
 		KrakenServerTime              func(childComplexity int) int
 		KrakenSystemStatus            func(childComplexity int) int
+		OpenseaAssets                 func(childComplexity int, opts *model.OpenseaAssetsOptions) int
 	}
 }
 
@@ -550,6 +665,7 @@ type QueryResolver interface {
 	IexRulesSchema(ctx context.Context) (*model.IexRulesSchema, error)
 	KrakenServerTime(ctx context.Context) (*model.KrakenServerTime, error)
 	KrakenSystemStatus(ctx context.Context) (*model.KrakenSystemStatus, error)
+	OpenseaAssets(ctx context.Context, opts *model.OpenseaAssetsOptions) (*model.OpenseaAssets, error)
 }
 
 type executableSchema struct {
@@ -2859,6 +2975,636 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.CoinbasePaymentMethodWithdrawal(childComplexity, args["opts"].(*model.CoinbasePaymentMethodWithdrawalOptions)), true
 
+	case "OpenseaAsset.animationOriginalUrl":
+		if e.complexity.OpenseaAsset.AnimationOriginalUrl == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.AnimationOriginalUrl(childComplexity), true
+
+	case "OpenseaAsset.animationUrl":
+		if e.complexity.OpenseaAsset.AnimationUrl == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.AnimationUrl(childComplexity), true
+
+	case "OpenseaAsset.assetContract":
+		if e.complexity.OpenseaAsset.AssetContract == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.AssetContract(childComplexity), true
+
+	case "OpenseaAsset.backgroundColor":
+		if e.complexity.OpenseaAsset.BackgroundColor == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.BackgroundColor(childComplexity), true
+
+	case "OpenseaAsset.collection":
+		if e.complexity.OpenseaAsset.Collection == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.Collection(childComplexity), true
+
+	case "OpenseaAsset.creator":
+		if e.complexity.OpenseaAsset.Creator == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.Creator(childComplexity), true
+
+	case "OpenseaAsset.decimals":
+		if e.complexity.OpenseaAsset.Decimals == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.Decimals(childComplexity), true
+
+	case "OpenseaAsset.description":
+		if e.complexity.OpenseaAsset.Description == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.Description(childComplexity), true
+
+	case "OpenseaAsset.externalLink":
+		if e.complexity.OpenseaAsset.ExternalLink == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.ExternalLink(childComplexity), true
+
+	case "OpenseaAsset.id":
+		if e.complexity.OpenseaAsset.Id == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.Id(childComplexity), true
+
+	case "OpenseaAsset.imageOriginalUrl":
+		if e.complexity.OpenseaAsset.ImageOriginalUrl == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.ImageOriginalUrl(childComplexity), true
+
+	case "OpenseaAsset.imagePreviewUrl":
+		if e.complexity.OpenseaAsset.ImagePreviewUrl == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.ImagePreviewUrl(childComplexity), true
+
+	case "OpenseaAsset.imageThumbnailUrl":
+		if e.complexity.OpenseaAsset.ImageThumbnailUrl == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.ImageThumbnailUrl(childComplexity), true
+
+	case "OpenseaAsset.imageUrl":
+		if e.complexity.OpenseaAsset.ImageUrl == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.ImageUrl(childComplexity), true
+
+	case "OpenseaAsset.isPresale":
+		if e.complexity.OpenseaAsset.IsPresale == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.IsPresale(childComplexity), true
+
+	case "OpenseaAsset.lastSale":
+		if e.complexity.OpenseaAsset.LastSale == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.LastSale(childComplexity), true
+
+	case "OpenseaAsset.listingDate":
+		if e.complexity.OpenseaAsset.ListingDate == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.ListingDate(childComplexity), true
+
+	case "OpenseaAsset.name":
+		if e.complexity.OpenseaAsset.Name == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.Name(childComplexity), true
+
+	case "OpenseaAsset.numSales":
+		if e.complexity.OpenseaAsset.NumSales == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.NumSales(childComplexity), true
+
+	case "OpenseaAsset.owner":
+		if e.complexity.OpenseaAsset.Owner == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.Owner(childComplexity), true
+
+	case "OpenseaAsset.permalink":
+		if e.complexity.OpenseaAsset.Permalink == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.Permalink(childComplexity), true
+
+	case "OpenseaAsset.sellOrders":
+		if e.complexity.OpenseaAsset.SellOrders == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.SellOrders(childComplexity), true
+
+	case "OpenseaAsset.tokenId":
+		if e.complexity.OpenseaAsset.TokenId == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.TokenId(childComplexity), true
+
+	case "OpenseaAsset.tokenMetadata":
+		if e.complexity.OpenseaAsset.TokenMetadata == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.TokenMetadata(childComplexity), true
+
+	case "OpenseaAsset.topBid":
+		if e.complexity.OpenseaAsset.TopBid == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.TopBid(childComplexity), true
+
+	case "OpenseaAsset.transferFee":
+		if e.complexity.OpenseaAsset.TransferFee == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.TransferFee(childComplexity), true
+
+	case "OpenseaAsset.transferFeePaymentToken":
+		if e.complexity.OpenseaAsset.TransferFeePaymentToken == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAsset.TransferFeePaymentToken(childComplexity), true
+
+	case "OpenseaAssetContract.address":
+		if e.complexity.OpenseaAssetContract.Address == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAssetContract.Address(childComplexity), true
+
+	case "OpenseaAssetContract.assetContractType":
+		if e.complexity.OpenseaAssetContract.AssetContractType == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAssetContract.AssetContractType(childComplexity), true
+
+	case "OpenseaAssetContract.buyerFeeBasisPoints":
+		if e.complexity.OpenseaAssetContract.BuyerFeeBasisPoints == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAssetContract.BuyerFeeBasisPoints(childComplexity), true
+
+	case "OpenseaAssetContract.createdDate":
+		if e.complexity.OpenseaAssetContract.CreatedDate == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAssetContract.CreatedDate(childComplexity), true
+
+	case "OpenseaAssetContract.defaultToFiat":
+		if e.complexity.OpenseaAssetContract.DefaultToFiat == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAssetContract.DefaultToFiat(childComplexity), true
+
+	case "OpenseaAssetContract.description":
+		if e.complexity.OpenseaAssetContract.Description == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAssetContract.Description(childComplexity), true
+
+	case "OpenseaAssetContract.devBuyFeeBasisPoints":
+		if e.complexity.OpenseaAssetContract.DevBuyFeeBasisPoints == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAssetContract.DevBuyFeeBasisPoints(childComplexity), true
+
+	case "OpenseaAssetContract.devSellerFeeBasisPoints":
+		if e.complexity.OpenseaAssetContract.DevSellerFeeBasisPoints == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAssetContract.DevSellerFeeBasisPoints(childComplexity), true
+
+	case "OpenseaAssetContract.externalLink":
+		if e.complexity.OpenseaAssetContract.ExternalLink == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAssetContract.ExternalLink(childComplexity), true
+
+	case "OpenseaAssetContract.imageUrl":
+		if e.complexity.OpenseaAssetContract.ImageUrl == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAssetContract.ImageUrl(childComplexity), true
+
+	case "OpenseaAssetContract.name":
+		if e.complexity.OpenseaAssetContract.Name == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAssetContract.Name(childComplexity), true
+
+	case "OpenseaAssetContract.nftVersion":
+		if e.complexity.OpenseaAssetContract.NftVersion == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAssetContract.NftVersion(childComplexity), true
+
+	case "OpenseaAssetContract.onlyProxiedTransfers":
+		if e.complexity.OpenseaAssetContract.OnlyProxiedTransfers == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAssetContract.OnlyProxiedTransfers(childComplexity), true
+
+	case "OpenseaAssetContract.openseaBuyerFeeBasisPoints":
+		if e.complexity.OpenseaAssetContract.OpenseaBuyerFeeBasisPoints == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAssetContract.OpenseaBuyerFeeBasisPoints(childComplexity), true
+
+	case "OpenseaAssetContract.openseaSellerFeeBasisPoints":
+		if e.complexity.OpenseaAssetContract.OpenseaSellerFeeBasisPoints == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAssetContract.OpenseaSellerFeeBasisPoints(childComplexity), true
+
+	case "OpenseaAssetContract.openseaVersion":
+		if e.complexity.OpenseaAssetContract.OpenseaVersion == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAssetContract.OpenseaVersion(childComplexity), true
+
+	case "OpenseaAssetContract.owner":
+		if e.complexity.OpenseaAssetContract.Owner == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAssetContract.Owner(childComplexity), true
+
+	case "OpenseaAssetContract.payoutAddress":
+		if e.complexity.OpenseaAssetContract.PayoutAddress == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAssetContract.PayoutAddress(childComplexity), true
+
+	case "OpenseaAssetContract.schemaName":
+		if e.complexity.OpenseaAssetContract.SchemaName == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAssetContract.SchemaName(childComplexity), true
+
+	case "OpenseaAssetContract.sellerFeeBasisPoints":
+		if e.complexity.OpenseaAssetContract.SellerFeeBasisPoints == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAssetContract.SellerFeeBasisPoints(childComplexity), true
+
+	case "OpenseaAssetContract.symbol":
+		if e.complexity.OpenseaAssetContract.Symbol == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAssetContract.Symbol(childComplexity), true
+
+	case "OpenseaAssetContract.totalSupply":
+		if e.complexity.OpenseaAssetContract.TotalSupply == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAssetContract.TotalSupply(childComplexity), true
+
+	case "OpenseaAssets.assets":
+		if e.complexity.OpenseaAssets.Assets == nil {
+			break
+		}
+
+		return e.complexity.OpenseaAssets.Assets(childComplexity), true
+
+	case "OpenseaCollection.bannerImageUrl":
+		if e.complexity.OpenseaCollection.BannerImageUrl == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.BannerImageUrl(childComplexity), true
+
+	case "OpenseaCollection.chatUrl":
+		if e.complexity.OpenseaCollection.ChatUrl == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.ChatUrl(childComplexity), true
+
+	case "OpenseaCollection.createdAt":
+		if e.complexity.OpenseaCollection.CreatedAt == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.CreatedAt(childComplexity), true
+
+	case "OpenseaCollection.defaultToFiat":
+		if e.complexity.OpenseaCollection.DefaultToFiat == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.DefaultToFiat(childComplexity), true
+
+	case "OpenseaCollection.description":
+		if e.complexity.OpenseaCollection.Description == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.Description(childComplexity), true
+
+	case "OpenseaCollection.devBuyerFeeBasisPoints":
+		if e.complexity.OpenseaCollection.DevBuyerFeeBasisPoints == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.DevBuyerFeeBasisPoints(childComplexity), true
+
+	case "OpenseaCollection.devSellerFeeBasisPoints":
+		if e.complexity.OpenseaCollection.DevSellerFeeBasisPoints == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.DevSellerFeeBasisPoints(childComplexity), true
+
+	case "OpenseaCollection.discordUrl":
+		if e.complexity.OpenseaCollection.DiscordUrl == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.DiscordUrl(childComplexity), true
+
+	case "OpenseaCollection.displayData":
+		if e.complexity.OpenseaCollection.DisplayData == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.DisplayData(childComplexity), true
+
+	case "OpenseaCollection.externalUrl":
+		if e.complexity.OpenseaCollection.ExternalUrl == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.ExternalUrl(childComplexity), true
+
+	case "OpenseaCollection.featured":
+		if e.complexity.OpenseaCollection.Featured == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.Featured(childComplexity), true
+
+	case "OpenseaCollection.featuredImageUrl":
+		if e.complexity.OpenseaCollection.FeaturedImageUrl == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.FeaturedImageUrl(childComplexity), true
+
+	case "OpenseaCollection.hidden":
+		if e.complexity.OpenseaCollection.Hidden == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.Hidden(childComplexity), true
+
+	case "OpenseaCollection.imageUrl":
+		if e.complexity.OpenseaCollection.ImageUrl == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.ImageUrl(childComplexity), true
+
+	case "OpenseaCollection.instagramUsername":
+		if e.complexity.OpenseaCollection.InstagramUsername == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.InstagramUsername(childComplexity), true
+
+	case "OpenseaCollection.isSubjectToWhitelist":
+		if e.complexity.OpenseaCollection.IsSubjectToWhitelist == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.IsSubjectToWhitelist(childComplexity), true
+
+	case "OpenseaCollection.largeImageUrl":
+		if e.complexity.OpenseaCollection.LargeImageUrl == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.LargeImageUrl(childComplexity), true
+
+	case "OpenseaCollection.mediumUsernam":
+		if e.complexity.OpenseaCollection.MediumUsernam == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.MediumUsernam(childComplexity), true
+
+	case "OpenseaCollection.name":
+		if e.complexity.OpenseaCollection.Name == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.Name(childComplexity), true
+
+	case "OpenseaCollection.onlyProxiedTransfers":
+		if e.complexity.OpenseaCollection.OnlyProxiedTransfers == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.OnlyProxiedTransfers(childComplexity), true
+
+	case "OpenseaCollection.openseaBuyerFeeBasisPoints":
+		if e.complexity.OpenseaCollection.OpenseaBuyerFeeBasisPoints == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.OpenseaBuyerFeeBasisPoints(childComplexity), true
+
+	case "OpenseaCollection.openseaSellerFeeBasisPoints":
+		if e.complexity.OpenseaCollection.OpenseaSellerFeeBasisPoints == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.OpenseaSellerFeeBasisPoints(childComplexity), true
+
+	case "OpenseaCollection.payoutAddress":
+		if e.complexity.OpenseaCollection.PayoutAddress == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.PayoutAddress(childComplexity), true
+
+	case "OpenseaCollection.requireEmail":
+		if e.complexity.OpenseaCollection.RequireEmail == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.RequireEmail(childComplexity), true
+
+	case "OpenseaCollection.safelistRequestStatus":
+		if e.complexity.OpenseaCollection.SafelistRequestStatus == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.SafelistRequestStatus(childComplexity), true
+
+	case "OpenseaCollection.shortDescription":
+		if e.complexity.OpenseaCollection.ShortDescription == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.ShortDescription(childComplexity), true
+
+	case "OpenseaCollection.slub":
+		if e.complexity.OpenseaCollection.Slub == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.Slub(childComplexity), true
+
+	case "OpenseaCollection.telegramUrl":
+		if e.complexity.OpenseaCollection.TelegramUrl == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.TelegramUrl(childComplexity), true
+
+	case "OpenseaCollection.twitterUsername":
+		if e.complexity.OpenseaCollection.TwitterUsername == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.TwitterUsername(childComplexity), true
+
+	case "OpenseaCollection.wikiUrl":
+		if e.complexity.OpenseaCollection.WikiUrl == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCollection.WikiUrl(childComplexity), true
+
+	case "OpenseaCreator.address":
+		if e.complexity.OpenseaCreator.Address == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCreator.Address(childComplexity), true
+
+	case "OpenseaCreator.config":
+		if e.complexity.OpenseaCreator.Config == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCreator.Config(childComplexity), true
+
+	case "OpenseaCreator.profileImgUrl":
+		if e.complexity.OpenseaCreator.ProfileImgUrl == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCreator.ProfileImgUrl(childComplexity), true
+
+	case "OpenseaCreator.user":
+		if e.complexity.OpenseaCreator.User == nil {
+			break
+		}
+
+		return e.complexity.OpenseaCreator.User(childComplexity), true
+
+	case "OpenseaDisplayData.cardDisplayStyle":
+		if e.complexity.OpenseaDisplayData.CardDisplayStyle == nil {
+			break
+		}
+
+		return e.complexity.OpenseaDisplayData.CardDisplayStyle(childComplexity), true
+
+	case "OpenseaOwner.address":
+		if e.complexity.OpenseaOwner.Address == nil {
+			break
+		}
+
+		return e.complexity.OpenseaOwner.Address(childComplexity), true
+
+	case "OpenseaOwner.config":
+		if e.complexity.OpenseaOwner.Config == nil {
+			break
+		}
+
+		return e.complexity.OpenseaOwner.Config(childComplexity), true
+
+	case "OpenseaOwner.profileImgUrl":
+		if e.complexity.OpenseaOwner.ProfileImgUrl == nil {
+			break
+		}
+
+		return e.complexity.OpenseaOwner.ProfileImgUrl(childComplexity), true
+
+	case "OpenseaOwner.user":
+		if e.complexity.OpenseaOwner.User == nil {
+			break
+		}
+
+		return e.complexity.OpenseaOwner.User(childComplexity), true
+
+	case "OpenseaUser.username":
+		if e.complexity.OpenseaUser.Username == nil {
+			break
+		}
+
+		return e.complexity.OpenseaUser.Username(childComplexity), true
+
 	case "Query.coinbaseAccount":
 		if e.complexity.Query.CoinbaseAccount == nil {
 			break
@@ -3054,6 +3800,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.KrakenSystemStatus(childComplexity), true
 
+	case "Query.OpenseaAssets":
+		if e.complexity.Query.OpenseaAssets == nil {
+			break
+		}
+
+		args, err := ec.field_Query_OpenseaAssets_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.OpenseaAssets(childComplexity, args["opts"].(*model.OpenseaAssetsOptions)), true
+
 	}
 	return 0, false
 }
@@ -3120,7 +3878,9 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 var sources = []*ast.Source{
 	{Name: "graph/schema/coinbase_account.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseAccount holds data for trading account from the profile of the API key
+"""
+ CoinbaseAccount holds data for trading account from the profile of the API key
+"""
 type CoinbaseAccount {
   id: String
   currency: String
@@ -3132,20 +3892,19 @@ type CoinbaseAccount {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_account_deposit_options.graphqls", Input: `# * This is a generated file, do not edit
 
-input CoinbaseAccountDepositOptions {
-  profileId: String
+input CoinbaseAccountDepositOptions {  profileId: String
   amount: Float!
   coinbaseAccountId: String!
-  currency: String!
-}
-`, BuiltIn: false},
+  currency: String!}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_account_hold.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseHold represents the hold on an account that belong to the same profile
-# as the API key. Holds are placed on an account for any active orders or
-# pending withdraw requests. As an order is filled, the hold amount is updated.
-# If an order is canceled, any remaining hold is removed. For withdrawals, the
-# hold is removed after it is completed.
+"""
+ CoinbaseHold represents the hold on an account that belong to the same profile
+ as the API key. Holds are placed on an account for any active orders or pending
+ withdraw requests. As an order is filled, the hold amount is updated. If an
+ order is canceled, any remaining hold is removed. For withdrawals, the hold is
+ removed after it is completed.
+"""
 type CoinbaseAccountHold {
   id: String
   createdAt: Time
@@ -3155,17 +3914,15 @@ type CoinbaseAccountHold {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_account_holds_options.graphqls", Input: `# * This is a generated file, do not edit
 
-input CoinbaseAccountHoldsOptions {
-  before: String
+input CoinbaseAccountHoldsOptions {  before: String
   after: String
-  limit: Int
-}
-`, BuiltIn: false},
+  limit: Int}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_account_ledger.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseAccountLedger lists ledger activity for an account. This includes
-# anything that would affect the accounts balance - transfers, trades, fees,
-# etc.
+"""
+ CoinbaseAccountLedger lists ledger activity for an account. This includes
+ anything that would affect the accounts balance - transfers, trades, fees, etc.
+"""
 type CoinbaseAccountLedger {
   id: String
   amount: Float
@@ -3176,7 +3933,9 @@ type CoinbaseAccountLedger {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_account_ledger_details.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseAccountLedgerDetails are the details for account history.
+"""
+ CoinbaseAccountLedgerDetails are the details for account history.
+"""
 type CoinbaseAccountLedgerDetails {
   orderId: String
   tradeId: String
@@ -3184,19 +3943,18 @@ type CoinbaseAccountLedgerDetails {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_account_ledger_options.graphqls", Input: `# * This is a generated file, do not edit
 
-input CoinbaseAccountLedgerOptions {
-  startDate: String
+input CoinbaseAccountLedgerOptions {  startDate: String
   endDate: String
   before: String
   after: String
   profileId: String
-  limit: Int
-}
-`, BuiltIn: false},
+  limit: Int}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_account_transfer.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseAccountTransfer will lists past withdrawals and deposits for an
-# account.
+"""
+ CoinbaseAccountTransfer will lists past withdrawals and deposits for an
+ account.
+"""
 type CoinbaseAccountTransfer {
   id: String
   type: String
@@ -3210,7 +3968,9 @@ type CoinbaseAccountTransfer {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_account_transfer_details.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseAccountTransferDetails are the details for an account transfer.
+"""
+ CoinbaseAccountTransferDetails are the details for an account transfer.
+"""
 type CoinbaseAccountTransferDetails {
   coinbaseAccountId: String
   coinbaseTransactionId: String
@@ -3227,25 +3987,21 @@ input CoinbaseAccountTransferOptions {
 `, BuiltIn: false},
 	{Name: "graph/schema/coinbase_account_transfers_options.graphqls", Input: `# * This is a generated file, do not edit
 
-input CoinbaseAccountTransfersOptions {
-  before: String
+input CoinbaseAccountTransfersOptions {  before: String
   after: String
   limit: Int
-  type: String
-}
-`, BuiltIn: false},
+  type: String}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_account_withdrawal_options.graphqls", Input: `# * This is a generated file, do not edit
 
-input CoinbaseAccountWithdrawalOptions {
-  profileId: String
+input CoinbaseAccountWithdrawalOptions {  profileId: String
   amount: Float!
   coinbaseAccountId: String!
-  currency: String!
-}
-`, BuiltIn: false},
+  currency: String!}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_available_balance.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseAvailableBalance is the available balance on the coinbase account
+"""
+ CoinbaseAvailableBalance is the available balance on the coinbase account
+"""
 type CoinbaseAvailableBalance {
   amount: Float
   currency: String
@@ -3253,15 +4009,19 @@ type CoinbaseAvailableBalance {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_balance.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseBalance is the balance for picker data
+"""
+ CoinbaseBalance is the balance for picker data
+"""
 type CoinbaseBalance {
   amount: Float
   currency: String
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_bank_country.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseBankCountry are the name and code for the bank's country associated
-# with a wallet
+"""
+ CoinbaseBankCountry are the name and code for the bank's country associated
+ with a wallet
+"""
 type CoinbaseBankCountry {
   name: String
   code: String
@@ -3277,24 +4037,20 @@ input CoinbaseCoinbaseAccountDepositOptions {
 `, BuiltIn: false},
 	{Name: "graph/schema/coinbase_conversion_options.graphqls", Input: `# * This is a generated file, do not edit
 
-input CoinbaseConversionOptions {
-  profileId: String
-}
-`, BuiltIn: false},
+input CoinbaseConversionOptions {  profileId: String}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_conversions_options.graphqls", Input: `# * This is a generated file, do not edit
 
-input CoinbaseConversionsOptions {
-  profileId: String
+input CoinbaseConversionsOptions {  profileId: String
   from: String!
   to: String!
   amount: Float!
-  nonce: String
-}
-`, BuiltIn: false},
+  nonce: String}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_crypto_account.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseCryptoAccount references a crypto account that a CoinbasePaymentMethod
-# belongs to
+"""
+ CoinbaseCryptoAccount references a crypto account that a CoinbasePaymentMethod
+ belongs to
+"""
 type CoinbaseCryptoAccount {
   id: String
   resource: String
@@ -3302,8 +4058,10 @@ type CoinbaseCryptoAccount {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_crypto_address.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseCryptoAddress is used for a one-time crypto address for depositing
-# crypto.
+"""
+ CoinbaseCryptoAddress is used for a one-time crypto address for depositing
+ crypto.
+"""
 type CoinbaseCryptoAddress {
   id: String
   address: String
@@ -3323,14 +4081,18 @@ type CoinbaseCryptoAddress {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_crypto_address_info.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseCryptoAddressInfo holds info for a crypto address
+"""
+ CoinbaseCryptoAddressInfo holds info for a crypto address
+"""
 type CoinbaseCryptoAddressInfo {
   address: String
   destinationTag: String
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_crypto_address_warning.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseCryptoAddressWarning is a warning for generating a crypting address
+"""
+ CoinbaseCryptoAddressWarning is a warning for generating a crypting address
+"""
 type CoinbaseCryptoAddressWarning {
   title: String
   details: String
@@ -3338,8 +4100,7 @@ type CoinbaseCryptoAddressWarning {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_crypto_withdrawal_options.graphqls", Input: `# * This is a generated file, do not edit
 
-input CoinbaseCryptoWithdrawalOptions {
-  profileId: String
+input CoinbaseCryptoWithdrawalOptions {  profileId: String
   amount: Float!
   cryptoAddress: String!
   currency: String!
@@ -3347,13 +4108,13 @@ input CoinbaseCryptoWithdrawalOptions {
   noDestinationTag: Boolean
   twoFactorCode: String
   nonce: Int
-  fee: Float
-}
-`, BuiltIn: false},
+  fee: Float}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_currency.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseCurrency is a currency that coinbase knows about. Not al currencies
-# may be currently in use for trading.
+"""
+ CoinbaseCurrency is a currency that coinbase knows about. Not al currencies may
+ be currently in use for trading.
+"""
 type CoinbaseCurrency {
   id: String
   name: String
@@ -3366,9 +4127,11 @@ type CoinbaseCurrency {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_currency_conversion.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseCurrencyConversion is the response that converts funds from from
-# currency to to currency. Funds are converted on the from account in the
-# profile_id profile.
+"""
+ CoinbaseCurrencyConversion is the response that converts funds from from
+ currency to to currency. Funds are converted on the from account in the
+ profile_id profile.
+"""
 type CoinbaseCurrencyConversion {
   id: String
   amount: Float
@@ -3379,8 +4142,10 @@ type CoinbaseCurrencyConversion {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_currency_details.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseCurrencyDetails are the details for a currency that coinbase knows
-# about
+"""
+ CoinbaseCurrencyDetails are the details for a currency that coinbase knows
+ about
+"""
 type CoinbaseCurrencyDetails {
   type: String
   symbol: String
@@ -3397,8 +4162,10 @@ type CoinbaseCurrencyDetails {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_deposit.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseDeposit is the response for deposited funds from a www.coinbase.com
-# wallet to the specified profile_id.
+"""
+ CoinbaseDeposit is the response for deposited funds from a www.coinbase.com
+ wallet to the specified profile_id.
+"""
 type CoinbaseDeposit {
   id: String
   amount: Float
@@ -3409,7 +4176,9 @@ type CoinbaseDeposit {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_fees.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseFees are fees rates and 30 days trailing volume.
+"""
+ CoinbaseFees are fees rates and 30 days trailing volume.
+"""
 type CoinbaseFees {
   takerFeeRate: Float
   makerFeeRate: Float
@@ -3417,8 +4186,9 @@ type CoinbaseFees {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_fiat_account.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseLimits references a FIAT account thata CoinbasePaymentMethod belongs
-# to
+"""
+ CoinbaseLimits references a FIAT account thata CoinbasePaymentMethod belongs to
+"""
 type CoinbaseFiatAccount {
   id: String
   resource: String
@@ -3426,7 +4196,9 @@ type CoinbaseFiatAccount {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_fill.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbasePaymentMethod is a partial or complete match on a specific order.
+"""
+ CoinbasePaymentMethod is a partial or complete match on a specific order.
+"""
 type CoinbaseFill {
   tradeId: Int
   productId: String
@@ -3443,25 +4215,26 @@ type CoinbaseFill {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_fills_options.graphqls", Input: `# * This is a generated file, do not edit
 
-input CoinbaseFillsOptions {
-  orderId: String
+input CoinbaseFillsOptions {  orderId: String
   productId: String
   profileId: String
   limit: Int
   before: Int
-  after: Int
-}
-`, BuiltIn: false},
+  after: Int}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_limits.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseLimits defines limits for a payment method
+"""
+ CoinbaseLimits defines limits for a payment method
+"""
 type CoinbaseLimits {
   type: String
   name: String
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_new_order.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseNewOrder is the server's response for placing a new order.
+"""
+ CoinbaseNewOrder is the server's response for placing a new order.
+"""
 type CoinbaseNewOrder {
   id: String
   price: Float
@@ -3489,8 +4262,7 @@ type CoinbaseNewOrder {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_new_order_options.graphqls", Input: `# * This is a generated file, do not edit
 
-input CoinbaseNewOrderOptions {
-  profileId: String
+input CoinbaseNewOrderOptions {  profileId: String
   type: OrderType
   side: OrderSide!
   stp: OrderSTP
@@ -3503,12 +4275,12 @@ input CoinbaseNewOrderOptions {
   timeInForce: TimeInForce
   cancelAfter: CancelAfter
   postOnly: Boolean
-  clientOid: String
-}
-`, BuiltIn: false},
+  clientOid: String}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_order.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseOrder is an open order.
+"""
+ CoinbaseOrder is an open order.
+"""
 type CoinbaseOrder {
   id: String
   price: Float
@@ -3536,8 +4308,7 @@ type CoinbaseOrder {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_orders_options.graphqls", Input: `# * This is a generated file, do not edit
 
-input CoinbaseOrdersOptions {
-  profileId: String
+input CoinbaseOrdersOptions {  profileId: String
   productId: String
   sortedBy: String
   sorting: String
@@ -3546,12 +4317,12 @@ input CoinbaseOrdersOptions {
   before: String
   after: String
   limit: Int!
-  status: [String]!
-}
-`, BuiltIn: false},
+  status: [String]!}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_payment_method.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbasePaymentMethod is a payment method used on coinbase
+"""
+ CoinbasePaymentMethod is a payment method used on coinbase
+"""
 type CoinbasePaymentMethod {
   id: String
   type: String
@@ -3583,25 +4354,21 @@ type CoinbasePaymentMethod {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_payment_method_deposit_options.graphqls", Input: `# * This is a generated file, do not edit
 
-input CoinbasePaymentMethodDepositOptions {
-  profileId: String
+input CoinbasePaymentMethodDepositOptions {  profileId: String
   amount: Float!
   paymentMethodId: String!
-  currency: String!
-}
-`, BuiltIn: false},
+  currency: String!}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_payment_method_withdrawal_options.graphqls", Input: `# * This is a generated file, do not edit
 
-input CoinbasePaymentMethodWithdrawalOptions {
-  profileId: String
+input CoinbasePaymentMethodWithdrawalOptions {  profileId: String
   amount: Float!
   paymentMethodId: String!
-  currency: String!
-}
-`, BuiltIn: false},
+  currency: String!}`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_picker_data.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbasePickerData ??
+"""
+ CoinbasePickerData ??
+"""
 type CoinbasePickerData {
   symbol: String
   customerName: String
@@ -3623,19 +4390,23 @@ type CoinbasePickerData {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_recurring_options.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseRecurringOptions ??
+"""
+ CoinbaseRecurringOptions ??
+"""
 type CoinbaseRecurringOptions {
   period: String
   label: String
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_sepa_deposit_information.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseSepaDepositInformation information regarding a wallet's deposits. A
-# SEPA credit transfer is a single transfer of Euros from one person or
-# organisation to another. For example, this could be to pay the deposit for a
-# holiday rental or to settle an invoice. A SEPA direct debit is a recurring
-# payment, for example to pay monthly rent or for a service like a mobile phone
-# contract.
+"""
+ CoinbaseSepaDepositInformation information regarding a wallet's deposits. A
+ SEPA credit transfer is a single transfer of Euros from one person or
+ organisation to another. For example, this could be to pay the deposit for a
+ holiday rental or to settle an invoice. A SEPA direct debit is a recurring
+ payment, for example to pay monthly rent or for a service like a mobile phone
+ contract.
+"""
 type CoinbaseSepaDepositInformation {
   iban: String
   swift: String
@@ -3648,7 +4419,9 @@ type CoinbaseSepaDepositInformation {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_single_product.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseSingleProduct is information on a single product
+"""
+ CoinbaseSingleProduct is information on a single product
+"""
 type CoinbaseSingleProduct {
   id: String
   baseCurrency: String
@@ -3673,11 +4446,13 @@ type CoinbaseSingleProduct {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_swift_deposit_information.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseSwiftDepositInformation information regarding a wallet's deposits.
-# SWIFT stands for Society for Worldwide Interbank Financial Telecommunications.
-# Basically, it's a computer network that connects over 900 banks around the
-# world – and enables them to transfer money. ING is part of this network. There
-# is no fee for accepting deposits into your account with ING.
+"""
+ CoinbaseSwiftDepositInformation information regarding a wallet's deposits.
+ SWIFT stands for Society for Worldwide Interbank Financial Telecommunications.
+ Basically, it's a computer network that connects over 900 banks around the
+ world – and enables them to transfer money. ING is part of this network. There
+ is no fee for accepting deposits into your account with ING.
+"""
 type CoinbaseSwiftDepositInformation {
   accountNumber: String
   bankName: String
@@ -3689,7 +4464,9 @@ type CoinbaseSwiftDepositInformation {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_uk_deposit_information.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseUkDepositInformation information regarding a wallet's deposits.
+"""
+ CoinbaseUkDepositInformation information regarding a wallet's deposits.
+"""
 type CoinbaseUkDepositInformation {
   accountNumber: String
   bankName: String
@@ -3701,8 +4478,10 @@ type CoinbaseUkDepositInformation {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_wallet.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseWallet represents a user's available Coinbase wallet (These are the
-# wallets/accounts that are used for buying and selling on www.coinbase.com)
+"""
+ CoinbaseWallet represents a user's available Coinbase wallet (These are the
+ wallets/accounts that are used for buying and selling on www.coinbase.com)
+"""
 type CoinbaseWallet {
   id: String
   name: String
@@ -3724,9 +4503,11 @@ type CoinbaseWallet {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_websocket_ticker.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseWebsocketTicker is real-time price updates every time a match happens.
-# It batches updates in case of cascading matches, greatly reducing bandwidth
-# requirements.
+"""
+ CoinbaseWebsocketTicker is real-time price updates every time a match happens.
+ It batches updates in case of cascading matches, greatly reducing bandwidth
+ requirements.
+"""
 type CoinbaseWebsocketTicker {
   type: String
   productId: String
@@ -3741,7 +4522,9 @@ type CoinbaseWebsocketTicker {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_wire_deposit_information.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseWireDepositInformation information regarding a wallet's deposits
+"""
+ CoinbaseWireDepositInformation information regarding a wallet's deposits
+"""
 type CoinbaseWireDepositInformation {
   accountNumber: String
   routingNumber: String
@@ -3754,8 +4537,10 @@ type CoinbaseWireDepositInformation {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_withdrawal.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseWithdrawal is data concerning withdrawing funds from the specified
-# profile_id to a www.coinbase.com wallet.
+"""
+ CoinbaseWithdrawal is data concerning withdrawing funds from the specified
+ profile_id to a www.coinbase.com wallet.
+"""
 type CoinbaseWithdrawal {
   id: String
   amount: Float
@@ -3766,23 +4551,24 @@ type CoinbaseWithdrawal {
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_withdrawal_fee_estimate.graphqls", Input: `# * This is a generated file, do not edit
 
-# CoinbaseWithdrawalFeeEstimate is a fee estimate for the crypto withdrawal to
-# crypto address
+"""
+ CoinbaseWithdrawalFeeEstimate is a fee estimate for the crypto withdrawal to
+ crypto address
+"""
 type CoinbaseWithdrawalFeeEstimate {
   fee: Float
 }`, BuiltIn: false},
 	{Name: "graph/schema/coinbase_withdrawal_fee_estimate_options.graphqls", Input: `# * This is a generated file, do not edit
 
-input CoinbaseWithdrawalFeeEstimateOptions {
-  currency: String
-  cryptoAddress: String
-}
-`, BuiltIn: false},
+input CoinbaseWithdrawalFeeEstimateOptions {  currency: String
+  cryptoAddress: String}`, BuiltIn: false},
 	{Name: "graph/schema/iex_rule.graphqls", Input: `# * This is a generated file, do not edit
 
-# Rule to evaluate thousands of data points per second and build event-driven,
-# automated alerts using Rules Engine. You can access Rules Engine through the
-# IEX Console or through our API using the guidelines below.
+"""
+ Rule to evaluate thousands of data points per second and build event-driven,
+ automated alerts using Rules Engine. You can access Rules Engine through the
+ IEX Console or through our API using the guidelines below.
+"""
 type IexRule {
   value: String
   label: String
@@ -3792,15 +4578,19 @@ type IexRule {
 }`, BuiltIn: false},
 	{Name: "graph/schema/iex_rules_schema.graphqls", Input: `# * This is a generated file, do not edit
 
-# IexRulesSchema is the latest schema for data points, notification types, and
-# operators used to construct rules.
+"""
+ IexRulesSchema is the latest schema for data points, notification types, and
+ operators used to construct rules.
+"""
 type IexRulesSchema {
   schema: [IexRulesScheme]
 }`, BuiltIn: false},
 	{Name: "graph/schema/iex_rules_scheme.graphqls", Input: `# * This is a generated file, do not edit
 
-# IEXRulesScheme is one of the latest schemes for data points, notification
-# types, and operators used to construct rules.
+"""
+ IEXRulesScheme is one of the latest schemes for data points, notification
+ types, and operators used to construct rules.
+"""
 type IexRulesScheme {
   label: String
   value: String
@@ -3812,33 +4602,202 @@ type IexRulesScheme {
 }`, BuiltIn: false},
 	{Name: "graph/schema/kraken_server_time.graphqls", Input: `# * This is a generated file, do not edit
 
-# KrakenServerTime holds data concerning the server time
+"""
+ KrakenServerTime holds data concerning the server time
+"""
 type KrakenServerTime {
   result: KrakenServerTimeResult
   error: [String]
 }`, BuiltIn: false},
 	{Name: "graph/schema/kraken_server_time_result.graphqls", Input: `# * This is a generated file, do not edit
 
-# KrakenServerTimeResult holds data concerning the server time
+"""
+ KrakenServerTimeResult holds data concerning the server time
+"""
 type KrakenServerTimeResult {
   unixtime: Int
   rfc1123: Time
 }`, BuiltIn: false},
 	{Name: "graph/schema/kraken_system_status.graphqls", Input: `# * This is a generated file, do not edit
 
-# KrakenSystemStatus holds data concerning the current system status or trading
-# mode.
+"""
+ KrakenSystemStatus holds data concerning the current system status or trading
+ mode.
+"""
 type KrakenSystemStatus {
   result: KrakenSystemStatusResult
   error: [String]
 }`, BuiltIn: false},
 	{Name: "graph/schema/kraken_system_status_result.graphqls", Input: `# * This is a generated file, do not edit
 
-# KrakenSystemStatusResult holds data concerning the current system status or
-# trading mode.
+"""
+ KrakenSystemStatusResult holds data concerning the current system status or
+ trading mode.
+"""
 type KrakenSystemStatusResult {
   status: SystemStatus
   timestamp: Time
+}`, BuiltIn: false},
+	{Name: "graph/schema/opensea_asset.graphqls", Input: `# * This is a generated file, do not edit
+
+"""
+ Asset is the primary object in the OpenSea API is the, representing a unique
+ digital item whose ownership is managed by the blockchain. The below CryptoSaga
+ hero is an example of an asset shown on OpenSea.
+"""
+type OpenseaAsset {
+  id: Int
+  tokenId: String
+  numSales: Float
+  backgroundColor: String
+  imageUrl: String
+  imagePreviewUrl: String
+  imageThumbnailUrl: String
+  imageOriginalUrl: String
+  animationUrl: String
+  animationOriginalUrl: String
+  name: String
+  description: String
+  externalLink: String
+  assetContract: OpenseaAssetContract
+  permalink: String
+  collection: OpenseaCollection
+  decimals: String
+  tokenMetadata: String
+  owner: OpenseaOwner
+  sellOrders: String
+  creator: OpenseaCreator
+  lastSale: Float
+  topBid: Float
+  listingDate: Time
+  isPresale: Boolean
+  transferFeePaymentToken: String
+  transferFee: Float
+}`, BuiltIn: false},
+	{Name: "graph/schema/opensea_asset_contract.graphqls", Input: `# * This is a generated file, do not edit
+
+"""
+ Asset contracts contain data about the contract itself, such as the
+ CryptoKitties contract or the CoolCats contract.
+"""
+type OpenseaAssetContract {
+  address: String
+  assetContractType: String
+  createdDate: String
+  name: String
+  nftVersion: String
+  openseaVersion: String
+  owner: Int
+  schemaName: String
+  symbol: String
+  totalSupply: Float
+  description: String
+  externalLink: String
+  imageUrl: String
+  defaultToFiat: Boolean
+  devBuyFeeBasisPoints: Int
+  devSellerFeeBasisPoints: Int
+  onlyProxiedTransfers: Boolean
+  openseaBuyerFeeBasisPoints: Int
+  openseaSellerFeeBasisPoints: Int
+  buyerFeeBasisPoints: Int
+  sellerFeeBasisPoints: Int
+  payoutAddress: String
+}`, BuiltIn: false},
+	{Name: "graph/schema/opensea_assets.graphqls", Input: `# * This is a generated file, do not edit
+
+"""
+ OpenseaAssets are a set of assets from opensea NFTs
+"""
+type OpenseaAssets {
+  assets: [OpenseaAsset]
+}`, BuiltIn: false},
+	{Name: "graph/schema/opensea_assets_options.graphqls", Input: `# * This is a generated file, do not edit
+
+input OpenseaAssetsOptions {  owner: String
+  tokenIds: String
+  assetContractAddress: String
+  assetContractAddresses: [String]
+  orderBy: String
+  orderDirection: String
+  offset: String
+  limit: String
+  collection: String}`, BuiltIn: false},
+	{Name: "graph/schema/opensea_collection.graphqls", Input: `# * This is a generated file, do not edit
+
+"""
+ Asset contracts contain data about the contract itself, such as the
+ CryptoKitties contract or the CoolCats contract.
+"""
+type OpenseaCollection {
+  bannerImageUrl: String
+  chatUrl: String
+  createdAt: Time
+  defaultToFiat: Boolean
+  description: String
+  devBuyerFeeBasisPoints: String
+  devSellerFeeBasisPoints: String
+  discordUrl: String
+  displayData: OpenseaDisplayData
+  externalUrl: String
+  featured: Boolean
+  featuredImageUrl: String
+  hidden: Boolean
+  safelistRequestStatus: String
+  imageUrl: String
+  isSubjectToWhitelist: Boolean
+  largeImageUrl: String
+  mediumUsernam: String
+  name: String
+  onlyProxiedTransfers: Boolean
+  openseaBuyerFeeBasisPoints: String
+  openseaSellerFeeBasisPoints: String
+  payoutAddress: String
+  requireEmail: Boolean
+  shortDescription: String
+  slub: String
+  telegramUrl: String
+  twitterUsername: String
+  instagramUsername: String
+  wikiUrl: String
+}`, BuiltIn: false},
+	{Name: "graph/schema/opensea_creator.graphqls", Input: `# * This is a generated file, do not edit
+
+"""
+ The creator of the an opensea asset
+"""
+type OpenseaCreator {
+  user: OpenseaUser
+  profileImgUrl: String
+  address: String
+  config: String
+}`, BuiltIn: false},
+	{Name: "graph/schema/opensea_display_data.graphqls", Input: `# * This is a generated file, do not edit
+
+"""
+ The display type for a collection
+"""
+type OpenseaDisplayData {
+  cardDisplayStyle: String
+}`, BuiltIn: false},
+	{Name: "graph/schema/opensea_owner.graphqls", Input: `# * This is a generated file, do not edit
+
+"""
+ The owner of an opensea asset
+"""
+type OpenseaOwner {
+  user: OpenseaUser
+  profileImgUrl: String
+  address: String
+  config: String
+}`, BuiltIn: false},
+	{Name: "graph/schema/opensea_user.graphqls", Input: `# * This is a generated file, do not edit
+
+"""
+ The user of the an opensea asset owner
+"""
+type OpenseaUser {
+  username: String
 }`, BuiltIn: false},
 	{Name: "graph/schema/scalars.graphqls", Input: `scalar CancelAfter
 scalar EntryType
@@ -3892,6 +4851,7 @@ type Query {
   iexRulesSchema: IexRulesSchema
   krakenServerTime: KrakenServerTime
   krakenSystemStatus: KrakenSystemStatus
+	OpenseaAssets(opts: OpenseaAssetsOptions): OpenseaAssets
 }
 type Mutation {
   coinbaseAccountDeposit(opts: CoinbaseAccountDepositOptions): CoinbaseDeposit
@@ -4049,6 +5009,21 @@ func (ec *executionContext) field_Mutation_coinbasePaymentMethodWithdrawal_args(
 	if tmp, ok := rawArgs["opts"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("opts"))
 		arg0, err = ec.unmarshalOCoinbasePaymentMethodWithdrawalOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbasePaymentMethodWithdrawalOptions(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["opts"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_OpenseaAssets_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *model.OpenseaAssetsOptions
+	if tmp, ok := rawArgs["opts"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("opts"))
+		arg0, err = ec.unmarshalOOpenseaAssetsOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐOpenseaAssetsOptions(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -14646,6 +15621,2886 @@ func (ec *executionContext) _Mutation_coinbaseCryptoWithdrawal(ctx context.Conte
 	return ec.marshalOCoinbaseWithdrawal2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐCoinbaseWithdrawal(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _OpenseaAsset_id(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Id, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalOInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_tokenId(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TokenId, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_numSales(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NumSales, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(float64)
+	fc.Result = res
+	return ec.marshalOFloat2float64(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_backgroundColor(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BackgroundColor, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_imageUrl(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ImageUrl, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_imagePreviewUrl(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ImagePreviewUrl, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_imageThumbnailUrl(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ImageThumbnailUrl, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_imageOriginalUrl(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ImageOriginalUrl, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_animationUrl(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AnimationUrl, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_animationOriginalUrl(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AnimationOriginalUrl, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_name(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Name, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_description(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Description, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_externalLink(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ExternalLink, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_assetContract(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AssetContract(), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.OpenseaAssetContract)
+	fc.Result = res
+	return ec.marshalOOpenseaAssetContract2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐOpenseaAssetContract(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_permalink(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Permalink, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_collection(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Collection(), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.OpenseaCollection)
+	fc.Result = res
+	return ec.marshalOOpenseaCollection2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐOpenseaCollection(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_decimals(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Decimals, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_tokenMetadata(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TokenMetadata, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_owner(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Owner(), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.OpenseaOwner)
+	fc.Result = res
+	return ec.marshalOOpenseaOwner2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐOpenseaOwner(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_sellOrders(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.SellOrders, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_creator(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Creator(), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.OpenseaCreator)
+	fc.Result = res
+	return ec.marshalOOpenseaCreator2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐOpenseaCreator(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_lastSale(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.LastSale, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(float64)
+	fc.Result = res
+	return ec.marshalOFloat2float64(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_topBid(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TopBid, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(float64)
+	fc.Result = res
+	return ec.marshalOFloat2float64(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_listingDate(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ListingDate, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_isPresale(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IsPresale, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_transferFeePaymentToken(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TransferFeePaymentToken, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAsset_transferFee(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAsset) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAsset",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TransferFee, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(float64)
+	fc.Result = res
+	return ec.marshalOFloat2float64(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAssetContract_address(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAssetContract) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAssetContract",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Address, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAssetContract_assetContractType(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAssetContract) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAssetContract",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AssetContractType, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAssetContract_createdDate(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAssetContract) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAssetContract",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedDate, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAssetContract_name(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAssetContract) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAssetContract",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Name, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAssetContract_nftVersion(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAssetContract) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAssetContract",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NftVersion, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAssetContract_openseaVersion(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAssetContract) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAssetContract",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.OpenseaVersion, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAssetContract_owner(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAssetContract) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAssetContract",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Owner, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalOInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAssetContract_schemaName(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAssetContract) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAssetContract",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.SchemaName, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAssetContract_symbol(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAssetContract) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAssetContract",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Symbol, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAssetContract_totalSupply(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAssetContract) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAssetContract",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TotalSupply, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(float64)
+	fc.Result = res
+	return ec.marshalOFloat2float64(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAssetContract_description(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAssetContract) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAssetContract",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Description, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAssetContract_externalLink(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAssetContract) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAssetContract",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ExternalLink, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAssetContract_imageUrl(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAssetContract) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAssetContract",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ImageUrl, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAssetContract_defaultToFiat(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAssetContract) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAssetContract",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DefaultToFiat, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAssetContract_devBuyFeeBasisPoints(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAssetContract) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAssetContract",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DevBuyFeeBasisPoints, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalOInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAssetContract_devSellerFeeBasisPoints(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAssetContract) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAssetContract",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DevSellerFeeBasisPoints, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalOInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAssetContract_onlyProxiedTransfers(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAssetContract) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAssetContract",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.OnlyProxiedTransfers, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAssetContract_openseaBuyerFeeBasisPoints(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAssetContract) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAssetContract",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.OpenseaBuyerFeeBasisPoints, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalOInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAssetContract_openseaSellerFeeBasisPoints(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAssetContract) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAssetContract",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.OpenseaSellerFeeBasisPoints, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalOInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAssetContract_buyerFeeBasisPoints(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAssetContract) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAssetContract",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BuyerFeeBasisPoints, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalOInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAssetContract_sellerFeeBasisPoints(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAssetContract) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAssetContract",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.SellerFeeBasisPoints, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalOInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAssetContract_payoutAddress(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAssetContract) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAssetContract",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PayoutAddress, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaAssets_assets(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaAssets) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaAssets",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Assets(), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.OpenseaAsset)
+	fc.Result = res
+	return ec.marshalOOpenseaAsset2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐOpenseaAsset(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_bannerImageUrl(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BannerImageUrl, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_chatUrl(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ChatUrl, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_createdAt(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedAt, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_defaultToFiat(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DefaultToFiat, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_description(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Description, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_devBuyerFeeBasisPoints(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DevBuyerFeeBasisPoints, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_devSellerFeeBasisPoints(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DevSellerFeeBasisPoints, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_discordUrl(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DiscordUrl, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_displayData(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DisplayData(), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.OpenseaDisplayData)
+	fc.Result = res
+	return ec.marshalOOpenseaDisplayData2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐOpenseaDisplayData(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_externalUrl(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ExternalUrl, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_featured(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Featured, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_featuredImageUrl(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.FeaturedImageUrl, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_hidden(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Hidden, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_safelistRequestStatus(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.SafelistRequestStatus, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_imageUrl(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ImageUrl, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_isSubjectToWhitelist(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IsSubjectToWhitelist, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_largeImageUrl(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.LargeImageUrl, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_mediumUsernam(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.MediumUsernam, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_name(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Name, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_onlyProxiedTransfers(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.OnlyProxiedTransfers, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_openseaBuyerFeeBasisPoints(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.OpenseaBuyerFeeBasisPoints, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_openseaSellerFeeBasisPoints(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.OpenseaSellerFeeBasisPoints, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_payoutAddress(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PayoutAddress, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_requireEmail(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.RequireEmail, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_shortDescription(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ShortDescription, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_slub(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Slub, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_telegramUrl(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TelegramUrl, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_twitterUsername(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TwitterUsername, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_instagramUsername(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.InstagramUsername, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCollection_wikiUrl(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCollection) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCollection",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.WikiUrl, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCreator_user(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCreator) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCreator",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.User(), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.OpenseaUser)
+	fc.Result = res
+	return ec.marshalOOpenseaUser2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐOpenseaUser(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCreator_profileImgUrl(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCreator) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCreator",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProfileImgUrl, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCreator_address(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCreator) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCreator",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Address, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaCreator_config(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaCreator) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaCreator",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Config, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaDisplayData_cardDisplayStyle(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaDisplayData) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaDisplayData",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CardDisplayStyle, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaOwner_user(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaOwner) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaOwner",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.User(), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.OpenseaUser)
+	fc.Result = res
+	return ec.marshalOOpenseaUser2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐOpenseaUser(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaOwner_profileImgUrl(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaOwner) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaOwner",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProfileImgUrl, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaOwner_address(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaOwner) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaOwner",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Address, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaOwner_config(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaOwner) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaOwner",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Config, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OpenseaUser_username(ctx context.Context, field graphql.CollectedField, obj *model.OpenseaUser) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OpenseaUser",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Username, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Query_coinbaseAccount(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -15361,6 +19216,45 @@ func (ec *executionContext) _Query_krakenSystemStatus(ctx context.Context, field
 	res := resTmp.(*model.KrakenSystemStatus)
 	fc.Result = res
 	return ec.marshalOKrakenSystemStatus2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐKrakenSystemStatus(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Query_OpenseaAssets(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Query_OpenseaAssets_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().OpenseaAssets(rctx, args["opts"].(*model.OpenseaAssetsOptions))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.OpenseaAssets)
+	fc.Result = res
+	return ec.marshalOOpenseaAssets2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐOpenseaAssets(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -17468,6 +21362,93 @@ func (ec *executionContext) unmarshalInputCoinbaseWithdrawalFeeEstimateOptions(c
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputOpenseaAssetsOptions(ctx context.Context, obj interface{}) (model.OpenseaAssetsOptions, error) {
+	var it model.OpenseaAssetsOptions
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	for k, v := range asMap {
+		switch k {
+		case "owner":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("owner"))
+			it.Owner, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "tokenIds":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("tokenIds"))
+			it.TokenIds, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "assetContractAddress":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("assetContractAddress"))
+			it.AssetContractAddress, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "assetContractAddresses":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("assetContractAddresses"))
+			it.AssetContractAddresses, err = ec.unmarshalOString2ᚕᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "orderBy":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("orderBy"))
+			it.OrderBy, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "orderDirection":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("orderDirection"))
+			it.OrderDirection, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "offset":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("offset"))
+			it.Offset, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "limit":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("limit"))
+			it.Limit, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "collection":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("collection"))
+			it.Collection, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		}
+	}
+
+	return it, nil
+}
+
 // endregion **************************** input.gotpl *****************************
 
 // region    ************************** interface.gotpl ***************************
@@ -19068,6 +23049,362 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 	return out
 }
 
+var openseaAssetImplementors = []string{"OpenseaAsset"}
+
+func (ec *executionContext) _OpenseaAsset(ctx context.Context, sel ast.SelectionSet, obj *model.OpenseaAsset) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, openseaAssetImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("OpenseaAsset")
+		case "id":
+			out.Values[i] = ec._OpenseaAsset_id(ctx, field, obj)
+		case "tokenId":
+			out.Values[i] = ec._OpenseaAsset_tokenId(ctx, field, obj)
+		case "numSales":
+			out.Values[i] = ec._OpenseaAsset_numSales(ctx, field, obj)
+		case "backgroundColor":
+			out.Values[i] = ec._OpenseaAsset_backgroundColor(ctx, field, obj)
+		case "imageUrl":
+			out.Values[i] = ec._OpenseaAsset_imageUrl(ctx, field, obj)
+		case "imagePreviewUrl":
+			out.Values[i] = ec._OpenseaAsset_imagePreviewUrl(ctx, field, obj)
+		case "imageThumbnailUrl":
+			out.Values[i] = ec._OpenseaAsset_imageThumbnailUrl(ctx, field, obj)
+		case "imageOriginalUrl":
+			out.Values[i] = ec._OpenseaAsset_imageOriginalUrl(ctx, field, obj)
+		case "animationUrl":
+			out.Values[i] = ec._OpenseaAsset_animationUrl(ctx, field, obj)
+		case "animationOriginalUrl":
+			out.Values[i] = ec._OpenseaAsset_animationOriginalUrl(ctx, field, obj)
+		case "name":
+			out.Values[i] = ec._OpenseaAsset_name(ctx, field, obj)
+		case "description":
+			out.Values[i] = ec._OpenseaAsset_description(ctx, field, obj)
+		case "externalLink":
+			out.Values[i] = ec._OpenseaAsset_externalLink(ctx, field, obj)
+		case "assetContract":
+			out.Values[i] = ec._OpenseaAsset_assetContract(ctx, field, obj)
+		case "permalink":
+			out.Values[i] = ec._OpenseaAsset_permalink(ctx, field, obj)
+		case "collection":
+			out.Values[i] = ec._OpenseaAsset_collection(ctx, field, obj)
+		case "decimals":
+			out.Values[i] = ec._OpenseaAsset_decimals(ctx, field, obj)
+		case "tokenMetadata":
+			out.Values[i] = ec._OpenseaAsset_tokenMetadata(ctx, field, obj)
+		case "owner":
+			out.Values[i] = ec._OpenseaAsset_owner(ctx, field, obj)
+		case "sellOrders":
+			out.Values[i] = ec._OpenseaAsset_sellOrders(ctx, field, obj)
+		case "creator":
+			out.Values[i] = ec._OpenseaAsset_creator(ctx, field, obj)
+		case "lastSale":
+			out.Values[i] = ec._OpenseaAsset_lastSale(ctx, field, obj)
+		case "topBid":
+			out.Values[i] = ec._OpenseaAsset_topBid(ctx, field, obj)
+		case "listingDate":
+			out.Values[i] = ec._OpenseaAsset_listingDate(ctx, field, obj)
+		case "isPresale":
+			out.Values[i] = ec._OpenseaAsset_isPresale(ctx, field, obj)
+		case "transferFeePaymentToken":
+			out.Values[i] = ec._OpenseaAsset_transferFeePaymentToken(ctx, field, obj)
+		case "transferFee":
+			out.Values[i] = ec._OpenseaAsset_transferFee(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var openseaAssetContractImplementors = []string{"OpenseaAssetContract"}
+
+func (ec *executionContext) _OpenseaAssetContract(ctx context.Context, sel ast.SelectionSet, obj *model.OpenseaAssetContract) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, openseaAssetContractImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("OpenseaAssetContract")
+		case "address":
+			out.Values[i] = ec._OpenseaAssetContract_address(ctx, field, obj)
+		case "assetContractType":
+			out.Values[i] = ec._OpenseaAssetContract_assetContractType(ctx, field, obj)
+		case "createdDate":
+			out.Values[i] = ec._OpenseaAssetContract_createdDate(ctx, field, obj)
+		case "name":
+			out.Values[i] = ec._OpenseaAssetContract_name(ctx, field, obj)
+		case "nftVersion":
+			out.Values[i] = ec._OpenseaAssetContract_nftVersion(ctx, field, obj)
+		case "openseaVersion":
+			out.Values[i] = ec._OpenseaAssetContract_openseaVersion(ctx, field, obj)
+		case "owner":
+			out.Values[i] = ec._OpenseaAssetContract_owner(ctx, field, obj)
+		case "schemaName":
+			out.Values[i] = ec._OpenseaAssetContract_schemaName(ctx, field, obj)
+		case "symbol":
+			out.Values[i] = ec._OpenseaAssetContract_symbol(ctx, field, obj)
+		case "totalSupply":
+			out.Values[i] = ec._OpenseaAssetContract_totalSupply(ctx, field, obj)
+		case "description":
+			out.Values[i] = ec._OpenseaAssetContract_description(ctx, field, obj)
+		case "externalLink":
+			out.Values[i] = ec._OpenseaAssetContract_externalLink(ctx, field, obj)
+		case "imageUrl":
+			out.Values[i] = ec._OpenseaAssetContract_imageUrl(ctx, field, obj)
+		case "defaultToFiat":
+			out.Values[i] = ec._OpenseaAssetContract_defaultToFiat(ctx, field, obj)
+		case "devBuyFeeBasisPoints":
+			out.Values[i] = ec._OpenseaAssetContract_devBuyFeeBasisPoints(ctx, field, obj)
+		case "devSellerFeeBasisPoints":
+			out.Values[i] = ec._OpenseaAssetContract_devSellerFeeBasisPoints(ctx, field, obj)
+		case "onlyProxiedTransfers":
+			out.Values[i] = ec._OpenseaAssetContract_onlyProxiedTransfers(ctx, field, obj)
+		case "openseaBuyerFeeBasisPoints":
+			out.Values[i] = ec._OpenseaAssetContract_openseaBuyerFeeBasisPoints(ctx, field, obj)
+		case "openseaSellerFeeBasisPoints":
+			out.Values[i] = ec._OpenseaAssetContract_openseaSellerFeeBasisPoints(ctx, field, obj)
+		case "buyerFeeBasisPoints":
+			out.Values[i] = ec._OpenseaAssetContract_buyerFeeBasisPoints(ctx, field, obj)
+		case "sellerFeeBasisPoints":
+			out.Values[i] = ec._OpenseaAssetContract_sellerFeeBasisPoints(ctx, field, obj)
+		case "payoutAddress":
+			out.Values[i] = ec._OpenseaAssetContract_payoutAddress(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var openseaAssetsImplementors = []string{"OpenseaAssets"}
+
+func (ec *executionContext) _OpenseaAssets(ctx context.Context, sel ast.SelectionSet, obj *model.OpenseaAssets) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, openseaAssetsImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("OpenseaAssets")
+		case "assets":
+			out.Values[i] = ec._OpenseaAssets_assets(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var openseaCollectionImplementors = []string{"OpenseaCollection"}
+
+func (ec *executionContext) _OpenseaCollection(ctx context.Context, sel ast.SelectionSet, obj *model.OpenseaCollection) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, openseaCollectionImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("OpenseaCollection")
+		case "bannerImageUrl":
+			out.Values[i] = ec._OpenseaCollection_bannerImageUrl(ctx, field, obj)
+		case "chatUrl":
+			out.Values[i] = ec._OpenseaCollection_chatUrl(ctx, field, obj)
+		case "createdAt":
+			out.Values[i] = ec._OpenseaCollection_createdAt(ctx, field, obj)
+		case "defaultToFiat":
+			out.Values[i] = ec._OpenseaCollection_defaultToFiat(ctx, field, obj)
+		case "description":
+			out.Values[i] = ec._OpenseaCollection_description(ctx, field, obj)
+		case "devBuyerFeeBasisPoints":
+			out.Values[i] = ec._OpenseaCollection_devBuyerFeeBasisPoints(ctx, field, obj)
+		case "devSellerFeeBasisPoints":
+			out.Values[i] = ec._OpenseaCollection_devSellerFeeBasisPoints(ctx, field, obj)
+		case "discordUrl":
+			out.Values[i] = ec._OpenseaCollection_discordUrl(ctx, field, obj)
+		case "displayData":
+			out.Values[i] = ec._OpenseaCollection_displayData(ctx, field, obj)
+		case "externalUrl":
+			out.Values[i] = ec._OpenseaCollection_externalUrl(ctx, field, obj)
+		case "featured":
+			out.Values[i] = ec._OpenseaCollection_featured(ctx, field, obj)
+		case "featuredImageUrl":
+			out.Values[i] = ec._OpenseaCollection_featuredImageUrl(ctx, field, obj)
+		case "hidden":
+			out.Values[i] = ec._OpenseaCollection_hidden(ctx, field, obj)
+		case "safelistRequestStatus":
+			out.Values[i] = ec._OpenseaCollection_safelistRequestStatus(ctx, field, obj)
+		case "imageUrl":
+			out.Values[i] = ec._OpenseaCollection_imageUrl(ctx, field, obj)
+		case "isSubjectToWhitelist":
+			out.Values[i] = ec._OpenseaCollection_isSubjectToWhitelist(ctx, field, obj)
+		case "largeImageUrl":
+			out.Values[i] = ec._OpenseaCollection_largeImageUrl(ctx, field, obj)
+		case "mediumUsernam":
+			out.Values[i] = ec._OpenseaCollection_mediumUsernam(ctx, field, obj)
+		case "name":
+			out.Values[i] = ec._OpenseaCollection_name(ctx, field, obj)
+		case "onlyProxiedTransfers":
+			out.Values[i] = ec._OpenseaCollection_onlyProxiedTransfers(ctx, field, obj)
+		case "openseaBuyerFeeBasisPoints":
+			out.Values[i] = ec._OpenseaCollection_openseaBuyerFeeBasisPoints(ctx, field, obj)
+		case "openseaSellerFeeBasisPoints":
+			out.Values[i] = ec._OpenseaCollection_openseaSellerFeeBasisPoints(ctx, field, obj)
+		case "payoutAddress":
+			out.Values[i] = ec._OpenseaCollection_payoutAddress(ctx, field, obj)
+		case "requireEmail":
+			out.Values[i] = ec._OpenseaCollection_requireEmail(ctx, field, obj)
+		case "shortDescription":
+			out.Values[i] = ec._OpenseaCollection_shortDescription(ctx, field, obj)
+		case "slub":
+			out.Values[i] = ec._OpenseaCollection_slub(ctx, field, obj)
+		case "telegramUrl":
+			out.Values[i] = ec._OpenseaCollection_telegramUrl(ctx, field, obj)
+		case "twitterUsername":
+			out.Values[i] = ec._OpenseaCollection_twitterUsername(ctx, field, obj)
+		case "instagramUsername":
+			out.Values[i] = ec._OpenseaCollection_instagramUsername(ctx, field, obj)
+		case "wikiUrl":
+			out.Values[i] = ec._OpenseaCollection_wikiUrl(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var openseaCreatorImplementors = []string{"OpenseaCreator"}
+
+func (ec *executionContext) _OpenseaCreator(ctx context.Context, sel ast.SelectionSet, obj *model.OpenseaCreator) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, openseaCreatorImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("OpenseaCreator")
+		case "user":
+			out.Values[i] = ec._OpenseaCreator_user(ctx, field, obj)
+		case "profileImgUrl":
+			out.Values[i] = ec._OpenseaCreator_profileImgUrl(ctx, field, obj)
+		case "address":
+			out.Values[i] = ec._OpenseaCreator_address(ctx, field, obj)
+		case "config":
+			out.Values[i] = ec._OpenseaCreator_config(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var openseaDisplayDataImplementors = []string{"OpenseaDisplayData"}
+
+func (ec *executionContext) _OpenseaDisplayData(ctx context.Context, sel ast.SelectionSet, obj *model.OpenseaDisplayData) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, openseaDisplayDataImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("OpenseaDisplayData")
+		case "cardDisplayStyle":
+			out.Values[i] = ec._OpenseaDisplayData_cardDisplayStyle(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var openseaOwnerImplementors = []string{"OpenseaOwner"}
+
+func (ec *executionContext) _OpenseaOwner(ctx context.Context, sel ast.SelectionSet, obj *model.OpenseaOwner) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, openseaOwnerImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("OpenseaOwner")
+		case "user":
+			out.Values[i] = ec._OpenseaOwner_user(ctx, field, obj)
+		case "profileImgUrl":
+			out.Values[i] = ec._OpenseaOwner_profileImgUrl(ctx, field, obj)
+		case "address":
+			out.Values[i] = ec._OpenseaOwner_address(ctx, field, obj)
+		case "config":
+			out.Values[i] = ec._OpenseaOwner_config(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var openseaUserImplementors = []string{"OpenseaUser"}
+
+func (ec *executionContext) _OpenseaUser(ctx context.Context, sel ast.SelectionSet, obj *model.OpenseaUser) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, openseaUserImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("OpenseaUser")
+		case "username":
+			out.Values[i] = ec._OpenseaUser_username(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
 var queryImplementors = []string{"Query"}
 
 func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) graphql.Marshaler {
@@ -19301,6 +23638,17 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_krakenSystemStatus(ctx, field)
+				return res
+			})
+		case "OpenseaAssets":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_OpenseaAssets(ctx, field)
 				return res
 			})
 		case "__type":
@@ -20949,6 +25297,111 @@ func (ec *executionContext) marshalOKrakenSystemStatusResult2ᚖgithubᚗcomᚋc
 		return graphql.Null
 	}
 	return ec._KrakenSystemStatusResult(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOOpenseaAsset2ᚕᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐOpenseaAsset(ctx context.Context, sel ast.SelectionSet, v []*model.OpenseaAsset) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalOOpenseaAsset2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐOpenseaAsset(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	return ret
+}
+
+func (ec *executionContext) marshalOOpenseaAsset2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐOpenseaAsset(ctx context.Context, sel ast.SelectionSet, v *model.OpenseaAsset) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._OpenseaAsset(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOOpenseaAssetContract2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐOpenseaAssetContract(ctx context.Context, sel ast.SelectionSet, v *model.OpenseaAssetContract) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._OpenseaAssetContract(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOOpenseaAssets2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐOpenseaAssets(ctx context.Context, sel ast.SelectionSet, v *model.OpenseaAssets) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._OpenseaAssets(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalOOpenseaAssetsOptions2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐOpenseaAssetsOptions(ctx context.Context, v interface{}) (*model.OpenseaAssetsOptions, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputOpenseaAssetsOptions(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOOpenseaCollection2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐOpenseaCollection(ctx context.Context, sel ast.SelectionSet, v *model.OpenseaCollection) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._OpenseaCollection(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOOpenseaCreator2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐOpenseaCreator(ctx context.Context, sel ast.SelectionSet, v *model.OpenseaCreator) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._OpenseaCreator(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOOpenseaDisplayData2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐOpenseaDisplayData(ctx context.Context, sel ast.SelectionSet, v *model.OpenseaDisplayData) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._OpenseaDisplayData(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOOpenseaOwner2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐOpenseaOwner(ctx context.Context, sel ast.SelectionSet, v *model.OpenseaOwner) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._OpenseaOwner(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOOpenseaUser2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋmodelᚐOpenseaUser(ctx context.Context, sel ast.SelectionSet, v *model.OpenseaUser) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._OpenseaUser(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOOrderSTP2ᚖgithubᚗcomᚋcryptometricsᚋcqlᚋscalarᚐOrderSTP(ctx context.Context, v interface{}) (*scalar.OrderSTP, error) {

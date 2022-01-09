@@ -1,0 +1,17 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "opensea",
+    srcs = [
+        "c.go",
+        "endpoint.go",
+        "nft.go",
+    ],
+    importpath = "github.com/cryptometrics/cql/opensea",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//client",
+        "//model",
+        "@com_github_sirupsen_logrus//:logrus",
+    ],
+)

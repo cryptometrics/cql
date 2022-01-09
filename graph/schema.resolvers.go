@@ -11,6 +11,7 @@ import (
 	"github.com/cryptometrics/cql/iex"
 	"github.com/cryptometrics/cql/kraken"
 	"github.com/cryptometrics/cql/model"
+	"github.com/cryptometrics/cql/opensea"
 )
 
 func (r *mutationResolver) CoinbaseAccountDeposit(ctx context.Context, opts *model.CoinbaseAccountDepositOptions) (*model.CoinbaseDeposit, error) {
@@ -127,6 +128,10 @@ func (r *queryResolver) KrakenServerTime(ctx context.Context) (*model.KrakenServ
 
 func (r *queryResolver) KrakenSystemStatus(ctx context.Context) (*model.KrakenSystemStatus, error) {
 	return kraken.NewMarketData(kraken.DefaultClient).SystemStatus()
+}
+
+func (r *queryResolver) OpenseaAssets(ctx context.Context, opts *model.OpenseaAssetsOptions) (*model.OpenseaAssets, error) {
+	return opensea.NewNFT(opensea.DefaultClient).Assets(opts)
 }
 
 // Mutation returns generated.MutationResolver implementation.

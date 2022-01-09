@@ -1,8 +1,7 @@
 package model
 
-import "github.com/cryptometrics/cql/protomodel"
-
 // * This file was initialized by the meta-program, but is open to modification
+import "github.com/cryptometrics/cql/protomodel"
 
 // CoinbaseSepaDepositInformation information regarding a wallet's deposits. A
 // SEPA credit transfer is a single transfer of Euros from one person or

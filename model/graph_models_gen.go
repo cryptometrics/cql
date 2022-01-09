@@ -139,3 +139,15 @@ type CoinbaseWithdrawalFeeEstimateOptions struct {
 	Currency      *string `json:"currency"`
 	CryptoAddress *string `json:"cryptoAddress"`
 }
+
+type OpenseaAssetsOptions struct {
+	Owner                  *string   `json:"owner"`
+	TokenIds               *string   `json:"tokenIds"`
+	AssetContractAddress   *string   `json:"assetContractAddress"`
+	AssetContractAddresses []*string `json:"assetContractAddresses"`
+	OrderBy                *string   `json:"orderBy"`
+	OrderDirection         *string   `json:"orderDirection"`
+	Offset                 *string   `json:"offset"`
+	Limit                  *string   `json:"limit"`
+	Collection             *string   `json:"collection"`
+}

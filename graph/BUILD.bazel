@@ -14,5 +14,6 @@ go_library(
         "//iex",
         "//kraken",
         "//model",
+        "//opensea",
     ],
 )

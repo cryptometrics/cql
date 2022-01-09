@@ -13,6 +13,7 @@ services:
       - ./coinbase:/usr/src/coinbase
       - ./kraken:/usr/src/kraken
       - ./iex:/usr/src/iex
+      - ./opensea:/usr/src/opensea
       - ./graph:/usr/src/graph
       - ./gqlgen.yml:/usr/src/gqlgen.yml
       - ./model:/usr/src/model
@@ -41,6 +42,7 @@ services:
       - ./coinbase:/usr/src/coinbase
       - ./kraken:/usr/src/kraken
       - ./iex:/usr/src/iex
+      - ./opensea:/usr/src/opensea
       - ./graph:/usr/src/graph
       - ./gqlgen.yml:/usr/src/gqlgen.yml
       - ./model:/usr/src/model

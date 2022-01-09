@@ -21,6 +21,14 @@ func (conn Connector) fetch(req *Request) (*http.Response, error) {
 
 	var res *http.Response
 	res, err = c.Do(*req)
+
+	//code snippet
+	// bodyBytes, err := ioutil.ReadAll(res.Body)
+	//print result
+	// bodyString := string(bodyBytes)
+	// fmt.Println(bodyString)
+
+	// fmt.Println(res)
 	if err != nil {
 		return nil, err
 	}

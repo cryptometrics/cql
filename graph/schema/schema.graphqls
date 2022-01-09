@@ -37,6 +37,7 @@ type Query {
   iexRulesSchema: IexRulesSchema
   krakenServerTime: KrakenServerTime
   krakenSystemStatus: KrakenSystemStatus
+	OpenseaAssets(opts: OpenseaAssetsOptions): OpenseaAssets
 }
 type Mutation {
   coinbaseAccountDeposit(opts: CoinbaseAccountDepositOptions): CoinbaseDeposit

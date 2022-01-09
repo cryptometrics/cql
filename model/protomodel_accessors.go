@@ -147,3 +147,44 @@ func (m *KrakenServerTime) Result() *KrakenServerTimeResult {
 func (m *KrakenSystemStatus) Result() *KrakenSystemStatusResult {
 	return &KrakenSystemStatusResult{KrakenSystemStatusResult: m.ProtoResult}
 }
+
+// AssetContract converts the native protomodel ProtoAssetContract to a local
+// OpenseaAssetContract.
+func (m *OpenseaAsset) AssetContract() *OpenseaAssetContract {
+	return &OpenseaAssetContract{OpenseaAssetContract: m.ProtoAssetContract}
+}
+
+// Collection converts the native protomodel ProtoCollection to a local
+// OpenseaCollection.
+func (m *OpenseaAsset) Collection() *OpenseaCollection {
+	return &OpenseaCollection{OpenseaCollection: m.ProtoCollection}
+}
+
+// Owner converts the native protomodel ProtoOwner to a local OpenseaOwner.
+func (m *OpenseaAsset) Owner() *OpenseaOwner { return &OpenseaOwner{OpenseaOwner: m.ProtoOwner} }
+
+// Creator converts the native protomodel ProtoCreator to a local
+// OpenseaCreator.
+func (m *OpenseaAsset) Creator() *OpenseaCreator {
+	return &OpenseaCreator{OpenseaCreator: m.ProtoCreator}
+}
+
+// Assets converts the native protomodel ProtoAssets to a local []*OpenseaAsset.
+func (m *OpenseaAssets) Assets() (slice []*OpenseaAsset) {
+	for _, v := range m.ProtoAssets {
+		slice = append(slice, &OpenseaAsset{OpenseaAsset: *v})
+	}
+	return
+}
+
+// DisplayData converts the native protomodel ProtoDisplayData to a local
+// OpenseaDisplayData.
+func (m *OpenseaCollection) DisplayData() *OpenseaDisplayData {
+	return &OpenseaDisplayData{OpenseaDisplayData: m.ProtoDisplayData}
+}
+
+// User converts the native protomodel ProtoUser to a local OpenseaUser.
+func (m *OpenseaCreator) User() *OpenseaUser { return &OpenseaUser{OpenseaUser: m.ProtoUser} }
+
+// User converts the native protomodel ProtoUser to a local OpenseaUser.
+func (m *OpenseaOwner) User() *OpenseaUser { return &OpenseaUser{OpenseaUser: m.ProtoUser} }

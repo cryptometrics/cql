@@ -137,6 +137,24 @@ models:
     model: github.com/cryptometrics/cql/scalar.TimeInForce
   TransferMethod:
     model: github.com/cryptometrics/cql/scalar.TransferMethod
+  OpenseaAsset:
+    model: github.com/cryptometrics/cql/model.OpenseaAsset
+  OpenseaAssetContract:
+    model: github.com/cryptometrics/cql/model.OpenseaAssetContract
+  OpenseaCollection:
+    model: github.com/cryptometrics/cql/model.OpenseaCollection
+  OpenseaCreator:
+    model: github.com/cryptometrics/cql/model.OpenseaCreator
+  OpenseaDisplayType:
+    model: github.com/cryptometrics/cql/model.OpenseaDisplayType
+  OpenseaOwner:
+    model: github.com/cryptometrics/cql/model.OpenseaOwner
+  OpenseaUser:
+    model: github.com/cryptometrics/cql/model.OpenseaUser
+  OpenseaDisplayData:
+    model: github.com/cryptometrics/cql/model.OpenseaDisplayData
+  OpenseaAssets:
+    model: github.com/cryptometrics/cql/model.OpenseaAssets
 resolver:
   dir: graph
   layout: follow-schema
